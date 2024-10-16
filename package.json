@@ -5,7 +5,8 @@
     "husky": "^9.1.6"
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "commit": "git add -A && cz"
   },
   "config": {
     "commitizen": {
