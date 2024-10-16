@@ -10,7 +10,17 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "./node_modules/cz-conventional-changelog",
+      "types": {
+        "common": {
+          "description": "Common configuration for all",
+          "title": "Common"
+        },
+        "example-project": {
+          "description": "",
+          "title": "Example Project"
+        }
+      }
     }
   }
 }
