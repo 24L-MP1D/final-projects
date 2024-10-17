@@ -1,5 +1,8 @@
 // 'use client';
-export default function Add() {
+import { useEffect } from 'react';
+export default function Page() {
+  useEffect(() => {}, [fetch('/api/products')]);
+
   return (
     <div className="container mx-auto flex flex-col gap-3">
       <div>Add Product</div>
