@@ -55,6 +55,14 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog",
       "types": {
+        "acers": {
+          "description": "",
+          "title": "Acers"
+        },
+        "amidos": {
+          "description": "",
+          "title": "Amidos"
+        },
         "common": {
           "description": "Common configurations for all",
           "title": "Common"
@@ -63,17 +71,13 @@
           "description": "",
           "title": "Example Project"
         },
+        "ger-gurus": {
+          "description": "",
+          "title": "Ger Gurus"
+        },
         "superduper": {
           "description": "",
           "title": "Superduper"
-        },
-        "acers": {
-          "description": "",
-          "title": "Acers"
-        },
-        "amidos": {
-          "description": "",
-          "title": "Amidos"
         }
       }
     }
