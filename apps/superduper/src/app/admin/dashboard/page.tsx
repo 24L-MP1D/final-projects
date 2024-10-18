@@ -15,8 +15,9 @@ export default function Home() {
               <h1>
                 <span> Hello there, </span>
                Welcome to the client accepting dashboard 👋
-                   
-              </h1>
+            <Button>Approve the seller's request</Button>
+            <Button>Reject  the seller's request</Button>
+            </h1>
             {/* </Header> */}
             <div className="max-w-[1440px] mx-auto ">
             {/* <LeftBar /> */}
