@@ -1,6 +1,3 @@
-export default function Index() {
-  return (
-    <div>
-    </div>
-  );
+export default function Page() {
+  return <div></div>;
 }
