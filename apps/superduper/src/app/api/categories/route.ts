@@ -9,3 +9,11 @@ export async function GET(request: Request) {
     console.error(err);
   }
 }
+
+export async function POST(request: Request) {
+  try {
+    const collection = DB.collection('products');
+  } catch (err) {
+    console.error(err);
+  }
+}
