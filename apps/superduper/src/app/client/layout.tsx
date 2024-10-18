@@ -1,7 +1,9 @@
-export default function Rootlayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return <div>{children}</div>;
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+
 }
