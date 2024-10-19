@@ -7,6 +7,7 @@ import { Input } from './ui/Input';
 interface FormValues {
   bid: string;
 }
+
 export const Bid = () => {
   const validationSchema = yup.object({
     bid: yup.number().min(1000, 'too low price').required('une oruul'),
