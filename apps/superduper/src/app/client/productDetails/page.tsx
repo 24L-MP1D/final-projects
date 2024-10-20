@@ -1,9 +1,11 @@
 'use client';
 
 import { Bid } from '../../components/Bid';
+import { Auction } from '../../components/BidExample';
 import { HelpCenter } from '../../components/helpCenter';
 import { ProductDetailImages } from '../../components/ProductDetailImages';
 import { Safity } from '../../components/Safity';
+import { Button } from '../../components/ui/Button';
 export default function App() {
   return (
     <div className="max-w-[1240px] mx-auto w-full">
@@ -13,6 +15,8 @@ export default function App() {
           <Bid />
           <Safity />
           <HelpCenter />
+          <Button>badral</Button>
+          <Auction />
         </div>
       </div>
     </div>
