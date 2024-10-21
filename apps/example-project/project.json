@@ -5,5 +5,13 @@
   "projectType": "application",
   "tags": [],
   "// targets": "to see all targets run: nx show project example-project --web",
-  "targets": {}
+  "targets": {
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rm -rf dist", "rm -rf .vercel", "mkdir .vercel", "cp -r ./apps/example-project/vercel.json .vercel/project.json", "vercel build --prod", "vercel --prebuilt --prod"],
+        "parallel": false
+      }
+    }
+  }
 }

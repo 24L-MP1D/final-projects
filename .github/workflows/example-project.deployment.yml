@@ -1,0 +1,36 @@
+name: Example-project Deployment
+run-name: Example-project is being deployed
+env:
+  VERCEL_ORG_ID: ${{ secrets.EXAMPLE_PROJECT_VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.EXAMPLE_PROJECT_VERCEL_PROJECT_ID }}
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+jobs:
+  DeployApp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: 'Install Vercel CLI'
+        run: npm i -g vercel@latest
+
+      - name: 'Pull environment information from Vercel'
+        run: vercel pull --yes --environment=production --token=${{ secrets.EXAMPLE_PROJECT_VERCEL_TOKEN }}
+
+      - name: 'Copy env variables to app folder'
+        run: |
+          cd ${{ github.workspace }}
+          cp .vercel/.env.production.local apps/example-project
+
+      - name: 'Build the app'
+        run: vercel build --prod --token=${{ secrets.EXAMPLE_PROJECT_VERCEL_TOKEN }}
+
+      - name: 'Deploy to Vercel'
+        run: vercel --prebuilt --prod --token=${{ secrets.EXAMPLE_PROJECT_VERCEL_TOKEN }}
