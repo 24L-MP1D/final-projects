@@ -3,6 +3,7 @@
   "orgId": "team_dhzhtjdknzcBISPf2DgmW1jW",
   "settings": {
     "framework": "nextjs",
+    "installCommand": "npm i --force",
     "buildCommand": "nx build --skip-nx-cache example-project",
     "outputDirectory": "dist/apps/example-project/.next"
   }
