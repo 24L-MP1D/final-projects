@@ -27,7 +27,7 @@ jobs:
       - name: 'Copy env variables'
         run: |
           vercel env pull .env.development.local --token=${{ secrets.EXAMPLE_PROJECT_VERCEL_TOKEN }}
-          mv .env.development.local .vercel/env.development.local
+          mv .env.development.local ./apps/example-project/.env
 
       - name: 'Build the app'
         run: vercel build --prod
