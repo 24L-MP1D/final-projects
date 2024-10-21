@@ -20,7 +20,7 @@ export default function Products() {
 
     return (
         <div className="grid grid-cols-4 gap-6">
-            {products.slice(0, 20).map((product) => (
+            {products.slice(0, 5).map((product) => (
                 <div>
                     <Image src={product.image_url} alt="image" height={280} width={280} className="h-[280px] w-[280px]" />
                     {product.name}
