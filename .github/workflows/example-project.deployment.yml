@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn
 
       - name: 'Install Vercel CLI'
         run: npm i -g vercel@latest
