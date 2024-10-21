@@ -2,8 +2,9 @@
 
 import { AddProductGeneral } from '@/app/components/AddProductGeneral';
 import { AllCountry } from '@/app/components/allCountry';
+import { ProductCondition } from '@/app/components/ProductCondition';
+import { ProductPrice } from '@/app/components/ProductPrice';
 import { Button } from '@/app/components/ui/Button';
-import { Input } from '@/app/components/ui/Input';
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -79,9 +80,7 @@ export default function Page() {
           </div>
         </div>
         <div className="mt-8 text-center text-[#333] text-[48px]">Tell us about your item</div>
-
         <header className="text-[#333333] text-2xl mb-8">General</header>
-
         <AddProductGeneral
           showCountry={showCountry}
           setShowCountry={setShowCountry}
@@ -91,60 +90,8 @@ export default function Page() {
           formikTouched={formik.touched}
           formikHandleChange={formik.handleChange}
         />
-        <section className="">
-          <header className="mt-16 mb-8 text-[#333333] text-2xl">Condition</header>
-          <div className="flex flex-col gap-8">
-            <div>
-              <div className="flex justify-between items-center">
-                <div className="text-[#23448d] text-sm mb-1.5">Signatures, Labels or Markings *</div>
-              </div>
-              <div className="flex border-b-[1px] relative">
-                <Input id="signatures" value={formik.values.signatures} onChange={formik.handleChange} maxLength={200} type="text" className="flex-1 border-none" />
-                <p className={`absolute text-red-500 top-10 ${formik.touched.signatures && formik.errors.signatures ? 'block' : 'hidden'}`}>{formik.errors.signatures}</p>
-              </div>
-            </div>
-            <div>
-              <div className="flex justify-between items-center">
-                <div className="text-[#23448d] text-sm mb-1.5">Areas of Damage *</div>
-              </div>
-              <div className="flex relative border-b-[1px]">
-                <Input id="damage" value={formik.values.damage} onChange={formik.handleChange} maxLength={200} type="text" className="flex-1 border-none" />
-                <p className={`absolute text-red-500 top-10 ${formik.touched.damage && formik.errors.damage ? 'block' : 'hidden'}`}>{formik.errors.damage}</p>
-              </div>
-            </div>
-            <div>
-              <div className="flex justify-between items-center">
-                <div className="text-[#23448d] text-sm mb-1.5">Has it been restored? If so, to what extent?</div>
-              </div>
-              <div className="flex border-b-[1px] relative">
-                <Input id="restored" value={formik.values.restored} onChange={formik.handleChange} maxLength={200} type="text" className="flex-1 border-none" />
-                <p className={`absolute text-red-500 top-10 ${formik.touched.restored && formik.errors.restored ? 'block' : 'hidden'}`}>{formik.errors.restored}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="pb-28">
-          <header className="mt-16 mb-8 text-[#333333] text-2xl">Price</header>
-          <div className="flex justify-between gap-2">
-            <div className="flex-1">
-              <div className="flex justify-between items-center">
-                <div className="text-[#23448d] text-sm mb-1.5">Price Paid*</div>
-              </div>
-              <div className="flex relative border-b-[1px]">
-                <Input id="startBid" value={formik.values.startBid} onChange={formik.handleChange} maxLength={200} type="number" className="flex-1 border-none" />
-                <p className={`absolute text-red-500 top-10 ${formik.touched.startBid && formik.errors.startBid ? 'block' : 'hidden'}`}>{formik.errors.startBid}</p>
-              </div>
-            </div>
-            <div className="flex-1">
-              <div className="">
-                <div className="text-[#23448d] text-sm mb-1.5">Currency*</div>
-              </div>
-              <div className="flex border-b-[1px] relative">
-                <Input maxLength={200} type="text" className="flex-1 border-none" />
-              </div>
-            </div>
-          </div>
-        </section>
+        <ProductCondition formikErrors={formik.errors} formikValues={formik.values} formikHandleChange={formik.handleChange} formikTouched={formik.touched} />
+        <ProductPrice formikErrors={formik.errors} formikHandleChange={formik.handleChange} formikTouched={formik.touched} formikValues={formik.values} />
       </div>
       <div className="flex gap-2 w-full justify-center fixed bottom-0 bg-[#ffffff] py-2 left-[50%] translate-x-[-50%]">
         <div>Click “continue” to save your progress for this step</div>
