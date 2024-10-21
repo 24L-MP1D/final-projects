@@ -2,7 +2,9 @@ import bcrypt from "bcrypt";
 import { DB } from "../../lib/db";
 
 export async function POST(request: Request) {
+    try {
     const body = await request.json();
+    console.log(body);
     const { userName, email, phoneNumber, role, password } = body;
 
     if (!userName || !email || !password) {
@@ -23,4 +25,8 @@ export async function POST(request: Request) {
         updatedAt: new Date(),
     });
     return new Response(null, { status: 201 });
+} catch (error) {
+    console.error(error);
+    return new Response('Internal Server Error', { status: 500 });
+}
 }

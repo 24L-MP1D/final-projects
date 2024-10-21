@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 import { DB } from '../../lib/db';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET || "";
 
 export async function GET(request: Request) {
-    const token = request.headers.get('Authorization')?.split(' ')[1];
+    const token = request.headers.get('authtoken');
 
     if (!token) {
         return new Response('Unauthorized', { status: 401 });

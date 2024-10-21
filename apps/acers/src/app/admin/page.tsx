@@ -1,3 +1,5 @@
+import { Check } from 'lucide-react';
+
 export default function Index() {
   /*
    * Replace the elements below with your own.
@@ -6,6 +8,7 @@ export default function Index() {
    */
   return (
     <div>
+      <Check />
       Admin
     </div>
   );

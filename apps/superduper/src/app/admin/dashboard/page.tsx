@@ -1,27 +1,34 @@
-"use client";
+'use client';
 
 // import Header from "@/components/header";
 // import LeftBar from "@/components/leftBar";
 
-export default function Home() {
-    /*
-     * Replace the elements below with your own.
-     *
-     * Note: The corresponding styles are in the ./index.tailwind file.
-     */
-    return (
-        <div className="bg-[#F7F7F8]">
-            {/* <Header> */}
-              <h1>
-                <span> Hello there, </span>
-               Welcome to the client accepting dashboard 👋
-            <Button>Approve the seller's request</Button>
-            <Button>Reject  the seller's request</Button>
-            </h1>
-            {/* </Header> */}
-            <div className="max-w-[1440px] mx-auto ">
-            {/* <LeftBar /> */}
-            </div>
+const Home = () => {
+  const approveSell = () => {
+    console.log('Successfully approved the Sell request');
+  };
+
+  const rejectSell = () => {
+    console.log('Rejected the Sell request');
+  };
+
+  return (
+    <div className="container mx-auto flex flex-col gap-30">
+      <h1>
+        <div className="container mx-auto flex flex-col padding-30">
+          {' '}
+          Hello there 👋, <br /> Welcome to the client accepting dashboard{' '}
         </div>
-    );
-  }
+      </h1>
+      <button className="border-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" onClick={approveSell}>
+        Approve the seller's request
+      </button>
+
+      <br />
+      <button className="border-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg" onClick={rejectSell}>
+        Reject the seller's request
+      </button>
+    </div>
+  );
+};
+export default Home;

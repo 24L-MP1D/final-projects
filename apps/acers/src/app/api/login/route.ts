@@ -2,9 +2,10 @@ import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 import { DB } from '../../lib/db';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET || '';
 
 export async function POST(request: Request) {
+    try {
     const body = await request.json();
     const { email, password } = body;
 
@@ -20,4 +21,7 @@ export async function POST(request: Request) {
     }
     const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, { expiresIn: '3h' });
     return Response.json({ token, user: { userName: user.userName, email: user.email, role: user.role } });
+} catch (error) {
+    return new Response('Invalid token', { status: 403 });
+}
 }

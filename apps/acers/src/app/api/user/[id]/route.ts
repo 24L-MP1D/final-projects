@@ -5,7 +5,7 @@ import { DB } from '../../../lib/db';
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
-    const token = request.headers.get('Authorization')?.split(' ')[1];
+    const token = request.headers.get('authtoken');
 
     if (!token) {
         return new Response('Unauthorized', { status: 401 });
@@ -39,7 +39,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
-    const token = request.headers.get('Authorization')?.split(' ')[1];
+    const token = request.headers.get('authtoken');
 
     if (!token) {
         return new Response('Unauthorized', { status: 401 });
