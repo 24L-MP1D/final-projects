@@ -114,34 +114,3 @@ export const SignUp = () => {
     </Dialog>
   );
 };
-
-// const [firstName, setFirstName] = useState('');
-// const [lastName, setLastName] = useState('');
-// const [email, setEmail] = useState('');
-// const [password, setPassword] = useState('');
-
-// console.log({ firstName, lastName, email, password });
-
-// const hasUppercase = /A-Z/.test(password);
-// const hasLowercase = /a-z/.test(password);
-// const hasNumber = /0-9/.test(password);
-// const hasSpecialChar = /[@$!%*#?&]+/.test(password);
-
-// const isValid = hasUppercase && hasLowercase && hasNumber && hasSpecialChar;
-
-{
-  /* <div className="flex gap-2 mb-3">
-            <Input placeholder="First name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-            {<span className="text-red-600">{}</span>}
-            <Input placeholder="Last name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-            {<span className="text-red-600">{}</span>}
-          </div>
-          <div>
-            <Input placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
-            {<span className="text-red-600">{}</span>}
-          </div>
-          <div className="flex my-3">
-            <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            {<span className="text-red-600">{}</span>}
-          </div> */
-}
