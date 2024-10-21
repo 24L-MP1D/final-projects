@@ -1,7 +1,9 @@
 "use client"
+import Image from "next/image";
 import { useEffect, useState } from "react";
 interface Product {
     name: string,
+    image_url: string,
 }
 
 export default function Home() {
@@ -19,7 +21,10 @@ export default function Home() {
     return (
         <div>
             {products.map((product) => (
-                <div>{product.name}</div>
+                <div>{product.name}
+                    <Image src={product.image_url} alt="image" height={280} width={280} className="h-[280px] w-[280px]" />
+                </div>
+
             ))}
         </div>
     )
