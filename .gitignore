@@ -46,3 +46,7 @@ Thumbs.db
 out
 
 .env
+
+/.vercel
+
+yarn.lock
