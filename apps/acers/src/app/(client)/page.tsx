@@ -1,5 +1,6 @@
 'use client';
 
+<<<<<<< HEAD
 import { Star, Bookmark } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
@@ -122,3 +123,13 @@ const holidays = [
   { name: 'Hanukkah' },
   { name: 'Lunar New Year' },
 ];
+=======
+export default function Index() {
+    return (
+      <div className="text-red-500">
+        Client
+      </div>
+    );
+}
+  
+>>>>>>> main
