@@ -19,15 +19,18 @@ jobs:
       - name: 'Install Vercel CLI'
         run: npm i -g vercel@latest
 
-      - name: 'Copy env variables'
+      - name: 'Copy vercel config'
         run: |
           mkdir .vercel
           cp -r ./apps/example-project/vercel.json .vercel/project.json
-          vercel env pull .env.development.local --token ${{ secrets.EXAMPLE_PROJECT_VERCEL_TOKEN }}
+
+      - name: 'Copy env variables'
+        run: |
+          vercel env pull .env.development.local --token=${{ secrets.EXAMPLE_PROJECT_VERCEL_TOKEN }}
           mv .env.development.local .vercel/env.development.local
 
       - name: 'Build the app'
         run: vercel build --prod
 
       - name: 'Deploy to Vercel'
-        run: vercel --prebuilt --prod --token ${{ secrets.EXAMPLE_PROJECT_VERCEL_TOKEN }}
+        run: vercel --prebuilt --prod --token=${{ secrets.EXAMPLE_PROJECT_VERCEL_TOKEN }}
