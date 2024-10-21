@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - main
+      - 97-example-project-deployment
 jobs:
   DeployApp:
     runs-on: ubuntu-latest
