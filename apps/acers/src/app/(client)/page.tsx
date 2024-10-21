@@ -7,7 +7,7 @@ export default function Index() {
      * Note: The corresponding styles are in the ./index.tailwind file.
      */
     return (
-      <div className="text-red-500">
+      <div>
         Client
       </div>
     );
