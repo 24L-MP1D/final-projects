@@ -1,10 +1,30 @@
+'use client';
+
 import { Button } from '@/app/components/ui/Button';
 import { Input } from '@/app/components/ui/Input';
 import { Camera } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function Page() {
+  const [image, setImage] = useState<FileList | null>(null);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  useEffect(() => {
+    const url: string[] = [];
+    if (image) {
+      const imageUrl = URL.createObjectURL(image[0]);
+      url.push(imageUrl);
+      setImageUrls([...imageUrls, ...url]);
+    }
+  }, [image]);
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.currentTarget.files;
+    if (files) {
+      setImage(files);
+    }
+  };
+
   return (
     <form className="pb-12">
       <div className="max-w-[50%] mx-auto mt-10">
@@ -47,7 +67,7 @@ export default function Page() {
               </div>
               <div>Click or drag and drop an image to upload</div>
               <div className="mt-10">Front</div>
-              <Input type="file" className="absolute w-full h-full opacity-0 z-50" />
+              <Input type="file" onChange={handleFileChange} className="absolute w-full h-full opacity-0 z-50" />
             </div>
             <div className="hover:cursor-pointer h-[200px] text-center border-dashed border-[1px] flex flex-col justify-center items-center relative p-4">
               <div>
@@ -55,7 +75,7 @@ export default function Page() {
               </div>
               <div>Click or drag and drop an image to upload</div>
               <div className="mt-10">Back</div>
-              <Input type="file" className="absolute w-full h-full opacity-0 z-50" />
+              <Input type="file" onChange={handleFileChange} className="absolute w-full h-full opacity-0 z-50" />
             </div>
             <div className="hover:cursor-pointer text-center border-dashed border-[1px] flex flex-col justify-center items-center relative p-4">
               <div>
