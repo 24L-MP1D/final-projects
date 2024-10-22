@@ -11,11 +11,11 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/ger-gurus"
+        "outputPath": "dist/apps/acers"
       },
       "configurations": {
         "development": {
-          "outputPath": "apps/ger-gurus"
+          "outputPath": "apps/acers"
         },
         "production": {}
       }
