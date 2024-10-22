@@ -1,11 +1,13 @@
 import bcrypt from "bcrypt";
 import { DB } from "../../lib/db";
 
-export async function POST(request: Request) {
-    const body = await request.json();
-    const { userName, email, phoneNumber, role, password } = body;
+export async function POST(req: Request) {
+    try {
+    //const body = await req.json();
+    //console.log(body);
+    const { firstName, lastName, email, phoneNumber, role, password } = await req.json();
 
-    if (!userName || !email || !password) {
+    if (!firstName || !lastName || !email || !password) {
         return new Response('Missing fields', { status: 400 });
     }
 
@@ -13,7 +15,8 @@ export async function POST(request: Request) {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     await DB.collection('users').insertOne({
-        userName,
+        firstName,
+        lastName,
         email,
         phoneNumber,
         role,
@@ -23,4 +26,7 @@ export async function POST(request: Request) {
         updatedAt: new Date(),
     });
     return new Response(null, { status: 201 });
+} catch (error) {
+    return new Response('Internal server error', { status: 500 });
+}
 }

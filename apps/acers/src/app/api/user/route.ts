@@ -20,7 +20,7 @@ export async function GET(request: Request) {
             return new Response('User not found', { status: 404 });
         }
 
-        return Response.json({ user: { userName: user.userName, email: user.email, phoneNumber: user.phoneNumber, role: user.role } });
+        return Response.json({ user: { firstName: user.firstName, lastName: user.lastName, email: user.email, phoneNumber: user.phoneNumber, role: user.role } });
     } catch (error) {
         return new Response('Invalid token', { status: 403 });
     }

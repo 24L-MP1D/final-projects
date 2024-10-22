@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 import { DB } from '../../../lib/db';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET || "";
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
     const token = request.headers.get('Authorization')?.split(' ')[1];
@@ -20,10 +20,11 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         }
         var salt = bcrypt.genSaltSync(Number(process.env.saltNumber));
         const body = await request.json();
-        const { userName, phoneNumber, role, password } = body;
+        const { firstName, lastName, phoneNumber, role, password } = body;
 
         const updateData: any = {
-            userName,
+            firstName,
+            lastName,
             phoneNumber,
             role,
             updatedAt: new Date(),

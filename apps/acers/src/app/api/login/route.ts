@@ -5,6 +5,7 @@ import { DB } from '../../lib/db';
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export async function POST(request: Request) {
+    try {
     const body = await request.json();
     const { email, password } = body;
 
@@ -19,5 +20,8 @@ export async function POST(request: Request) {
         return new Response('Invalid email or password', { status: 401 });
     }
     const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, { expiresIn: '3h' });
-    return Response.json({ token, user: { userName: user.userName, email: user.email, role: user.role } });
+    return Response.json({ token, user: { firstName: user.firstName, lastName: user.lastName, email: user.email, role: user.role } });
+} catch (error) {
+    return new Response('Invalid token', { status: 403 });
+}
 }
