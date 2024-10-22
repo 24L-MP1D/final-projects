@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - main
+      - 114-ger-gurus-vercel-deployment
 jobs:
   DeployApp:
     runs-on: ubuntu-latest
