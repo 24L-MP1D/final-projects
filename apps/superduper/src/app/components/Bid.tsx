@@ -5,20 +5,27 @@ import { Button } from './ui/Button';
 import { Input } from './ui/Input';
 
 interface FormValues {
-  bid: string;
+  bid: number;
 }
 
 export const Bid = () => {
   const validationSchema = yup.object({
-    bid: yup.number().min(1000, 'too low price').required('une oruul'),
+    bid: yup.number().required('Please insert a valid bid amount').min(1000, 'minumum bid is 1000'),
   });
 
   const formik = useFormik({
     initialValues: {
-      bid: 0,
+      bid: '',
     },
     onSubmit: async (values, { resetForm }) => {
-      fetch('/api/');
+      fetch('/api/hello', {
+        method: 'POST',
+        body: JSON.stringify({ bid: values.bid }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      resetForm();
     },
     validationSchema,
   });
@@ -34,13 +41,27 @@ export const Bid = () => {
           </div>
         </div>
         <div className="flex flex-col gap-2 pt-8 px-4">
-          <div>3000</div>
+          <div className="flex gap-4">
+            <div className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer">3000</div>
+            <div className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer">3500</div>
+            <div className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer">4000</div>
+          </div>
           <label className="border-solid bg-[#f8f7f8] flex gap-1 items-center py-1 px-3 w-full">
             <div className="text-slate-500">€</div>
-            <Input id="bid" onChange={formik.handleChange} value={formik.values.bid !== 0 ? formik.values.bid : ''} className="w-full p-2 bg-[#f8f7f8]" placeholder="3,350 or up" type="number" />
+            <Input
+              id="bid"
+              onChange={formik.handleChange}
+              value={Number(formik.values.bid) !== 0 ? formik.values.bid : ''}
+              className="w-full p-2 bg-[#f8f7f8]"
+              placeholder="3,350 or up"
+              type="number"
+            />
           </label>
+          {formik.touched.bid && formik.errors.bid && <p className="ml-8 text-red-500">{formik.errors.bid}</p>}
           <div className="flex gap-1 w-full">
-            <Button className="flex-1 border-[1px] py-2 px-4 bg-white text-blue-500 text-center">Place bid</Button>
+            <Button type="submit" className="flex-1 border-[1px] py-2 px-4 bg-white text-blue-500 text-center">
+              Place bid
+            </Button>
             <Button type="submit" className="flex-1 border-[1px] py-2 px-4 bg-blue-600 text-white text-center">
               Set max bid
             </Button>
