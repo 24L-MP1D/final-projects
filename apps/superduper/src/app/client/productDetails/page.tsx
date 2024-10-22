@@ -1,6 +1,7 @@
 'use client';
 
 import { Bid } from '../../components/Bid';
+import { Auction } from '../../components/BidExample';
 import { HelpCenter } from '../../components/helpCenter';
 import { ProductDetailImages } from '../../components/ProductDetailImages';
 import { Safity } from '../../components/Safity';
@@ -15,6 +16,7 @@ export default function App() {
           <Safity />
           <HelpCenter />
           <Button>badral</Button>
+          <Auction />
         </div>
       </div>
     </div>
