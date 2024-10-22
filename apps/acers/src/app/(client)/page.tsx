@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { Stars } from './components/itemComponents/stars';
 import { Button } from './components/ui/Button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './components/ui/Carousel';
+import { Item } from './components/itemComponents/singleItem';
+import { HandyCarousel } from './components/homePageComponents/handyCarousel';
 
 export default function Index() {
   /*
@@ -15,7 +17,7 @@ export default function Index() {
    */
   return (
     <div className="">
-      <div className="flex flex-col gap-16 max-w-[1160px] w-full m-auto text-[#222222]">
+      <div className="flex flex-col gap-16 max-w-[80%] xl:max-w-[1160px] w-full m-auto text-[#222222]">
         <RecipeOfTheDay />
         <OccasionMeals />
         <GetTheLatest />
@@ -123,34 +125,7 @@ const HolidayCarousal = () => {
   return <HandyCarousel data={Array(5).fill(1)} />;
 };
 
-const Item = ({ item }: { item: any }) => {
-  const { img, title, rating, ratingNum, prepTime, id } = item;
-  const defaultImg = 'https://static01.nyt.com/images/2014/03/07/dining/07pakoras/07pakoras-square640.jpg?quality=75&auto=webp';
-  return (
-    <div className="flex flex-col text-[#222222] border-[#d4d4d4] border-[1px] hover:shadow-[0px_0px_20px_-10px_#000] transition-shadow duration-150">
-      <a href={`product/${id}`} className="w-full">
-        <img className="h-[270px] w-full object-center" src={img || defaultImg} />
-      </a>
 
-      <div className="flex flex-col justify-between p-[10px] relative">
-        <span className="text-[16px] font-bold">{title || 'KHoool'}</span>
-        <div className="flex flex-col gap-0.5">
-          <Stars size={11} rating={rating || 0} voteNum={ratingNum || 0} id={id} />
-          <span className="text-[10px]">{prepTime || 'Prep Time'}</span>
-        </div>
-        <Button
-          className="text-[#CCCCCC] p-2.5 absolute right-0 bottom-0 "
-          variant={'ghost'}
-          onClick={() => {
-            console.log(id);
-          }}
-        >
-          <Bookmark size={24} />
-        </Button>
-      </div>
-    </div>
-  );
-};
 
 const RecipeOfTheDay = () => {
   const router = useRouter();
@@ -211,18 +186,3 @@ const holidays = [
   { name: 'Lunar New Year' },
 ];
 
-export const HandyCarousel = ({ data }: { data: any[] }) => {
-  return (
-    <Carousel>
-      <CarouselContent>
-        {data.map((item) => (
-          <CarouselItem className="basis-1/4">
-            <Item item={item} />
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
-  );
-};
