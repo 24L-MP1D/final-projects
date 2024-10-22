@@ -1,0 +1,37 @@
+name: superduper Deployment
+run-name: superduper is being deployed
+env:
+  VERCEL_ORG_ID: ${{ secrets.SUPERDUPER_VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.SUPERDUPER_VERCEL_PROJECT_ID }}
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - apps/superduper/**
+jobs:
+  DeployApp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 'Install Vercel CLI'
+        run: npm i -g vercel@latest
+
+      - name: 'Copy vercel config'
+        run: |
+          mkdir .vercel
+          cp -r ./apps/superduper/vercel.json .vercel/project.json
+
+      - name: 'Copy env variables'
+        run: |
+          vercel env pull .env.development.local --token=${{ secrets.SUPERDUPER_VERCEL_TOKEN }}
+          mv .env.development.local ./apps/superduper/.env
+
+      - name: 'Build the app'
+        run: vercel build --prod
+
+      - name: 'Deploy to Vercel'
+        run: vercel --prebuilt --prod --token=${{ secrets.SUPERDUPER_VERCEL_TOKEN }}

@@ -1,4 +1,4 @@
-import { DB } from '../../lib/db';
+import { DB } from '@/lib/db';
 
 export async function GET(request: Request) {
   return new Response('Hello, from API!');
