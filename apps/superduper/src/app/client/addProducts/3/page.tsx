@@ -1,15 +1,9 @@
 'use client';
 
-<<<<<<< HEAD
-import { Button } from '@/app/components/ui/Button';
-import { Input } from '@/app/components/ui/Input';
-import { useFormik } from 'formik';
-import { Camera, X } from 'lucide-react';
-=======
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/Input';
-import { Camera } from 'lucide-react';
->>>>>>> main
+import { useFormik } from 'formik';
+import { Camera, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

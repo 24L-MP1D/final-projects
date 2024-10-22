@@ -1,7 +1,8 @@
 'use client';
-import { AllCountry } from '@/app/components/allCountry';
-import { Button } from '@/app/components/ui/Button';
-import { Input } from '@/app/components/ui/Input';
+
+import { AllCountry } from '@/components/allCountry';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/Input';
 import { useFormik } from 'formik';
 import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
@@ -92,6 +93,7 @@ export default function Page() {
               </div>
             </div>
             <div>
+              <p>Country</p>
               <div className="flex border-b-[1px] relative">
                 <Input
                   id="Country"
