@@ -1,0 +1,35 @@
+name: Ger-gurus Deployment
+run-name: Ger-gurus is being deployed
+env:
+  VERCEL_ORG_ID: ${{ secrets.GER_GURUS_VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.GER_GURUS_VERCEL_PROJECT_ID }}
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+jobs:
+  DeployApp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 'Install Vercel CLI'
+        run: npm i -g vercel@latest
+
+      - name: 'Copy vercel config'
+        run: |
+          mkdir .vercel
+          cp -r ./apps/ger-gurus/vercel.json .vercel/project.json
+
+      - name: 'Copy env variables'
+        run: |
+          vercel env pull .env.development.local --token=${{ secrets.GER_GURUS_VERCEL_TOKEN }}
+          mv .env.development.local ./apps/ger-gurus/.env
+
+      - name: 'Build the app'
+        run: vercel build --prod
+
+      - name: 'Deploy to Vercel'
+        run: vercel --prebuilt --prod --token=${{ secrets.GER_GURUS_VERCEL_TOKEN }}
