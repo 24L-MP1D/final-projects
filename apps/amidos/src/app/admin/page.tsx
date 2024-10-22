@@ -1,10 +1,13 @@
+
 import { Button } from '../components/ui/button';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
+
 import LeftBar from './components/leftbar';
 
 export default function Home() {
   return (
     <div>
+      <LeftBar />
       <div className="flex m-10 ml-0">
         <LeftBar />
         <div className=" w-[600px] h-[500px] bg-slate-300 ml-[20px] ">

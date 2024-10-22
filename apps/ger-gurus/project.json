@@ -5,5 +5,22 @@
   "projectType": "application",
   "tags": [],
   "// targets": "to see all targets run: nx show project ger-gurus --web",
-  "targets": {}
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/ger-gurus"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/ger-gurus"
+        },
+        "production": {}
+      }
+    }
+  }
 }
