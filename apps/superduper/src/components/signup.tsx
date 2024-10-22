@@ -2,33 +2,19 @@
 
 import { FormikValues, useFormik } from 'formik';
 import Link from 'next/link';
+import { useState } from 'react';
 import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import * as yup from 'yup';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from './ui/Dialog';
 import { Input } from './ui/Input';
 import { Button } from './ui/button';
 
 export const SignUp = () => {
-  const initialValues = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-  };
-  const validationSchema = yup.object({
-    firstName: yup.string().min(1).required('First name is required'),
-    lastName: yup.string().min(1).required('Last name required'),
-    email: yup.string().email('Wrong e-mail').required('e-mail required'),
-    password: yup
-      .string()
-      .required('Required')
-      .min(8, 'Must be 8 characters or more')
-      .matches(/[a-z]+/, 'One lowercase character')
-      .matches(/[A-Z]+/, 'One uppercase character')
-      .matches(/[@$!%*#?&]+/, 'One special character')
-      .matches(/\d+/, 'One number'),
-  });
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isValid, setIsValid] = useState(false);
 
   const formik = useFormik({
     initialValues,
@@ -90,7 +76,37 @@ export const SignUp = () => {
             <div className="h-[2px] flex-1 bg-slate-300"></div>
           </div>
           <div className="flex gap-2 mb-3">
-            <Input name="firstName" placeholder="First name" value={formik.errors.firstName} onChange={formik.handleChange} />
+            <Input placeholder="First name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+            {<span className="text-red-600">{}</span>}
+            <Input placeholder="Last name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+            {<span className="text-red-600">{}</span>}
+          </div>
+          <div>
+            <Input placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
+            {<span className="text-red-600">{}</span>}
+          </div>
+          <div className="flex my-3">
+            <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            {<span className="text-red-600">{}</span>}
+          </div>
+          <DialogDescription className={hasPassword ? 'text-green-600' : 'text-red-500'}>
+            At least 8 characters, one capital letter, one lower case letter, one number and one special character.
+          </DialogDescription>
+        </form>
+
+        <DialogFooter>
+          <Button className="bg-blue-700 flex-1 disabled:cursor-not-allowed" type="submit" disabled={!isValid}>
+            Agree and Continue
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+{
+  /* <div className="flex gap-2 mb-3">
+            <Input placeholder="First name" value={formik.values.firstName} onChange={formik.handleChange} />
             {<span className="text-red-600">{formik.errors.firstName}</span>}
             <Input name="lastName" placeholder="Last name" value={formik.values.lastName} onChange={formik.handleChange} />
             {<span className="text-red-600">{formik.errors.lastName}</span>}
@@ -102,15 +118,5 @@ export const SignUp = () => {
           <div className="flex my-3">
             <Input name="password" placeholder="Password" value={formik.values.password} onChange={formik.handleChange} />
             {<span className="text-red-600">{formik.errors.password}</span>}
-          </div>
-          <DialogDescription>At least 8 characters, one capital letter, one lower case letter, one number and one special character.</DialogDescription>
-          <DialogFooter>
-            <Button className="bg-blue-700 flex-1 disabled:cursor-not-allowed" type="submit">
-              Agree and Continue
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
-  );
-};
+          </div> */
+}
