@@ -6,7 +6,7 @@ import { Orders } from '@/lib/types';
 
 import { Dialog, DialogContent, DialogTrigger } from '@/app/components/ui/dialog';
 import { Label } from '@radix-ui/react-label';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import LeftBar from '../components/leftbar';
 
 export default function Order() {
@@ -16,7 +16,17 @@ export default function Order() {
   const [ingredients, setIngredients] = useState('');
   const [price, setPrice] = useState('');
   const [photos, setPhotos] = useState('');
+  const [files, setFiles] = useState<FileList | null>(null);
+  const imageUrls: string[] = [];
 
+  Array.from(files ?? []).forEach((file) => {
+    const imageUrl = URL.createObjectURL(file);
+    imageUrls.push(imageUrl);
+  });
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.currentTarget.files;
+    setFiles(files);
+  };
   const addFood = () => {
     const newFood = {
       name,
@@ -96,10 +106,13 @@ export default function Order() {
                     <Input id="width" className="col-span-2 h-12" onChange={(e) => setPrice(e.target.value)} />
                   </div>
                   <div className="grid grid-cols-3 align-items-center gap-2 ">
-                    <Label htmlFor="width" className="text-lg h-12">
+                    <Label htmlFor="images" className="text-lg h-12">
                       Зураг
                     </Label>
-                    <Input className="col-span-2 h-12 bg-zinc-100 " onChange={(e) => setPhotos(e.target.value)} />
+                    <Input multiple type="file" className="col-span-2 h-12 bg-zinc-100 " id="images" onChange={handleFileChange} />
+                    <div className="items-center">
+                      <img className="w-50 h-50 ml-24" src={imageUrls}></img>
+                    </div>
                   </div>
                   <div className="grid grid-cols-3 align-items-center gap-2 ">
                     <Label htmlFor="width" className="text-lg h-12">
