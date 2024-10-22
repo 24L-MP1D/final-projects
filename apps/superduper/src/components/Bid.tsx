@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { Button } from './ui/Button';
+import { Button } from './ui/button';
 import { Input } from './ui/Input';
 
 interface FormValues {
