@@ -13,7 +13,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   const body = await request.json();
 
-  await db.collection('categories').updateOne(
+  await db.collection('schools').updateOne(
     {
       _id: new ObjectId(params.id),
     },
@@ -25,6 +25,6 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
-  await db.collection('categories').deleteOne({ _id: new ObjectId(params.id) });
+  await db.collection('schools').deleteOne({ _id: new ObjectId(params.id) });
   return new Response(null, { status: 204 });
 }
