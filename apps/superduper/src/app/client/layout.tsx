@@ -1,12 +1,12 @@
-import { Header } from '../components/header';
+import Header from '../components/layout/header';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>
+    <div className="max-w-[1200px] mx-auto ">
+      <div>
         <Header />
         {children}
-      </body>
-    </html>
+      </div>
+    </div>
   );
 }
