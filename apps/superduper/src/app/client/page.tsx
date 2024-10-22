@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client"
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -29,3 +30,13 @@ export default function Home() {
         </div>
     )
 }
+=======
+'use client';
+interface Product {
+  name: string;
+}
+
+export default function Home() {
+  return <div></div>;
+}
+>>>>>>> 09537c3 (superduper: added header)
