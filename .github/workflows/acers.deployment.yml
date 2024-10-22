@@ -8,7 +8,8 @@ on:
   push:
     branches:
       - main
-      - 121-acers-deployment
+    paths:
+      - apps/acers/**
 jobs:
   DeployApp:
     runs-on: ubuntu-latest
