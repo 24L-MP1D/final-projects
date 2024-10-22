@@ -1,10 +1,7 @@
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-    return (
-      <html lang="en">
-        <body>{children}</body>
-      </html>
-    );
-  
-  }
-  
+export default function Index() {
+  return (
+    <div>
+      <h1>Ger-Gurus</h1>
+    </div>
+  );
+}
