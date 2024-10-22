@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 export function Googlemap() {
   const state = useGeolocation();
+  const GOOGLE_API = String(process.env.GOOGLE_API);
   if (state.loading) {
     return <p>loading... (you may need to enable permissions)</p>;
   }
@@ -19,7 +20,7 @@ export function Googlemap() {
   } else {
     return (
       <div style={{ height: '500px', width: 'full' }}>
-        <APIProvider apiKey={'AIzaSyCYuf3C9btTOUo7_OddJlPg0rjJuwLWf_I'}>
+        <APIProvider apiKey={GOOGLE_API}>
           <Map defaultCenter={position} defaultZoom={10} mapId="myMap" fullscreenControl={false}>
             <AdvancedMarker position={position} />
           </Map>
