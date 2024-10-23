@@ -78,14 +78,14 @@ export default function Order() {
       <div className="bg-slate-100">
         <div className="flex m-10 m-10">
           <LeftBar />
-          <div className="w-[800px] h-[500px] bg-white  p-10 mt-10 ml-10 text-md rounded-lg">
+          <div className="w-[800px]  bg-white  p-10 mt-10 ml-10 text-md rounded-lg">
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="outline" className="mb-10 text-lg">
                   Хоол нэмэх
                 </Button>
               </DialogTrigger>
-              <DialogContent className="w-[600px] bg-white text-center align-items-center   z-50">
+              <DialogContent className="w-[600px] bg-white text-center align-items-center  z-50">
                 <div className="grid gap-2 p-20">
                   <div className="grid grid-cols-3 align-items-center gap-2  ">
                     <Label htmlFor="width" className="text-lg h-12 text-start ">
@@ -120,12 +120,7 @@ export default function Order() {
                     </Label>
                     <Input id="width" className="col-span-2 h-12" />
                   </div>
-                  <div className="grid grid-cols-3 align-items-center gap-2 ">
-                    <Label htmlFor="width" className="text-lg h-12">
-                      Устгах
-                    </Label>
-                    <Input id="width" className="col-span-2 h-12" />
-                  </div>
+
                   <Button variant="outline" className="mt-3" onClick={addFood}>
                     Оруулах
                   </Button>
