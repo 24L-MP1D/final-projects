@@ -1,5 +1,11 @@
 name: acers Deployment
 run-name: acers is being deployed
+<<<<<<< HEAD
+env:
+  VERCEL_ORG_ID: ${{ secrets.ACERS_VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.ACERS_VERCEL_PROJECT_ID }}
+=======
+>>>>>>> main
 on:
   workflow_dispatch:
   push:
