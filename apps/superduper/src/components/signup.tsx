@@ -14,7 +14,6 @@ export const SignUp = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isValid, setIsValid] = useState(false);
 
   const formik = useFormik({
     initialValues,
@@ -89,13 +88,11 @@ export const SignUp = () => {
             <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             {<span className="text-red-600">{}</span>}
           </div>
-          <DialogDescription className={hasPassword ? 'text-green-600' : 'text-red-500'}>
-            At least 8 characters, one capital letter, one lower case letter, one number and one special character.
-          </DialogDescription>
+          <DialogDescription>At least 8 characters, one capital letter, one lower case letter, one number and one special character.</DialogDescription>
         </form>
 
         <DialogFooter>
-          <Button className="bg-blue-700 flex-1 disabled:cursor-not-allowed" type="submit" disabled={!isValid}>
+          <Button onClick={Submit} className="bg-blue-700 flex-1 disabled:cursor-not-allowed" type="submit" disabled={isValid}>
             Agree and Continue
           </Button>
         </DialogFooter>
