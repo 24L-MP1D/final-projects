@@ -1,11 +1,15 @@
 'use client';
 
-import { School } from "../../components/School";
+import { SchoolPageHeader } from "../../components/SchoolPageHeader";
+import { SchoolPageIntroduction } from "../../components/SchoolPageIntroduction";
+
+
 
 export default function Page() {
   return (
     <div className=" ">
-        <School/>
+        <SchoolPageHeader />
+        <SchoolPageIntroduction />
     </div>
   );
 }
