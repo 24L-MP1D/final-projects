@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - apps/example-project/**
+      - apps/amidos/**
 jobs:
   DeployApp:
     runs-on: ubuntu-latest
@@ -20,15 +20,15 @@ jobs:
       - name: 'Copy vercel config'
         run: |
           mkdir .vercel
-          cp -r ./apps/example-project/vercel.json .vercel/project.json
+          cp -r ./apps/amidos/vercel.json .vercel/project.json
 
       - name: 'Copy env variables'
         run: |
-          vercel env pull .env.development.local --token=${{ secrets.EXAMPLE_PROJECT_VERCEL_TOKEN }}
-          mv .env.development.local ./apps/example-project/.env
+          vercel env pull .env.development.local --token=${{ secrets.AMIDOS_VERCEL_TOKEN }}
+          mv .env.development.local ./apps/amidos/.env
 
       - name: 'Build the app'
         run: vercel build --prod
 
       - name: 'Deploy to Vercel'
-        run: vercel --prebuilt --prod --token=${{ secrets.EXAMPLE_PROJECT_VERCEL_TOKEN }}
+        run: vercel --prebuilt --prod --token=${{ secrets.AMIDOS_VERCEL_TOKEN }}

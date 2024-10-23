@@ -1,8 +1,5 @@
 name: superduper Deployment
 run-name: superduper is being deployed
-env:
-  VERCEL_ORG_ID: ${{ secrets.SUPERDUPER_VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.SUPERDUPER_VERCEL_PROJECT_ID }}
 on:
   workflow_dispatch:
   push:
