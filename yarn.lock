@@ -1541,13 +1541,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@date-fns/tz@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "@date-fns/tz@npm:1.1.2"
-  checksum: 10c0/30c5e15f11ceb013fcba3fd05125571554b9a7cab4873c69969966f7ddb00ffa8c9277d2367012e72fd7a905e48a7252e1f914614532852f157d62b3f8d90034
-  languageName: node
-  linkType: hard
-
 "@edge-runtime/format@npm:2.2.1":
   version: 2.2.1
   resolution: "@edge-runtime/format@npm:2.2.1"
@@ -2554,6 +2547,7 @@ __metadata:
     "@swc-node/register": "npm:~1.9.1"
     "@swc/core": "npm:~1.5.7"
     "@swc/helpers": "npm:~0.5.11"
+    "@tabler/icons-react": "npm:^3.20.0"
     "@types/bcrypt": "npm:^5.0.2"
     "@types/jest": "npm:^29.5.12"
     "@types/jsonwebtoken": "npm:^9.0.7"
@@ -2578,9 +2572,11 @@ __metadata:
     eslint-plugin-react: "npm:7.35.0"
     eslint-plugin-react-hooks: "npm:4.6.0"
     formik: "npm:^2.4.6"
+    framer-motion: "npm:^11.11.9"
     husky: "npm:^9.1.6"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
+    json-web-token: "npm:^3.2.0"
     jsonwebtoken: "npm:^9.0.2"
     lucide-react: "npm:^0.453.0"
     mongodb: "npm:^6.9.0"
@@ -2590,7 +2586,7 @@ __metadata:
     postcss: "npm:8.4.38"
     prettier: "npm:^2.6.2"
     react: "npm:18.3.1"
-    react-day-picker: "npm:^9.1.4"
+    react-day-picker: "npm:8"
     react-dom: "npm:18.3.1"
     react-hook-form: "npm:^7.53.1"
     sonner: "npm:^1.5.0"
@@ -4300,6 +4296,24 @@ __metadata:
   dependencies:
     defer-to-connect: "npm:^2.0.0"
   checksum: 10c0/73946918c025339db68b09abd91fa3001e87fc749c619d2e9c2003a663039d4c3cb89836c98a96598b3d47dec2481284ba85355392644911f5ecd2336536697f
+  languageName: node
+  linkType: hard
+
+"@tabler/icons-react@npm:^3.20.0":
+  version: 3.20.0
+  resolution: "@tabler/icons-react@npm:3.20.0"
+  dependencies:
+    "@tabler/icons": "npm:3.20.0"
+  peerDependencies:
+    react: ">= 16"
+  checksum: 10c0/468aa5034c489e6db443cafbf20a3794ef5f2ad7dc719dca8ce957fd19ea5d94f6ad8ada4c68b7621d6e5cdf747e40f6b2cc65e89c5a4f2b21e4ea727dd1b67c
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:3.20.0":
+  version: 3.20.0
+  resolution: "@tabler/icons@npm:3.20.0"
+  checksum: 10c0/81650ed119f1a87fabe55dc33f4956a5e427cfad48629ac3ea1b8946486935c3206ff20aad080270a5df4f3080848dbb8e22c6dfa0a9290cf111a228ef1fefc9
   languageName: node
   linkType: hard
 
@@ -6283,6 +6297,13 @@ __metadata:
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
   checksum: 10c0/f23823513b63173a001030fae4f2dabe283b99a9d324ade3ad3d148e218134676f1ee8568c877cd79ec1c53158dcf2d2ba527a97c606618928ba99dd930102bf
+  languageName: node
+  linkType: hard
+
+"base64-url@npm:^2.3.2":
+  version: 2.3.3
+  resolution: "base64-url@npm:2.3.3"
+  checksum: 10c0/d68b2a9586e5a00eba1271c2d6d182932439e5f61e7c8901b6404044fedcc1d8be4c6034a78599462782372939a0c12ce3563af031fda87c54b03b19ebe75d3f
   languageName: node
   linkType: hard
 
@@ -9627,6 +9648,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion@npm:^11.11.9":
+  version: 11.11.9
+  resolution: "framer-motion@npm:11.11.9"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/70e956da4146ffe00a35bf5abe7fc04bd86dc6fbc8a8ec95b1b125dfaa624db9a1b41d676f0b2eaef88538c58c5616c113d0fbed73219814223669a9002886cc
+  languageName: node
+  linkType: hard
+
 "fresh@npm:0.5.2, fresh@npm:~0.5.2":
   version: 0.5.2
   resolution: "fresh@npm:0.5.2"
@@ -11123,6 +11164,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is.object@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "is.object@npm:1.0.0"
+  checksum: 10c0/f47b847c63db3d88d0076f9205925062792915c93a5a6447c115132ee640734f57b01e69b3aabd1481186c9ead37a0c1fa9d9fe4ba0aa15a7f2ae5306633a79c
+  languageName: node
+  linkType: hard
+
 "isarray@npm:0.0.1":
   version: 0.0.1
   resolution: "isarray@npm:0.0.1"
@@ -11871,6 +11919,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"json-parse-safe@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "json-parse-safe@npm:2.0.0"
+  checksum: 10c0/b46939427b1e3c2c0eb04e97305decf30f8550175fb156bd1e95cca13f88030c11c598ea3bef01f6d7ca0235e3ce6f80a043ec32827c7d0a06d64fe312382e57
+  languageName: node
+  linkType: hard
+
 "json-schema-to-ts@npm:1.6.4":
   version: 1.6.4
   resolution: "json-schema-to-ts@npm:1.6.4"
@@ -11899,6 +11954,18 @@ __metadata:
   version: 1.0.1
   resolution: "json-stable-stringify-without-jsonify@npm:1.0.1"
   checksum: 10c0/cb168b61fd4de83e58d09aaa6425ef71001bae30d260e2c57e7d09a5fd82223e2f22a042dedaab8db23b7d9ae46854b08bb1f91675a8be11c5cffebef5fb66a5
+  languageName: node
+  linkType: hard
+
+"json-web-token@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "json-web-token@npm:3.2.0"
+  dependencies:
+    base64-url: "npm:^2.3.2"
+    is.object: "npm:^1.0.0"
+    json-parse-safe: "npm:^2.0.0"
+    xtend: "npm:^4.0.2"
+  checksum: 10c0/69d2020ef69c9d2f9191ce0fac2a7e7ec49c0daf43840ce1b1f6c60545fb67943b7f62bf6aa098ea9a246885816690b4c0a531b770280b183b251af99ee71aca
   languageName: node
   linkType: hard
 
@@ -14770,15 +14837,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-day-picker@npm:^9.1.4":
-  version: 9.1.4
-  resolution: "react-day-picker@npm:9.1.4"
-  dependencies:
-    "@date-fns/tz": "npm:^1.1.2"
-    date-fns: "npm:^4.1.0"
+"react-day-picker@npm:8":
+  version: 8.10.1
+  resolution: "react-day-picker@npm:8.10.1"
   peerDependencies:
-    react: ">=16.8.0"
-  checksum: 10c0/4f9468571fe7d9504c35cf85c538a1ef996cf7d39e36f9889e10bfdb52ebaa98d70efc8e6c0b234f04d962a142b453da61f16bd39e76c092f2d370984b579196
+    date-fns: ^2.28.0 || ^3.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/a0ff28c4b61b3882e6a825b19e5679e2fdf3256cf1be8eb0a0c028949815c1ae5a6561474c2c19d231c010c8e0e0b654d3a322610881e0655abca05a2e03d9df
   languageName: node
   linkType: hard
 
@@ -17709,6 +17774,13 @@ __metadata:
   version: 2.2.0
   resolution: "xmlchars@npm:2.2.0"
   checksum: 10c0/b64b535861a6f310c5d9bfa10834cf49127c71922c297da9d4d1b45eeaae40bf9b4363275876088fbe2667e5db028d2cd4f8ee72eed9bede840a67d57dab7593
+  languageName: node
+  linkType: hard
+
+"xtend@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "xtend@npm:4.0.2"
+  checksum: 10c0/366ae4783eec6100f8a02dff02ac907bf29f9a00b82ac0264b4d8b832ead18306797e283cf19de776538babfdcb2101375ec5646b59f08c52128ac4ab812ed0e
   languageName: node
   linkType: hard
 

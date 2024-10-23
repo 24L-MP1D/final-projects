@@ -118,40 +118,46 @@ export default function Index() {
       <div className="flex flex-col gap-3 ml-10 mt-10">
         test
         {data.map((data) => (
-          <div className="flex justify-between w-[500px] h-12 items-center" key={data._id}>
+          <div className="flex gap-4 w-[500px] h-12 items-center" key={data._id}>
             <div className="flex flex-col gap-1">
-              {updateName === data._id ? <input value={nameValue} className="border border-black" onChange={handleNameInputChange} /> : <div>Name: {data.name}</div>}
-              {updateEmail === data._id ? <input value={emailValue} className="border border-black" onChange={handleEmailInputChange} /> : <div>Email: {data.email}</div>}
-            </div>
-            <div className="flex gap-4">
               {updateName === data._id ? (
-                <>
+                <div className="flex gap-4">
+                  <input value={nameValue} className="border border-black" onChange={handleNameInputChange} />{' '}
                   <button onClick={() => editName(data._id)} className="border border-black rounded-lg">
                     Update
                   </button>
                   <button onClick={cancelName} className="border border-black rounded-lg">
                     Cancel
                   </button>
-                </>
+                </div>
               ) : (
-                <button onClick={() => nameID(data._id, data.name)} className="border border-black rounded-lg">
-                  Edit Name
-                </button>
+                <div className="flex justify-between w-[300px]">
+                  <div>Name: {data.name}</div>
+                  <button onClick={() => nameID(data._id, data.name)} className="border border-black rounded-lg">
+                    Edit Name
+                  </button>
+                </div>
               )}
               {updateEmail === data._id ? (
-                <>
+                <div className="flex gap-4">
+                  <input value={emailValue} className="border border-black" onChange={handleEmailInputChange} />
                   <button onClick={() => editEmail(data._id)} className="border border-black rounded-lg">
                     Update
                   </button>
                   <button onClick={cancelEmail} className="border border-black rounded-lg">
                     Cancel
                   </button>
-                </>
+                </div>
               ) : (
-                <button onClick={() => emailID(data._id, data.email)} className="border border-black rounded-lg">
-                  Edit email
-                </button>
+                <div className="flex justify-between w-[300px]">
+                  <div>Email: {data.email}</div>
+                  <button onClick={() => emailID(data._id, data.email)} className="border border-black rounded-lg">
+                    Edit email
+                  </button>
+                </div>
               )}
+            </div>
+            <div>
               <button onClick={() => deleteUser(data._id)} className="border border-black rounded-lg">
                 Delete
               </button>
@@ -168,6 +174,7 @@ export default function Index() {
           </>
         )}
       </div>
+      \{' '}
     </div>
   );
 }
