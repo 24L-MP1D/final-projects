@@ -2580,6 +2580,7 @@ __metadata:
     eslint-plugin-react: "npm:7.35.0"
     eslint-plugin-react-hooks: "npm:4.6.0"
     formik: "npm:^2.4.6"
+    framer-motion: "npm:^11.11.9"
     husky: "npm:^9.1.6"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
@@ -2591,6 +2592,7 @@ __metadata:
     postcss: "npm:8.4.38"
     prettier: "npm:^2.6.2"
     react: "npm:18.3.1"
+    react-confetti: "npm:^6.1.0"
     react-day-picker: "npm:^9.1.4"
     react-dom: "npm:18.3.1"
     react-hook-form: "npm:^7.53.1"
@@ -9637,6 +9639,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion@npm:^11.11.9":
+  version: 11.11.9
+  resolution: "framer-motion@npm:11.11.9"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/70e956da4146ffe00a35bf5abe7fc04bd86dc6fbc8a8ec95b1b125dfaa624db9a1b41d676f0b2eaef88538c58c5616c113d0fbed73219814223669a9002886cc
+  languageName: node
+  linkType: hard
+
 "fresh@npm:0.5.2, fresh@npm:~0.5.2":
   version: 0.5.2
   resolution: "fresh@npm:0.5.2"
@@ -14777,6 +14799,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-confetti@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "react-confetti@npm:6.1.0"
+  dependencies:
+    tween-functions: "npm:^1.2.0"
+  peerDependencies:
+    react: ^16.3.0 || ^17.0.1 || ^18.0.0
+  checksum: 10c0/5b4eb23eef564695f6db1d25b294ed31d5fa21ff4092c6a38e641f85cd10e3e0b50014366e3ac0f7cf772e73faaecd14614e5b11a5531336fa769dda8068ab59
+  languageName: node
+  linkType: hard
+
 "react-day-picker@npm:^9.1.4":
   version: 9.1.4
   resolution: "react-day-picker@npm:9.1.4"
@@ -16752,6 +16785,13 @@ __metadata:
   version: 1.0.6
   resolution: "tsscmp@npm:1.0.6"
   checksum: 10c0/2f79a9455e7e3e8071995f98cdf3487ccfc91b760bec21a9abb4d90519557eafaa37246e87c92fa8bf3fef8fd30cfd0cc3c4212bb929baa9fb62494bfa4d24b2
+  languageName: node
+  linkType: hard
+
+"tween-functions@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "tween-functions@npm:1.2.0"
+  checksum: 10c0/7e59295b8b0ee4132ed2fe335f56a9db5c87056dad6b6fd3011be72239fd20398003ddb4403bc98ad9f5c94468890830f64016edbbde35581faf95b32cda8305
   languageName: node
   linkType: hard
 

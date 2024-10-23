@@ -18,9 +18,9 @@ export default function Page() {
     setCategories(data);
   };
   const saveCategory = (category: string) => {
-    const addProductObject = {
-      category,
-    };
+    const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
+
+    addProductObject.category = category;
     localStorage.setItem('addProduct', JSON.stringify(addProductObject));
     router.push('/client/addProducts/2');
   };

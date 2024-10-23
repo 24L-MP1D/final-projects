@@ -140,13 +140,7 @@ export default function Page() {
                           <div
                             key={item}
                             onClick={() => {
-                              formik.setValues({
-                                Country: item,
-                                firstName: '',
-                                lastName: '',
-                                city: '',
-                                email: '',
-                              });
+                              formik.setFieldValue('Country', item);
                               setOneCountry('');
                             }}
                             className="p-3 hover:bg-blue-600 hover:cursor-pointer"

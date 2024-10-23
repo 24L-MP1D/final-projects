@@ -22,10 +22,11 @@ type Props = {
   formikErrors: FormikErrors<FormValues>;
   formikHandleChange: (e: ChangeEvent) => void;
   showCountry: boolean;
-  formikSetValues: (value: FormValues) => void;
+
+  formikSetFieldValue: (name: string, value: string) => void;
 };
 
-export const AddProductGeneral = ({ formikValues, formikTouched, formikSetValues, showCountry, formikHandleChange, formikErrors, setShowCountry }: Props) => {
+export const AddProductGeneral = ({ formikValues, formikTouched, formikSetFieldValue, showCountry, formikHandleChange, formikErrors, setShowCountry }: Props) => {
   const [oneCountry, setOneCountry] = useState('');
 
   const [country, setCountry] = useState<string[]>([]);
@@ -77,15 +78,8 @@ export const AddProductGeneral = ({ formikValues, formikTouched, formikSetValues
                     <div
                       key={item}
                       onClick={() => {
-                        formikSetValues({
-                          countryOfOrigin: item,
-                          productName: '',
-                          additionalInformation: '',
-                          signatures: '',
-                          damage: '',
-                          restored: '',
-                          startBid: Number(''),
-                        });
+                        formikSetFieldValue('countryOfOrigin', item);
+
                         setOneCountry('');
                       }}
                       className="p-3  hover:bg-blue-600 hover:cursor-pointer"

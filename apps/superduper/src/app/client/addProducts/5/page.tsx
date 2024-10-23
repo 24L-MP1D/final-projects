@@ -1,49 +1,34 @@
 'use client';
 
+import { ProductType } from '@/components/productType';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-type Props = {
-  Country: string;
-  additionalInformation: string;
-  backImage: string;
-  category: string;
-  city: string;
-  countryOfOrigin: string;
-  damage: string;
-  detailImage: string;
-  email: string;
-  firstName: string;
-  frontImage: string;
-  lastName: string;
-  productName: string;
-  restored: string;
-  signatures: string;
-  startBid: number;
-  Currency: string;
-  additionalImage: string;
-  damageImage: string;
-  signatureImage: string;
-};
+
 export default function Page() {
-  const [getFromLocal, setGetFromLocal] = useState<Props>();
+  const router = useRouter();
+  const [getFromLocal, setGetFromLocal] = useState<ProductType>();
   const postToDatabase = async () => {
     try {
-      const response = await fetch('/api/products', {
-        method: 'POST',
-        body: JSON.stringify({
-          getFromLocal,
-        }),
-        headers: {
-          'Content-type': 'application/json',
-        },
-      });
-
-      console.log('data');
-      alert('amjilttai nemegdlee');
-      localStorage.removeItem('addProduct');
-      setGetFromLocal(undefined);
+      if (getFromLocal) {
+        const response = await fetch('/api/products', {
+          method: 'POST',
+          body: JSON.stringify({
+            getFromLocal,
+          }),
+          headers: {
+            'Content-type': 'application/json',
+          },
+        });
+        const data = await response.json();
+        console.log(data);
+        alert('amjilttai nemegdlee');
+        // localStorage.removeItem('addProduct');
+        setGetFromLocal(undefined);
+        router.push(`/client/success?id=${data.insertedId}`);
+      }
     } catch (err) {
       console.error(err);
     }

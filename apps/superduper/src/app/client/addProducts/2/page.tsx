@@ -106,7 +106,7 @@ export default function Page() {
         <AddProductGeneral
           showCountry={showCountry}
           setShowCountry={setShowCountry}
-          formikSetValues={formik.setValues}
+          formikSetFieldValue={formik.setFieldValue}
           formikValues={formik.values}
           formikErrors={formik.errors}
           formikTouched={formik.touched}
