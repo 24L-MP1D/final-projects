@@ -13,7 +13,7 @@ export default function Header() {
         <div className="w-48 flex justify-center">
           <Image width={70} height={65} alt="logo" src={'/Logo.png'} onClick={() => router.push(`/`)} />
         </div>
-        <div className="flex h-full rounded-sm items-center w-[740px] border group focus-within:border-slate-700 pl-3 mt-4 p-1 gap-3">
+        <div className="flex h-full rounded-lg items-center w-[740px] border group focus-within:border-slate-700 pl-3 mt-4 p-1 gap-3 ">
           <Search width={22} height={22} />
           <Input className="border-none focus-visible:ring-0" placeholder="What's you gonna eat?" />
         </div>
