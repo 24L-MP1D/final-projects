@@ -31,13 +31,30 @@ export default function Page() {
   });
   const formik = useFormik({
     initialValues,
-    onSubmit: () => {
+    onSubmit: (values) => {
+      const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
+      addProductObject.Country = values.Country;
+      addProductObject.firstName = values.firstName;
+      addProductObject.lastName = values.lastName;
+      addProductObject.city = values.city;
+      addProductObject.email = values.email;
+      localStorage.setItem('addProduct', JSON.stringify(addProductObject));
       router.push('/client/addProducts/5');
     },
     validationSchema,
   });
   useEffect(() => {
     setCountry(AllCountry);
+    const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
+    if (addProductObject) {
+      formik.setValues({
+        Country: addProductObject.Country,
+        firstName: addProductObject.firstName,
+        lastName: addProductObject.lastName,
+        city: addProductObject.city,
+        email: addProductObject.email,
+      });
+    }
   }, []);
 
   return (
@@ -84,6 +101,7 @@ export default function Page() {
                   {formik.touched.firstName && formik.errors.firstName && <p className="text-red-600">{formik.errors.firstName}</p>}
                 </div>
               </div>
+
               <div className="flex-1 border-b-[1px]">
                 <p>Last Name</p>
                 <div>
@@ -131,7 +149,7 @@ export default function Page() {
                               });
                               setOneCountry('');
                             }}
-                            className="p-3  hover:bg-blue-600 hover:cursor-pointer"
+                            className="p-3 hover:bg-blue-600 hover:cursor-pointer"
                           >
                             {item}
                           </div>
