@@ -7,6 +7,7 @@
   },
   "private": true,
   "dependencies": {
+    "@ably/asset-tracking": "^1.0.0-beta.5",
     "@custom-react-hooks/use-geo-location": "^1.5.1",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-checkbox": "^1.1.2",
@@ -68,7 +69,7 @@
     "babel-jest": "^29.7.0",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^9.23.0",
+    "eslint": "^9.8.0",
     "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "2.31.0",
