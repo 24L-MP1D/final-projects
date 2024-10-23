@@ -1,0 +1,10 @@
+{
+    "projectId": "prj_8hB3e3WKupfHL8XuyerOXFop7Mxk",
+    "orgId": "team_RDEHu5mNVBGcmlpSR4p1Z7E3",
+    "settings": {
+      "framework": "nextjs",
+      "installCommand": "npm i --force",
+      "buildCommand": "nx build --skip-nx-cache acers",
+      "outputDirectory": "dist/apps/acers/.next"
+    }
+  }

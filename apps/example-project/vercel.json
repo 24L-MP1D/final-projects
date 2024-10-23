@@ -1,0 +1,10 @@
+{
+  "projectId": "prj_IG0QMzu0vl42byIj67np3JHmn4Ai",
+  "orgId": "team_dhzhtjdknzcBISPf2DgmW1jW",
+  "settings": {
+    "framework": "nextjs",
+    "installCommand": "npm i --force",
+    "buildCommand": "nx build --skip-nx-cache example-project",
+    "outputDirectory": "dist/apps/example-project/.next"
+  }
+}

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*","apps/amidos/src/*", "node_modules/*"]
     },
     "jsx": "preserve",
     "allowJs": true,
