@@ -13,17 +13,36 @@ export const SignUp = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isValid, setIsValid] = useState(false);
 
   console.log({ firstName, lastName, email, password });
 
-  const hasUppercase = true;
-  const hasLowercase = true;
-  const hasNumber = true;
-  const hasSpecialChar = true;
-  const hasEmail = true;
-  const hasPassword = true;
+  const hasUppercase = /A-Z/.test(password);
+  const hasLowercase = /a-z/.test(password);
+  const hasNumber = /0-9/.test(password);
+  const hasSpecialChar = /[@$!%*#?&]+/.test(password);
 
+  const isValid = hasUppercase && hasLowercase && hasNumber && hasSpecialChar;
+
+  function Submit() {
+    fetch('/backend/sign-up', {
+      method: 'POST',
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        email,
+        password,
+      }),
+      headers: {
+        'Content type': 'application/json()',
+      },
+    }).then((res) => {
+      if (res.status(200)) {
+        //success
+      } else {
+        //res.status(400)
+      }
+    });
+  }
   //   const initialValues = {
   //     firstName: '',
   //     lastName: '',
@@ -98,13 +117,11 @@ export const SignUp = () => {
             <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             {<span className="text-red-600">{}</span>}
           </div>
-          <DialogDescription className={hasPassword ? 'text-green-600' : 'text-red-500'}>
-            At least 8 characters, one capital letter, one lower case letter, one number and one special character.
-          </DialogDescription>
+          <DialogDescription>At least 8 characters, one capital letter, one lower case letter, one number and one special character.</DialogDescription>
         </form>
 
         <DialogFooter>
-          <Button className="bg-blue-700 flex-1 disabled:cursor-not-allowed" type="submit" disabled={!isValid}>
+          <Button onClick={Submit} className="bg-blue-700 flex-1 disabled:cursor-not-allowed" type="submit" disabled={isValid}>
             Agree and Continue
           </Button>
         </DialogFooter>
