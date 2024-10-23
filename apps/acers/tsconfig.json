@@ -25,7 +25,8 @@
     "../../apps/acers/.next/types/**/*.ts",
     "../../dist/apps/acers/.next/types/**/*.ts",
     "next-env.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "../../dist/apps/ger-gurus/.next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
