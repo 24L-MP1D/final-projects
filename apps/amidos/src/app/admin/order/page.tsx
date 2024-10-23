@@ -1,10 +1,9 @@
 'use client';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/table';
 import { Button } from '@/app/components/ui/button';
-import { Input } from '@/app/components/ui/input';
+import { Input } from '@/components/ui/input';
 import { Orders } from '@/lib/types';
-
-import { Dialog, DialogContent, DialogTrigger } from '@/app/components/ui/dialog';
+import { Dialog, DialogContent, DialogTrigger } from '@radix-ui/react-dialog';
 import { Label } from '@radix-ui/react-label';
 import { ChangeEvent, useEffect, useState } from 'react';
 import LeftBar from '../components/leftbar';
