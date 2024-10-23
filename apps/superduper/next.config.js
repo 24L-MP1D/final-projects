@@ -8,7 +8,7 @@ const { composePlugins, withNx } = require('@nx/next');
  **/
 const nextConfig = {
   images: {
-    domains: ['media.wired.com']
+    domains: ['media.wired.com'],
   },
   nx: {
     // Set this to true if you would like to use SVGR
@@ -16,8 +16,6 @@ const nextConfig = {
     svgr: false,
   },
 };
-
-
 
 const plugins = [
   // Add more Next.js plugins to this list if needed.

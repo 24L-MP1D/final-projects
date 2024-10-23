@@ -1,0 +1,10 @@
+{
+  "projectId": "prj_jrPQeDwRTgkeFoavSBfvHWCxdJu3",
+  "orgId": "team_Dz5r1loxhgsuL6ZW4PxGB9HZ",
+  "settings": {
+    "framework": "nextjs",
+    "installCommand": "npm i --force",
+    "buildCommand": "nx build --skip-nx-cache superduper",
+    "outputDirectory": "dist/apps/superduper/.next"
+  }
+}

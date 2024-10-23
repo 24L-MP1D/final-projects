@@ -1,3 +1,3 @@
 import client from './mongodb';
 
-export const DB = client.db('amidos');
+export const db = client.db('amidos');

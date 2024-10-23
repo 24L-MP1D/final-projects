@@ -20,6 +20,7 @@ interface Product {
 }
 
 export default function Index() {
+
   const [slides, setSlides] = useState<Product[]>([])
   useEffect(() => {
     const fetchProducts = async () => {
@@ -182,3 +183,4 @@ export default function Index() {
     </div>
   );
 }
+
