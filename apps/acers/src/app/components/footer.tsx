@@ -5,14 +5,14 @@ import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 export default function Footer() {
   return (
     <div>
-      <div className="bg-slate-100 h-60">
-        <div className="flex justify-around w-[1000px] mx-auto content-center">
-          <div>
+      <div className="bg-slate-100 content-center">
+        <div className="flex justify-around w-[1000px] h-60 mx-auto my-auto">
+          <div className="content-center">
             <p className="font-serif text-2xl w-[560px]">Get Our Newsletter</p>
             <p>Get recipes, tips and NYT special offers delivered straight to your inbox.</p>
             <p>Opt out or contact us anytime. See our Privacy Policy.</p>
           </div>
-          <div className="w-[410px]  gap-10">
+          <div className="w-[410px]  gap-10 content-center">
             <p className="text-base font-bold">Follow Us</p>
             <div className="flex gap-5">
               <span className="border rounded-full w-10 h-10 flex justify-center items-center">
