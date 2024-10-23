@@ -1,8 +1,8 @@
 'use client';
-import { Button } from '@/app/components/ui/button';
-import { Input } from '@/app/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { useFormik } from 'formik';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
@@ -47,7 +47,7 @@ export default function LoginPage() {
         console.log('Successfully signed in');
 
         const { accesstoken } = await response.json();
-        Cookies.set('token', accesstoken, { expires: 7, path: '/' });
+        // Cookies.set('token', accesstoken, { expires: 7, path: '/' });
 
         router.push('/');
       } else {
