@@ -95,7 +95,7 @@ export default function Index() {
               </div>
               <div className="flex flex-col gap-1">
                 <div className="text-base font-medium">Холболт салсан байна.</div>
-                <div className="text-sm font-normal">Түр хүлээгээд дахин оролдоно уу.</div>
+                <div className="text-sm font-normal">Түр хүлээгээд дахин оролдоно уу. </div>
               </div>
             </div>
           ),
