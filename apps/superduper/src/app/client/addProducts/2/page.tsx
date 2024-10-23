@@ -1,10 +1,10 @@
 'use client';
 
-import { AddProductGeneral } from '@/app/components/AddProductGeneral';
-import { AllCountry } from '@/app/components/allCountry';
-import { ProductCondition } from '@/app/components/ProductCondition';
-import { ProductPrice } from '@/app/components/ProductPrice';
-import { Button } from '@/app/components/ui/Button';
+import { AddProductGeneral } from '@/components/AddProductGeneral';
+import { AllCountry } from '@/components/allCountry';
+import { ProductCondition } from '@/components/ProductCondition';
+import { ProductPrice } from '@/components/ProductPrice';
+import { Button } from '@/components/ui/button';
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

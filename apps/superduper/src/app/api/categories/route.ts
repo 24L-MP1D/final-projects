@@ -1,4 +1,4 @@
-import { DB } from '@/app/lib/db';
+import { DB } from '@/lib/db';
 
 export async function GET(request: Request) {
   try {

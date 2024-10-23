@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { DB } from '../../lib/db';
 
+
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export async function GET(request: Request) {
@@ -25,3 +26,4 @@ export async function GET(request: Request) {
         return new Response('Invalid token', { status: 403 });
     }
 }
+
