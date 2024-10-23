@@ -2581,6 +2581,7 @@ __metadata:
     husky: "npm:^9.1.6"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
+    json-web-token: "npm:^3.2.0"
     jsonwebtoken: "npm:^9.0.2"
     lucide-react: "npm:^0.453.0"
     mongodb: "npm:^6.9.0"
@@ -6281,6 +6282,13 @@ __metadata:
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
   checksum: 10c0/f23823513b63173a001030fae4f2dabe283b99a9d324ade3ad3d148e218134676f1ee8568c877cd79ec1c53158dcf2d2ba527a97c606618928ba99dd930102bf
+  languageName: node
+  linkType: hard
+
+"base64-url@npm:^2.3.2":
+  version: 2.3.3
+  resolution: "base64-url@npm:2.3.3"
+  checksum: 10c0/d68b2a9586e5a00eba1271c2d6d182932439e5f61e7c8901b6404044fedcc1d8be4c6034a78599462782372939a0c12ce3563af031fda87c54b03b19ebe75d3f
   languageName: node
   linkType: hard
 
@@ -11121,6 +11129,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is.object@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "is.object@npm:1.0.0"
+  checksum: 10c0/f47b847c63db3d88d0076f9205925062792915c93a5a6447c115132ee640734f57b01e69b3aabd1481186c9ead37a0c1fa9d9fe4ba0aa15a7f2ae5306633a79c
+  languageName: node
+  linkType: hard
+
 "isarray@npm:0.0.1":
   version: 0.0.1
   resolution: "isarray@npm:0.0.1"
@@ -11869,6 +11884,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"json-parse-safe@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "json-parse-safe@npm:2.0.0"
+  checksum: 10c0/b46939427b1e3c2c0eb04e97305decf30f8550175fb156bd1e95cca13f88030c11c598ea3bef01f6d7ca0235e3ce6f80a043ec32827c7d0a06d64fe312382e57
+  languageName: node
+  linkType: hard
+
 "json-schema-to-ts@npm:1.6.4":
   version: 1.6.4
   resolution: "json-schema-to-ts@npm:1.6.4"
@@ -11897,6 +11919,18 @@ __metadata:
   version: 1.0.1
   resolution: "json-stable-stringify-without-jsonify@npm:1.0.1"
   checksum: 10c0/cb168b61fd4de83e58d09aaa6425ef71001bae30d260e2c57e7d09a5fd82223e2f22a042dedaab8db23b7d9ae46854b08bb1f91675a8be11c5cffebef5fb66a5
+  languageName: node
+  linkType: hard
+
+"json-web-token@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "json-web-token@npm:3.2.0"
+  dependencies:
+    base64-url: "npm:^2.3.2"
+    is.object: "npm:^1.0.0"
+    json-parse-safe: "npm:^2.0.0"
+    xtend: "npm:^4.0.2"
+  checksum: 10c0/69d2020ef69c9d2f9191ce0fac2a7e7ec49c0daf43840ce1b1f6c60545fb67943b7f62bf6aa098ea9a246885816690b4c0a531b770280b183b251af99ee71aca
   languageName: node
   linkType: hard
 
@@ -17687,6 +17721,13 @@ __metadata:
   version: 2.2.0
   resolution: "xmlchars@npm:2.2.0"
   checksum: 10c0/b64b535861a6f310c5d9bfa10834cf49127c71922c297da9d4d1b45eeaae40bf9b4363275876088fbe2667e5db028d2cd4f8ee72eed9bede840a67d57dab7593
+  languageName: node
+  linkType: hard
+
+"xtend@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "xtend@npm:4.0.2"
+  checksum: 10c0/366ae4783eec6100f8a02dff02ac907bf29f9a00b82ac0264b4d8b832ead18306797e283cf19de776538babfdcb2101375ec5646b59f08c52128ac4ab812ed0e
   languageName: node
   linkType: hard
 
