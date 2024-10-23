@@ -1,0 +1,18 @@
+.custom-toast {
+    background-color: #fff; 
+    color: #fff;            
+    padding: 16px;        
+    border-radius: 8px;   
+    font-size: 16px;       
+    font-weight: 500;
+}
+
+.custom-toast.success {
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+}
+
+.custom-toast.error {
+    color: #F44336;
+    border: 1px solid #F44336; 
+}
