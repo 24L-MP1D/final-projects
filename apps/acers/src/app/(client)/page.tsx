@@ -3,11 +3,9 @@
 import { Bookmark } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import { HandyCarousel } from './components/homePageComponents/handyCarousel';
 import { Stars } from './components/itemComponents/stars';
 import { Button } from './components/ui/Button';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './components/ui/Carousel';
-import { Item } from './components/itemComponents/singleItem';
-import { HandyCarousel } from './components/homePageComponents/handyCarousel';
 
 export default function Index() {
   /*
@@ -17,11 +15,13 @@ export default function Index() {
    */
   return (
     <div className="">
-      <div className="flex flex-col gap-16 max-w-[80%] xl:max-w-[1160px] w-full m-auto text-[#222222]">
+      <div className="flex flex-col gap-16 text-[#222222] ">
         <RecipeOfTheDay />
-        <OccasionMeals />
-        <GetTheLatest />
-        <Popular />
+        <div className="flex flex-col gap-16 max-w-[80%] xl:max-w-[1160px] w-full m-auto">
+          <OccasionMeals />
+          <GetTheLatest />
+          <Popular />
+        </div>
       </div>
     </div>
   );
@@ -58,9 +58,12 @@ const EasyBakingRecipes = () => {
 };
 
 const DiwaliRecipes = () => {
+  const id = 'willFix';
   return (
-    <div>
-      <span className="text-2xl underline">Diwali Recipes</span>
+    <div className="flex flex-col gap-2">
+      <a href={`/suggestion/${id}`} className=" text-2xl underline">
+        Diwali Recipes
+      </a>
       <HandyCarousel data={Array(10).fill(1)} />
     </div>
   );
@@ -125,8 +128,6 @@ const HolidayCarousal = () => {
   return <HandyCarousel data={Array(5).fill(1)} />;
 };
 
-
-
 const RecipeOfTheDay = () => {
   const router = useRouter();
   const [data, setData] = useState({
@@ -140,12 +141,12 @@ const RecipeOfTheDay = () => {
   });
   const { img, title, description, rating, ratingNum, id, prepTime } = data;
   return (
-    <div className="flex items-center gap-10">
+    <div className="flex flex-col lg:flex-row items-center gap-10 max-w-[auto] md:max-w-[80%] xl:max-w-[1160px] w-full m-auto">
       <div className="relative bg-slate-500">
-        <img src={img} className={`w-[710px] object-center`} onClick={() => router.push(`/product/${id}`)} />
+        <img src={img} className={`max-w-auto sm:w-[710px] object-center`} onClick={() => router.push(`/product/${id}`)} />
         <SaveButton id={id} className="absolute right-6 bottom-6" />
       </div>
-      <div className="flex flex-col text-[#222222]">
+      <div className="flex flex-col text-[#222222] max-w-[80%]">
         <span className="text-[#DF321B] text-[14px] font-bold">Recipe of the day</span>
         <span className=" text-[31px]">{title}</span>
         <span>{description}</span>
@@ -185,4 +186,3 @@ const holidays = [
   { name: 'Hanukkah' },
   { name: 'Lunar New Year' },
 ];
-
