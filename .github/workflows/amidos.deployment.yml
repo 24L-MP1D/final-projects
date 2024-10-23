@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - 143-vercel-deploy
     paths:
       - apps/amidos/**
 jobs:
