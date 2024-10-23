@@ -1,4 +1,5 @@
-import { DB } from 'apps/amidos/src/lib/db';
+import { DB } from "@/lib/db";
+
 
 export async function POST(request: Request) {
   const test = await DB.collection('menu').insertOne({});
@@ -19,4 +20,5 @@ export async function DELETE(request: Request) {
 export async function PUT(request: Request) {
   return new Response('Hello, from API PUT!');
 }
+
 
