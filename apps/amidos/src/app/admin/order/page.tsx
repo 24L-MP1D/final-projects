@@ -1,37 +1,49 @@
 'use client';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/table';
 import { Button } from '@/app/components/ui/button';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Orders } from '@/lib/types';
-import { Dialog, DialogContent, DialogTrigger } from '@radix-ui/react-dialog';
 import { Label } from '@radix-ui/react-label';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import LeftBar from '../components/leftbar';
-
 export default function Order() {
   const [order, setOrder] = useState<Orders[]>([]);
-  const [food, setFood] = useState<Orders[]>([]);
   const [name, setName] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [price, setPrice] = useState('');
-  const [photos, setPhotos] = useState('');
-  const [files, setFiles] = useState<FileList | null>(null);
-  const imageUrls: string[] = [];
+  const [imageUrl, setImageUrl] = useState('');
+  const [loading, setLoading] = useState(false);
+  const CLOUDINARY_CLOUD_NAME = 'dozicpox6';
+  const CLOUDINARY_UPLOAD_PRESET = 'pe3w78vd';
 
-  Array.from(files ?? []).forEach((file) => {
-    const imageUrl = URL.createObjectURL(file);
-    imageUrls.push(imageUrl);
-  });
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.currentTarget.files;
-    setFiles(files);
+  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+      setLoading(true);
+      fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`, {
+        method: 'post',
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setImageUrl(data.secure_url);
+          setLoading(false);
+        })
+        .catch((err) => {
+          alert('An Error Occured While Uploading');
+        });
+    }
   };
   const addFood = () => {
     const newFood = {
       name,
       ingredients,
       price,
-      photos,
+      photos: imageUrl,
     };
     try {
       const response = fetch('/api/hello/admin', {
@@ -108,10 +120,9 @@ export default function Order() {
                     <Label htmlFor="images" className="text-lg h-12">
                       Зураг
                     </Label>
-                    <Input multiple type="file" className="col-span-2 h-12 bg-zinc-100 " id="images" onChange={handleFileChange} />
-                    <div className="items-center">
-                      <img className="w-50 h-50 ml-24" src={imageUrls}></img>
-                    </div>
+                    <Input type="file" className="col-span-2 h-12 bg-zinc-100 " id="images" onChange={handleUpload} />
+                    {loading && <span className="text-red">Loading...</span>}
+                    {imageUrl && <img className="w-50 h-50 ml-24" src={imageUrl} alt="Uploaded" />}
                   </div>
                   <div className="grid grid-cols-3 align-items-center gap-2 ">
                     <Label htmlFor="width" className="text-lg h-12">
@@ -119,7 +130,6 @@ export default function Order() {
                     </Label>
                     <Input id="width" className="col-span-2 h-12" />
                   </div>
-
                   <Button variant="outline" className="mt-3" onClick={addFood}>
                     Оруулах
                   </Button>
@@ -146,7 +156,7 @@ export default function Order() {
                       <TableCell>{order.ingredients}</TableCell>
                       <TableCell className="text-black font-bold">{order.price}</TableCell>
                       <TableCell className="">төлөв</TableCell>
-                      <TableCell className="">зураг</TableCell>
+                      <TableCell className="">{order.photos}</TableCell>
                       <TableCell className="">
                         <Button onClick={() => handleDeleteFood(order._id)}>Устгах</Button>
                       </TableCell>

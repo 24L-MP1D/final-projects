@@ -1,9 +1,8 @@
 'use client';
 
-import { Copyright } from 'lucide-react';
+import { CopyrightIcon } from 'lucide-react';
 import Link from 'next/link';
 import { CiFacebook, CiInstagram, CiTwitter } from 'react-icons/ci';
-
 export default function Footer() {
   const socials = [
     { platforms: <CiFacebook fill="white" />, link: 'https://www.facebook.com/', id: 1 },
@@ -27,7 +26,7 @@ export default function Footer() {
           ))}
         </div>
         <div className="flex gap-1 items-center">
-          <Copyright size={12} fill="white" />
+          <CopyrightIcon size={12} fill="white" />
           <p className="text-[#F7F7F7] text-xs"> 2024 AMIDO’S - Бүх эрх хуулиар хамгаалагдсан</p>
         </div>
       </div>
