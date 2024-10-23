@@ -1,10 +1,10 @@
 'use client';
 
+import { Category } from '@/components/CategoryType';
+import { DialogComponent } from '@/components/Dialog';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { Category } from '../../components/CategoryType';
-import { DialogComponent } from '../../components/Dialog';
 
 export default function Page() {
   const [open, setOpen] = useState(false);

@@ -8,7 +8,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  
   return (
+    
     <html lang="en">
       <body><div>admin header</div>{children}</body>
     </html>
