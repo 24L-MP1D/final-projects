@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormik } from 'formik';
+import { FormikValues, useFormik } from 'formik';
 import Link from 'next/link';
 import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
@@ -34,30 +34,28 @@ export const SignUp = () => {
     initialValues,
     onSubmit: (values) => {
       console.log(values);
-      alert(`firstName:${values.firstName}, lastName:${values.lastName}, email:${values.email}, password:${values.password}`);
+      Submit(values);
     },
     validationSchema,
   });
 
-  function Submit() {
-    fetch('/backend/sign-up', {
-      method: 'POST',
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-      }),
-      headers: {
-        'Content type': 'application/json()',
-      },
-    }).then((res) => {
-      if (res.status(200)) {
-        //success
+  async function Submit(values: FormikValues) {
+    try {
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+      if (response.ok) {
+        console.log('success');
       } else {
-        //res.status(400)
+        console.log('error');
       }
-    });
+    } catch (err) {
+      console.log('error in sign up');
+    }
   }
 
   return (
@@ -66,7 +64,7 @@ export const SignUp = () => {
         <Button variant="outline">Sign Up</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <form>
+        <form onSubmit={formik.handleSubmit}>
           <DialogTitle className="font-bold text-center">Sign in or Create an account</DialogTitle>
           <div className="h-[2px] bg-slate-300 my-3"></div>
           <div className="flex justify-between">
@@ -92,27 +90,26 @@ export const SignUp = () => {
             <div className="h-[2px] flex-1 bg-slate-300"></div>
           </div>
           <div className="flex gap-2 mb-3">
-            <Input placeholder="First name" value={formik.values.firstName} onChange={formik.handleChange} />
+            <Input name="firstName" placeholder="First name" value={formik.errors.firstName} onChange={formik.handleChange} />
             {<span className="text-red-600">{formik.errors.firstName}</span>}
-            <Input placeholder="Last name" value={formik.values.lastName} onChange={formik.handleChange} />
+            <Input name="lastName" placeholder="Last name" value={formik.values.lastName} onChange={formik.handleChange} />
             {<span className="text-red-600">{formik.errors.lastName}</span>}
           </div>
           <div>
-            <Input placeholder="E-mail" value={formik.values.email} onChange={formik.handleChange} />
+            <Input name="email" placeholder="E-mail" value={formik.values.email} onChange={formik.handleChange} />
             {<span className="text-red-600">{formik.errors.email}</span>}
           </div>
           <div className="flex my-3">
-            <Input placeholder="Password" value={formik.values.password} onChange={formik.handleChange} />
+            <Input name="password" placeholder="Password" value={formik.values.password} onChange={formik.handleChange} />
             {<span className="text-red-600">{formik.errors.password}</span>}
           </div>
           <DialogDescription>At least 8 characters, one capital letter, one lower case letter, one number and one special character.</DialogDescription>
+          <DialogFooter>
+            <Button className="bg-blue-700 flex-1 disabled:cursor-not-allowed" type="submit">
+              Agree and Continue
+            </Button>
+          </DialogFooter>
         </form>
-
-        <DialogFooter>
-          <Button onClick={Submit} className="bg-blue-700 flex-1 disabled:cursor-not-allowed" type="submit" disabled={isValid}>
-            Agree and Continue
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
