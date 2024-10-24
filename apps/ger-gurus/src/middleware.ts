@@ -11,17 +11,15 @@ export function middleware(request: NextRequest) {
   let domain = '';
 
   switch (currentHost) {
-    case 'ger-gurus.mn':
-      domain = 'home';
+    case 'ger-gurus.vercel.app':
+      domain = 'client';
       break;
-    case 'dashboard.ger-gurus.mn':
+    case 'dashboard-ger-gurus.vercel.app':
       domain = 'dashboard';
       break;
-    case 'sample-school.mn':
-      domain = 'school';
-      break;
     default:
-      return NextResponse.next();
+      domain = 'school';
+
   }
 
   return NextResponse.rewrite(new URL(`/${domain}${pathname}${search}`, request.url));
