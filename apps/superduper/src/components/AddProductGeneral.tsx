@@ -2,7 +2,8 @@
 
 import { FormikErrors, FormikTouched } from 'formik';
 import { ChevronDown } from 'lucide-react';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { AllCountry } from './allCountry';
 import { Input } from './ui/Input';
 
 export interface FormValues {
@@ -21,10 +22,11 @@ type Props = {
   formikErrors: FormikErrors<FormValues>;
   formikHandleChange: (e: ChangeEvent) => void;
   showCountry: boolean;
-  formikSetValues: (value: FormValues) => void;
+
+  formikSetFieldValue: (name: string, value: string) => void;
 };
 
-export const AddProductGeneral = ({ formikValues, formikTouched, formikSetValues, showCountry, formikHandleChange, formikErrors, setShowCountry }: Props) => {
+export const AddProductGeneral = ({ formikValues, formikTouched, formikSetFieldValue, showCountry, formikHandleChange, formikErrors, setShowCountry }: Props) => {
   const [oneCountry, setOneCountry] = useState('');
 
   const [country, setCountry] = useState<string[]>([]);
@@ -32,6 +34,9 @@ export const AddProductGeneral = ({ formikValues, formikTouched, formikSetValues
   const includesFunction = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOneCountry(event.target.value.toLowerCase());
   };
+  useEffect(() => {
+    setCountry(AllCountry);
+  }, []);
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -73,15 +78,8 @@ export const AddProductGeneral = ({ formikValues, formikTouched, formikSetValues
                     <div
                       key={item}
                       onClick={() => {
-                        formikSetValues({
-                          countryOfOrigin: item,
-                          productName: '',
-                          additionalInformation: '',
-                          signatures: '',
-                          damage: '',
-                          restored: '',
-                          startBid: Number(''),
-                        });
+                        formikSetFieldValue('countryOfOrigin', item);
+
                         setOneCountry('');
                       }}
                       className="p-3  hover:bg-blue-600 hover:cursor-pointer"
@@ -98,7 +96,7 @@ export const AddProductGeneral = ({ formikValues, formikTouched, formikSetValues
       <div>
         <div className="flex justify-between items-center">
           <div className="text-[#23448d] text-sm mb-1.5">Additional information *</div>
-          <div>{formikValues.additionalInformation.length}/1000 characters</div>
+          <div>{formikValues.additionalInformation ? formikValues.additionalInformation.length : 0}/1000 characters</div>
         </div>
         <div className="border-b-[1px] relative">
           <Input id="additionalInformation" value={formikValues.additionalInformation} onChange={formikHandleChange} maxLength={1000} type="text" className="flex-1 border-none" />
