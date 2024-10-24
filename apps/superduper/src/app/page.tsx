@@ -1,5 +1,5 @@
 "use client"
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Heart } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { Swiper as SwiperType } from "swiper";
@@ -74,10 +74,40 @@ export default function Index() {
               <div className="text-[#0033FF] text-sm">Explore now</div>
             </div>
           </div>
-          <div className="flex w-full mt-[100px] h-[40px]">
-            <div className="relative h-2 w-full bg-gray-300 mt-4">
+          <div className="flex w-full mt-[100px] h-[40px] gap-2">
+            <div className="relative h-[7px] w-full bg-gray-300 mt-4 rounded-full">
               <div
-                className="absolute top-0 left-0 h-full bg-blue-500"
+                className="absolute top-0 left-0 h-full bg-blue-500 rounded-full"
+                style={{ width: `${progress * 100}%` }}
+              ></div>
+              <div
+                className="absolute top-0 left-0 h-full w-full cursor-pointer"
+                onClick={handleProgressClick}
+              ></div>
+            </div>
+            <div className="relative h-[7px] w-full bg-gray-300 mt-4 rounded-full">
+              <div
+                className="absolute top-0 left-0 h-full bg-blue-500 rounded-full"
+                style={{ width: `${progress * 100}%` }}
+              ></div>
+              <div
+                className="absolute top-0 left-0 h-full w-full cursor-pointer"
+                onClick={handleProgressClick}
+              ></div>
+            </div>
+            <div className="relative h-[7px] w-full bg-gray-300 mt-4 rounded-full">
+              <div
+                className="absolute top-0 left-0 h-full bg-blue-500 rounded-full"
+                style={{ width: `${progress * 100}%` }}
+              ></div>
+              <div
+                className="absolute top-0 left-0 h-full w-full cursor-pointer"
+                onClick={handleProgressClick}
+              ></div>
+            </div>
+            <div className="relative h-[7px] w-full bg-gray-300 mt-4 rounded-full">
+              <div
+                className="absolute top-0 left-0 h-full bg-blue-500 rounded-full"
                 style={{ width: `${progress * 100}%` }}
               ></div>
               <div
@@ -138,10 +168,12 @@ export default function Index() {
                 <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border  ">
                   <CardItem
                     translateZ="50"
-                    className="text-xl font-bold text-neutral-600 dark:text-white"
+                    className="text-xl font-bold text-neutral-600 dark:text-white flex text-nowrap gap-24"
                   >
                     {slide.name}
+                    <button className='rounded-full h-[40px] w-[40px] bg-white items-center flex justify-center text-[#0033FF]'><Heart size={22} strokeWidth={2} /></button>
                   </CardItem>
+
                   <CardItem
                     as="p"
                     translateZ="60"
@@ -173,6 +205,7 @@ export default function Index() {
                     >
                       Bid now →
                     </CardItem>
+                    <button>zahialah</button>
                   </div>
                 </CardBody>
               </CardContainer >
