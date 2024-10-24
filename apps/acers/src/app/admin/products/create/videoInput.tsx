@@ -23,6 +23,9 @@ export const VideoInput = ({ register }: { register: (name: string, value: File 
     setVideo(null);
     setVideoURL(null);
     register('videoFile', null); // Clear the register
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // Reset the input value
+    }
   };
 
   useEffect(() => {
