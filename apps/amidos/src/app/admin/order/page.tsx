@@ -1,18 +1,19 @@
 'use client';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/table';
 import { Button } from '@/app/components/ui/button';
+
+import { Dialog, DialogContent, DialogTrigger } from '@/app/components/ui/dialog';
+import { Input } from '@/app/components/ui/input';
 import { Orders } from '@/lib/types';
-
-
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogTrigger } from '@radix-ui/react-dialog';
 import { Label } from '@radix-ui/react-label';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import LeftBar from '../components/leftbar';
 
 export default function Order() {
   const [order, setOrder] = useState<Orders[]>([]);
-  const [food, setFood] = useState<Orders[]>([]);
   const [name, setName] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [price, setPrice] = useState('');
@@ -33,7 +34,7 @@ export default function Order() {
         },
         body: JSON.stringify(newFood),
       });
-      console.log('created');
+      toast('Хоол амжилттай нэмэгдлээ.');
     } catch (error) {
       console.log('error');
     }
@@ -46,16 +47,13 @@ export default function Order() {
       .then((res) => {
         if (res.status === 200) {
           setOrder(order.filter((food) => food._id !== id));
-          console.log('Successfully deleted the product');
         } else {
-          console.log('Error occurred during deletion');
         }
       })
       .catch((error) => {
         console.error('Error:', error);
       });
   };
-
   useEffect(() => {
     fetch('/api/hello/admin')
       .then((res) => res.json())
@@ -65,11 +63,11 @@ export default function Order() {
   }, []);
 
   return (
-    <form className="text-md">
-      <div className="bg-slate-100">
-        <div className="flex m-10 m-10">
+    <form className="text-md w-full">
+      <div className="bg-slate-100 ">
+        <div className="flex m-10 m-10 w-full">
           <LeftBar />
-          <div className="w-[800px] h-[500px] bg-white  p-10 mt-10 ml-10 text-md rounded-lg">
+          <div className="w-[1200px] h-[500px] bg-white  p-10 mt-10 ml-10 text-md rounded-lg">
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="outline" className="mb-10 text-lg">
@@ -85,34 +83,22 @@ export default function Order() {
                     <Input id="width" className="col-span-2 h-12" onChange={(e) => setName(e.target.value)} />
                   </div>
                   <div className="grid grid-cols-3 align-items-center gap-2 ">
-                    <Label htmlFor="width" className="text-lg h-12">
+                    <Label htmlFor="width" className="text-lg text-start h-12">
                       Орц
                     </Label>
                     <Input id="width" className="col-span-2 h-12 " onChange={(e) => setIngredients(e.target.value)} />
                   </div>
                   <div className="grid grid-cols-3 align-items-center gap-2 ">
-                    <Label htmlFor="width" className="text-lg h-12">
+                    <Label htmlFor="width" className="text-lg h-12 text-start ">
                       Үнэ
                     </Label>
                     <Input id="width" className="col-span-2 h-12" onChange={(e) => setPrice(e.target.value)} />
                   </div>
                   <div className="grid grid-cols-3 align-items-center gap-2 ">
-                    <Label htmlFor="width" className="text-lg h-12">
+                    <Label htmlFor="width" className="text-lg h-12 text-start ">
                       Зураг
                     </Label>
                     <Input className="col-span-2 h-12 bg-zinc-100 " onChange={(e) => setPhotos(e.target.value)} />
-                  </div>
-                  <div className="grid grid-cols-3 align-items-center gap-2 ">
-                    <Label htmlFor="width" className="text-lg h-12">
-                      Төлөв
-                    </Label>
-                    <Input id="width" className="col-span-2 h-12" />
-                  </div>
-                  <div className="grid grid-cols-3 align-items-center gap-2 ">
-                    <Label htmlFor="width" className="text-lg h-12">
-                      Устгах
-                    </Label>
-                    <Input id="width" className="col-span-2 h-12" />
                   </div>
                   <Button variant="outline" className="mt-3" onClick={addFood}>
                     Оруулах
@@ -123,13 +109,15 @@ export default function Order() {
             <div>
               <Table className="text-2xl mb-5">
                 <TableHeader>
-                  <TableRow className="text-center font-bold ">
+                  <TableRow className="text-start font-bold ">
                     <TableHead className="w-[100px] text-bold ">№</TableHead>
-                    <TableHead className="text-bold ">Хоолны нэр, код</TableHead>
+                    <TableHead className="text-bold  ">Хоолны нэр, код</TableHead>
                     <TableHead className="text-bold">Орц</TableHead>
                     <TableHead className=" text-bold">Үнэ</TableHead>
                     <TableHead className="text-bold">Төлөв</TableHead>
                     <TableHead className=" text-bold">Зураг</TableHead>
+                    <TableHead className=" text-bold">Устгах</TableHead>
+                    <TableHead className=" text-bold">Шилдэг</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody className="text-lg">
@@ -139,7 +127,7 @@ export default function Order() {
                       <TableCell>{order.name}</TableCell>
                       <TableCell>{order.ingredients}</TableCell>
                       <TableCell className="text-black font-bold">{order.price}</TableCell>
-                      <TableCell className="">төлөв</TableCell>
+                      <TableCell className=""></TableCell>
                       <TableCell className="">зураг</TableCell>
                       <TableCell className="">
                         <Button onClick={() => handleDeleteFood(order._id)}>Устгах</Button>
