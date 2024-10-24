@@ -1,59 +1,43 @@
+'use client';
 import { Button } from '@/app/components/ui/button';
+import { Orders } from '@/lib/types';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export default function Lunch() {
+  const [food, setFood] = useState<Orders[]>([]);
+
+  useEffect(() => {
+    fetch('/api/hello/admin')
+      .then((res) => res.json())
+      .then((data) => {
+        setFood(data);
+      });
+  }, []);
+
   return (
     <div className="w-full mx-auto flex ">
       <div className="relative mx-auto ">
         <h1 className="text-4xl italic mx-auto">Онцлох Меню</h1>
         {/* carausel */}
         <h1 className="text-7xl italic  mb-10 mx-auto">Lunch set</h1>
-        <div className="mt-20 mx-auto w-[1090px] flex flex-col lg:flex lg:flex-row  gap-20">
-          <div className="w-[320px] h-[380px] border-2 border-[#8B0000]  absoulte w-full rounded-sm p-10 ">
-            <Image src="/sassy.jpg" width={164} height={133} alt="Picture of the author" className="mx-auto rounded-full items-center" />
-            <h1 className=" absolute text-[#8B0000] font-bold ">23$</h1>
-            <h1 className="font-bold absolute mt-6">Steak salad</h1>
-            <h2 className=" mt-14">Shpaggetthi, egg,butter, souce</h2>
-            <div className="flex flex-row mt-8 gap-5 items-center">
-              <Button variant="amidos" className="row-1 ">
-                Сагс
-              </Button>
-              <Button variant="amidos2" className="row-1">
-                Захиалах
-              </Button>
+        <div className="mt-20 mx-auto w-[1200px] flex flex-col lg:flex lg:flex-wrap lg:flex-row  gap-20">
+          {food.map((food: Orders) => (
+            <div key={food._id} className="w-[320px] h-[380px] border-2 border-[#8B0000]  absoulte rounded-sm p-10 ">
+              <Image src="/sassy.jpg" width={164} height={133} alt="Picture of the author" className="mx-auto rounded-full items-center" />
+              <h1 className=" absolute text-[#8B0000] font-bold ">{food.price}</h1>
+              <h1 className="font-bold absolute mt-6">{food.name}</h1>
+              <h2 className=" mt-14">{food.ingredients}</h2>
+              <div className="flex flex-row mt-8 gap-5 items-center">
+                <Button variant="amidos" className="row-1 ">
+                  Сагс
+                </Button>
+                <Button variant="amidos2" className="row-1">
+                  Захиалах
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className="w-[320px] h-[380px] border-2 border-[#8B0000]  absoulte w-full rounded-sm p-10 ">
-            <Image src="/sassy.jpg" width={164} height={133} alt="Picture of the author" className="mx-auto rounded-full items-center" />
-            <h1 className=" absolute text-[#8B0000] font-bold ">23$</h1>
-            <h1 className="font-bold absolute mt-6">Steak salad</h1>
-            <h2 className=" mt-14">Shpaggetthi, egg,butter, souce</h2>
-            <div className="flex flex-row mt-8 gap-5 items-center">
-              <Button variant="amidos" className="row-1 ">
-                Сагс
-              </Button>
-              <Button variant="amidos2" className="row-1">
-                Захиалах
-              </Button>
-            </div>
-          </div>
-          <div className="w-[320px] h-[380px] border-2 border-[#8B0000]  absoulte w-full rounded-sm p-10 ">
-            <Image src="/sassy.jpg" width={164} height={133} alt="Picture of the author" className="mx-auto rounded-full items-center" />
-            <h1 className=" absolute text-[#8B0000] font-bold ">23$</h1>
-            <h1 className="font-bold absolute mt-6">Steak salad</h1>
-            <h2 className=" mt-14">Shpaggetthi, egg,butter, souce</h2>
-            <div className="flex flex-row mt-8 gap-5 items-center">
-              <Button variant="amidos" className="row-1 ">
-                Сагс
-              </Button>
-              <Button variant="amidos2" className="row-1">
-                Захиалах
-              </Button>
-            </div>
-            <Button variant="amidos2" className="mt-20 mx-auto">
-              Цааш үзэх
-            </Button>
-          </div>
+          ))}
         </div>
       </div>
     </div>
