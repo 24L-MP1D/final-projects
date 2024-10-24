@@ -1,5 +1,5 @@
+import { db } from "@/lib/db";
 import bcrypt from "bcrypt";
-import { db } from "../../../lib/db";
 
 export async function GET(request: Request) {
   const list = await db.collection('users').find({}).toArray();

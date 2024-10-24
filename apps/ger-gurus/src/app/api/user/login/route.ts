@@ -1,6 +1,6 @@
+import { db } from "@/lib/db";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
-import { db } from "../../../../lib/db";
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || "";
 
