@@ -9,12 +9,12 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const body = await request.json();
 
-  const { title, author, description } = body;
+  const { title, author, description, thumbnail} = body;
   await db.collection('courses').insertOne({
     title,
     author,
-
     description,
+    thumbnail
   });
   return new Response(null, { status: 204 });
 }
