@@ -1,11 +1,11 @@
 'use client';
 
+import '@/components/styles.css';
+import { Button } from '@/components/ui/button';
 import { CircleAlert, Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Toaster, toast } from 'sonner';
-import '../components/styles.css';
-import { Button } from '../components/ui/button';
 
 export default function Index() {
   const [name, setName] = useState('');
