@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { ObjectId } from 'mongodb';
 
 
+
 export async function GET(request: Request, { params }: { params: { id: string } }) {
     const user = await db.collection('users').findOne({ _id: new ObjectId(params.id) });
     if (!user) {
