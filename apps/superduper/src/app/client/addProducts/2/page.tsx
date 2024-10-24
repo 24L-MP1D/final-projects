@@ -38,11 +38,33 @@ export default function Page() {
   const formik = useFormik({
     initialValues,
     onSubmit: (values, { resetForm }) => {
+      const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '[]');
+      addProductObject.countryOfOrigin = values.countryOfOrigin;
+      addProductObject.productName = values.productName;
+      addProductObject.additionalInformation = values.additionalInformation;
+      addProductObject.signatures = values.signatures;
+      addProductObject.damage = values.damage;
+      addProductObject.restored = values.restored;
+      addProductObject.startBid = values.startBid;
+      localStorage.setItem('addProduct', JSON.stringify(addProductObject));
       router.push(`/client/addProducts/3`);
     },
     validationSchema,
   });
   useEffect(() => {
+    const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
+    if (addProductObject) {
+      formik.setValues({
+        countryOfOrigin: addProductObject.countryOfOrigin,
+        productName: addProductObject.productName,
+        additionalInformation: addProductObject.additionalInformation,
+        signatures: addProductObject.signatures,
+        damage: addProductObject.damage,
+        restored: addProductObject.restored,
+        startBid: Number(addProductObject.startBid),
+      });
+    }
+
     setCountry(AllCountry);
   }, []);
 
@@ -84,7 +106,7 @@ export default function Page() {
         <AddProductGeneral
           showCountry={showCountry}
           setShowCountry={setShowCountry}
-          formikSetValues={formik.setValues}
+          formikSetFieldValue={formik.setFieldValue}
           formikValues={formik.values}
           formikErrors={formik.errors}
           formikTouched={formik.touched}

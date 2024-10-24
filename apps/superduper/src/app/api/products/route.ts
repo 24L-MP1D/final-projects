@@ -15,9 +15,9 @@ export async function POST(request: Request) {
   try {
     const collection = DB.collection('product');
     const newProduct = await request.json();
-    console.log(newProduct);
-    const result = await collection.insertOne(newProduct);
-    console.log(result);
+    const { getFromLocal } = newProduct;
+    const result = await collection.insertOne(getFromLocal);
+
     return Response.json(result, { status: 200 });
   } catch (error) {
     return Response.json({ message: 'Failed to create product!' }, { status: 404 });
