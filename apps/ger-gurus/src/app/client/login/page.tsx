@@ -105,7 +105,7 @@ export default function Index() {
             <Button onClick={confirm} className="w-[334px]">
               Нэвтрэх
             </Button>
-            <Link className="text-sm text-gray-500 border-b-2 w-fit" href={'/forgetpassword'}>
+            <Link className="text-sm text-gray-500 border-b-2 w-fit" href={'#'}>
               Нууц үг мартсан
             </Link>
           </div>
