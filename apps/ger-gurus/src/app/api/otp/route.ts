@@ -8,10 +8,13 @@ export async function POST(request: Request) {
   const otp = Math.floor(Math.random() * 8999) + 1000;
   const GOOGLE_SECRET = process.env.GOOGLE_SECRET
   try {
-    await db.collection('users').insertOne({
+    const createdAt = new Date();
+    await db.collection('otp').insertOne({
       email,
-      otp
+      otp,
+      createdAt
     });
+    await db.collection('otp').createIndex({ createdAt: 1 }, { expireAfterSeconds: 300 });
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
