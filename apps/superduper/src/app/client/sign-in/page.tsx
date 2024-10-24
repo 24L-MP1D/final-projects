@@ -2,12 +2,38 @@
 
 import { Checkbox } from '@/components/ui/Checkbox';
 import { Button } from '@/components/ui/button';
-
 import Link from 'next/link';
+import { useState } from 'react';
 import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 
 export default function signin() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  console.log();
+  async function Submit() {
+    try {
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      if (response.ok) {
+        console.log('success');
+      } else {
+        console.log('error');
+      }
+    } catch (err) {
+      console.log('error in sign up');
+    }
+  }
+
   return (
     <div className="bg-slate-50">
       <div className="w-[500px] container mx-auto gap-3 border-2 rounded-lg mt-[100px] pb-[50px] bg-white">
@@ -36,10 +62,17 @@ export default function signin() {
           <div className="h-[2px] flex-1 bg-slate-300"></div>
         </div>
         <div className="mb-3">
-          <input className="w-full border-2 rounded-lg p-3" placeholder="Email address"></input>
+          <input
+            className="w-full border-2 rounded-lg p-3"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
         </div>
         <div className="mb-3">
-          <input className="w-full border-2 rounded-lg p-3" placeholder="Password"></input>
+          <input className="w-full border-2 rounded-lg p-3" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
         <div className="flex justify-between m-3">
           <div className="flex items-center gap-3">
@@ -50,7 +83,9 @@ export default function signin() {
             Forgotten your password?
           </Link>
         </div>
-        <Button className="bg-blue-700 w-full disabled:cursor-not-allowed">Sign in</Button>
+        <Button className="bg-blue-700 w-full disabled:cursor-not-allowed" onClick={Submit}>
+          Sign in
+        </Button>
       </div>
     </div>
   );
