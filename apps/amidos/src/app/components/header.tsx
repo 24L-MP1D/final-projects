@@ -1,13 +1,22 @@
-import { Menu } from 'lucide-react';
-export function Header() {
+'use client';
+
+import Link from 'next/link';
+
+const navs = [
+  { name: 'БИДНИЙ ТУХАЙ', link: '' },
+  { name: 'MЕНЮ', link: '/menu' },
+  { name: 'ГАЛЛЕРЕЙ', link: '/gallery' },
+  { name: 'ЗАХИАЛГА', link: '/order' },
+  { name: 'ХҮРГЭЛТ', link: '/delivery' },
+];
+export default function Header() {
   return (
-    <div className="flex">
-      <div className="hidden lg:block">Бидний тухай</div>
-      <div className="hidden lg:block">Меню</div>
-      <div className="hidden lg:block">Галлерей</div>
-      <div className="lg:hidden text-left">
-        <Menu />
-      </div>
+    <div className="flex gap-7 pt-10 z-10">
+      {navs.map((nav) => (
+        <Link href={nav.link} className="text-white" key={nav.name}>
+          {nav.name}
+        </Link>
+      ))}
     </div>
   );
 }

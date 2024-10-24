@@ -8,9 +8,12 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { name, description } = body;
+
+  const { title, author, description } = body;
   await db.collection('courses').insertOne({
-    name,
+    title,
+    author,
+
     description,
   });
   return new Response(null, { status: 204 });
