@@ -9,6 +9,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/src/app/components/ui/table";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -18,7 +19,8 @@ export default function Page() {
         _id: string;
         title: string;
         author: string;
-        description: string
+        description: string;
+        thumbnail: string
     }
     const [courses, setCourses] = useState<Course[]>([]);
 
@@ -61,7 +63,9 @@ export default function Page() {
             <TableBody>
                 {courses.map((course)=>(
                                 <TableRow>
-                                    <TableCell className="font-medium">image</TableCell>
+                                    <TableCell className="font-medium">
+                                        <Image src={course.thumbnail} height={40} width={40} alt="thumbnail"/>
+                                    </TableCell>
                                     <TableCell>{course.title}</TableCell>
                                     <TableCell>{course.author}</TableCell>
                                     <TableCell></TableCell>
@@ -76,12 +80,4 @@ export default function Page() {
 
             </TableBody>
         </Table>
-
-import { Button } from "@/src/app/components/ui/button";
-
-export default function Page() {
-    return (<div>
-        <Button>Add new course</Button>
-
-    </div>)
-}
+        </div>)}
