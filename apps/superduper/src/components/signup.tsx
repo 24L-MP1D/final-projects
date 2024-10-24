@@ -68,7 +68,7 @@ export const SignUp = () => {
           <DialogTitle className="font-bold text-center">Sign in or Create an account</DialogTitle>
           <div className="h-[2px] bg-slate-300 my-3"></div>
           <div className="flex justify-between">
-            <p>Welcome Back!</p>
+            <p className="font-bold">Welcome Back!</p>
             <Link href="/sign in">
               <div className="text-blue-500">Sign in</div>
             </Link>
