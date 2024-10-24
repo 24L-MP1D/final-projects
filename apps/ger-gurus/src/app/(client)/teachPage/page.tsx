@@ -1,11 +1,19 @@
 'use client';
 
-import { School } from "../../components/School";
+import { SchoolPageHeader } from "../../components/SchoolPageHeader";
+import { SchoolPageIntroduction } from "../../components/SchoolPageIntroduction";
+
+
+import { HomePageInfo } from '../../components/HomePageInfo';
+import { School } from '../../components/School';
 
 export default function Page() {
   return (
     <div className=" ">
-        <School/>
+        <SchoolPageHeader />
+        <SchoolPageIntroduction />
+      <School />
+      <HomePageInfo />
     </div>
   );
 }
