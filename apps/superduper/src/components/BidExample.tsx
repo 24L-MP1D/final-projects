@@ -1,5 +1,6 @@
 import * as Ably from 'ably';
 import { useEffect, useState } from 'react';
+import { ProductType } from './productType';
 import { Input } from './ui/Input';
 
 type Type = {
@@ -8,7 +9,7 @@ type Type = {
 };
 
 const ably = new Ably.Realtime('kttm_Q.XWRBZw:oJ0PanXgJ8Dsg5BspXlB8hb1TDRSDA05d6bXYMmW7KM');
-export const Auction = () => {
+export const Auction = ({ oneProduct }: { oneProduct: ProductType }) => {
   const [bids, setBids] = useState<Type[]>([]);
   const [bid, setBid] = useState<number>(0);
   const channel = ably.channels.get('auction-bids');
@@ -32,7 +33,7 @@ export const Auction = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user: 'Badral',
+          user: 'badral',
           amount: bid,
         }),
       });
@@ -66,7 +67,7 @@ export const Auction = () => {
   return (
     <div>
       <h2>Live Auction Bids</h2>
-      <Input type="number" value={bid === 0 ? '' : bid} onChange={(e) => setBid(Number(e.target.value))} />
+      <Input type="number" value={bid > 0 ? bid : ''} onChange={(e) => setBid(Number(e.target.value))} />
       <button onClick={bidPost}>Publish</button>
       <ul>
         {bids.map((bid, index) => (
