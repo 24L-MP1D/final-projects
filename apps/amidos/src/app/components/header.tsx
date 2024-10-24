@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const navs = [
   { name: 'БИДНИЙ ТУХАЙ', link: '' },
-  { name: 'MЕНЮ', link: '/menu' },
+  { name: 'MЕНЮ', link: '/lunch' },
   { name: 'ГАЛЛЕРЕЙ', link: '/gallery' },
   { name: 'ЗАХИАЛГА', link: '/order' },
   { name: 'ХҮРГЭЛТ', link: '/delivery' },
