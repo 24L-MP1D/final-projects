@@ -8,7 +8,11 @@ const { composePlugins, withNx } = require('@nx/next');
  **/
 const nextConfig = {
   images: {
-    domains: ['media.wired.com'],
+    remotePatterns: [
+      {
+        hostname: 'res.cloudinary.com',
+      },
+    ],
   },
   nx: {
     // Set this to true if you would like to use SVGR
