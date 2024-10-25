@@ -2,8 +2,8 @@ import { DB } from '@/lib/db';
 
 export async function GET(request: Request) {
   try {
-    const collection = DB.collection('seller');
-    const result = await collection.find({ name: 'badral' }).toArray();
+    const collection = DB.collection('categories');
+    const result = await collection.find({ category: 'categories' }).toArray();
     return Response.json(result);
   } catch (err) {
     console.error(err);
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const collection = DB.collection('products');
+    const collection = DB.collection('categories');
   } catch (err) {
     console.error(err);
   }
