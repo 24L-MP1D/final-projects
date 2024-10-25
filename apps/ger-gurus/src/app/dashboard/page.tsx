@@ -2,8 +2,8 @@
 
 export default function Page() {
   return (
-    <div className=" ">
-
+    <div>
+       This is a Dashboard
     </div>
   );
 }

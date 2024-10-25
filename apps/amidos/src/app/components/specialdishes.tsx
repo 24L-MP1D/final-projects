@@ -6,6 +6,9 @@ import { EmblaPluginType } from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { useEffect, useRef, useState } from 'react';
 
+import { Card, CardContent } from '@/components/ui/card';
+import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+
 type PropType = {
   plugins?: EmblaPluginType[];
 };
@@ -37,7 +40,7 @@ export default function Specialdishes() {
   return (
     <Carousel
       opts={{
-        align: "start",
+        align: 'start',
       }}
       className="w-full max-w-sm"
     >
