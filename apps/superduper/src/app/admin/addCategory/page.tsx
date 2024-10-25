@@ -18,17 +18,16 @@ export default function Home() {
   const [category, setCategory] = useState('');
 
   const addCategory = async() => {
-    console.log('Successfully added category');
+    
     try {
       const response = await fetch('/api/categories', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ category: 'categories' }),
+        body: JSON.stringify(category),
       });
-      const data = await response.json();
-      console.log(data);
+    
       if (response.ok) {
         // get();
         setCategory('');
@@ -59,6 +58,8 @@ return (
       {/* <button className="border-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg" onClick={closeCategory}>
         Close
       </button> */}
+
+
     </div>
   );
 }
