@@ -47,7 +47,9 @@
     "npm": "^10.9.0",
     "react": "18.3.1",
     "react-confetti": "^6.1.0",
-    "react-day-picker": "^9.1.4",
+
+    "react-day-picker": "^9.2.0",
+
     "react-dom": "18.3.1",
     "react-hook-form": "^7.53.1",
     "sonner": "^1.5.0",
@@ -80,7 +82,9 @@
     "babel-jest": "^29.7.0",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^9.13.0",
+
+    "eslint": "^9.8.0",
+
     "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "2.31.0",
