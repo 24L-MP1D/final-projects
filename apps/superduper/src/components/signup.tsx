@@ -48,7 +48,7 @@ export const SignUp = () => {
         },
         body: JSON.stringify(values),
       });
-      if (response.ok) {
+      if (response.status === 201) {
         console.log('success');
       } else {
         console.log('error');

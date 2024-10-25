@@ -18,8 +18,8 @@ export async function POST(request: Request) {
 
     const response = await collection.insertOne(form);
 
-    return Response.json(response, { status: 200 });
+    return new Response(null, { status: 201 });
   } catch (err) {
-    return console.error('Sign up error', { status: 404 });
+    return new Response(null, { status: 404 });
   }
 }

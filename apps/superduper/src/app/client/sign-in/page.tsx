@@ -13,8 +13,9 @@ export default function signin() {
 
   console.log();
   async function Submit() {
+    console.log(email, password);
     try {
-      const response = await fetch('/api/signup', {
+      const response = await fetch('/api/signin', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
