@@ -1,6 +1,8 @@
+'use client';
 import * as Ably from 'ably';
 import { FormikErrors, FormikTouched } from 'formik';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { ProductType } from './productType';
 import { Button } from './ui/button';
 import { Input } from './ui/Input';
 interface FormValues {
@@ -13,16 +15,50 @@ type Props = {
   formikTouched: FormikTouched<FormValues>;
   formikErrors: FormikErrors<FormValues>;
   formikHandleChange: (e: ChangeEvent) => void;
+  oneProduct: ProductType;
+  maximumBid: number;
 };
-export const Bid = ({ sendBid, bids, formikValues, formikTouched, formikErrors, formikHandleChange }: Props) => {
+type DateType = {
+  day: number;
+  dateHours: number;
+  dateMinuts: number;
+  dateSecunds: number;
+};
+export const Bid = ({ bids, maximumBid, formikValues, formikTouched, oneProduct, formikErrors, formikHandleChange }: Props) => {
+  const [showDate, setShowDate] = useState<DateType>();
+  const endDate = new Date(oneProduct.endDate).getTime();
+  const startDate = new Date().getTime();
+  let betweenDate = endDate - startDate;
+
+  useEffect(() => {
+    const timeInterval = setInterval(() => {
+      const time = {
+        day: Math.floor(betweenDate / (1000 * 60 * 60 * 24)),
+        dateHours: Math.floor((betweenDate % (1000 * 60 * 60 * 24)) / (60 * 60 * 1000)),
+        dateMinuts: Math.floor((betweenDate % (60 * 60 * 1000)) / (60 * 1000)),
+        dateSecunds: Math.floor((betweenDate % (60 * 1000)) / 1000),
+      };
+
+      if (betweenDate < 0) {
+        clearInterval(timeInterval);
+        setShowDate(undefined);
+        return;
+      }
+      setShowDate(time);
+    }, 1000);
+
+    return () => clearInterval(timeInterval);
+  }, [showDate]);
   return (
     <div>
-      <div>Closes in 4d 4h 04m 35s</div>
+      <div>
+        Closed in {showDate?.day}d {showDate?.dateHours}h {showDate?.dateMinuts}m {showDate?.dateSecunds}s
+      </div>
       <div className="border-l-2 border-b-2 border-slate-300">
         <div className="mt-3 border-t-2 border-blue-600 py-8 px-6">
           <div className="flex flex-col gap-2">
             <div className="text-sm">Current bid</div>
-            <div className="font-bold text-3xl">€ 18,500</div>
+            <div className="font-bold text-3xl">€ {maximumBid}</div>
             <div className="text-sm">Reserve price not met</div>
           </div>
         </div>
@@ -59,7 +95,7 @@ export const Bid = ({ sendBid, bids, formikValues, formikTouched, formikErrors, 
             <div>€3,150</div>
           </div>
           <div className="mb-2">See all bids (7)</div>
-          <div className="overflow-y-scroll w-full h-24 flex flex-col gap-2">
+          <div className="overflow-y-scroll w-full max-h-80 flex flex-col gap-2">
             {bids.map((bid) => (
               <div className="bg-slate-500 p-2" key={bid.id}>
                 {bid.data}
