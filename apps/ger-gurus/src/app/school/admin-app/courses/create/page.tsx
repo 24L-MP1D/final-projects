@@ -1,21 +1,39 @@
 'use client';
-
 import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from '@/components/ui/input';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from 'react';
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+ 
+const formSchema = z.object({
+  title: z.string().min(1, {
+    message: "Title is required",
+  }),
+})
 const CLOUDINARY_CLOUD_NAME = 'dw85vgzlk';
 const CLOUDINARY_UPLOAD_PRESET = 'zojuemkn';
+
+useRouter
+
 export default function Page() {
   const [title, setTitle] = useState<string>('');
   const [author, setAuthor] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  // const [images, setImages] = useState<string[]>([]);
-  // const [files, setFiles] = useState<FileList[]>([]);
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
   async function createCourse() {
-    // const images = await handleUpload();
     await fetch(`/api/courses`, {
       method: 'POST',
       body: JSON.stringify({
@@ -58,45 +76,51 @@ export default function Page() {
     }
   };
 
-  // const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-  //     const imageUrls: string[] = [];
-  //     const newFiles = event.currentTarget.files;
-  //     Array.from(newFiles ?? []).forEach((file) => {
-  //         const imageUrl = URL.createObjectURL(file);
-  //         imageUrls.push(imageUrl);
-  //     });
-  //     setImages((s) => [...s, ...imageUrls]);
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+    },
+  })
 
-  //     if (newFiles) {
-  //         setFiles([...files, newFiles]);
-  //     }
-  // };
+  const {isSubmitting, isValid}=form.formState
 
-  // const handleUpload = async () => {
-  //     if (!files) return;
-  //     const formData = new FormData();
-  //     files.forEach((fileList) => {
-  //         Array.from(fileList ?? []).forEach((file) => {
-  //             formData.append("image", file, file.name);
-  //         });
-  //     })
-  //     console.log(formData);
-  //     try {
-  //       const response = await fetch("/api/upload", {
-  //         method: "POST",
-  //         body: formData,
-  //       });
-  //       const data = await response.json();
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values)
+  }
 
-  //       return data;
-  //     } catch (error) {
-  //       console.error("error uploading file:", error);
-  //     }
-  // };
 
   return (
-    <div className="flex flex-col gap-4 w-[50%]">
-      <Input placeholder="course title" value={title} onChange={(e) => setTitle(e.target.value)} />
+    <div className="flex flex-col gap-4 max-w-5xl mx-auto ">
+      <div>
+        <h1 className='text-2xl'>Name your course</h1>
+        <p>What would you want to name your course?</p>
+
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-8">
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Course Title</FormLabel>
+              <FormControl>
+              <Input placeholder="course title" disabled={isSubmitting} {...field}/>
+              </FormControl>
+              <FormDescription>
+                What will you teach in this course?
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+      </div>
+      
       <Input placeholder="course author" value={author} onChange={(e) => setAuthor(e.target.value)} />
       <Input placeholder="Write description" value={description} onChange={(e) => setDescription(e.target.value)} />
       <div className="grid w-full max-w-sm items-center gap-1.5">

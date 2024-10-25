@@ -34,7 +34,7 @@ export default function Page() {
   return (
     <div>
       <Link href="/school/admin-app/courses/create">
-        <Button>Add new course</Button>
+        <Button className='p-6'>Add new course</Button>
       </Link>
 
       <Table className="w-[80%]">
