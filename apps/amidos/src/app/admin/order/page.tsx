@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/app/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch';
 import { Orders } from '@/lib/types';
 import { Label } from '@radix-ui/react-label';
 import { useEffect, useState } from 'react';
@@ -15,6 +16,8 @@ export default function Order() {
   const [price, setPrice] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
+  const [specialOrders, setSpecialOrders] = useState<{ [key: string]: boolean }>({});
+
   const CLOUDINARY_CLOUD_NAME = 'dozicpox6';
   const CLOUDINARY_UPLOAD_PRESET = 'pe3w78vd';
 
@@ -39,6 +42,7 @@ export default function Order() {
         });
     }
   };
+
   const addFood = () => {
     const newFood = {
       name,
@@ -60,6 +64,23 @@ export default function Order() {
       console.log('error');
     }
   };
+  const toSpecial = () => {
+    const special = {};
+    try {
+      const response = fetch('/api/hello/special', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(special),
+      });
+      toast('Хоолыг онцгой меню руу орууллаа');
+      console.log('created');
+    } catch (error) {
+      console.log('error');
+    }
+  };
+
   const handleDeleteFood = (id: string) => {
     fetch(`/api/hello/admin/${id}`, {
       method: 'DELETE',
@@ -76,6 +97,7 @@ export default function Order() {
         console.error('Error:', error);
       });
   };
+
   useEffect(() => {
     fetch('/api/hello/admin')
       .then((res) => res.json())
@@ -83,10 +105,19 @@ export default function Order() {
         setOrder(data);
       });
   }, []);
+
+  useEffect(() => {
+    fetch('/api/special')
+      .then((res) => res.json())
+      .then((data) => {
+        setSpecialOrders(data);
+      });
+  }, []);
+
   return (
     <form className="text-md">
       <div className="bg-slate-100">
-        <div className="flex m-10 m-10">
+        <div className="flex  m-10">
           <LeftBar />
           <div className="  bg-white  p-10 mt-10 ml-10 text-md rounded-lg">
             <Dialog>
@@ -123,12 +154,12 @@ export default function Order() {
                     {loading && <span className="text-red">Loading...</span>}
                     {imageUrl && <img className="w-50 h-50 ml-24" src={imageUrl} alt="Uploaded" />}
                   </div>
-                  <div className="grid grid-cols-3 align-items-center gap-2 ">
+                  {/* <div className="grid grid-cols-3 align-items-center gap-2 ">
                     <Label htmlFor="width" className="text-lg h-12">
-                      Төлөв
+                    
                     </Label>
                     <Input id="width" className="col-span-2 h-12" />
-                  </div>
+                  </div> */}
                   <Button variant="outline" className="mt-3" onClick={addFood}>
                     Оруулах
                   </Button>
@@ -143,7 +174,7 @@ export default function Order() {
                     <TableHead className="text-bold ">Хоолны нэр, код</TableHead>
                     <TableHead className="text-bold">Орц</TableHead>
                     <TableHead className=" text-bold">Үнэ</TableHead>
-                    <TableHead className="text-bold">Төлөв</TableHead>
+                    <TableHead className="text-bold">Онцгой хоол</TableHead>
                     <TableHead className=" text-bold">Зураг</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -154,7 +185,9 @@ export default function Order() {
                       <TableCell>{order.name}</TableCell>
                       <TableCell>{order.ingredients}</TableCell>
                       <TableCell className="text-black font-bold">{order.price}</TableCell>
-                      <TableCell className="">төлөв</TableCell>
+                      <TableCell className="">
+                        <Switch onClick={toSpecial} />
+                      </TableCell>
                       <TableCell className="w-80 h-50">
                         <img className=" ml-24 mx-auto w-[150px] h-[150px] object-cover rounded-full items-center" width={150} height={150} src={order.photos} alt={order.name} />
                       </TableCell>

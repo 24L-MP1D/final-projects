@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 
 export default function Menu() {
   const [food, setFood] = useState<Orders[]>([]);
+  const [special, setSpecial] = useState<Orders[]>([]);
   const specialdishes = [
     { url: '/carbonara.jpg', price: 21000, name: 'Carbonara' },
     { url: '/pasta.jpg', price: 15000, name: 'Pasta' },
@@ -20,7 +21,13 @@ export default function Menu() {
         setFood(data);
       });
   }, []);
-
+  useEffect(() => {
+    fetch('/api/hello/special')
+      .then((res) => res.json())
+      .then((data) => {
+        setSpecial(data);
+      });
+  }, []);
   const navs = [
     { name: 'ЗАХИАЛГА', link: '/order' },
     { name: 'MЕНЮ', link: '/lunch' },
@@ -44,11 +51,13 @@ export default function Menu() {
               {Array.from({ length: 5 }).map((_, index) => (
                 <CarouselItem key={index} className="">
                   <div className="p-1">
-                    <Card>
-                      <CardContent className="flex aspect-square items-center justify-center p-6">
-                        <span className="text-4xl font-semibold">{index + 1}</span>
-                      </CardContent>
-                    </Card>
+                    {special.map((special: Orders) => (
+                      <Card key={special.id}>
+                        <CardContent className="flex aspect-square items-center justify-center p-6">
+                          <span className="text-4xl font-semibold"> {special.photos}</span>
+                        </CardContent>
+                      </Card>
+                    ))}
                   </div>
                 </CarouselItem>
               ))}

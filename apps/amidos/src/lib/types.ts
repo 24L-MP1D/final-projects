@@ -6,4 +6,5 @@ export type Orders = {
   key: number;
   id: string;
   photos: string;
+  special: string;
 };
