@@ -9,13 +9,10 @@ export default function Page() {
   const [title, setTitle] = useState<string>('');
   const [author, setAuthor] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  // const [images, setImages] = useState<string[]>([]);
-  // const [files, setFiles] = useState<FileList[]>([]);
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
   async function createCourse() {
-    // const images = await handleUpload();
     await fetch(`/api/courses`, {
       method: 'POST',
       body: JSON.stringify({
@@ -58,44 +55,10 @@ export default function Page() {
     }
   };
 
-  // const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-  //     const imageUrls: string[] = [];
-  //     const newFiles = event.currentTarget.files;
-  //     Array.from(newFiles ?? []).forEach((file) => {
-  //         const imageUrl = URL.createObjectURL(file);
-  //         imageUrls.push(imageUrl);
-  //     });
-  //     setImages((s) => [...s, ...imageUrls]);
 
-  //     if (newFiles) {
-  //         setFiles([...files, newFiles]);
-  //     }
-  // };
-
-  // const handleUpload = async () => {
-  //     if (!files) return;
-  //     const formData = new FormData();
-  //     files.forEach((fileList) => {
-  //         Array.from(fileList ?? []).forEach((file) => {
-  //             formData.append("image", file, file.name);
-  //         });
-  //     })
-  //     console.log(formData);
-  //     try {
-  //       const response = await fetch("/api/upload", {
-  //         method: "POST",
-  //         body: formData,
-  //       });
-  //       const data = await response.json();
-
-  //       return data;
-  //     } catch (error) {
-  //       console.error("error uploading file:", error);
-  //     }
-  // };
 
   return (
-    <div className="flex flex-col gap-4 w-[50%]">
+    <div className="flex flex-col gap-4 p-8">
       <Input placeholder="course title" value={title} onChange={(e) => setTitle(e.target.value)} />
       <Input placeholder="course author" value={author} onChange={(e) => setAuthor(e.target.value)} />
       <Input placeholder="Write description" value={description} onChange={(e) => setDescription(e.target.value)} />
