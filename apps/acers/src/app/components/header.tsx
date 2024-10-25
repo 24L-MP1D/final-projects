@@ -1,67 +1,25 @@
 'use client';
 
-import { Search } from 'lucide-react';
+import { Search, UserCircle } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Input } from './ui/input';
-
-import Link from 'next/link';
 import { Button } from './ui/button';
+import { Input } from './ui/input';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 
 export function Component() {
   return (
-    <div className="grid place-items-center text-center">
-      <div className="mx-auto w-full max-w-sm space-y-4">
-        <div className="space-y-2">
-          <Button variant="outline" size="icon" className="w-10 h-10">
-            <MenuIcon className="hidden scale-125 w-6 h-6 lg:block" />
-            <XIcon className="scale-125 w-6 h-6 hidden lg:block" />
-            <span className="sr-only">Toggle menu</span>
+    <div className="w-6 mx-auto">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="ghost" size="icon" className="w-10 h-10 rounded-r-none">
+            <MenuIcon className="scale-125 w-6 h-6 " />
           </Button>
-          <Button variant="outline" size="icon" className="w-10 h-10">
-            <MenuIcon className="hidden scale-125 w-6 h-6 lg:block" />
-            <XIcon className="scale-125 w-6 h-6 hidden lg:block" />
-            <span className="sr-only">Toggle menu</span>
-          </Button>
-        </div>
-        <div className="border border-gray-200 rounded-lg shadow-sm dark:border-gray-800">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="w-10 h-10 rounded-r-none">
-                <MenuIcon className="hidden scale-125 w-6 h-6 lg:block" />
-                <XIcon className="scale-125 w-6 h-6 hidden lg:block" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent>
-              <div className="grid gap-4 p-4">
-                <Link
-                  href="#"
-                  className="inline-flex h-9 items-center justify-center rounded-md bg-gray-100 px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100/50 focus:bg-gray-100/50 dark:bg-gray-800 dark:hover:bg-gray-800/50 dark:focus:bg-gray-800/50"
-                  prefetch={false}
-                >
-                  Item 1
-                </Link>
-                <Link
-                  href="#"
-                  className="inline-flex h-9 items-center justify-center rounded-md bg-gray-100 px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100/50 focus:bg-gray-100/50 dark:bg-gray-800 dark:hover:bg-gray-800/50 dark:focus:bg-gray-800/50"
-                  prefetch={false}
-                >
-                  Item 2
-                </Link>
-                <Link
-                  href="#"
-                  className="inline-flex h-9 items-center justify-center rounded-md bg-gray-100 px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100/50 focus:bg-gray-100/50 dark:bg-gray-800 dark:hover:bg-gray-800/50 dark:focus:bg-gray-800/50"
-                  prefetch={false}
-                >
-                  Item 3
-                </Link>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
+        </SheetTrigger>
+        <SheetContent className="bg-white  duration-700 inset-y-0 left-0 h-full w-4/4 ">
+          <div className="bg-white"></div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
@@ -85,44 +43,49 @@ function XIcon(props: any) {
   );
 }
 
+function SearchBar() {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="ghost" size="icon" className="w-10 h-10 rounded-r-none">
+          <Search className="scale-125 w-6 h-6 " />
+        </Button>
+      </SheetTrigger>
+      <SheetContent className="bg-white  duration-700 inset-y-0 left-0 h-full w-4/4 ">
+        <div className="bg-white flex rounded-lg items-center border group focus-within:border-slate-700 pl-3 mt-2 p-1 gap-3 w-11/12">
+          <Search width={22} height={22} />
+          <Input className="border-none focus-visible:ring-0  bg-white " placeholder="What's you gonna eat?" />
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
 export default function Header() {
   const router = useRouter();
   return (
     <div>
-      {/* <div className="flex justify-between gap-3">
-        <div>
+      <div className=" mx-auto min-w-[310px] max-w-[1160px]">
+        <div className="flex justify-between items-center w-full lg:hidden">
+          <span className="flex gap-4 ">
+            <Component />
+            <SearchBar />
+          </span>
+          <Image width={50} height={45} alt="logo" src={'/Logo.png'} onClick={() => router.push(`/`)} />
+          <div className=" lg:hidden  items-center gap-2 flex ">
+            <button className="border bg-slate-400 text-white rounded-full leading-3 px-[19px]  py-[11px] hidden md:block" onClick={() => router.push(`/subscribe`)}>
+              Subscribe
+            </button>
+            <UserCircle width={24} height={24} />
+          </div>
+        </div>
+        <div className="hidden lg:flex justify-between w-full">
           <Image width={70} height={65} alt="logo" src={'/Logo.png'} onClick={() => router.push(`/`)} />
-        </div>
-        <div className="flex h-full rounded-lg items-center w-[740px] border group focus-within:border-slate-700 pl-3 mt-4 p-1 gap-3 ">
-          <Search width={22} height={22} />
-          <Input className="border-none focus-visible:ring-0" placeholder="What's you gonna eat?" />
-        </div>
-        <div className="flex flex-row gap-1 items-center mt-1">
-          <button className="border border-gray-600 rounded-full font-bold leading-3 px-[19px] py-[11px] " onClick={() => router.push(`/login`)}>
-            Log In
-          </button>
-          <button className="border bg-slate-400 text-white rounded-full leading-3 px-[19px]  py-[11px]" onClick={() => router.push(`/subscribe`)}>
-            Subscribe
-          </button>
-        </div>
-      </div>
-      <div className="flex gap-5 h-12">
-        <button className="font-bold">Want to Cook</button>
-        <button className="font-bold">Recipes</button>
-        <button className="font-bold">Ingredients</button>
-        <button className="font-bold">Ocassions</button>
-        <button className="font-bold">About</button>
-      </div> */}
-      <div className="flex flex-col gap-5 mx-auto lg:w-[904px] ">
-        <span className="flex justify-between">
-          <div>
-            <Image width={70} height={65} alt="logo" src={'/Logo.png'} onClick={() => router.push(`/`)} />
-          </div>
-          <div className="flex h-full rounded-lg items-center w-7/12 border group focus-within:border-slate-700 pl-3 mt-4 p-1 gap-3 bg-slate-200">
+          <div className="flex h-full rounded-lg items-center border group focus-within:border-slate-700 pl-3 mt-4 p-1 gap-3 w-7/12">
             <Search width={22} height={22} />
-            <Input className="border-none focus-visible:ring-0 :border-none bg-slate-200" placeholder="What's you gonna eat?" />
+            <Input className="border-none focus-visible:ring-0" placeholder="What's you gonna eat?" />
           </div>
-          <div className="flex flex-row gap-1 items-center mt-1">
+          <div className="flex gap-1 items-center mt-1 ">
             <button className="border border-gray-600 rounded-full font-bold leading-3 px-[19px] py-[11px] " onClick={() => router.push(`/login`)}>
               Log In
             </button>
@@ -130,23 +93,15 @@ export default function Header() {
               Subscribe
             </button>
           </div>
-        </span>
-        <span className="flex gap-5 h-10">
+        </div>
+        <div className="gap-5 h-12 mx-auto min-w-[310px] max-w-[1160px] hidden lg:flex">
           <button className="font-bold">Want to Cook</button>
           <button className="font-bold">Recipes</button>
           <button className="font-bold">Ingredients</button>
           <button className="font-bold">Ocassions</button>
           <button className="font-bold">About</button>
-        </span>
+        </div>
       </div>
-      {/* <div className="flex gap-5 h-10">
-        <button className="font-bold">Want to Cook</button>
-        <button className="font-bold">Recipes</button>
-        <button className="font-bold">Ingredients</button>
-        <button className="font-bold">Ocassions</button>
-        <button className="font-bold">About</button>
-      </div> */}
-      <Component />
     </div>
   );
 }
