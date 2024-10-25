@@ -2,12 +2,12 @@ import { db } from "@/lib/db";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { time, nums, calendar } = body;
+  const { time, nums, table, day } = body;
   const tablebook = await db.collection("table").insertOne({
     time,
     nums,
-    calendar,
-    createdAt: new Date()
+    table,
+    day
   });
 
   return new Response(null, {

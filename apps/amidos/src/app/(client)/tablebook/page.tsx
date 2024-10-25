@@ -1,17 +1,23 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { format } from 'date-fns';
 import { useState } from "react";
 
+
 type Time = {
-    id: number
+    id: number;
     value: string
 };
 type Number = {
     value: string
 }
 type Calendar = {
-    value: string
+    value: number
+}
+type Table = {
+    id: number;
+    name: string
 }
 
 const times: Time[] = [
@@ -28,6 +34,68 @@ const times: Time[] = [
     { id: 11, value: "21:00" },
     { id: 12, value: "22:00" },
 ];
+const tables = [
+    {
+        id: 1,
+        name: "Table-1"
+    },
+    {
+        id: 2,
+        name: "Table-2"
+    },
+    {
+        id: 3,
+        name: "Table-3"
+    },
+    {
+        id: 4,
+        name: "Table-4"
+    },
+    {
+        id: 5,
+        name: "Table-5"
+    },
+    {
+        id: 6,
+        name: "Table-6"
+    },
+    {
+        id: 7,
+        name: "Table-7"
+    },
+    {
+        id: 8,
+        name: "Table-8"
+    },
+    {
+        id: 9,
+        name: "Table-9"
+    },
+    {
+        id: 10,
+        name: "Table-10"
+    },
+    {
+        id: 11,
+        name: "Table-11"
+    },
+    {
+        id: 12,
+        name: "Table-12"
+    },
+    {
+        id: 13,
+        name: "Table-13"
+    },
+    {
+        id: 14,
+        name: "Table-14"
+    },
+    {
+        id: 15,
+        name: "Table-15"
+    },
+]
 
 const nums = [
     { value: "1 хүн" },
@@ -39,16 +107,18 @@ const nums = [
 ];
 
 export default function TableBook() {
-    const [calendar, setCalendar] = useState<string>("");
+    const [selectedCalendarDay, setSelectedCalendarDay] = useState<number | undefined>();
     const [selectedTime, setSelectedTime] = useState<Time | null>(null);
     const [number, setNumber] = useState<string>("");
+    const [selectTable, setSelectedTable] = useState<number | null>(null);
+    const [day, setDay] = useState<Date | undefined>(new Date());
 
     const reset = () => {
         setSelectedTime(null);
         setNumber("");
-        setCalendar("");
+        setSelectedCalendarDay(undefined);
+        setSelectedTable(null);
     };
-
     async function CreateOrder() {
         try {
             const response = await fetch("/api/tablebook", {
@@ -56,7 +126,9 @@ export default function TableBook() {
                 body: JSON.stringify({
                     time: selectedTime?.value,
                     nums: number,
-                    calendar: calendar,
+                    calendar: selectedCalendarDay,
+                    table: selectTable,
+                    day: format(day as Date, "yyyy-MM-dd")
                 }),
                 headers: {
                     "Content-Type": "application/json",
@@ -68,39 +140,29 @@ export default function TableBook() {
             console.error("Order creation failed:", error);
         }
     }
-
+    // day: format(day as Date, "yyyy-MM-DD")
     return (
-        <div className="flex gap-10 p-10 mx-auto">
-            <div className="flex flex-col gap-6">
-                <div className="grid grid-cols-3 gap-16">
-                    <Button className="w-32 h-16 bg-yellow-400 hover:bg-yellow-600">9</Button>
-                    <Button className="w-24 h-16 bg-yellow-400 hover:bg-yellow-600">10</Button>
-                    <Button className="w-24 h-16 bg-yellow-400 hover:bg-yellow-600">11</Button>
-                </div>
-                <div className="flex gap-36">
-                    <div className="grid col-span-6 gap-6">
-                        <Button className="w-32 h-16 bg-yellow-400 hover:bg-yellow-600">8</Button>
-                        <Button className="w-32 h-16 bg-yellow-400 hover:bg-yellow-600">7</Button>
-                        <Button className="w-32 h-16 bg-yellow-400 hover:bg-yellow-600">6</Button>
-                        <Button className="w-32 h-16 bg-yellow-400 hover:bg-yellow-600">5</Button>
-                        <Button className="w-32 h-16 bg-yellow-400 hover:bg-yellow-600">4</Button>
-                    </div>
-                    <div className="grid col-span-6 gap-6">
-                        <Button className="w-24 h-16 bg-yellow-400 hover:bg-yellow-600">12</Button>
-                        <Button className="w-24 h-16 bg-yellow-400 hover:bg-yellow-600">13</Button>
-                        <Button className="w-24 h-16 bg-yellow-400 hover:bg-yellow-600">14</Button>
-                        <Button className="w-24 h-16 bg-yellow-400 hover:bg-yellow-600">15</Button>
-                    </div>
-                </div>
-                <div className="grid grid-cols-3 gap-16">
-                    <Button className="w-32 h-16 bg-yellow-400 hover:bg-yellow-600">3</Button>
-                    <Button className="w-24 h-16 bg-yellow-400 hover:bg-yellow-600">2</Button>
-                    <Button className="w-24 h-16 bg-yellow-400 hover:bg-yellow-600">1</Button>
-                </div>
+        <div className="flex justify-center gap-10 p-10 mx-auto">
+            <div className="grid grid-cols-4 gap-16">
+                {tables.map((table) => (
+                    <Button
+                        key={table.id}
+                        className={`w-32 h-16 bg-yellow-400 hover:bg-yellow-600 ${selectTable === table.id ? "bg-yellow-600" : ""
+                            }`}
+                        onClick={() => setSelectedTable(table.id)}
+                    >
+                        {table.name}
+                    </Button>
+                ))}
             </div>
             <div className="bg-slate-300 p-4 flex flex-col gap-6">
                 <div className="self-center">
-                    <Calendar onChange={setCalendar} value={calendar} />
+                    <Calendar
+                        mode="single"
+                        selected={day}
+                        onSelect={(date) => setDay(date || undefined)}
+                        className="rounded-md border"
+                    />
                 </div>
                 <div className="flex flex-col gap-4">
                     <p className="text-2xl font-bold">Цаг сонгох</p>
@@ -133,7 +195,7 @@ export default function TableBook() {
                         ))}
                     </div>
                 </div>
-                <Button onClick={CreateOrder}>Confirm</Button>
+                <Button onClick={CreateOrder}>Үргэлжлүүлэх</Button>
             </div>
         </div>
     );
