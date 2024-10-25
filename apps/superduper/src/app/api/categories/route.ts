@@ -12,8 +12,12 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const collection = DB.collection('categories');
+    const collection = await DB.collection('categories');
+    const category=await request.json();
+    console.log(category)
+    const result=await collection.insertOne({category});
+    return new Response(null,{status:201})
   } catch (err) {
-    console.error(err);
+    return new Response(null,{status:404})
   }
 }
