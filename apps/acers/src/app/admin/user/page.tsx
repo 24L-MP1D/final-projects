@@ -17,6 +17,9 @@ export default function Home() {
             <TableHead>Email</TableHead>
             <TableHead className="">phoneNumber</TableHead>
             <TableHead className="">Role</TableHead>
+            <TableHead className="">ProfilePicture</TableHead>
+            <TableHead className="">createdAt</TableHead>
+            <TableHead className="">updatedAt</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -26,6 +29,9 @@ export default function Home() {
             <TableCell>.email</TableCell>
             <TableCell className="">.phoneNumber</TableCell>
             <TableCell className="">.Role</TableCell>
+            <TableCell className="">.picture</TableCell>
+            <TableCell className="">.createdAt</TableCell>
+            <TableCell className="">.updatedAt</TableCell>
           </TableRow>
         </TableBody>
       </Table>
