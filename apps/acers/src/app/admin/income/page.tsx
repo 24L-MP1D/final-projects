@@ -4,6 +4,14 @@ import { DashboardAside } from '../components /DashboardAside';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../components /ui/Table';
 
 export default function Home() {
+  interface user {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    repassword: string;
+  }
+
   return (
     <div className="flex ">
       <DashboardAside />
@@ -22,7 +30,7 @@ export default function Home() {
         </TableHeader>
         <TableBody>
           <TableRow className="flex justify-between">
-            <TableCell className="font-medium">Invoice ID</TableCell>
+            <TableCell className="font-medium">dd</TableCell>
             <TableCell>PaymentStatus</TableCell>
             <TableCell>PaymentMethod</TableCell>
             <TableCell>Amount</TableCell>
