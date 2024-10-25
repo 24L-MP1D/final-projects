@@ -32,12 +32,12 @@ export default function Page() {
   }, []);
 
   return (
-    <div>
-      <Link href="/school/admin-app/courses/create">
+    <div className='p-8 max-w-5xl mx-auto'>
+      <Link href="/admin-app/courses/create">
         <Button>Add new course</Button>
       </Link>
 
-      <Table className="w-[80%]">
+      <Table className="">
         <TableCaption>Create and manage courses in your school.</TableCaption>
         <TableHeader>
           <TableRow>
