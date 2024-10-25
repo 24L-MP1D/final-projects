@@ -1,8 +1,8 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import Header from './header';
-import { Button } from './ui/button';
+import Header from '../app/components/header';
+import { Button } from '../app/components/ui/button';
 
 export default function Hero() {
   return (
@@ -24,10 +24,10 @@ export default function Hero() {
             </label>
           </div>
           <div className="flex gap-2">
-            <Link href="/order">
+            <Link href="/tablebook">
               <Button className="bg-white hover:bg-slate-300 text-[#52071B] text-sm">ШИРЭЭ ЗАХИАЛГА</Button>
             </Link>
-            <Link href="/delivery">
+            <Link href="/lunch">
               <Button className="bg-[#C41D4A] hover:bg-[#8B0000]">ХООЛ ХҮРГЭЛТ</Button>
             </Link>
           </div>

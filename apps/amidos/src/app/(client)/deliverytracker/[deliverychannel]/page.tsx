@@ -1,11 +1,18 @@
 'use client';
 import { useGeolocation } from '@uidotdev/usehooks';
 import { APIProvider, AdvancedMarker, Map, useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
+import * as Ably from 'ably';
+import { AblyProvider, ChannelProvider, useChannel, useConnectionStateListener } from 'ably/react';
 import { useEffect, useState } from 'react';
 
-export function Googlemap() {
+export default function Deliverytracker({ params }: { params: { deliverychannel: string } }) {
   const state = useGeolocation();
+  const deliverychannel = params.deliverychannel;
   const GOOGLE_API = String(process.env.GOOGLE_API);
+  const latitude = state.latitude;
+  const longitude = state.longitude;
+
+  const client = new Ably.Realtime('Nh6tIw.Klcmeg:giWLIzmJQ9jQ_ovhkmin61JtSF5QScEZb_EQgxLTr5I');
   if (state.loading) {
     return <p>loading... (you may need to enable permissions)</p>;
   }
@@ -19,18 +26,28 @@ export function Googlemap() {
     return;
   } else {
     return (
-      <div style={{ height: '500px', width: 'full' }}>
-        <APIProvider apiKey={GOOGLE_API}>
-          <Map defaultCenter={position} defaultZoom={10} mapId="myMap" fullscreenControl={false}>
-            <AdvancedMarker position={position} />
-          </Map>
-          <Directions />
-        </APIProvider>
+      <div>
+        <AblyProvider client={client}>
+          <ChannelProvider channelName={deliverychannel}>
+            <div style={{ height: '500px', width: 'full' }}>
+              <APIProvider apiKey="AIzaSyCYuf3C9btTOUo7_OddJlPg0rjJuwLWf_I">
+                <Map defaultCenter={position} defaultZoom={10} mapId="myMap" fullscreenControl={false}>
+                  <AdvancedMarker position={position} />
+                  <Directions latitude={latitude} longitude={longitude} />
+                </Map>
+              </APIProvider>
+            </div>
+          </ChannelProvider>
+        </AblyProvider>
       </div>
     );
   }
 }
-function Directions() {
+type Props = {
+  latitude: Number | null;
+  longitude: Number | null;
+};
+function Directions({ latitude, longitude }: Props) {
   const map = useMap();
   const routesLibrary = useMapsLibrary('routes');
   const [directionsService, setDirectionsservicce] = useState<google.maps.DirectionsService>();
@@ -46,12 +63,29 @@ function Directions() {
     setDirectionsrenderer(new routesLibrary.DirectionsRenderer({ map }));
   }, [routesLibrary, map]);
 
+  const [messages, setMessages] = useState<Ably.Message[]>([]);
+  console.log(messages);
+  function getlocation({ deliverychannel }: { deliverychannel: string }) {
+    useConnectionStateListener('connected', () => {
+      console.log('Connected to Ably');
+    });
+
+    const { channel } = useChannel(deliverychannel, 'message', (message) => {
+      setMessages((previousMessages) => [message, ...previousMessages]);
+    });
+    return <></>;
+  }
+
+  useEffect(() => {
+    getlocation;
+  }, [messages]);
+
   useEffect(() => {
     if (!directionsService || !directionsRenderer) return;
     directionsService
       .route({
-        origin: 'BZD - 42 khoroo, Ulaanbaatar',
-        destination: 'Galaxy Tower, Ulaanbaatar',
+        origin: '47.91542, 106.92148',
+        destination: `${latitude}, ${longitude}`,
         travelMode: google.maps.TravelMode.DRIVING,
         provideRouteAlternatives: true,
       })

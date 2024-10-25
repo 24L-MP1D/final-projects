@@ -1,11 +1,10 @@
 'use client';
-import Image from 'next/image';
 
+import { Card, CardContent } from '@/components/ui/card';
+import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { EmblaPluginType } from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { useEffect, useRef, useState } from 'react';
-import { Card, CardContent } from './ui/card';
-import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
 type PropType = {
   plugins?: EmblaPluginType[];
 };
@@ -37,12 +36,12 @@ export default function Specialdishes() {
   return (
     <Carousel
       opts={{
-        align: "start",
+        align: 'start',
       }}
       className="w-full max-w-sm"
     >
       <CarouselContent>
-      {specialdishes.map((special, index) => (
+        {specialdishes.map((special, index) => (
           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
             <div className="p-1">
               <Card>
