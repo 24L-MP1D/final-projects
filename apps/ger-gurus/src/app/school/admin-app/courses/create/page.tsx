@@ -33,11 +33,11 @@ export default function Page() {
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
-  async function createCourse() {
+  async function createCourse(values) {
     await fetch(`/api/courses`, {
       method: 'POST',
       body: JSON.stringify({
-        title,
+        title: values.title,
         author,
         description,
         thumbnail: imageUrl,
@@ -88,6 +88,7 @@ export default function Page() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    createCourse(values)
     console.log(values)
   }
 
