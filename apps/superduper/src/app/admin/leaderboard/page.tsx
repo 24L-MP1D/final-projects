@@ -1,6 +1,5 @@
 'use client';
 
-
 const Home = () => {
   const approveSell = () => {
     console.log('Successfully approved the Sell request');
