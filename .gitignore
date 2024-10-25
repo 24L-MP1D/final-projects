@@ -49,8 +49,6 @@ out
 
 /.vercel
 
-yarn.lock
-
 .yarn/*
 !.yarn/cache
 !.yarn/patches
@@ -58,3 +56,5 @@ yarn.lock
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+yarn.lock
