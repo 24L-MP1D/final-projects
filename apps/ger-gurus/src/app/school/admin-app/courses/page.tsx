@@ -33,7 +33,7 @@ export default function Page() {
 
   return (
     <div>
-      <Link href="/school/admin-app/courses/create">
+      <Link href="/admin-app/courses/create">
         <Button>Add new course</Button>
       </Link>
 
