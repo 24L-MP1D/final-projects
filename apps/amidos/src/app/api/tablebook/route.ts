@@ -1,22 +1,17 @@
 import { db } from "@/lib/db";
 
 export async function POST(request: Request) {
-  const test = await db.collection('menu').insertOne({});
-  new Response('Hello, from API POST!');
-}
+  const body = await request.json();
+  const { time, nums, table, day } = body;
+  const tablebook = await db.collection("table").insertOne({
+    time,
+    nums,
+    table,
+    day
+  });
 
-export async function GET(request: Request) {
-  const bodytest = request.body;
-  const Get = await db.collection('menu').find({ bodytest });
-  console.log('Get', Get);
-  return new Response('Hello, from API GET!');
+  return new Response(null, {
+    status: 204,
+    headers: { "Content-Type": "application/json" }
+  });
 }
-
-export async function DELETE(request: Request) {
-  return new Response('Hello, from API DELETE!');
-}
-
-export async function PUT(request: Request) {
-  return new Response('Hello, from API PUT!');
-}
-
