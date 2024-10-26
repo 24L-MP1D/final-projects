@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { ProductType } from './productType';
 
-export const Safity = () => {
+export const Safity = ({ oneProduct }: { oneProduct: ProductType }) => {
   const showTextFirst = () => {
     if (showPaymentSafety) return setShowPaymentSafety(false);
     setShowPaymentSafety(true);

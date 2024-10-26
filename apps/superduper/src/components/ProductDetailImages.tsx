@@ -1,6 +1,7 @@
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
+import { ProductType } from './productType';
 
 const mockData = [
   {
@@ -10,7 +11,7 @@ const mockData = [
   },
 ];
 
-export const ProductDetailImages = () => {
+export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType }) => {
   const [imageCount, setImageCount] = useState(3);
   const imageSlice = () => {
     if (imageCount == 3) return setImageCount(10);
