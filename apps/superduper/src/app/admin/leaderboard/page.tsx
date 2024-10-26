@@ -25,6 +25,9 @@ const Home = () => {
       <button className="border-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg" onClick={rejectSell}>
         Reject the seller's request
       </button>
+      <button className="border-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg" onClick={() => window.location.href="http://localhost:3000/admin"}>
+        Close Add Category
+      </button>
     </div>
   );
 };
