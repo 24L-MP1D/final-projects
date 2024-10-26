@@ -1,3 +1,5 @@
+'use client'
+import { Button } from "@/components/ui/button"
 import {
     Table,
     TableBody,
@@ -44,15 +46,22 @@ import {
                       <TableCell>{approved.ObjectId}</TableCell>
                       <TableCell className="font-medium">{approved.category}</TableCell>
                       <TableCell className="text-center">Approved</TableCell>
-
                   </TableRow>
               )
           })}
         </TableBody>
-        <TableFooter>
+        
+          <TableFooter>
           <TableRow>
           </TableRow>
+        
+            <div className="container mx-auto flex">
+            <div><Button variant="outline" onClick={() => window.location.href="http://localhost:3000/admin"}>Close</Button></div>
+            </div>
+            
         </TableFooter>
+        
+  
       </Table>
       </div>
     )

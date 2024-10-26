@@ -29,6 +29,10 @@ export default function CarouselSize() {
       alert('Failed to approve request');
     }
   }
+  function cancelSellRequest(event: React.MouseEvent<HTMLButtonElement>): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div className="container w-[550px] peer-has-[]: mx-auto flex justify-center p-6 bg-slate-100 rounded-sm">
     <div>
@@ -58,7 +62,6 @@ export default function CarouselSize() {
       <div className="p-8">
       <CardFooter>     
         <Button onClick={approveButton ? approvedSellRequest : cancelSellRequest}>{approveRequest ? "Approve the seller's request" : "Cancel"}</Button>
-        <div className="flex-auto"><Button>Approve the seller's request</Button></div>
         <div className="flex-auto"><Button variant="outline" onClick={() => window.location.href="http://localhost:3000/admin"}>Cancel</Button></div>
       </CardFooter>
       </div>
