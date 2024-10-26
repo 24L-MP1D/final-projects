@@ -3,11 +3,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/app/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Switch } from '@/components/ui/switch';
 import { Orders } from '@/lib/types';
 import { Label } from '@radix-ui/react-label';
 import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
 import LeftBar from '../components/leftbar';
 export default function Order() {
   const [order, setOrder] = useState<Orders[]>([]);
@@ -16,8 +14,6 @@ export default function Order() {
   const [price, setPrice] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
-  const [specialOrders, setSpecialOrders] = useState<{ [key: string]: boolean }>({});
-
   const CLOUDINARY_CLOUD_NAME = 'dozicpox6';
   const CLOUDINARY_UPLOAD_PRESET = 'pe3w78vd';
 
@@ -42,7 +38,6 @@ export default function Order() {
         });
     }
   };
-
   const addFood = () => {
     const newFood = {
       name,
@@ -58,23 +53,6 @@ export default function Order() {
         },
         body: JSON.stringify(newFood),
       });
-      toast('Хоол амжилттай нэмэгдлээ');
-      console.log('created');
-    } catch (error) {
-      console.log('error');
-    }
-  };
-  const toSpecial = () => {
-    const special = {};
-    try {
-      const response = fetch('/api/hello/special', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(special),
-      });
-      toast('Хоолыг онцгой меню руу орууллаа');
       console.log('created');
     } catch (error) {
       console.log('error');
@@ -106,20 +84,12 @@ export default function Order() {
       });
   }, []);
 
-  useEffect(() => {
-    fetch('/api/special')
-      .then((res) => res.json())
-      .then((data) => {
-        setSpecialOrders(data);
-      });
-  }, []);
-
   return (
     <form className="text-md">
       <div className="bg-slate-100">
-        <div className="flex  m-10">
+        <div className="flex m-10">
           <LeftBar />
-          <div className="  bg-white  p-10 mt-10 ml-10 text-md rounded-lg">
+          <div className="w-[800px]  bg-white  p-10 mt-10 ml-10 text-md rounded-lg">
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="outline" className="mb-10 text-lg">
@@ -154,12 +124,12 @@ export default function Order() {
                     {loading && <span className="text-red">Loading...</span>}
                     {imageUrl && <img className="w-50 h-50 ml-24" src={imageUrl} alt="Uploaded" />}
                   </div>
-                  {/* <div className="grid grid-cols-3 align-items-center gap-2 ">
+                  <div className="grid grid-cols-3 align-items-center gap-2 ">
                     <Label htmlFor="width" className="text-lg h-12">
-                    
+                      Төлөв
                     </Label>
                     <Input id="width" className="col-span-2 h-12" />
-                  </div> */}
+                  </div>
                   <Button variant="outline" className="mt-3" onClick={addFood}>
                     Оруулах
                   </Button>
@@ -167,14 +137,14 @@ export default function Order() {
               </DialogContent>
             </Dialog>
             <div>
-              <Table className="text-2xl mb-5 mx-auto">
+              <Table className="text-2xl mb-5">
                 <TableHeader>
                   <TableRow className="text-center font-bold ">
                     <TableHead className="w-[100px] text-bold ">№</TableHead>
                     <TableHead className="text-bold ">Хоолны нэр, код</TableHead>
                     <TableHead className="text-bold">Орц</TableHead>
                     <TableHead className=" text-bold">Үнэ</TableHead>
-                    <TableHead className="text-bold">Онцгой хоол</TableHead>
+                    <TableHead className="text-bold">Төлөв</TableHead>
                     <TableHead className=" text-bold">Зураг</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -185,13 +155,9 @@ export default function Order() {
                       <TableCell>{order.name}</TableCell>
                       <TableCell>{order.ingredients}</TableCell>
                       <TableCell className="text-black font-bold">{order.price}</TableCell>
+                      <TableCell className="">төлөв</TableCell>
+                      <TableCell className="">{order.photos}</TableCell>
                       <TableCell className="">
-                        <Switch onClick={toSpecial} />
-                      </TableCell>
-                      <TableCell className="w-80 h-50">
-                        <img className=" ml-24 mx-auto w-[150px] h-[150px] object-cover rounded-full items-center" width={150} height={150} src={order.photos} alt={order.name} />
-                      </TableCell>
-                      <TableCell className="w-80 text-center">
                         <Button onClick={() => handleDeleteFood(order._id)}>Устгах</Button>
                       </TableCell>
                     </TableRow>

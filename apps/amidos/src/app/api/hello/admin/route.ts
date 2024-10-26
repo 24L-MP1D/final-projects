@@ -7,15 +7,13 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { name, description, ingredients, price, photos, _id, special } = body;
+  const { name, description, ingredients, price, photos } = body;
   await db.collection('admin').insertOne({
     name,
     description,
     ingredients,
     price,
     photos,
-    _id,
-    special,
   });
   return new Response(null, { status: 204 });
 }

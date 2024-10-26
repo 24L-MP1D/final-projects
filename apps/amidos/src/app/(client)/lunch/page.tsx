@@ -22,12 +22,14 @@ export default function Menu() {
       });
   }, []);
   useEffect(() => {
-    fetch('/api/hello/special')
+    fetch('/api/hello/admin')
       .then((res) => res.json())
       .then((data) => {
-        setSpecial(data);
+        setFood(data);
+        setSpecial(data.filter((dish: { isSpecial: any }) => dish.isSpecial)); // Set special dishes based on isSpecial
       });
   }, []);
+
   const navs = [
     { name: 'ЗАХИАЛГА', link: '/order' },
     { name: 'MЕНЮ', link: '/lunch' },
@@ -48,17 +50,15 @@ export default function Menu() {
 
           <Carousel className="w-full lg:max-w-md max-w-sm mb-20  md:basis-1/2 lg:basis-1/3 mx-auto">
             <CarouselContent>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <CarouselItem key={index} className="">
-                  <div className="p-1">
-                    {special.map((special: Orders) => (
-                      <Card key={special.id}>
-                        <CardContent className="flex aspect-square items-center justify-center p-6">
-                          <span className="text-4xl font-semibold"> {special.photos}</span>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
+              {special.map((specialDish: Orders) => (
+                <CarouselItem key={specialDish._id} className="">
+                  <Card>
+                    <CardContent className="flex aspect-square items-center justify-center p-6">
+                      <img src={specialDish.photos} alt={specialDish.name} className="w-full h-full object-cover" />
+                      <h2 className="text-lg font-bold">{specialDish.name}</h2>
+                      <p className="text-lg">{specialDish.price}₮</p>
+                    </CardContent>
+                  </Card>
                 </CarouselItem>
               ))}
             </CarouselContent>
