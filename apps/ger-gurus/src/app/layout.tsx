@@ -1,10 +1,11 @@
 import './global.css';
 
-import { Open_Sans } from '@next/font/google';
+import { ToastProvider } from '@/components/providers/toaster-provider';
+import { Open_Sans } from 'next/font/google';
 
 const openSans = Open_Sans({
   subsets: ['latin', 'cyrillic-ext'],
-  weight: ['400', '500', '600', '700'], // Adjust weights as needed
+  weight: ['400', '500', '600', '700'],
 });
 
 export const metadata = {
@@ -15,7 +16,10 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ToastProvider />
+        {children}
+      </body>
     </html>
   );
 }

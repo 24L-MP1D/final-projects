@@ -7,6 +7,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { z } from 'zod';
 
 const formSchema = z.object({
@@ -83,8 +84,9 @@ export default function Page() {
     try {
       const response = await axios.post('/api/courses', values);
       router.push(`/admin-app/courses/${response.data._id}`);
+      toast.success('Course created');
     } catch {
-      console.log('Something went wrong');
+      toast.error('Something went wrong');
     }
   }
 

@@ -1,5 +1,3 @@
 export default function Page() {
-    return (<div>
-        School Page
-    </div>)
+  return <div>School Page</div>;
 }

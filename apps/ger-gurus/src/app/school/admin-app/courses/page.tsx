@@ -34,7 +34,7 @@ export default function Page() {
   return (
     <div>
       <Link href="/admin-app/courses/create">
-        <Button className='p-6'>Add new course</Button>
+        <Button className="p-6">Add new course</Button>
       </Link>
 
       <Table className="w-[80%]">
@@ -54,9 +54,7 @@ export default function Page() {
         <TableBody>
           {courses.map((course) => (
             <TableRow>
-              <TableCell className="font-medium">
-                <Image src={course.thumbnail} height={40} width={40} alt="thumbnail" />
-              </TableCell>
+              <TableCell className="font-medium"> {course.thumbnail && <Image src={course.thumbnail} height={40} width={40} alt="thumbnail" />}</TableCell>
               <TableCell>{course.title}</TableCell>
               <TableCell>{course.author}</TableCell>
               <TableCell></TableCell>
