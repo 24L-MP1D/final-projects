@@ -1,36 +1,60 @@
-'use client';
-
 import {
-    Menubar,
-    MenubarMenu,
-    MenubarTrigger
-} from "@/components/ui/menubar";
-import { useEffect, useState } from 'react';
-
-export default function DisplayCategories() {
-    const [categories, setCategories] = useState<string[]>([]);
-
-    useEffect(() => {
-        async function fetchCategories() {
-            const response = await fetch('/api/categories');
-            const data = await response.json();
-            setCategories(data.map((category: { name: string }) => category.name));
-        }
-        fetchCategories();
-    }, []);
-
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableFooter,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/Table"
+  
+  const approvedSellRequest = [
+    {
+        ObjectId: "1",
+        category: "Art",
+    },
+    {
+        ObjectId: "2",
+        category: "Jewellery",
+    },
+    {
+        ObjectId: "3",
+        category: "Car",
+      },
+     
+  ]
+  
+  export default function TableDemo() {
     return (
-        <div className="container mx-auto flex flex-col gap-30">
-            <Menubar>
-                <MenubarMenu>
-                    <MenubarTrigger>Categories1</MenubarTrigger>
-                    <MenubarTrigger>Categories2</MenubarTrigger>
-                    <MenubarTrigger>Categories3</MenubarTrigger>
-                    <MenubarTrigger>Categories4</MenubarTrigger>
-                    <MenubarTrigger>Categories5</MenubarTrigger>
-                    <MenubarTrigger>Categories6</MenubarTrigger>
-                </MenubarMenu>
-            </Menubar>
-        </div>
-    );
-}
+    <div className="container w-[550px] peer-has-[]: mx-auto flex justify-center p-6 bg-slate-100 rounded-sm">
+      <Table>
+        <TableCaption>A list of your recent approved seller requests.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead>ID</TableHead>
+            <TableHead>Category name</TableHead>
+            <TableHead className="text-center">Approval status</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {approvedSellRequest.map((approved) => {
+              return (
+                  <TableRow key={approved.ObjectId}>
+                      <TableCell>{approved.ObjectId}</TableCell>
+                      <TableCell className="font-medium">{approved.category}</TableCell>
+                      <TableCell className="text-center">Approved</TableCell>
+
+                  </TableRow>
+              )
+          })}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+          </TableRow>
+        </TableFooter>
+      </Table>
+      </div>
+    )
+  }
+  
