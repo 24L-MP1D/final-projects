@@ -2564,6 +2564,7 @@ __metadata:
     "@eslint/compat": "npm:^1.1.1"
     "@eslint/js": "npm:^9.8.0"
     "@hookform/resolvers": "npm:^3.9.0"
+    "@next/font": "npm:^14.2.15"
     "@nx/eslint": "npm:20.0.3"
     "@nx/eslint-plugin": "npm:20.0.3"
     "@nx/jest": "npm:20.0.3"
@@ -2594,6 +2595,7 @@ __metadata:
     "@vis.gl/react-google-maps": "npm:^1.3.0"
     ably: "npm:^2.4.1"
     autoprefixer: "npm:10.4.13"
+    axios: "npm:^1.7.7"
     babel-jest: "npm:^29.7.0"
     bcrypt: "npm:^5.1.1"
     class-variance-authority: "npm:^0.7.0"
@@ -2634,6 +2636,7 @@ __metadata:
     react-dom: "npm:18.3.1"
     react-hook-form: "npm:^7.53.1"
     react-hook-geolocation: "npm:^1.1.0"
+    react-hot-toast: "npm:^2.4.1"
     react-icons: "npm:^5.3.0"
     react-use: "npm:^17.5.1"
     sonner: "npm:^1.5.0"
@@ -2677,6 +2680,15 @@ __metadata:
   dependencies:
     glob: "npm:10.3.10"
   checksum: 10c0/de9af2c7465cce4eb4cb50654aa2548d4d2af788c8992d02e2b863b1bf4f99e3b6604d1f0775f8e50aca6a53cf30d51f4ac56810d1625d401548267ca5f1d883
+  languageName: node
+  linkType: hard
+
+"@next/font@npm:^14.2.15":
+  version: 14.2.15
+  resolution: "@next/font@npm:14.2.15"
+  peerDependencies:
+    next: "*"
+  checksum: 10c0/771061e60465c8b61dc3a959b2086faa88b1e0e975f6442341e8f54b6083458d2130148a9430bffa10886dd5d74b18f91254d7e47b677204f742798b85fbbed1
   languageName: node
   linkType: hard
 
@@ -6538,7 +6550,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.4":
+"axios@npm:^1.7.4, axios@npm:^1.7.7":
   version: 1.7.7
   resolution: "axios@npm:1.7.7"
   dependencies:
@@ -10703,6 +10715,15 @@ __metadata:
     merge2: "npm:^1.4.1"
     slash: "npm:^4.0.0"
   checksum: 10c0/121fee62bb9a43a35a32731cda9540241003ef578f9cee5ad87b27d3020b94857ff62f8d82cb99dbeedf6f26981c9fa62509d873392642ceb37674f3d6ec4e52
+  languageName: node
+  linkType: hard
+
+"goober@npm:^2.1.10":
+  version: 2.1.16
+  resolution: "goober@npm:2.1.16"
+  peerDependencies:
+    csstype: ^3.0.10
+  checksum: 10c0/f4c8256bf9c27873d47c1443f348779ac7f322516cb80a5dc647a6ebe790ce6bb9d3f487a0fb8be0b583fb96b9b2f6b7463f7fea3cd680306f95fa6fc9db1f6a
   languageName: node
   linkType: hard
 
@@ -16147,6 +16168,18 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
   checksum: 10c0/2c0692be78112486590a61179af12fe20629b38ef75b2173312f463c200d768c97614dbc7438db8cd889580e84df9b125e7277512a2105af21c096a702a162f2
+  languageName: node
+  linkType: hard
+
+"react-hot-toast@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "react-hot-toast@npm:2.4.1"
+  dependencies:
+    goober: "npm:^2.1.10"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 10c0/591ecec3c6adc1cdb70f00165a57baa3d7f75d0d30fa767213c36496bdcc6be2b2e6a3edbf7c04f7d726a1b17dcfb5e7feb2136b04b17c9ccb769894b970f365
   languageName: node
   linkType: hard
 
