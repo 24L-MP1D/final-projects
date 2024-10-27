@@ -24,8 +24,19 @@ export default function App({ params }: { params: { chatId: string } }) {
 }
 
 function Realtime({ chatId }: { chatId: string }) {
+  const id = '671b4f498f3ba2f00e69fe3b';
+
+  const [bids, setBids] = useState<BidType[]>([]);
+
+  const [oneProduct, setOneProduct] = useState<ProductType>();
+
+  const [maximumBid, setMaximumBid] = useState(0);
+
   const validationSchema = yup.object({
-    bid: yup.number().required('Please insert a valid bid amount').min(1000, 'minumum bid is 1000'),
+    bid: yup
+      .number()
+      .required('Please insert a valid bid amount')
+      .min(maximumBid + 50, `minumum bid is ${maximumBid + 50}`),
   });
 
   const formik = useFormik({
@@ -46,14 +57,6 @@ function Realtime({ chatId }: { chatId: string }) {
     },
     validationSchema,
   });
-
-  const id = '671b4f498f3ba2f00e69fe3b';
-
-  const [bids, setBids] = useState<BidType[]>([]);
-
-  const [oneProduct, setOneProduct] = useState<ProductType>();
-
-  const [maximumBid, setMaximumBid] = useState(0);
 
   const { channel } = useChannel(chatId, 'auction-bids', (message) => {
     const maxBid = Number(message.data.bid);
@@ -97,6 +100,7 @@ function Realtime({ chatId }: { chatId: string }) {
 
         <div className="flex flex-col gap-8 pb-12">
           <Bid
+            formikSetFieldValue={formik.setFieldValue}
             formikTouched={formik.touched}
             oneProduct={oneProduct}
             formikErrors={formik.errors}
