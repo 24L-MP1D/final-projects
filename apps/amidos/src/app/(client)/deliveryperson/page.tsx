@@ -11,7 +11,7 @@ export default function Deliveryperson() {
   const latitude = state.latitude;
   const longitude = state.longitude;
   const GOOGLE_API = String(process.env.GOOGLE_API);
-  const client = new Ably.Realtime({ authUrl: '[YOUR_ABLY_TOKEN_API_URL_PATH]' });
+  const client = new Ably.Realtime({ key: 'Nh6tIw.Klcmeg:giWLIzmJQ9jQ_ovhkmin61JtSF5QScEZb_EQgxLTr5I' });
   if (state.loading) {
     return <p>loading... (you may need to enable permissions)</p>;
   }

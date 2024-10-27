@@ -21,7 +21,7 @@ export function Googlemap() {
     return;
   } else {
     return (
-      <div style={{ height: '500px', width: 'full' }}>
+      <div style={{ height: '500px', width: 'full' }} className="relative">
         <APIProvider apiKey="AIzaSyCYuf3C9btTOUo7_OddJlPg0rjJuwLWf_I">
           <Map defaultCenter={position} defaultZoom={10} mapId="myMap" fullscreenControl={false} u>
             <AdvancedMarker position={position} />
@@ -47,6 +47,11 @@ function Directions({ latitude, longitude }: Props) {
   const leg = selected?.legs[0];
 
   useEffect(() => {
+    if (!directionsRenderer) return;
+    directionsRenderer.setRouteIndex(routeIndex);
+  }, [routeIndex, directionsRenderer]);
+
+  useEffect(() => {
     if (!routesLibrary || !map) return;
     setDirectionsservicce(new routesLibrary.DirectionsService());
     setDirectionsrenderer(new routesLibrary.DirectionsRenderer({ map }));
@@ -69,8 +74,25 @@ function Directions({ latitude, longitude }: Props) {
   console.log(routes);
   if (!leg) return null;
   return (
-    <div className="directions">
-      <h2>{selected.summary}</h2>
+    <div className="directions absolute top-0 right-0 bg-gray-400 text-white w-[400px]  md:p-6 pt-4 pb-4 pl-4 rounded-lg flex flex-col gap-3">
+      <div>
+        <h2 className="md:text-xl text-base font-bold">{selected.summary}</h2>
+        <p className="md:text-xs text-base">
+          {leg.start_address.split(',')[0]} - {leg.end_address.split(',')[0]}
+        </p>
+        <p className="text-xs">Зай: {leg.distance?.text}</p>
+        <p className="text-xs">Хугацаа: {leg.duration?.text}</p>
+      </div>
+      <div>
+        <h2 className="md:text-lg text-base font-bold text-white">Other routes</h2>
+        <ul>
+          {routes.map((route, index) => (
+            <li key={route.summary} className="text-xs text-yellow-200 list-disc">
+              <button onClick={() => setRouteIndex(index)}>{route.summary}</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

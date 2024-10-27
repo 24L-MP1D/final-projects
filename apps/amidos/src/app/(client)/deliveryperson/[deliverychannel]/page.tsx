@@ -11,7 +11,7 @@ export default function Deliveryperson({ params }: { params: { deliverychannel: 
   const latitude = state.latitude;
   const longitude = state.longitude;
   const GOOGLE_API = String(process.env.GOOGLE_API);
-  const client = new Ably.Realtime('Nh6tIw.Klcmeg:giWLIzmJQ9jQ_ovhkmin61JtSF5QScEZb_EQgxLTr5I');
+  const client = new Ably.Realtime({ key: 'Nh6tIw.Klcmeg:giWLIzmJQ9jQ_ovhkmin61JtSF5QScEZb_EQgxLTr5I' });
   if (state.loading) {
     return <p>loading... (you may need to enable permissions)</p>;
   }
@@ -28,12 +28,12 @@ export default function Deliveryperson({ params }: { params: { deliverychannel: 
       <div>
         <AblyProvider client={client}>
           <ChannelProvider channelName={deliverychannel}>
-            <div style={{ height: '500px', width: 'full' }}>
+            <div style={{ height: '500px', width: 'full' }} className="relative">
               <APIProvider apiKey="AIzaSyCYuf3C9btTOUo7_OddJlPg0rjJuwLWf_I">
                 <Map defaultCenter={position} defaultZoom={10} mapId="myMap" fullscreenControl={false}>
                   <AdvancedMarker position={position} />
+                  <Directions latitude={latitude} longitude={longitude} deliverychannel={deliverychannel} />
                 </Map>
-                <Directions latitude={latitude} longitude={longitude} deliverychannel={deliverychannel} />
               </APIProvider>
             </div>
           </ChannelProvider>
@@ -50,7 +50,7 @@ type Props = {
 function Directions({ latitude, longitude, deliverychannel }: Props) {
   const map = useMap();
   const routesLibrary = useMapsLibrary('routes');
-  const [directionsService, setDirectionsservicce] = useState<google.maps.DirectionsService>();
+  const [directionsService, setDirectiionsService] = useState<google.maps.DirectionsService>();
   const [directionsRenderer, setDirectionsrenderer] = useState<google.maps.DirectionsRenderer>();
   const [routes, setRoutes] = useState<google.maps.DirectionsRoute[]>([]);
   const [routeIndex, setRouteIndex] = useState(0);
@@ -70,8 +70,13 @@ function Directions({ latitude, longitude, deliverychannel }: Props) {
   }, [longitude, latitude]);
 
   useEffect(() => {
+    if (!directionsRenderer) return;
+    directionsRenderer.setRouteIndex(routeIndex);
+  }, [routeIndex, directionsRenderer]);
+
+  useEffect(() => {
     if (!routesLibrary || !map) return;
-    setDirectionsservicce(new routesLibrary.DirectionsService());
+    setDirectiionsService(new routesLibrary.DirectionsService());
     setDirectionsrenderer(new routesLibrary.DirectionsRenderer({ map }));
   }, [routesLibrary, map]);
 
@@ -93,8 +98,25 @@ function Directions({ latitude, longitude, deliverychannel }: Props) {
   console.log(routes);
   if (!leg) return null;
   return (
-    <div className="directions">
-      <h2>{selected.summary}</h2>
+    <div className="directions absolute top-0 right-0 bg-slate-500 text-white w-[400px] p-6 rounded-lg flex flex-col gap-3">
+      <div>
+        <h2 className="text-xl font-bold">{selected.summary}</h2>
+        <p className="text-xs">
+          {leg.start_address.split(',')[0]} - {leg.end_address.split(',')[0]}
+        </p>
+        <p className="text-xs">Зай: {leg.distance?.text}</p>
+        <p className="text-xs">Хугацаа: {leg.duration?.text}</p>
+      </div>
+      <div>
+        <h2 className="text-lg font-bold text-white">Other routes</h2>
+        <ul>
+          {routes.map((route, index) => (
+            <li key={route.summary} className="text-xs text-yellow-200 list-disc">
+              <button onClick={() => setRouteIndex(index)}>{route.summary}</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

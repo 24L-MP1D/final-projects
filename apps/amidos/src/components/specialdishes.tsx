@@ -5,6 +5,8 @@ import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, Car
 import { EmblaPluginType } from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { useEffect, useRef, useState } from 'react';
+
+
 type PropType = {
   plugins?: EmblaPluginType[];
 };

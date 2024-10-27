@@ -5,14 +5,13 @@ import * as Ably from 'ably';
 import { AblyProvider, ChannelProvider, useChannel, useConnectionStateListener } from 'ably/react';
 import { useEffect, useState } from 'react';
 
-export default function Deliverytracker({ params }: { params: { deliverychannel: string } }) {
+export default function Deliveryperson({ params }: { params: { deliverychannel: string } }) {
   const state = useGeolocation();
   const deliverychannel = params.deliverychannel;
-  const GOOGLE_API = String(process.env.GOOGLE_API);
   const latitude = state.latitude;
   const longitude = state.longitude;
-
-  const client = new Ably.Realtime('Nh6tIw.Klcmeg:giWLIzmJQ9jQ_ovhkmin61JtSF5QScEZb_EQgxLTr5I');
+  const GOOGLE_API = String(process.env.GOOGLE_API);
+  const client = new Ably.Realtime({ key: 'Nh6tIw.Klcmeg:giWLIzmJQ9jQ_ovhkmin61JtSF5QScEZb_EQgxLTr5I' });
   if (state.loading) {
     return <p>loading... (you may need to enable permissions)</p>;
   }
@@ -29,11 +28,11 @@ export default function Deliverytracker({ params }: { params: { deliverychannel:
       <div>
         <AblyProvider client={client}>
           <ChannelProvider channelName={deliverychannel}>
-            <div style={{ height: '500px', width: 'full' }}>
+            <div style={{ height: '500px', width: 'full' }} className="relative">
               <APIProvider apiKey="AIzaSyCYuf3C9btTOUo7_OddJlPg0rjJuwLWf_I">
                 <Map defaultCenter={position} defaultZoom={10} mapId="myMap" fullscreenControl={false}>
                   <AdvancedMarker position={position} />
-                  <Directions latitude={latitude} longitude={longitude} />
+                  <Directions latitude={latitude} longitude={longitude} deliverychannel={deliverychannel} />
                 </Map>
               </APIProvider>
             </div>
@@ -46,39 +45,38 @@ export default function Deliverytracker({ params }: { params: { deliverychannel:
 type Props = {
   latitude: Number | null;
   longitude: Number | null;
+  deliverychannel: string;
 };
-function Directions({ latitude, longitude }: Props) {
+function Directions({ latitude, longitude, deliverychannel }: Props) {
   const map = useMap();
   const routesLibrary = useMapsLibrary('routes');
-  const [directionsService, setDirectionsservicce] = useState<google.maps.DirectionsService>();
+  const [directionsService, setDirectiionsService] = useState<google.maps.DirectionsService>();
   const [directionsRenderer, setDirectionsrenderer] = useState<google.maps.DirectionsRenderer>();
   const [routes, setRoutes] = useState<google.maps.DirectionsRoute[]>([]);
   const [routeIndex, setRouteIndex] = useState(0);
+  const [data, setData] = useState(0);
   const selected = routes[routeIndex];
   const leg = selected?.legs[0];
+  const [messages, setMessages] = useState<Ably.Message[]>([]);
+  console.log(messages);
+  useConnectionStateListener('connected', () => {
+    console.log('Connected to Ably');
+  });
+
+  const { channel } = useChannel(deliverychannel, 'message', (message) => {
+    setMessages((previousMessages) => [message, ...previousMessages]);
+  });
+
+  useEffect(() => {
+    if (!directionsRenderer) return;
+    directionsRenderer.setRouteIndex(routeIndex);
+  }, [routeIndex, directionsRenderer]);
 
   useEffect(() => {
     if (!routesLibrary || !map) return;
-    setDirectionsservicce(new routesLibrary.DirectionsService());
+    setDirectiionsService(new routesLibrary.DirectionsService());
     setDirectionsrenderer(new routesLibrary.DirectionsRenderer({ map }));
   }, [routesLibrary, map]);
-
-  const [messages, setMessages] = useState<Ably.Message[]>([]);
-  console.log(messages);
-  function getlocation({ deliverychannel }: { deliverychannel: string }) {
-    useConnectionStateListener('connected', () => {
-      console.log('Connected to Ably');
-    });
-
-    const { channel } = useChannel(deliverychannel, 'message', (message) => {
-      setMessages((previousMessages) => [message, ...previousMessages]);
-    });
-    return <></>;
-  }
-
-  useEffect(() => {
-    getlocation;
-  }, [messages]);
 
   useEffect(() => {
     if (!directionsService || !directionsRenderer) return;
@@ -94,11 +92,29 @@ function Directions({ latitude, longitude }: Props) {
         setRoutes(response.routes);
       });
   }, [directionsService, directionsRenderer]);
+
   console.log(routes);
   if (!leg) return null;
   return (
-    <div className="directions">
-      <h2>{selected.summary}</h2>
+    <div className="directions absolute top-0 right-0 bg-slate-500 text-white w-[400px] p-6 rounded-lg flex flex-col gap-3">
+      <div>
+        <h2 className="text-xl font-bold">{selected.summary}</h2>
+        <p className="text-xs">
+          {leg.start_address.split(',')[0]} - {leg.end_address.split(',')[0]}
+        </p>
+        <p className="text-xs">Зай: {leg.distance?.text}</p>
+        <p className="text-xs">Хугацаа: {leg.duration?.text}</p>
+      </div>
+      <div>
+        <h2 className="text-lg font-bold text-white">Other routes</h2>
+        <ul>
+          {routes.map((route, index) => (
+            <li key={route.summary} className="text-xs text-yellow-200 list-disc">
+              <button onClick={() => setRouteIndex(index)}>{route.summary}</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

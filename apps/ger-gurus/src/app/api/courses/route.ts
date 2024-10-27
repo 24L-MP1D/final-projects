@@ -1,4 +1,4 @@
-import { db } from "../../lib/db";
+import { db } from "@/lib/db";
 
 
 export async function GET(request: Request) {
@@ -8,10 +8,13 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { name, description } = body;
+
+  const { title, author, description, thumbnail } = body;
   await db.collection('courses').insertOne({
-    name,
+    title,
+    author,
     description,
+    thumbnail
   });
   return new Response(null, { status: 204 });
 }

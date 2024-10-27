@@ -1,29 +1,50 @@
 'use client';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/components/table';
 import { Button } from '@/app/components/ui/button';
-import { Orders } from '@/lib/types';
-
-
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Dialog, DialogContent, DialogTrigger } from '@radix-ui/react-dialog';
+import { Orders } from '@/lib/types';
 import { Label } from '@radix-ui/react-label';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import LeftBar from '../components/leftbar';
-
 export default function Order() {
   const [order, setOrder] = useState<Orders[]>([]);
-  const [food, setFood] = useState<Orders[]>([]);
   const [name, setName] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [price, setPrice] = useState('');
-  const [photos, setPhotos] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [loading, setLoading] = useState(false);
+  const CLOUDINARY_CLOUD_NAME = 'dozicpox6';
+  const CLOUDINARY_UPLOAD_PRESET = 'pe3w78vd';
 
+  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+      setLoading(true);
+      fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`, {
+        method: 'post',
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setImageUrl(data.secure_url);
+          setLoading(false);
+        })
+        .catch((err) => {
+          alert('An Error Occured While Uploading');
+        });
+    }
+  };
   const addFood = () => {
     const newFood = {
       name,
       ingredients,
       price,
-      photos,
+      photos: imageUrl,
     };
     try {
       const response = fetch('/api/hello/admin', {
@@ -33,12 +54,12 @@ export default function Order() {
         },
         body: JSON.stringify(newFood),
       });
+      toast('Хоол амжилттай нэмэгдлээ');
       console.log('created');
     } catch (error) {
       console.log('error');
     }
   };
-
   const handleDeleteFood = (id: string) => {
     fetch(`/api/hello/admin/${id}`, {
       method: 'DELETE',
@@ -55,7 +76,6 @@ export default function Order() {
         console.error('Error:', error);
       });
   };
-
   useEffect(() => {
     fetch('/api/hello/admin')
       .then((res) => res.json())
@@ -63,20 +83,19 @@ export default function Order() {
         setOrder(data);
       });
   }, []);
-
   return (
     <form className="text-md">
       <div className="bg-slate-100">
         <div className="flex m-10 m-10">
           <LeftBar />
-          <div className="w-[800px] h-[500px] bg-white  p-10 mt-10 ml-10 text-md rounded-lg">
+          <div className="  bg-white  p-10 mt-10 ml-10 text-md rounded-lg">
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="outline" className="mb-10 text-lg">
                   Хоол нэмэх
                 </Button>
               </DialogTrigger>
-              <DialogContent className="w-[600px] bg-white text-center align-items-center   z-50">
+              <DialogContent className="w-[600px] bg-white text-center align-items-center  z-50">
                 <div className="grid gap-2 p-20">
                   <div className="grid grid-cols-3 align-items-center gap-2  ">
                     <Label htmlFor="width" className="text-lg h-12 text-start ">
@@ -97,20 +116,16 @@ export default function Order() {
                     <Input id="width" className="col-span-2 h-12" onChange={(e) => setPrice(e.target.value)} />
                   </div>
                   <div className="grid grid-cols-3 align-items-center gap-2 ">
-                    <Label htmlFor="width" className="text-lg h-12">
+                    <Label htmlFor="images" className="text-lg h-12">
                       Зураг
                     </Label>
-                    <Input className="col-span-2 h-12 bg-zinc-100 " onChange={(e) => setPhotos(e.target.value)} />
+                    <Input type="file" className="col-span-2 h-12 bg-zinc-100 " id="images" onChange={handleUpload} />
+                    {loading && <span className="text-red">Loading...</span>}
+                    {imageUrl && <img className="w-50 h-50 ml-24" src={imageUrl} alt="Uploaded" />}
                   </div>
                   <div className="grid grid-cols-3 align-items-center gap-2 ">
                     <Label htmlFor="width" className="text-lg h-12">
                       Төлөв
-                    </Label>
-                    <Input id="width" className="col-span-2 h-12" />
-                  </div>
-                  <div className="grid grid-cols-3 align-items-center gap-2 ">
-                    <Label htmlFor="width" className="text-lg h-12">
-                      Устгах
                     </Label>
                     <Input id="width" className="col-span-2 h-12" />
                   </div>
@@ -121,7 +136,7 @@ export default function Order() {
               </DialogContent>
             </Dialog>
             <div>
-              <Table className="text-2xl mb-5">
+              <Table className="text-2xl mb-5 mx-auto">
                 <TableHeader>
                   <TableRow className="text-center font-bold ">
                     <TableHead className="w-[100px] text-bold ">№</TableHead>
@@ -140,8 +155,10 @@ export default function Order() {
                       <TableCell>{order.ingredients}</TableCell>
                       <TableCell className="text-black font-bold">{order.price}</TableCell>
                       <TableCell className="">төлөв</TableCell>
-                      <TableCell className="">зураг</TableCell>
-                      <TableCell className="">
+                      <TableCell className="w-80 h-50">
+                        <img className=" ml-24 mx-auto w-[150px] h-[150px] object-cover rounded-full items-center" width={150} height={150} src={order.photos} alt={order.name} />
+                      </TableCell>
+                      <TableCell className="w-80 text-center">
                         <Button onClick={() => handleDeleteFood(order._id)}>Устгах</Button>
                       </TableCell>
                     </TableRow>
