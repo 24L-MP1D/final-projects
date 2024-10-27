@@ -1,8 +1,12 @@
 import { IconBadge } from '@/components/icon-badge';
 import { db } from '@/lib/db';
-import { LayoutDashboard } from 'lucide-react';
+import { CircleDollarSign, File, LayoutDashboard, ListCheck } from 'lucide-react';
 import { ObjectId } from 'mongodb';
 import { redirect } from 'next/navigation';
+import { AttachmentForm } from './_components/attachment-form';
+import { DescriptionForm } from './_components/description-form';
+import { ImageForm } from './_components/image-form';
+import { PriceForm } from './_components/price-form';
 import { TitleForm } from './_components/title-form';
 
 export default async function Page({ params }: { params: { courseId: string } }) {
@@ -41,6 +45,31 @@ export default async function Page({ params }: { params: { courseId: string } })
             <h2 className="text-xl">Customize your course</h2>
           </div>
           <TitleForm initialData={courseWithPlainId} />
+          <DescriptionForm initialData={courseWithPlainId} />
+          <ImageForm initialData={courseWithPlainId} />
+        </div>
+        <div className="space-y-6">
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={ListCheck} />
+              <h2 className="text-xl">Course chapters</h2>
+            </div>
+            <div>todo:chapters</div>
+          </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={CircleDollarSign} />
+              <h2 className="text-xl">Sell your course</h2>
+            </div>
+            <PriceForm initialData={courseWithPlainId} />
+          </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={File} />
+              <h2 className="text-xl">Resources and Attachments</h2>
+            </div>
+            <AttachmentForm initialData={courseWithPlainId} />
+          </div>
         </div>
       </div>
     </div>

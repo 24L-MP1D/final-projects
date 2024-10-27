@@ -11,7 +11,7 @@ export default function Page() {
     title: string;
     author: string;
     description: string;
-    thumbnail: string;
+    imageUrl: string;
   }
   const [courses, setCourses] = useState<Course[]>([]);
 
@@ -54,7 +54,7 @@ export default function Page() {
         <TableBody>
           {courses.map((course) => (
             <TableRow>
-              <TableCell className="font-medium"> {course.thumbnail && <Image src={course.thumbnail} height={40} width={40} alt="thumbnail" />}</TableCell>
+              <TableCell className="font-medium"> {course.imageUrl && <Image src={course.imageUrl} height={40} width={40} alt="thumbnail" />}</TableCell>
               <TableCell>{course.title}</TableCell>
               <TableCell>{course.author}</TableCell>
               <TableCell></TableCell>

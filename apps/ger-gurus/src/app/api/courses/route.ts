@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-  const courses = await db.collection('courses').find({}).sort({ metacritic: -1 }).limit(10).toArray();
+  const courses = await db.collection('courses').find({}).sort({ metacritic: -1 }).limit(20).toArray();
   return Response.json(courses);
 }
 
