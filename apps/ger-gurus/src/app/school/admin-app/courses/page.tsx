@@ -36,7 +36,6 @@ export default function Page() {
       <Link href="/admin-app/courses/create">
         <Button className="p-6">Add new course</Button>
       </Link>
-
       <Table className="">
         <TableCaption>Create and manage courses in your school.</TableCaption>
         <TableHeader>
