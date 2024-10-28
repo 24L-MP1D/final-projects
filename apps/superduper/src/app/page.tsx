@@ -8,44 +8,44 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Product, ProductItem } from './components/productItem';
 
-const images = [
-  'https://media.wired.com/photos/66180ed0c1ba76f5ce2ff268/master/w_2240,c_limit/Rolex.jpg',
-  'https://media.wired.com/photos/66180ed0c1ba76f5ce2ff268/master/w_2240,c_limit/Rolex.jpg',
-  'https://media.wired.com/photos/66180ed0c1ba76f5ce2ff268/master/w_2240,c_limit/Rolex.jpg',
-  'https://media.wired.com/photos/66180ed0c1ba76f5ce2ff268/master/w_2240,c_limit/Rolex.jpg',
-];
-
 export default function Index() {
   // Product data codes
   const [products, setProducts] = useState<Product[]>([]);
 
+  const [progress, setProgress] = useState(0);
+  const swiperRef = useRef<SwiperType | null>(null);
+
+  interface product {
+    image: string
+  }
+
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await fetch('/api/products');
-      const data = await res.json();
-      console.log(data);
+      try {
+        const res = await fetch('/api/products');
+        if (!res.ok) throw new Error('Network response was not ok');
+        const data = await res.json();
+        setProducts(data);
 
-      setProducts(data);
+        // Extract image URLs from the products
+        const imageUrls = data.map((product: product) => product.image);
+
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
     };
     fetchProducts();
   }, []);
-
-  // SWIPER codes
-  const [progress, setProgress] = useState(0);
-  const swiperRef = useRef<SwiperType | null>(null);
 
   const handleProgressClick = (e: number) => {
     if (swiperRef.current) {
       swiperRef.current.slideTo(e);
     }
   };
+
   const handleNextSlide = () => {
     if (swiperRef.current) {
-      if (swiperRef.current.activeIndex === 3) {
-        swiperRef.current.slideTo(0);
-      } else {
-        swiperRef.current.slideNext();
-      }
+      swiperRef.current.slideNext();
     }
   };
 
@@ -81,28 +81,22 @@ export default function Index() {
               <div className="text-[#0033FF] text-sm">Explore now</div>
             </div>
           </div>
+          {/* Progress Bar */}
           <div className="flex w-full mt-[100px] h-[40px] gap-2">
-            <div className="relative h-[7px] w-full bg-gray-300 mt-4 rounded-full">
-              <div className="absolute top-0 left-0 h-full bg-blue-500 rounded-full" style={{ width: progress === 0 ? `${100}%` : 'auto' }}></div>
-              <div className="absolute top-0 left-0 h-full w-full cursor-pointer" onClick={() => handleProgressClick(0)}></div>
-            </div>
-            <div className="relative h-[7px] w-full bg-gray-300 mt-4 rounded-full">
-              <div className="absolute top-0 left-0 h-full bg-blue-500 rounded-full" style={{ width: progress === 1 ? `${100}%` : 'auto' }}></div>
-              <div className="absolute top-0 left-0 h-full w-full cursor-pointer" onClick={() => handleProgressClick(1)}></div>
-            </div>
-            <div className="relative h-[7px] w-full bg-gray-300 mt-4 rounded-full">
-              <div className="absolute top-0 left-0 h-full bg-blue-500 rounded-full" style={{ width: progress === 2 ? `${100}%` : 'auto' }}></div>
-              <div className="absolute top-0 left-0 h-full w-full cursor-pointer" onClick={() => handleProgressClick(2)}></div>
-            </div>
-            <div className="relative h-[7px] w-full bg-gray-300 mt-4 rounded-full">
-              <div className="absolute top-0 left-0 h-full bg-blue-500 rounded-full" style={{ width: progress === 3 ? `${100}%` : 'auto' }}></div>
-              <div className="absolute top-0 left-0 h-full w-full cursor-pointer" onClick={() => handleProgressClick(3)}></div>
-            </div>
+            {Array.from({ length: products.length }).slice(0, 6).map((_, index) => (
+              <div key={index} className="relative h-[7px] w-full bg-gray-300 rounded-full">
+                <div className={`absolute top-0 left-0 h-full bg-blue-500 rounded-full`}
+                  style={{ width: progress === index ? '100%' : '0%', transition: 'width 0.8s ease-in-out' }}>
+                </div>
+                <div className="absolute top-0 left-0 h-full w-full cursor-pointer" onClick={() => handleProgressClick(index)}></div>
+              </div>
+            ))}
             <button className="items-center text-[#0033FF] ml-[5px]" onClick={handleNextSlide}>
               <ChevronRight strokeWidth={1.75} />
             </button>
           </div>
         </div>
+
         <div className="w-[60%] py-10 pl-10">
           <Swiper
             direction={'vertical'}
@@ -117,14 +111,14 @@ export default function Index() {
             }}
             modules={[Pagination, Autoplay]}
             onSwiper={(swiper) => (swiperRef.current = swiper)} // Save swiper instance
-            onSlideChange={(swiper) => setProgress(swiper.activeIndex)}
+            onSlideChange={(swiper) => setProgress(swiper.activeIndex)} // Update progress
             style={{
               height: '360px',
             }}
           >
-            {images.map((src, index) => (
+            {products.slice(0, 6).map((product, index) => (
               <SwiperSlide key={index}>
-                <Image alt={`Slide ${index + 1}`} src={src} width={1200} height={600} className="w-full h-full object-cover" />
+                <Image alt={`Slide ${index + 1}`} src={product.image_url} width={1200} height={600} className="w-full h-full object-cover" />
               </SwiperSlide>
             ))}
           </Swiper>
