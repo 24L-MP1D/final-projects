@@ -2,8 +2,10 @@
 
 import { FormikValues, useFormik } from 'formik';
 import Link from 'next/link';
+import { useState } from 'react';
 import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
+import { Toaster, toast } from 'sonner';
 import * as yup from 'yup';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from './ui/Dialog';
 import { Input } from './ui/Input';
@@ -39,7 +41,10 @@ export const SignUp = () => {
     validationSchema,
   });
 
+  const [loading, setLoading] = useState(false);
+
   async function Submit(values: FormikValues) {
+    setLoading(true);
     try {
       const response = await fetch('/api/signup', {
         method: 'POST',
@@ -50,6 +55,9 @@ export const SignUp = () => {
       });
       if (response.status === 201) {
         console.log('success');
+        toast('Signed Up successfully');
+
+        setLoading(false);
       } else {
         console.log('error');
       }
@@ -104,14 +112,15 @@ export const SignUp = () => {
             {<span className="text-red-600">{formik.errors.password}</span>}
           </div>
           <DialogDescription>At least 8 characters, one capital letter, one lower case letter, one number and one special character.</DialogDescription>
+          <DialogFooter>
+            <Button className="bg-blue-700 flex-1 disabled:cursor-not-allowed" type="submit" disabled={loading}>
+              {loading && <span className="loading loading-spinner"></span>}
+              Agree and Continue
+            </Button>
+          </DialogFooter>
         </form>
-
-        <DialogFooter>
-          <Button onClick={Submit} className="bg-blue-700 flex-1 disabled:cursor-not-allowed" type="submit" disabled={isValid}>
-            Agree and Continue
-          </Button>
-        </DialogFooter>
       </DialogContent>
+      <Toaster />
     </Dialog>
   );
 };
