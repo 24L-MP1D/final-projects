@@ -24,7 +24,7 @@ export const Auction = ({ oneProduct }: { oneProduct: ProductType }) => {
       return;
     }
 
-    await channel.publish('new-bid', data);
+    channel.publish('new-bid', data);
     console.log('Preparing to post bid...');
     try {
       const response = await fetch('/api/bids', {

@@ -2,13 +2,13 @@
 import { Button } from '@/app/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Orders } from '@/lib/types';
+import { Food } from '@/lib/types';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function Menu() {
-  const [food, setFood] = useState<Orders[]>([]);
-  const [special, setSpecial] = useState<Orders[]>([]);
+  const [food, setFood] = useState<Food[]>([]);
+  const [special, setSpecial] = useState<Food[]>([]);
   const specialdishes = [
     { url: '/carbonara.jpg', price: 21000, name: 'Carbonara' },
     { url: '/pasta.jpg', price: 15000, name: 'Pasta' },
@@ -21,15 +21,14 @@ export default function Menu() {
         setFood(data);
       });
   }, []);
+
   useEffect(() => {
-    fetch('/api/hello/admin')
+    fetch('/api/special')
       .then((res) => res.json())
       .then((data) => {
         setFood(data);
-        setSpecial(data.filter((dish: { isSpecial: any }) => dish.isSpecial)); // Set special dishes based on isSpecial
       });
   }, []);
-
   const navs = [
     { name: 'ЗАХИАЛГА', link: '/order' },
     { name: 'MЕНЮ', link: '/lunch' },
@@ -49,25 +48,29 @@ export default function Menu() {
           <h1 className="text-7xl italic text-center underline underline-1 mb-20">Онцлох Меню</h1>
 
           <Carousel className="w-full lg:max-w-md max-w-sm mb-20  md:basis-1/2 lg:basis-1/3 mx-auto">
-            <CarouselContent>
-              {special.map((specialDish: Orders) => (
-                <CarouselItem key={specialDish._id} className="">
-                  <Card>
-                    <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <img src={specialDish.photos} alt={specialDish.name} className="w-full h-full object-cover" />
-                      <h2 className="text-lg font-bold">{specialDish.name}</h2>
-                      <p className="text-lg">{specialDish.price}₮</p>
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
+            <Carousel className="w-full lg:max-w-md max-w-sm mb-20 md:basis-1/2 lg:basis-1/3 mx-auto">
+              <CarouselContent>
+                {special.map((specialDish: Food) => (
+                  <CarouselItem key={specialDish._id}>
+                    <Card>
+                      <CardContent className="flex aspect-square items-center justify-center p-6">
+                        <img src={specialDish.photos} alt={specialDish.name} className="w-full h-full object-cover" />
+                        <h2 className="text-lg font-bold">{specialDish.name}</h2>
+                        <p className="text-lg">{specialDish.price}₮</p>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
             <CarouselPrevious />
             <CarouselNext />
           </Carousel>
           <h1 className="text-7xl italic text-center mb-10 mx-auto underline underline-1 text-[#4A433E]">Lunch set</h1>
           <div className="mt-20 mx-auto lg:w-[1200px] flex flex-col lg:flex lg:flex-wrap lg:flex-row  gap-16 mb-20">
-            {food.map((food: Orders) => (
+            {food.map((food: Food) => (
               <div key={food._id} className="w-[320px] h-[380px] border-2 border-[#8B0000]  absoulte rounded-sm p-10 ">
                 <div className="rounded-full width={150} height={150}">
                   <img src={food.photos} width={150} height={150} alt={food.name} className="mx-auto w-[150px] h-[150px] object-cover rounded-full items-center" />

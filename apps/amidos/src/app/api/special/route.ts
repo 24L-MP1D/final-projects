@@ -1,14 +1,18 @@
 import { db } from '@/lib/db';
-import { ObjectId } from 'mongodb';
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { id, isSpecial } = body;
-
-  await db.collection('admin').updateOne(
-    { _id: new ObjectId(id) },
-    { $set: { isSpecial } } // Update the isSpecial field in the database
-  );
+  const { _id, name, photos, price } = body;
+  await db.collection('special').insertOne({
+    _id,
+    name,
+    price,
+    photos,
+  });
 
   return new Response(null, { status: 204 });
+}
+export async function GET(request: Request) {
+  const isSpecial = await db.collection('special').find({}).toArray();
+  return Response.json(isSpecial);
 }
