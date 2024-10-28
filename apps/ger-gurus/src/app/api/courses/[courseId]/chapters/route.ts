@@ -1,5 +1,4 @@
 import { db } from "@/lib/db";
-import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 
 
@@ -15,10 +14,10 @@ export async function POST(request: Request, { params }: { params: { courseId: s
         // if (!userId){
         //   return new NextResponse("Unauthorized", {status:401})
         // }
-        const courseOwner= await db.collection("course").findOne({_id: new ObjectId(params.courseId)})
-        if (!courseOwner){
-          return new NextResponse("Unauthorized", {status: 401})
-        }
+        // const courseOwner= await db.collection("course").findOne({_id: new ObjectId(params.courseId)})
+        // if (!courseOwner){
+        //   return new NextResponse("Unauthorized", {status: 401})
+        // }
         await db.collection('chapters').insertOne({title});
         return new Response(null, { status: 204 });
     
