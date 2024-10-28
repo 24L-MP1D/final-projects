@@ -15,7 +15,9 @@ export async function POST(request: Request, { params }: { params: { courseId: s
         // if (!userId){
         //   return new NextResponse("Unauthorized", {status:401})
         // }
+
         const courseOwner= await db.collection("course").findOne({_id: new ObjectId(params.courseId)})
+
         if (!courseOwner){
           return new NextResponse("Unauthorized", {status: 401})
         }
