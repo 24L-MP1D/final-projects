@@ -1,63 +1,108 @@
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-
+'use client';
+import dayjs from 'dayjs';
+import { FormikErrors, FormikTouched } from 'formik';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { BidType } from './bidType';
+import { ProductType } from './productType';
 import { Button } from './ui/button';
 import { Input } from './ui/Input';
-
 interface FormValues {
   bid: number;
 }
+type Props = {
+  bids: BidType[];
+  formikValues: FormValues;
+  sendBid: () => void;
+  formikTouched: FormikTouched<FormValues>;
+  formikErrors: FormikErrors<FormValues>;
+  formikHandleChange: (e: ChangeEvent) => void;
+  oneProduct: ProductType;
+  maximumBid: number;
+  formikSetFieldValue: (name: string, value: number) => void;
+};
+type DateType = {
+  day: number;
+  dateHours: number;
+  dateMinuts: number;
+  dateSecunds: number;
+};
+export const Bid = ({ bids, maximumBid, formikValues, formikSetFieldValue, formikTouched, oneProduct, formikErrors, formikHandleChange }: Props) => {
+  const [showDate, setShowDate] = useState<DateType>();
+  const endDate = new Date(oneProduct.endDate).getTime();
+  const [showAllBids, setShowAllBids] = useState(0);
+  const sticky = useRef<HTMLDivElement | null>(null);
+  const startDate = new Date().getTime();
+  let betweenDate = endDate - startDate;
+  const [isSticky, setIsSticky] = useState(false);
 
-export const Bid = () => {
-  const validationSchema = yup.object({
-    bid: yup.number().required('Please insert a valid bid amount').min(1000, 'minumum bid is 1000'),
-  });
+  useEffect(() => {
+    const handleScroll = () => {
+      if (sticky.current) {
+        const { bottom } = sticky.current.getBoundingClientRect();
+        setIsSticky(bottom < 0);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    const timeInterval = setInterval(() => {
+      const time = {
+        day: Math.floor(betweenDate / (1000 * 60 * 60 * 24)),
+        dateHours: Math.floor((betweenDate % (1000 * 60 * 60 * 24)) / (60 * 60 * 1000)),
+        dateMinuts: Math.floor((betweenDate % (60 * 60 * 1000)) / (60 * 1000)),
+        dateSecunds: Math.floor((betweenDate % (60 * 1000)) / 1000),
+      };
 
-  const formik = useFormik({
-    initialValues: {
-      bid: '',
-    },
-    onSubmit: async (values, { resetForm }) => {
-      fetch('/api/hello', {
-        method: 'POST',
-        body: JSON.stringify({ bid: values.bid }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      resetForm();
-    },
-    validationSchema,
-  });
+      if (betweenDate < 0) {
+        clearInterval(timeInterval);
+        setShowDate(undefined);
+        return;
+      }
+      setShowDate(time);
+    }, 1000);
+
+    return () => {
+      clearInterval(timeInterval);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [showDate]);
+
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div>Closes in 4d 4h 04m 35s</div>
-      <div className="border-l-2 border-b-2 border-slate-300">
-        <div className="mt-3 border-t-2 border-blue-600 py-8 px-6">
+    <div ref={sticky} className={`${isSticky ? 'sticky right-0 top-0' : ''} z-[100] bg-white`}>
+      <div>
+        Closed in {showDate?.day}d {showDate?.dateHours}h {showDate?.dateMinuts}m {showDate?.dateSecunds}s
+      </div>
+      <div className="border-2 border-t-2 border-t-blue-600 border-b-2 border-slate-300">
+        <div className="mt-3  py-8 px-6">
           <div className="flex flex-col gap-2">
             <div className="text-sm">Current bid</div>
-            <div className="font-bold text-3xl">€ 18,500</div>
+            <div className="font-bold text-3xl">€ {maximumBid}</div>
             <div className="text-sm">Reserve price not met</div>
           </div>
         </div>
         <div className="flex flex-col gap-2 pt-8 px-4">
           <div className="flex gap-4">
-            <div className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer">3000</div>
-            <div className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer">3500</div>
-            <div className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer">4000</div>
+            <div onClick={() => formikSetFieldValue('bid', Math.ceil(maximumBid) + 500)} className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer">
+              {Math.ceil(maximumBid) + 500}
+            </div>
+            <div onClick={() => formikSetFieldValue('bid', Math.ceil(maximumBid) + 1000)} className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer">
+              {Math.ceil(maximumBid) + 1000}
+            </div>
+            <div onClick={() => formikSetFieldValue('bid', Math.ceil(maximumBid) + 1500)} className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer">
+              {Math.ceil(maximumBid) + 1500}
+            </div>
           </div>
           <label className="border-solid bg-[#f8f7f8] flex gap-1 items-center py-1 px-3 w-full">
             <div className="text-slate-500">€</div>
             <Input
               id="bid"
-              onChange={formik.handleChange}
-              value={Number(formik.values.bid) !== 0 ? formik.values.bid : ''}
+              onChange={formikHandleChange}
+              value={formikValues.bid > 0 ? formikValues.bid : ''}
               className="w-full p-2 bg-[#f8f7f8]"
-              placeholder="3,350 or up"
+              placeholder={`${maximumBid ? maximumBid : oneProduct.startBid} or up`}
               type="number"
             />
           </label>
-          {formik.touched.bid && formik.errors.bid && <p className="ml-8 text-red-500">{formik.errors.bid}</p>}
+          {formikTouched.bid && formikErrors.bid && <p className="ml-8 text-red-500">{formikErrors.bid}</p>}
           <div className="flex gap-1 w-full">
             <Button type="submit" className="flex-1 border-[1px] py-2 px-4 bg-white text-blue-500 text-center">
               Place bid
@@ -74,14 +119,31 @@ export const Bid = () => {
           <div>Closes: Saturday 18:01</div>
         </div>
         <div className="pt-8 px-4 flex flex-col gap-[40px]">
-          <div className="flex justify-between">
-            <div>Bidder 0835</div>
-            <div>1 day ago</div>
-            <div>€3,150</div>
+          <div className="overflow-y-scroll relative w-full max-h-80 flex flex-col gap-2">
+            {bids.slice(0, 3).map((bid, index) => (
+              <div key={bid._id} className="flex justify-between items-center">
+                <div>{bid.userId}</div>
+                <div className="p-2">{bid.bid}</div>
+                <div>{dayjs(bid.createdAt).format('YYYY-MM-DD')}</div>
+              </div>
+            ))}
           </div>
-          <div className="mb-2">See all bids (7)</div>
+
+          <label className="mb-2 hover:cursor-pointer flex justify-between">
+            {bids.length > 3 && <div> See all bids({bids.length - 3})</div>}
+            <div>{showAllBids == 0 ? <ChevronDown onClick={() => setShowAllBids(bids.length)} /> : <ChevronUp onClick={() => setShowAllBids(0)} />}</div>
+          </label>
+          <div className="overflow-y-scroll relative w-full max-h-80 flex flex-col gap-2">
+            {bids.slice(3, showAllBids).map((bid, index) => (
+              <div key={bid._id} className="flex justify-between items-center">
+                <div>{bid.userId}</div>
+                <div className="p-2">{bid.bid}</div>
+                <div>{dayjs(bid.createdAt).format('YYYY-MM-DD')}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </form>
+    </div>
   );
 };
