@@ -14,6 +14,8 @@ export interface FormValues {
   damage: string;
   restored: string;
   startBid: number;
+  startDate: Date;
+  endDate: Date;
 }
 type Props = {
   formikValues: FormValues;
@@ -22,7 +24,6 @@ type Props = {
   formikErrors: FormikErrors<FormValues>;
   formikHandleChange: (e: ChangeEvent) => void;
   showCountry: boolean;
-
   formikSetFieldValue: (name: string, value: string) => void;
 };
 
