@@ -2,6 +2,7 @@
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { composePlugins, withNx } = require('@nx/next');
+const { hostname } = require('os');
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -12,8 +13,12 @@ const nextConfig = {
       {
         hostname: 'res.cloudinary.com',
       },
+      {
+        hostname: 'media.wired.com',
+      },
     ],
   },
+
   nx: {
     // Set this to true if you would like to use SVGR
     // See: https://github.com/gregberge/svgr
