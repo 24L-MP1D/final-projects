@@ -1,5 +1,5 @@
-name: Example-project Deployment
-run-name: Example-project is being deployed
+name: amidos Deployment
+run-name: amidos is being deployed
 on:
   workflow_dispatch:
   push:

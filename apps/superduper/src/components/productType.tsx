@@ -19,4 +19,6 @@ export type ProductType = {
   additionalImage: string;
   damageImage: string;
   signatureImage: string;
+  startDate: Date;
+  endDate: Date;
 };

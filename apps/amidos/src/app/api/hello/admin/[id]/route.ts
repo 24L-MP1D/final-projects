@@ -1,5 +1,5 @@
-import { db } from "@/lib/db";
-import { ObjectId } from "mongodb";
+import { db } from '@/lib/db';
+import { ObjectId } from 'mongodb';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   const oneDish = await db.collection('admin').findOne({ _id: new ObjectId(params.id) });
@@ -27,4 +27,3 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
   await db.collection('admin').deleteOne({ _id: new ObjectId(params.id) });
   return new Response(null, { status: 204 });
 }
-
