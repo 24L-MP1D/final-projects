@@ -46,12 +46,12 @@ export const VideoInput = ({ register }: { register: (name: string, value: File 
       <input type="file" ref={fileInputRef} style={{ display: 'none' }} accept="video/*" onChange={handleFileChange} />
       <div className="flex gap-2 flex-wrap mt-4">
         {video ? (
-          <div className="w-[125px] border-[1px] border-[#D6D8DB] border-dashed rounded-[16px] relative group">
+          <div className="w-[125px] border-[1px] border-[#D6D8DB] border-dashed rounded-[16px] relative group flex gap-2">
             <video className="object-cover w-full h-full" controls>
               <source src={videoURL || ''} type={video.type} />
               Your browser does not support the video tag.
             </video>
-            <p className="text-xs text-center mt-1">{video.name}</p> {/* Display video name */}
+            <p className="text-xs text-center mt-1 w-full">{video.name}</p>
             <button className="rounded-full w-5 h-5 -right-2.5 -top-2.5 bg-slate-600 text-white absolute group-hover:block hidden" onClick={deleteVideo}>
               <X size={13} className="m-auto" />
             </button>
