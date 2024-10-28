@@ -35,6 +35,7 @@ export default function Page() {
     } catch {
       toast.error('Something went wrong');
     }
+
   }
 
   return (
@@ -71,6 +72,7 @@ export default function Page() {
             </div>
           </form>
         </Form>
+
       </div>
     </div>
   );

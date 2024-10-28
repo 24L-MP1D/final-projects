@@ -1,5 +1,7 @@
 'use client';
 
+import { Card, CardContent } from '@/components/ui/card';
+import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { EmblaPluginType } from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { useEffect, useRef, useState } from 'react';

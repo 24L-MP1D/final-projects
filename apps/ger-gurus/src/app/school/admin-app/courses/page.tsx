@@ -37,7 +37,7 @@ export default function Page() {
         <Button className="p-6">Add new course</Button>
       </Link>
 
-      <Table className="w-[80%]">
+      <Table className="">
         <TableCaption>Create and manage courses in your school.</TableCaption>
         <TableHeader>
           <TableRow>
