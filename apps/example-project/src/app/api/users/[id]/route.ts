@@ -1,19 +1,18 @@
-import { db } from '@/lib/db';
 import { ObjectId } from 'mongodb';
-
+import { db } from '../../../../lib/db';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const oneCourse = await db.collection('courses').findOne({ _id: new ObjectId(params.id) });
-  if (!oneCourse) {
+  const oneUser = await db.collection('users').findOne({ _id: new ObjectId(params.id) });
+  if (!oneUser) {
     return new Response('Not Found', { status: 404 });
   }
-  return Response.json(oneCourse);
+  return Response.json(oneUser);
 }
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   const body = await request.json();
 
-  await db.collection('courses').updateOne(
+  await db.collection('users').updateOne(
     {
       _id: new ObjectId(params.id),
     },
@@ -25,6 +24,6 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
-  await db.collection('courses').deleteOne({ _id: new ObjectId(params.id) });
+  await db.collection('users').deleteOne({ _id: new ObjectId(params.id) });
   return new Response(null, { status: 204 });
 }
