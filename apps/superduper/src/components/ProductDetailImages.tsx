@@ -1,47 +1,32 @@
 import Image from 'next/image';
-import { useState } from 'react';
 import { ProductType } from './productType';
 
-const mockData = [
-  {
-    productName: 'Hermès - Kelly Mini - Handbag',
-    productImage: ['/images/handbag.jpg', '/images/handbag.jpg', '/images/handbag.jpg', '/images/handbag.jpg', '/images/handbag.jpg'],
-    productNo: 88884317,
-  },
-];
-
 export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType }) => {
-  const [imageCount, setImageCount] = useState(3);
-  const imageSlice = () => {
-    if (imageCount == 3) return setImageCount(10);
-    setImageCount(3);
-  };
-
   return (
     <div className="max-w-[750px] mx-auto w-full">
-      <div className="text-[40px]">{oneProduct.productName}</div>
       <div>
-        <div>NO. {mockData[0].productNo}</div>
-        <div className="w-full grid gap-2 grid-cols-2">
-          <div className="border-solid border-[1px]  cursor-pointer">
-            <Image className="object-cover shadow drop-shadow-xl" src={oneProduct.frontImage} alt="front-image" width={1000} height={1000} />
+        <div className="text-[40px]">{oneProduct.productName}</div>
+        <div>NO.14214</div>
+        <div className="flex gap-3">
+          <div className="w-full">
+            <Image className="object-cover rounded-lg w-full shadow drop-shadow-xl" src={oneProduct.frontImage} alt="front-image" width={1000} height={1000} />
           </div>
-          <div className="border-solid border-[1px]  cursor-pointer ">
-            <Image className="object-cover shadow drop-shadow-xl" src={oneProduct.backImage} alt="front-image" width={1000} height={1000} />
+          <div className="flex flex-col gap-3">
+            <Image className="object-cover w-[150px] h-[150px] rounded-lg shadow drop-shadow-xl" src={oneProduct.backImage} alt="front-image" width={1000} height={1000} />
+
+            <Image className="object-cover w-[150px] h-[150px] rounded-lg shadow aspect-video drop-shadow-xl" src={oneProduct.detailImage} alt="front-image" width={1000} height={1000} />
+
+            {oneProduct.damageImage && (
+              <div className="border-solid border-[1px] flex-1 cursor-pointer">
+                <Image className="object-cover w-[150px] h-[150px] shadow rounded-lg  drop-shadow-xl" src={oneProduct.damageImage} alt="front-image" width={1000} height={1000} />
+              </div>
+            )}
+            {oneProduct.signatureImage && (
+              <div className="border-solid border-[1px] flex-1 cursor-pointer">
+                <Image className="object-cover  w-[150px] h-[150px] shadow rounded-lg drop-shadow-xl" src={oneProduct.signatureImage} alt="front-image" width={1000} height={1000} />
+              </div>
+            )}
           </div>
-          <div className="border-solid border-[1px]  cursor-pointer col-span-2">
-            <Image className="object-cover shadow drop-shadow-xl" src={oneProduct.detailImage} alt="front-image" width={1000} height={1000} />
-          </div>
-          {oneProduct.damageImage && (
-            <div className="border-solid border-[1px]  cursor-pointer">
-              <Image className="object-cover shadow drop-shadow-xl" src={oneProduct.damageImage} alt="front-image" width={1000} height={1000} />
-            </div>
-          )}
-          {oneProduct.signatureImage && (
-            <div className="border-solid border-[1px]  cursor-pointer">
-              <Image className="object-cover shadow drop-shadow-xl" src={oneProduct.signatureImage} alt="front-image" width={1000} height={1000} />
-            </div>
-          )}
         </div>
       </div>
       <div className="mt-8 px-6 py-6">

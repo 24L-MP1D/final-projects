@@ -1,11 +1,14 @@
 'use client';
 
 import { Bid } from '@/components/Bid';
+import { BidDialog } from '@/components/bidDialog';
 import { BidType } from '@/components/bidType';
 import { HelpCenter } from '@/components/helpCenter';
+import { PlacedBidDialog } from '@/components/placedBidDialog';
 import { ProductDetailImages } from '@/components/ProductDetailImages';
 import { ProductType } from '@/components/productType';
 import { Safity } from '@/components/Safity';
+import { BidSticky } from '@/components/stickyBid';
 import * as Ably from 'ably';
 import { AblyProvider, ChannelProvider, useChannel } from 'ably/react';
 import { useFormik } from 'formik';
@@ -24,13 +27,21 @@ export default function App({ params }: { params: { chatId: string } }) {
 }
 
 function Realtime({ chatId }: { chatId: string }) {
-  const id = '671b4f498f3ba2f00e69fe3b';
+  const id = '671f3e9409e0a506b97f5c89';
 
   const [bids, setBids] = useState<BidType[]>([]);
+
+  const [dialogsBid, setDialogsBid] = useState(0);
 
   const [oneProduct, setOneProduct] = useState<ProductType>();
 
   const [maximumBid, setMaximumBid] = useState(0);
+
+  const [open, setOpen] = useState(false);
+
+  const [secondDialog, setSecondDialog] = useState(false);
+
+  const [isSticky, setIsSticky] = useState(false);
 
   const validationSchema = yup.object({
     bid: yup
@@ -44,16 +55,24 @@ function Realtime({ chatId }: { chatId: string }) {
       bid: 0,
     },
     onSubmit: async (values, { resetForm }) => {
-      sendBid();
+      if (open) {
+        sendBid();
+        console.log('safas');
+        fetch('/api/bids', {
+          method: 'POST',
+          body: JSON.stringify({ bid: values.bid, userId: 'badral', createdAt: new Date() }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        setDialogsBid(formik.values.bid);
+        resetForm();
+        setOpen(false);
 
-      fetch('/api/bids', {
-        method: 'POST',
-        body: JSON.stringify({ bid: values.bid, userId: 'badral', createdAt: new Date() }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      resetForm();
+        setSecondDialog(true);
+      } else {
+        setOpen(true);
+      }
     },
     validationSchema,
   });
@@ -94,10 +113,9 @@ function Realtime({ chatId }: { chatId: string }) {
 
   if (!oneProduct) return <div>loading</div>;
   return (
-    <form onSubmit={formik.handleSubmit} className="max-w-[1240px] mx-auto w-full">
-      <div className="flex gap-24">
+    <form onSubmit={formik.handleSubmit} className={`max-w-[1240px] mx-auto w-full `}>
+      <div className={`flex gap-24 `}>
         <ProductDetailImages oneProduct={oneProduct} />
-
         <div className="flex flex-col gap-8 pb-12">
           <Bid
             formikSetFieldValue={formik.setFieldValue}
@@ -106,16 +124,40 @@ function Realtime({ chatId }: { chatId: string }) {
             formikErrors={formik.errors}
             sendBid={sendBid}
             bids={bids}
+            open={open}
+            setOpen={setOpen}
             formikValues={formik.values}
             formikHandleChange={formik.handleChange}
             maximumBid={maximumBid}
+            isSticky={isSticky}
+            setIsSticky={setIsSticky}
           />
 
           <Safity oneProduct={oneProduct} />
 
           <HelpCenter oneProduct={oneProduct} />
+          {isSticky && (
+            <BidSticky
+              formikSetFieldValue={formik.setFieldValue}
+              formikTouched={formik.touched}
+              oneProduct={oneProduct}
+              formikErrors={formik.errors}
+              sendBid={sendBid}
+              bids={bids}
+              open={open}
+              setOpen={setOpen}
+              formikValues={formik.values}
+              formikHandleChange={formik.handleChange}
+              maximumBid={maximumBid}
+              isSticky={isSticky}
+              setIsSticky={setIsSticky}
+            />
+          )}
         </div>
       </div>
+      {open && <div className="absolute inset-0 bg-slate-500 opacity-50"></div>}
+      {open && <BidDialog bid={formik.values.bid} open={open} setOpen={setOpen} />}
+      <PlacedBidDialog secondDialog={secondDialog} setSecondDialog={setSecondDialog} bid={dialogsBid} />
     </form>
   );
 }
