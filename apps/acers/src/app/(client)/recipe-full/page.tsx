@@ -119,7 +119,9 @@ export default function Recipe() {
           </div>
         </div>
       </div>
-      
+      <p>Already made this?</p>
+      <button>Share your feedback</button>
+      <div className="h-3 bg-orange-400"></div>
     </div>
   );
 }
