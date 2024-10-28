@@ -24,6 +24,20 @@ export async function PUT(request: Request, { params }: { params: { id: string }
   return new Response(null, { status: 204 });
 }
 
+export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+  const values = await request.json();
+
+  await db.collection('courses').updateOne(
+    {
+      _id: new ObjectId(params.id),
+    },
+    {
+      $set: values,
+    }
+  );
+  return new Response(null, { status: 204 });
+}
+
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   await db.collection('courses').deleteOne({ _id: new ObjectId(params.id) });
   return new Response(null, { status: 204 });

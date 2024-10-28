@@ -1,72 +1,78 @@
 'use client';
-
 import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useState } from 'react';
-const CLOUDINARY_CLOUD_NAME = 'dw85vgzlk';
-const CLOUDINARY_UPLOAD_PRESET = 'zojuemkn';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { z } from 'zod';
+
+const formSchema = z.object({
+  title: z.string().min(1, {
+    message: 'Title is required',
+  }),
+});
+
 export default function Page() {
-  const [title, setTitle] = useState<string>('');
-  const [author, setAuthor] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: '',
+    },
+  });
 
-  async function createCourse() {
-    await fetch(`/api/courses`, {
-      method: 'POST',
-      body: JSON.stringify({
-        title,
-        author,
-        description,
-        thumbnail: imageUrl,
-      }),
-      headers: { 'Content-type': 'application/json; charset=UTF-8' },
-    });
-    await reset();
-  }
+  const { isSubmitting, isValid } = form.formState;
 
-  function reset() {
-    setTitle(''), setAuthor(''), setDescription('');
-  }
-
-  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-
-      const data = new FormData();
-      data.append('file', file);
-      data.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-
-      setLoading(true);
-
-      fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`, {
-        method: 'post',
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setImageUrl(data.secure_url);
-          setLoading(false);
-        })
-        .catch((err) => {
-          alert('An Error Occured While Uploading');
-        });
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await axios.post('/api/courses', values);
+      router.push(`/admin-app/courses/${response.data._id}`);
+      toast.success('Course created');
+    } catch {
+      toast.error('Something went wrong');
     }
-  };
-
-
+  }
 
   return (
-    <div className="flex flex-col gap-4 p-8">
-      <Input placeholder="course title" value={title} onChange={(e) => setTitle(e.target.value)} />
-      <Input placeholder="course author" value={author} onChange={(e) => setAuthor(e.target.value)} />
-      <Input placeholder="Write description" value={description} onChange={(e) => setDescription(e.target.value)} />
-      <div className="grid w-full max-w-sm items-center gap-1.5">
-        <Input id="picture" disabled={loading} type="file" onChange={handleUpload} />
-        {imageUrl && <img src={imageUrl} alt="" />}
+    <div className="max-w-5xl mx-auto ">
+      <div>
+        <h1 className="text-2xl">Та хичээлдээ нэр өгнө үү</h1>
+        <p>Хичээлийн нэрийг дараа сольж болно</p>
+
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-8">
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Хичээлийн нэр</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Жишээ: Вэб хөгжүүлэлт" disabled={isSubmitting} {...field} />
+                  </FormControl>
+                  <FormDescription>Та энэ хичээлд юуны талаар заах вэ?</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex items-center gap-x-2">
+              <Link href="/">
+                <Button variant="ghost" type="button">
+                  Cancel
+                </Button>
+              </Link>
+              <Button type="submit" disabled={!isValid || isSubmitting}>
+                Continue
+              </Button>
+            </div>
+          </form>
+        </Form>
+
       </div>
-      <Button onClick={createCourse}>Continue</Button>
     </div>
   );
 }
