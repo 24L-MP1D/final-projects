@@ -13,17 +13,28 @@ const searchClient = algoliasearch('MLKXEEH303', 'dc3895feeae585b208d713220c7e40
 export default function Hero() {
   const router = useRouter();
   const [searchid, setSearchid] = useState('');
-  
+
   const [searcheddata, setSearcheddata] = useState('');
   console.log(searchid);
 
-  function searchfunction({ name }: { name: string }) {
-    console.log(name);
+  const [searchValue, setSearchvalue] = useState('');
+  console.log(searchValue);
+  const onStateChange = ({ uiState, setUiState }: Props) => {
+    setUiState(uiState);
+    setSearchvalue(uiState.ecommerce.query);
+  };
+
+  function searchfunction(name: string) {
     setSearchid(name);
-    pushtoRouter();
+    pushtoRouter(name);
   }
-  function pushtoRouter() {
-    router.push(`/products?searchvalue=${searchid}`);
+
+  function pushtoRouter(name: string) {
+    if (searchid.length > 1) {
+      router.push(`/products?searchvalue=${searchid}`);
+    } else {
+      router.push(`/products?searchvalue=${searchValue}`);
+    }
   }
 
   function Hit({ hit }: { hit: any }) {
@@ -44,6 +55,10 @@ export default function Hero() {
       </article>
     );
   }
+  type Props = {
+    uiState: any;
+    setUiState: any;
+  };
 
   return (
     <div className="md:h-[100vh] w-full aspect-video relative overflow-hidden flex fex-col">
@@ -57,9 +72,17 @@ export default function Hero() {
           <div className="flex flex-col text-center gap-7">
             <div className="text-white md:text-6xl font-bold text-4xl">AMIDO'S</div>
             <div>
-              <InstantSearch searchClient={searchClient} indexName="ecommerce">
-                <SearchBox className="p-2 rounded-xl bg-white" searchAsYouType={true} placeholder="Хайлт..." onKeyDown={(e) => (e.key === 'Enter' ? searchfunction() : '')} />
-                <Hits hitComponent={Hit} />
+              <InstantSearch onStateChange={onStateChange} searchClient={searchClient} indexName="ecommerce">
+                <SearchBox
+                  onSubmit={(event) => {
+                    console.log(123);
+                  }}
+                  className="p-2 rounded-xl bg-white"
+                  searchAsYouType={true}
+                  placeholder="Хайлт..."
+                  onKeyDown={(e) => e.key === 'Enter' && pushtoRouter()}
+                />
+                <Hits hitComponent={Hit} className={`${searchValue && searchValue.length > 1 ? 'block' : 'hidden'}`} />
               </InstantSearch>
             </div>
           </div>

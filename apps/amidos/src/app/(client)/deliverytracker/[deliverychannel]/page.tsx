@@ -57,14 +57,17 @@ function Directions({ latitude, longitude, deliverychannel }: Props) {
   const [data, setData] = useState(0);
   const selected = routes[routeIndex];
   const leg = selected?.legs[0];
-  const [messages, setMessages] = useState<Ably.Message[]>([]);
-  console.log(messages);
+  const [messages, setMessages] = useState<Ably.Message>();
+  const deliverypersonposition = messages?.data;
+  const deliveryperson = deliverypersonposition?.join(', ');
+  console.log(deliveryperson);
+
   useConnectionStateListener('connected', () => {
     console.log('Connected to Ably');
   });
 
   const { channel } = useChannel(deliverychannel, 'message', (message) => {
-    setMessages((previousMessages) => [message, ...previousMessages]);
+    setMessages(message);
   });
 
   useEffect(() => {
@@ -76,13 +79,13 @@ function Directions({ latitude, longitude, deliverychannel }: Props) {
     if (!routesLibrary || !map) return;
     setDirectiionsService(new routesLibrary.DirectionsService());
     setDirectionsrenderer(new routesLibrary.DirectionsRenderer({ map }));
-  }, [routesLibrary, map]);
+  }, [routesLibrary, map, deliveryperson]);
 
   useEffect(() => {
     if (!directionsService || !directionsRenderer) return;
     directionsService
       .route({
-        origin: '47.91542, 106.92148',
+        origin: `${deliveryperson}`,
         destination: `${latitude}, ${longitude}`,
         travelMode: google.maps.TravelMode.DRIVING,
         provideRouteAlternatives: true,
