@@ -1,5 +1,6 @@
 import { UserRoundPen } from 'lucide-react';
 import Link from 'next/link';
+import { Input } from './ui/Input';
 
 export default function Header() {
   return (
@@ -8,8 +9,9 @@ export default function Header() {
         <Link href={'./dashboard?select=Хяналтын самбар'} className="">
           <div>ACERS Dashboard | Admin</div>
         </Link>
-        {/* <Input>search</Input> */} <div>searchbar</div>
-        {/* <SearchBar /> */}
+        <div>
+          <Input placeholder="search" />
+        </div>
         <div>
           <UserRoundPen />
         </div>
