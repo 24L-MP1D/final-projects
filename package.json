@@ -29,6 +29,7 @@
     "clsx": "^2.1.1",
     "daisyui": "^4.12.13",
     "date-fns": "^4.1.0",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
     "embla-carousel-autoplay": "^8.3.0",
     "embla-carousel-react": "^8.3.0",
@@ -41,7 +42,6 @@
     "next": "^15.0.2-canary.6",
     "next": "14.2.3",
     "next-themes": "^0.3.0",
-
     "npm": "^10.9.0",
     "react": "18.3.1",
     "react-confetti": "^6.1.0",
