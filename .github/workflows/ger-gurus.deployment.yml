@@ -1,8 +1,5 @@
 name: Ger-gurus Deployment
 run-name: Ger-gurus is being deployed
-env:
-  VERCEL_ORG_ID: ${{ secrets.GER_GURUS_VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.GER_GURUS_VERCEL_PROJECT_ID }}
 on:
   workflow_dispatch:
   push:

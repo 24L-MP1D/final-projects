@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { db } from '@/lib/db';
 
 export async function POST(request: Request) {
   const test = await db.collection('menu').insertOne({});
@@ -19,4 +19,3 @@ export async function DELETE(request: Request) {
 export async function PUT(request: Request) {
   return new Response('Hello, from API PUT!');
 }
-

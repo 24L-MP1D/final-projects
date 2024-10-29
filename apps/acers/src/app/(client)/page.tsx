@@ -2,7 +2,7 @@
 
 import { Bookmark } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { HandyCarousel } from './components/homePageComponents/handyCarousel';
 import { Stars } from './components/itemComponents/stars';
 import { Button } from './components/ui/Button';
@@ -18,7 +18,10 @@ export default function Index() {
       <div className="flex flex-col gap-16 text-[#222222] ">
         <RecipeOfTheDay />
         <div className="flex flex-col gap-16 max-w-[80%] xl:max-w-[1160px] w-full m-auto">
-          <OccasionMeals />
+          <Suspense>
+            <OccasionMeals />
+          </Suspense>
+
           <GetTheLatest />
           <Popular />
         </div>
@@ -157,7 +160,7 @@ const RecipeOfTheDay = () => {
   );
 };
 
-export const SaveButton = ({ id, className }: { id: string; className: string }) => {
+const SaveButton = ({ id, className }: { id: string; className?: string }) => {
   const addToSaved = (id: string) => {
     // here will be fucntion
     console.log(id);

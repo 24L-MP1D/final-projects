@@ -1,0 +1,34 @@
+name: amidos Deployment
+run-name: amidos is being deployed
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - apps/amidos/**
+jobs:
+  DeployApp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 'Install Vercel CLI'
+        run: npm i -g vercel@latest
+
+      - name: 'Copy vercel config'
+        run: |
+          mkdir .vercel
+          cp -r ./apps/amidos/vercel.json .vercel/project.json
+
+      - name: 'Copy env variables'
+        run: |
+          vercel env pull .env.development.local --token=${{ secrets.AMIDOS_VERCEL_TOKEN }}
+          mv .env.development.local ./apps/amidos/.env
+
+      - name: 'Build the app'
+        run: vercel build --prod
+
+      - name: 'Deploy to Vercel'
+        run: vercel --prebuilt --prod --token=${{ secrets.AMIDOS_VERCEL_TOKEN }}

@@ -14,12 +14,15 @@ import { ImageInput } from './imageInput';
 import { VideoInput } from './videoInput';
 
 import { uploadFilesInCloudinary } from './cloudinary';
+import fetchAddRecipe from './fetchNewRecipe';
+import Loading from './loading';
 
 const Page = () => {
   const [tags, setTags] = useState<tag[]>([]);
   const [categories, setCategories] = useState([]);
   const [tiers, setTiers] = useState([]);
   const [activeTags, setActiveTags] = useState<tag[]>([]);
+  const [loading, setLoading] = useState(false);
 
   interface tag {
     _id: ObjectId;
@@ -90,7 +93,7 @@ const Page = () => {
   };
 
   async function Submit(data: RecipeForm) {
-    console.log('1');
+    setLoading(true);
     const imageURLs = await Promise.all(data.imagesFile.map(async (file) => await uploadFilesInCloudinary(file)));
     setValue('images', imageURLs);
     if (data.videoFile) {
@@ -98,7 +101,8 @@ const Page = () => {
       setValue('video', videoURL);
     }
     const updatedData = getValues();
-    console.log('Updated form data:', updatedData);
+    fetchAddRecipe(updatedData);
+    setLoading(false);
   }
 
   const getDatas = async () => {
@@ -125,7 +129,7 @@ const Page = () => {
       activeTags.map((tag) => tag._id)
     );
   }, [activeTags, setValue]);
-
+  if (loading) return <Loading />;
   return (
     <div className="w-full bg-slate-100 ">
       <form onSubmit={handleSubmit(onSubmit)} className="mx-9">
