@@ -12,3 +12,14 @@ export async function GET(request: Request, { params }: { params: { id: string }
     return Response.json({ message: err });
   }
 }
+
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+  const id = params.id;
+  try {
+    const collection = DB.collection('product');
+    await collection.deleteOne({ _id: new ObjectId(id) });
+    return Response.json({ message: 'successfully deleted' });
+  } catch (err) {
+    return new Response(null, { status: 404 });
+  }
+}
