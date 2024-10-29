@@ -11,7 +11,7 @@ export default function Page() {
     title: string;
     author: string;
     description: string;
-    thumbnail: string;
+    imageUrl: string;
   }
   const [courses, setCourses] = useState<Course[]>([]);
 
@@ -32,12 +32,11 @@ export default function Page() {
   }, []);
 
   return (
-    <div>
-      <Link href="/school/admin-app/courses/create">
-        <Button>Add new course</Button>
+    <div className='w-[1000px] mx-auto p-10'>
+      <Link href="/admin-app/courses/create">
+        <Button className="p-6">Add new course</Button>
       </Link>
-
-      <Table className="w-[80%]">
+      <Table className="">
         <TableCaption>Create and manage courses in your school.</TableCaption>
         <TableHeader>
           <TableRow>
@@ -54,9 +53,7 @@ export default function Page() {
         <TableBody>
           {courses.map((course) => (
             <TableRow>
-              <TableCell className="font-medium">
-                <Image src={course.thumbnail} height={40} width={40} alt="thumbnail" />
-              </TableCell>
+              <TableCell className="font-medium"> {course.imageUrl && <Image src={course.imageUrl} height={40} width={40} alt="thumbnail" />}</TableCell>
               <TableCell>{course.title}</TableCell>
               <TableCell>{course.author}</TableCell>
               <TableCell></TableCell>

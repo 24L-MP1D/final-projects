@@ -45,7 +45,7 @@ export default function SubmissionPage() {
     }, 5000);
   }, []);
   return (
-    <div style={{ textAlign: 'center', padding: '20px' }}>
+    <div className="min-h-screen" style={{ textAlign: 'center', padding: '20px' }}>
       <AnimatePresence>
         {showAnimate && (
           <>
