@@ -37,6 +37,7 @@
     "form": "^0.2.5",
     "formik": "^2.4.6",
     "framer-motion": "^11.11.9",
+    "google-auth-library": "^9.14.2",
     "json-web-token": "^3.2.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.453.0",
