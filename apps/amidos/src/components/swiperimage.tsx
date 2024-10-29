@@ -18,7 +18,7 @@ export function Swipersnew() {
   //   }, []);
   return (
     <div className="text-center py-16">
-      <div className="text-[#8B0000] font-semibold text-xl">7 ХОНОГИЙН ОНЦЛОХ MЕНЮ</div>
+      <div className="text-[#8B0000] font-semibold text-3xl pb-4">7 ХОНОГИЙН ОНЦЛОХ MЕНЮ</div>
       <Swiper
         slidesPerView={3}
         spaceBetween={20}

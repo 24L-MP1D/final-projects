@@ -1,25 +1,37 @@
 'use client';
 import { Button } from '@/app/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Orders } from '@/lib/types';
+import Hero from '@/components/hero';
+import { Swipersnew } from '@/components/swiperimage';
+import { Food } from '@/lib/types';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-
+import { useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
 export default function Menu() {
-  const [food, setFood] = useState<Orders[]>([]);
+  const [food, setFood] = useState<Food[]>([]);
+  const searchParams = useSearchParams();
+  const searchValue = searchParams.get('searchvalue');
   const specialdishes = [
     { url: '/carbonara.jpg', price: 21000, name: 'Carbonara' },
     { url: '/pasta.jpg', price: 15000, name: 'Pasta' },
     { url: '/pizza.jpeg', price: 25000, name: 'Pizza' },
   ];
-  useEffect(() => {
-    fetch('/api/hello/admin')
-      .then((res) => res.json())
-      .then((data) => {
-        setFood(data);
-      });
-  }, []);
+  if (searchValue) {
+    useEffect(() => {
+      fetch(`/api/hello/admin?searchvalue=${searchValue}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setFood(data);
+        });
+    }, []);
+  } else {
+    useEffect(() => {
+      fetch('/api/hello/admin')
+        .then((res) => res.json())
+        .then((data) => {
+          setFood(data);
+        });
+    }, []);
+  }
 
   const navs = [
     { name: 'ЗАХИАЛГА', link: '/order' },
@@ -35,30 +47,13 @@ export default function Menu() {
           </Link>
         ))}
       </div>
+      <Swipersnew />
       <div className="w-full mx-auto flex mt-20 md:mx-auto">
         <div className="relative mx-auto ">
-          <h1 className="text-7xl italic text-center underline underline-1 mb-20">Онцлох Меню</h1>
+          <h1 className="text-7xl italic text-center mb-10 mx-auto text-[#4A433E]">Lunch set</h1>
 
-          <Carousel className="w-full lg:max-w-md max-w-sm mb-20  md:basis-1/2 lg:basis-1/3 mx-auto">
-            <CarouselContent>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <CarouselItem key={index} className="">
-                  <div className="p-1">
-                    <Card>
-                      <CardContent className="flex aspect-square items-center justify-center p-6">
-                        <span className="text-4xl font-semibold">{index + 1}</span>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-          <h1 className="text-7xl italic text-center mb-10 mx-auto underline underline-1 text-[#4A433E]">Lunch set</h1>
           <div className="mt-20 mx-auto lg:w-[1200px] flex flex-col lg:flex lg:flex-wrap lg:flex-row  gap-16 mb-20">
-            {food.map((food: Orders) => (
+            {food.map((food: Food) => (
               <div key={food._id} className="w-[320px] h-[380px] border-2 border-[#8B0000]  absoulte rounded-sm p-10 ">
                 <div className="rounded-full width={150} height={150}">
                   <img src={food.photos} width={150} height={150} alt={food.name} className="mx-auto w-[150px] h-[150px] object-cover rounded-full items-center" />
@@ -79,6 +74,9 @@ export default function Menu() {
           </div>
         </div>
       </div>
+    
+        
+      
     </div>
   );
 }

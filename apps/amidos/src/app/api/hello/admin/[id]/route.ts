@@ -27,3 +27,5 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
   await db.collection('admin').deleteOne({ _id: new ObjectId(params.id) });
   return new Response(null, { status: 204 });
 }
+
+
