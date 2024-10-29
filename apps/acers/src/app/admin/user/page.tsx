@@ -1,6 +1,7 @@
 'use client';
 
 import dayjs from 'dayjs';
+import { X } from 'lucide-react';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { DashboardAside } from '../components /DashboardAside';
 import { Input } from '../components /ui/Input';
@@ -79,6 +80,32 @@ export default function Home() {
     }
   };
 
+  const handleDeleteUser = async (userId: string) => {
+    const confirmDelete = window.confirm('Энэ хэрэглэгчийг устгах уу?');
+    if (!confirmDelete) {
+      return; // If the user cancels, exit the function
+    }
+    try {
+      const response = await fetch(`/api/user/adminFunctions/deleteUser`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ _id: userId }), // backend der
+      });
+
+      if (!response.ok) {
+        window.alert('User deleted successfully');
+        throw new Error('Failed to delete user');
+      }
+
+      // Remove the user from local state
+      setUsers(users.filter((user) => user._id !== userId));
+    } catch (e: any) {
+      setError(e.message);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -119,6 +146,7 @@ export default function Home() {
               <TableHead>Created At</TableHead>
               <TableHead>Updated At</TableHead>
               {isAdmin && <TableHead>Role </TableHead>} {/* Show Actions column for admins */}
+              <TableHead>delete</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -145,6 +173,11 @@ export default function Home() {
                     </select>
                   </TableCell>
                 )}
+                <TableCell>
+                  <button onClick={() => handleDeleteUser(user._id)} className=" hover:text-red-700">
+                    <X />
+                  </button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
