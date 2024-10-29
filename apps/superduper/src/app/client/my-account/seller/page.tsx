@@ -1,0 +1,85 @@
+'use client';
+
+import { ProductType } from '@/components/productType';
+import { ProfileAside } from '@/components/profileAside';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+export default function App() {
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const search = useSearchParams();
+  const queryValue = search.get('seller') || '';
+  const loadProduct = async () => {
+    try {
+      const response = await fetch('/api/products');
+      const data = await response.json();
+      setProducts(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    loadProduct();
+  }, []);
+  return (
+    <div className="min-h-screen bg-slate-200 flex gap-5">
+      <ProfileAside queryValue={queryValue} />
+      <div className="flex-1 bg-white px-4 py-8">
+        <div className="flex mb-6">
+          <div className="flex-1">Item Description</div>
+          <div className="flex-1 flex justify-center">Status</div>
+          <div className="flex-1 text-center">Action</div>
+        </div>
+        <div className="flex flex-col">
+          {products.map((product) => (
+            <div className="flex-1 py-4 border-t flex items-center">
+              <div className="flex gap-2 items-center flex-1">
+                <div className="max-w-[150px] w-full border">
+                  <Image className="object-cover w-[80%] h-full mx-auto" src={product.frontImage} width={500} height={500} alt="zurag" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div>Country: {product.Country}</div>
+                  <div>Product Name: {product.productName}</div>
+                  <div>Category: {product.category}</div>
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="flex flex-col gap-1 max-w-[500px] mx-auto text-2xl">
+                  <div className="flex gap-2 items-center justify-center w-full text-[#00253e]">
+                    <div className="p-0.5 border-2 border-[#00253e] rounded-full">
+                      <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
+                    </div>
+                    <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+                    <div className={`p-0.5 rounded-full ${product.status == 'denied' && 'border-2'}`}>
+                      <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
+                    </div>
+                    <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+                    <div className="p-0.5 rounded-full">
+                      <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
+                    </div>
+                    <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+                    <div className="p-0.5 rounded-full">
+                      <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
+                    </div>
+                  </div>
+                  <div className="flex gap-8 ml-4 items-center ">
+                    <div>Received</div>
+                    {product.status == 'denied' && <div className="text-[#f3f3f3]">closed</div>}
+                    {product.status !== 'denied' && <div className="text-[#f3f3f3]">Accepted</div>}
+                    {product.status !== 'denied' && <div className="text-[#f3f3f3]">Listed</div>}
+                    {product.status !== 'denied' && <div className="text-[#f3f3f3]">Sold</div>}
+                  </div>
+                </div>
+              </div>
+              <div className="flex-1 flex justify-center">
+                <Button>Detail</Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

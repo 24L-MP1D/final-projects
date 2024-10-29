@@ -12,6 +12,9 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  env: {
+    ABLY_KEY: process.env.ABLY_KEY || '',
+  },
 };
 
 const plugins = [
