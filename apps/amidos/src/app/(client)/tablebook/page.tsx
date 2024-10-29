@@ -2,6 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from 'date-fns';
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 
@@ -112,6 +114,7 @@ export default function TableBook() {
     const [number, setNumber] = useState<string>("");
     const [selectTable, setSelectedTable] = useState<number | null>(null);
     const [day, setDay] = useState<Date | undefined>(new Date());
+    const router = useRouter
 
     const reset = () => {
         setSelectedTime(null);
@@ -155,7 +158,7 @@ export default function TableBook() {
                     </Button>
                 ))}
             </div>
-            <div className="bg-slate-300 p-4 flex flex-col gap-6">
+            <div className="p-4 flex flex-col gap-6">
                 <div className="self-center">
                     <Calendar
                         mode="single"
@@ -170,8 +173,8 @@ export default function TableBook() {
                         {times.map((time) => (
                             <Button
                                 key={time.id}
-                                variant={"outline"}
-                                className={`text-base font-semibold ${selectedTime?.id === time.id ? "bg-black text-white" : ""
+                                variant={"amidos4"}
+                                className={`text-base font-semibold ${selectedTime?.id === time.id ? "bg-[#52071B] text-white" : ""
                                     }`}
                                 onClick={() => setSelectedTime(time)}
                             >
@@ -186,8 +189,8 @@ export default function TableBook() {
                         {nums.map((num, index) => (
                             <Button
                                 key={index}
-                                variant={"outline"}
-                                className={`text-base font-semibold ${number === num.value ? "bg-black text-white" : ""}`}
+                                variant={"amidos4"}
+                                className={`text-base font-semibold ${number === num.value ? "bg-[#52071B] text-white" : ""}`}
                                 onClick={() => setNumber(num.value)}
                             >
                                 {num.value}
@@ -195,7 +198,7 @@ export default function TableBook() {
                         ))}
                     </div>
                 </div>
-                <Button onClick={CreateOrder}>Үргэлжлүүлэх</Button>
+                <Link href={"/tablebook-verify"} className="w-[200px] h-[40px] py-2 text-center self-center bg-[#52071B] rounded-xl text-white text-base font-semibold hover:bg-[#52071b7c]">Үргэлжлүүлэх</Link>
             </div>
         </div>
     );
