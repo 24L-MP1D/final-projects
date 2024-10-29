@@ -1,7 +1,16 @@
 import Image from 'next/image';
 import { ProductType } from './productType';
+import { TextGenerateEffect } from './ui/text-generate-effect';
+import { TypewriterEffectSmooth } from './ui/typewriter-effect';
 
 export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType }) => {
+  const words = (text: string) => {
+    const array = [];
+    for (let i = 0; i < text.length; i++) {
+      array.push({ text: text[i] });
+    }
+    return array;
+  };
   return (
     <div className="max-w-[750px] mx-auto w-full">
       <div>
@@ -33,36 +42,52 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
         <div className="border-b-2 py-6 grid grid-cols-2 text-[#000000] gap-5 text-xl items-center justify-center">
           <div className="flex gap-2 flex-col">
             <div className="text-[#565B60] text-sm">Product Name</div>
-            <div>{oneProduct?.productName}</div>
+            <div>
+              <TypewriterEffectSmooth words={words(oneProduct.productName)} />
+            </div>
           </div>
           <div className="flex gap-2 flex-col">
             <div className="text-[#565B60] text-sm">Item's Country of Origin</div>
-            <div>{oneProduct?.Country}</div>
+            <div>
+              <TextGenerateEffect words={oneProduct.Country} />
+            </div>
           </div>
           <div className="flex gap-2 flex-col">
             <div className="text-[#565B60] text-sm">Additional information</div>
-            <div>{oneProduct?.additionalInformation}</div>
+            <div>
+              <TextGenerateEffect words={oneProduct?.additionalInformation} />
+            </div>
           </div>
           <div className="flex gap-2 flex-col">
             <div className="text-[#565B60] text-sm">Signatures</div>
-            <div>{oneProduct?.signatures}</div>
+            <div>
+              <TextGenerateEffect words={oneProduct?.signatures} />
+            </div>
           </div>
           <div className="flex gap-2 flex-col">
             <div className="text-[#565B60] text-sm">Areas of Damage</div>
-            <div>{oneProduct?.damage}</div>
+            <div>
+              <TextGenerateEffect words={oneProduct?.damage} />
+            </div>
           </div>
           <div className="flex gap-2 flex-col">
             <div className="text-[#565B60] text-sm">Has it been restored? If so, to what extent</div>
-            <div>{oneProduct?.restored}</div>
+            <div>
+              <TextGenerateEffect words={oneProduct?.restored} />
+            </div>
           </div>
           <div className="flex gap-2 flex-col">
             <div className="text-[#565B60] text-sm">Start Price</div>
-            <div>{oneProduct?.startBid}</div>
+            <div>
+              <TypewriterEffectSmooth words={words(String(oneProduct.startBid))} />
+            </div>
           </div>
           {oneProduct.Currency && (
             <div className="flex gap-2 flex-col">
               <div className="text-[#565B60] text-sm">Currency</div>
-              <div>{oneProduct.Currency}</div>
+              <div>
+                <TextGenerateEffect words={oneProduct.Currency} />
+              </div>
             </div>
           )}
         </div>

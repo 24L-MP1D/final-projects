@@ -39,7 +39,7 @@
     "embla-carousel-autoplay": "^8.3.0",
     "embla-carousel-react": "^8.3.0",
     "formik": "^2.4.6",
-    "framer-motion": "^11.11.9",
+    "framer-motion": "^11.11.10",
     "json-web-token": "^3.2.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.453.0",
