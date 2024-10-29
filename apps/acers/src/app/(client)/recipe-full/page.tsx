@@ -23,50 +23,59 @@ interface Recipe {
   updatedAt: Date;
 }
 
+function RecipePage() {
+  fetch('');
+}
+
 export default function Recipe() {
   return (
-    <div className="w-[1110px] m-auto">
-      <div>
-        <div>
-          <TrendingUp />
+    <div className="w-[1110px] m-auto flex flex-col gap-6">
+      <div className="flex justify-between">
+        <div className="flex gap-4">
+          <TrendingUp className="w-8 h-8" />
           85% would make this again
         </div>
-        <div>
+        <div className="flex gap-6">
           <Upload />
           <Bookmark />
         </div>
       </div>
-      <p>Strawberry Cream Cheesecake</p>
-      <div>
-        <div className="bg-gray-300 w-[50px] h-[50px] rounded-full">
-          <div />
-          <div>
+      <p className="font-bold text-6xl">Strawberry Cream Cheesecake</p>
+      <div className="flex">
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3">
+            <div className="bg-gray-300 w-[50px] h-[50px] rounded-full"></div>
+            <p>UserName</p>
+          </div>
+          <div className="flex gap-2">
             <Calendar />
             Yesterday
           </div>
-          <div>
+          <div className="flex gap-2">
             <MessageSquare />
             25
           </div>
-          <div className="h-1 bg-gray-300"></div>
         </div>
       </div>
+      <div className="h-[1px] w-[1110px] bg-gray-200"></div>
       <p>Recipe description</p>
-      <div className="bg-gray-300 w-[77.08%] h-[624px] rounded">Video url</div>
-      <div className="flex">
+      <div className="bg-gray-300 w-[1110px] h-[624px] rounded">Video url</div>
+      <div className="flex justify-between">
         <div>
           <div>
-            <div>
-              <p>PREP TIME</p>
-              <p>15 MIN</p>
-            </div>
-            <div>
-              <p>SERVINGS</p>
+            <div className="flex">
               <div>
-                4 PEOPLE
-                <SquarePen />
+                <p>PREP TIME</p>
+                <p>15 MIN</p>
               </div>
-              <Printer />
+              <div>
+                <p>SERVINGS</p>
+                <div className="flex">
+                  4 PEOPLE
+                  <SquarePen />
+                </div>
+                <Printer />
+              </div>
             </div>
             <div>
               <h3>Ingredients</h3>
@@ -99,8 +108,8 @@ export default function Recipe() {
             </div>
           </div>
         </div>
-        <div>
-          <div>
+        <div className="border-l pl-5">
+          <div className="bg-slate-100 border border-1 rounded p-3">
             <Table>
               <TableHeader>
                 <TableRow>
