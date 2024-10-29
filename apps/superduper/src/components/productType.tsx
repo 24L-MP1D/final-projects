@@ -21,4 +21,5 @@ export type ProductType = {
   signatureImage: string;
   startDate: Date;
   endDate: Date;
+  status: string;
 };

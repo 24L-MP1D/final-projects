@@ -24,6 +24,7 @@ const buttonVariants = cva(
         amidos: 'bg-[#52071B] rounded-[16px], text-white lg:w-[110px] w-[110px] h-[36px]  hover:outline hover:bg-[#52071B]/80 hover:text-white',
         amidos2: 'outline outline-[#52071B] w-[110px] h-[36px] hover:bg-[#52071B] hover:text-white  ',
         blue: 'bg-[#38bdf8], rounded-[18px] text-white',
+        edit: 'bg-blue-500 rounded-[18px], text-white',
       },
       size: {
         default: 'h-9 px-4 py-2',

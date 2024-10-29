@@ -8,11 +8,12 @@ import { Camera, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import * as yup from 'yup';
 const CLOUDINARYNAME = process.env.NEXT_PUBLIC_CLOUDINARYNAME;
 const CLOUDINARYPRESET = process.env.NEXT_PUBLIC_CLOUDINARYPRESET || '';
 export default function Page() {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const initialValues = {
     frontImage: '',
@@ -46,6 +47,7 @@ export default function Page() {
   });
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>, fieldName: string) => {
     if (!event.currentTarget.files?.length) return;
+    setLoading(true);
     const file = event.currentTarget.files[0];
     const formData = new FormData();
     formData.append('file', file);
@@ -58,6 +60,7 @@ export default function Page() {
       const data = await response.json();
 
       formik.setFieldValue(fieldName, data.secure_url);
+      setLoading(false);
     } catch (err) {
       console.error('error upload to image', err);
     }
@@ -67,7 +70,6 @@ export default function Page() {
   };
   useEffect(() => {
     const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
-
     if (addProductObject) {
       formik.setValues({
         frontImage: addProductObject.frontImage,
@@ -189,6 +191,7 @@ export default function Page() {
                   className="absolute w-full h-full opacity-0 z-30"
                 />
               )}
+
               {formik.touched.detailImage && formik.errors.detailImage && <p className="text-red-500">{formik.errors.detailImage}</p>}
             </div>
             <div className="hover:cursor-pointer text-center border-dashed border-[1px] flex flex-col justify-center items-center relative p-4">
@@ -214,6 +217,7 @@ export default function Page() {
                   className="absolute w-full h-full opacity-0 z-30"
                 />
               )}
+
               {formik.touched.signatureImage && formik.errors.signatureImage && <p className="text-red-500">{formik.errors.signatureImage}</p>}
             </div>
             <div className="hover:cursor-pointer text-center border-dashed border-[1px] flex flex-col justify-center items-center relative p-4">
@@ -265,6 +269,7 @@ export default function Page() {
                   className="absolute w-full h-full opacity-0 z-30"
                 />
               )}
+
               {formik.touched.additionalImage && formik.errors.additionalImage && <p className="text-red-500">{formik.errors.additionalImage}</p>}
             </div>
           </div>
