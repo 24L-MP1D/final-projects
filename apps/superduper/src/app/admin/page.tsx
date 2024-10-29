@@ -2,12 +2,10 @@
 import { Sidebar, SidebarBody, SidebarLink } from '@/components/ui/Sidebar';
 import { cn } from '@/lib/utils';
 import { IconArrowLeft, IconBrandPaypalFilled, IconBrandProducthunt, IconBrandTabler, IconMoodBitcoin, IconSettings, IconUserBolt } from '@tabler/icons-react';
-import { motion } from "framer-motion";
-
+import { motion } from 'framer-motion';
 
 import Link from 'next/link';
 import { useState } from 'react';
-
 
 export default function SidebarDemo() {
   const links = [
@@ -65,15 +63,13 @@ export default function SidebarDemo() {
               ))}
             </div>
           </div>
-        
         </SidebarBody>
       </Sidebar>
       <Dashboard />
-      
     </div>
   );
 }
-export const Logo = () => {
+const Logo = () => {
   return (
     <Link href="#" className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20">
       <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
@@ -83,7 +79,7 @@ export const Logo = () => {
     </Link>
   );
 };
-export const LogoIcon = () => {
+const LogoIcon = () => {
   return (
     <Link href="#" className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20">
       <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
