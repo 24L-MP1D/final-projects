@@ -11,6 +11,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
+import ChapterList from './chapterList';
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -25,12 +26,23 @@ interface ChaptersFormProps {
     description: string;
     imageUrl: string;
     price: number;
-    chapters: [];
+    chapters: Chapter[];
   };
+}
+
+interface Chapter {
+  _id: string;
+  title: string;
+  courseId: string;
+  isPublished?: boolean;
+  isFree?: boolean;
+  position: number;
+  // Add other properties here if needed
 }
 export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [chapters, setChapters] = useState<Chapter[]>(initialData.chapters);
   const toggleCreating = () => setIsCreating((x) => !x);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -42,10 +54,11 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await axios.post(`/api/courses/${initialData._id}/chapters`, values);
+      await axios.post(`/api/courses/${initialData._id}/chapters`, values);
       toast.success('Chapter created');
       toggleCreating();
-      router.refresh();
+      const response = await axios.get(`/api/courses/${initialData._id}/chapters`);
+      setChapters(response.data);
     } catch {
       toast.error('Something went wrong');
     }
@@ -86,7 +99,13 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
           </form>
         </Form>
       )}
-      {!isCreating && <div className={cn('text-sm mt-2', !initialData.chapters.length && 'text-slate-500 italic')}>No chapters</div>}
+      {!isCreating && (
+        <div className={cn('text-sm mt-2', !initialData.chapters?.length && 'text-slate-500 italic')}>
+          {!initialData.chapters.length && 'No chapters'}
+          <ChapterList onEdit={() => {}} onReorder={() => {}} chapters={chapters || []} />
+        </div>
+      )}
+
       {!isCreating && <p className="text-sm text-muted-foreground mt-4">Drag and drop to reorder the chapters</p>}
     </div>
   );
