@@ -61,11 +61,10 @@ export async function GET(request: Request) {
 }
 export async function POST(request: Request) {
   try {
-    // Read and parse the request body
-    const body = await request.json();
-    const { user, amount } = body;
+    const data = await request.json();
+
     const collection = DB.collection('bids');
-    await collection.insertOne({ user, amount });
+    await collection.insertOne(data);
     return new Response(JSON.stringify({ message: 'Successfully published' }), { status: 200 });
   } catch (err) {
     console.error('Error while publishing bid:', err); // Log any errors encountered

@@ -24,7 +24,9 @@ export default function Page() {
     signatures: '',
     damage: '',
     restored: '',
-    startBid: Number(''),
+    startBid: 0,
+    startDate: new Date(''),
+    endDate: new Date(''),
   };
   const validationSchema = yup.object({
     countryOfOrigin: yup.string().required('you must enter country of origin'),
@@ -34,6 +36,8 @@ export default function Page() {
     damage: yup.string().required('you must enter damage'),
     restored: yup.string().required('you must enter restored'),
     startBid: yup.number().required('you must enter startBid').min(1),
+    startDate: yup.date().required('start date must be required'),
+    endDate: yup.date().required('end date must be required'),
   });
   const formik = useFormik({
     initialValues,
@@ -46,6 +50,8 @@ export default function Page() {
       addProductObject.damage = values.damage;
       addProductObject.restored = values.restored;
       addProductObject.startBid = values.startBid;
+      addProductObject.startDate = values.startDate;
+      addProductObject.endDate = values.endDate;
       localStorage.setItem('addProduct', JSON.stringify(addProductObject));
       router.push(`/client/addProducts/3`);
     },
@@ -61,7 +67,9 @@ export default function Page() {
         signatures: addProductObject.signatures,
         damage: addProductObject.damage,
         restored: addProductObject.restored,
-        startBid: Number(addProductObject.startBid),
+        startBid: addProductObject.startBid,
+        startDate: addProductObject.startDate,
+        endDate: addProductObject.endDate,
       });
     }
 

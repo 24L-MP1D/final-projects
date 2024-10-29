@@ -1,7 +1,7 @@
-export type Orders = {
+export type Food = {
   _id: any;
   name: string;
-  price: number;
+  price: string;
   ingredients: string;
   key: number;
   id: string;

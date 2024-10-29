@@ -19,8 +19,8 @@ export default function Footer() {
       <div className="flex flex-col gap-4 items-center">
         <div className="flex gap-3">
           {socials.map((social) => (
-            <div>
-              <Link href={social.link} target="_blank" key={social.id}>
+            <div key={social.id}>
+              <Link href={social.link} target="_blank">
                 {social.platforms}
               </Link>
             </div>
