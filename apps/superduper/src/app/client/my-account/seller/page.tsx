@@ -76,6 +76,7 @@ export default function App() {
                   </div>
                 </div>
               </div>
+
               <div className="flex-1 flex justify-center">
                 <Button>Detail</Button>
               </div>
