@@ -22,7 +22,6 @@ interface PriceFormProps {
     description: string;
     imageUrl: string;
     price: number;
-    chapters: [];
   };
 }
 export const PriceForm: React.FC<PriceFormProps> = ({ initialData }) => {
