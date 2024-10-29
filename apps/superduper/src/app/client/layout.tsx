@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <Suspense>
-      <div>
+      <div className="max-w-[1280px] mx-auto">
         <Header />
         <Context.Provider
           value={{

@@ -1,16 +1,13 @@
 import { DB } from '@/lib/db';
 import { ObjectId } from 'mongodb';
-import { cookies } from 'next/headers';
 type filtType = {
   status?: string;
   startDate?: { $gte: Date };
   endDate?: { $lt: Date };
 };
+
 const collection = DB.collection('product');
-
 export async function GET(request: Request) {
-  const token = cookies().get('token');
-
   const { searchParams } = new URL(request.url);
   const stat = searchParams.get('status');
   const dateFrom = searchParams.get('startDate');

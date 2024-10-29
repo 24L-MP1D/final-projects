@@ -49,10 +49,10 @@ export async function GET(request: NextRequest) {
 
     const collection = await DB.collection('users');
     const check = await collection.findOne({ email: payload.email, role: 'admin' });
+    if (!check) return new Response(JSON.stringify({ message: '404' }), { status: 404 });
     const accessToken = jwt.sign({ email: payload.email, userId: check?._id }, ADMIN_ACCESS_TOKEN_SECRET, {
       expiresIn: '1d',
     });
-    if (!check) return new Response(JSON.stringify({ message: '404' }), { status: 404 });
 
     const response = NextResponse.redirect(new URL('/admin', request.url));
     response.headers.append('Set-Cookie', `token=${accessToken}; Path=/; Max-Age=43200; SameSite=Lax`); //12 hours

@@ -9,9 +9,10 @@ import { Label } from '@radix-ui/react-label';
 import { Heart, Pencil, Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import LeftBar from '../components/leftbar';
-export default function Order() {
+
+export default function Foods() {
   const [order, setOrder] = useState<Food[]>([]);
+  const [buttonColor, setButtonColor] = useState<string>('bg-slate-600');
   const [selectedFood, setSelectedFood] = useState<Food | null>(null);
   const [name, setName] = useState('');
   const [ingredients, setIngredients] = useState('');
@@ -52,13 +53,14 @@ export default function Order() {
       photos: imageUrl,
     };
     try {
-      const response = fetch('/api/hello/admin', {
+      const response = fetch('/api/addFood', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newFood),
       });
+      toast('Successfully deleted the product');
       console.log('created');
     } catch (error) {
       console.log('error');
@@ -79,7 +81,7 @@ export default function Order() {
   };
 
   const handleDeleteFood = (_id: string) => {
-    fetch(`/api/hello/admin/${_id}`, {
+    fetch(`/api/addFood/${_id}`, {
       method: 'DELETE',
     })
       .then((res) => {
@@ -106,7 +108,7 @@ export default function Order() {
     };
 
     try {
-      const response = await fetch(`/api/hello/admin/${selectedFood._id}`, {
+      const response = await fetch(`/api/addFood/${selectedFood._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -149,9 +151,26 @@ export default function Order() {
       toast.error('Error removing to special items');
     }
   };
+  const handleSpecialToggle = async (foodId: string, isSpecial: string) => {
+    try {
+      if (isSpecial) {
+        await handleRemoveSpecial(foodId);
+        toast.success('Food removed from special list!');
+      } else {
+        await handleSpecialFood(foodId);
+        toast.success('Food added to special items!');
+      }
+    } catch (error) {
+      console.error('Error toggling special food:', error);
+      toast.error('Error toggling special items');
+    }
+  };
 
+  const toggleButtonColor = () => {
+    setButtonColor((prevColor) => (prevColor === 'bg-slate-600' ? 'bg-red-600' : 'bg-slate-600'));
+  };
   useEffect(() => {
-    fetch('/api/hello/admin')
+    fetch('/api/addFood')
       .then((res) => res.json())
       .then((data) => {
         setOrder(data);
@@ -166,14 +185,13 @@ export default function Order() {
   }, []);
 
   return (
-    <div className="text-md">
+    <div className="text-md mb-10 ">
       <div className="bg-slate-100">
-        <div className="flex m-10">
-          <LeftBar />
-          <div className="bg-white  p-10 mt-10 ml-10 text-md rounded-lg mx-auto">
+        <div className="flex ">
+          <div className="bg-white  p-10 mt-6 ml-10 text-md rounded-lg mx-auto">
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="default" className="mb-10 text-lg">
+                <Button variant="outline" className="mb-10 text-lg">
                   Хоол нэмэх
                 </Button>
               </DialogTrigger>
@@ -218,15 +236,17 @@ export default function Order() {
               </DialogContent>
             </Dialog>
             <div>
-              <Table className="text-xl mb-5">
-                <TableHeader>
-                  <TableRow className="text-center font-bold text-wrap">
+              <Table className="text-xl mb-5 ">
+                <TableHeader className="bg-slate-200">
+                  <TableRow className="text-center font-bold text-wrap ">
                     <TableHead className="text-bold ">№</TableHead>
                     <TableHead className="text-bold ">Хоолны нэр, код</TableHead>
                     <TableHead className="text-bold">Орц</TableHead>
                     <TableHead className=" text-bold">Үнэ</TableHead>
                     <TableHead className=" text-bold">Зураг</TableHead>
                     <TableHead className="text-bold">Засах</TableHead>
+                    <TableHead className="text-bold">Устгах</TableHead>
+                    <TableHead className="text-bold">Онгой меню</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody className="text-md">
@@ -292,9 +312,15 @@ export default function Order() {
                           <Trash onClick={() => handleDeleteFood(order._id)} />
                         </Button>
                       </TableCell>
-                      <TableCell className="text-center align-middle flex-col">
+                      <TableCell className="text-center align-middle flex-col ">
                         <Button>
-                          <Heart onClick={() => handleSpecialFood(order._id)} />
+                          <Heart
+                            onClick={() => {
+                              toggleButtonColor();
+                              handleSpecialToggle(order._id, order.isSpecial);
+                            }}
+                            // className={${order.id=== order.isSpecial}}
+                          />
                         </Button>
                       </TableCell>
                     </TableRow>

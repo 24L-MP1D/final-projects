@@ -88,7 +88,7 @@ export default function Index() {
                   <div className="absolute top-0 left-0 h-full w-full cursor-pointer" onClick={() => handleProgressClick(index)}></div>
                 </div>
               ))}
-            <Button className="items-center text-[#0033FF] ml-[5px]" onClick={handleNextSlide}>
+            <Button className=" text-[#0033FF] ml-[5px] bg-white hover:bg-white" onClick={handleNextSlide}>
               <ChevronRight strokeWidth={1.75} />
             </Button>
           </div>
