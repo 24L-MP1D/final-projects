@@ -1,11 +1,31 @@
 'use client';
 import { Bookmark, Calendar, Ellipsis, Heart, MessageSquare, Printer, SquarePen, TrendingUp, Upload } from 'lucide-react';
 import { ScrollArea } from '../components/ui/scroll-area';
-import { Table, TableBody, TableCaption, TableCell, TableRow } from '../components/ui/table';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
+
+interface Recipe {
+  _id: string;
+  title: string;
+  description: string;
+  prepTime: string;
+  servings: string;
+  ingredients: string[];
+  instructions: string[];
+  nutritionFacts: string[];
+  category: string;
+  difficulty: string;
+  availability: string;
+  images: string[];
+  video: string;
+  tags: string[];
+  visits: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export default function Recipe() {
   return (
-    <div>
+    <div className="w-[1110px] m-auto">
       <div>
         <div>
           <TrendingUp />
@@ -80,7 +100,25 @@ export default function Recipe() {
           </div>
         </div>
         <div>
-          <div></div>
+          <div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">Nutrition Facts</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-medium">INV001</TableCell>
+                  <TableCell>Paid</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">INV001</TableCell>
+                  <TableCell>Paid</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
           <div>
             <h4>Fresh Recipes</h4>
             <div>
@@ -214,9 +252,23 @@ export default function Recipe() {
               </div>
             </div>
           </div>
-          <div></div>
         </div>
       </div>
+      <div>
+        <p>Write a comment</p>
+        <div className="flex">
+          <p className="text-orange-500">Login</p>
+          <p>to post a commment</p>
+        </div>
+      </div>
+
+      <div className="relative">
+        <input className="h-[400px] w-full max-w-[1110px] bg-gray-200 rounded p-4" placeholder="Write your comment..." aria-label="Comment input" />
+        <button className="bg-orange-500 hover:bg-orange-400 w-[200px] h-[50px] rounded mt-2 absolute right-0 bottom-0 z-10" aria-label="Post comment">
+          Post Comment
+        </button>
+      </div>
+      <p>You might also like</p>
     </div>
   );
 }
