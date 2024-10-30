@@ -1,7 +1,6 @@
 'use client';
 
-import { useLocalStorage } from '@uidotdev/usehooks';
-import axios from 'axios';
+import { fetcher } from '@/lib/fetcher';
 import { useState } from 'react';
 
 export default function Page() {
@@ -9,19 +8,18 @@ export default function Page() {
   const [password, setPassword] = useState('');
 
   const [loading, setLoading] = useState(false);
-  const [authToken, setAuthToken] = useLocalStorage('authToken', '');
 
   function register() {
     setLoading(true);
 
-    axios
+    fetcher()
       .post('/api/users/login', {
         email,
         password,
       })
       .then(({ data }) => {
         const { token } = data;
-        setAuthToken(token);
+        localStorage.setItem('authToken', token);
         alert('success');
       })
       .catch(({ response }) => {
