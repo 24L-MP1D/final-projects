@@ -8,12 +8,6 @@ export async function GET(request: NextRequest) {
   const code = searchParams.get('code');
 
   const client = new OAuth2Client(process.env.OAUTH_GOOGLE_CLIENT_ID);
-  interface payload {
-    email: string;
-    name: string;
-    picture: string;
-    sub: string;
-  }
 
   try {
     const params = new URLSearchParams({

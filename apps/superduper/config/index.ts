@@ -4,6 +4,6 @@ export const oauth_google: Record<GOOGLE_AUTH_KEYS, string> = {
   client_id: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID || '',
   client_secret: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_SECRET || '',
   endpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
-  redirect_uri: process.env.NEXT_PUBLIC_BASE_URL || '',
+  redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URL || '',
   scopes: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
 };
