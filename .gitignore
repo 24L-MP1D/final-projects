@@ -50,6 +50,7 @@ out
 /.vercel
 
 yarn.lock
+package-lock.json
 
 .yarn/*
 !.yarn/cache
