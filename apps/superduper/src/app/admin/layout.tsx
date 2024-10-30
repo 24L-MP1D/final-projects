@@ -1,13 +1,17 @@
+import { SidebarDemo } from '@/components/sideBarDemo';
 import { ReactNode } from 'react';
 
 interface RootLayoutProps {
   children: ReactNode;
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <div>
+      <div className="flex">
+        <SidebarDemo />
+        <div className="flex-1">{children}</div>
+      </div>
+    </div>
   );
 }
