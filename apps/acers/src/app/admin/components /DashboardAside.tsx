@@ -29,10 +29,10 @@ export const DashboardAside = () => {
   return (
     <div className="flex flex-col gap-4 text-base bg-[#f3f4f6] min-h-screen">
       {/* <SidebarLink href="./dashboard/?select=Хяналтын самбар" selectValue="Хяналтын самбар" label="Хяналтын самбар" Icon={LayoutDashboard} /> */}
-      <SidebarLink href="./income?select=Орлого" selectValue="Орлого" label="Орлого | Income" Icon={Euro} />
-      <SidebarLink href="./recipe?select=Бүтээгдэхүүн" selectValue="Бүтээгдэхүүн" label="Бүтээгдэхүүн | Recipe" Icon={CookingPot} />
-      <SidebarLink href="./user?select=Хэрэглэгч" selectValue="Хэрэглэгч" label="Хэрэглэгч | User" Icon={Users} />
-      <SidebarLink href="./settings?select=Тохиргоо" selectValue="Тохиргоо" label="Тохиргоо | Settings" Icon={Settings} />
+      <SidebarLink href="./admin/income" selectValue="Орлого" label="Орлого | Income" Icon={Euro} />
+      <SidebarLink href="./admin/products/create" selectValue="Бүтээгдэхүүн" label="Бүтээгдэхүүн | Recipe" Icon={CookingPot} />
+      <SidebarLink href="./admin/user" selectValue="Хэрэглэгч" label="Хэрэглэгч | User" Icon={Users} />
+      <SidebarLink href="./admin/settings" selectValue="Тохиргоо" label="Тохиргоо | Settings" Icon={Settings} />
     </div>
   );
 };
