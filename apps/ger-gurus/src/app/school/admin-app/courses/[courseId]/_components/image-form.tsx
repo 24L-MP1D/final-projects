@@ -23,7 +23,6 @@ interface ImageFormProps {
     description: string;
     imageUrl: string;
     price: number;
-    chapters: [];
   };
 }
 export const ImageForm: React.FC<ImageFormProps> = ({ initialData }) => {

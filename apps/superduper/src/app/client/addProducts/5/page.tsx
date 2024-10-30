@@ -10,9 +10,11 @@ import { useEffect, useState } from 'react';
 export default function Page() {
   const router = useRouter();
   const [getFromLocal, setGetFromLocal] = useState<ProductType>();
+  const [loadding, setLoading] = useState(false);
   const postToDatabase = async () => {
     try {
       if (getFromLocal) {
+        setLoading(true);
         const response = await fetch('/api/products', {
           method: 'POST',
           body: JSON.stringify({
@@ -25,6 +27,8 @@ export default function Page() {
         const data = await response.json();
 
         setGetFromLocal(undefined);
+        localStorage.removeItem('addProduct');
+        setLoading(false);
         router.push(`/client/success?id=${data.insertedId}`);
       }
     } catch (err) {
@@ -33,6 +37,7 @@ export default function Page() {
   };
   useEffect(() => {
     const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
+    addProductObject.status = 'pending';
     setGetFromLocal(addProductObject);
   }, []);
   return (
@@ -125,13 +130,13 @@ export default function Page() {
           </div>
           <div className="flex gap-4 items-center justify-center my-10 text-xl">
             <div>Photos:</div>
-            <div className="flex">
-              {getFromLocal?.frontImage && <Image src={getFromLocal?.frontImage} alt="a" width={100} height={100} />}
-              {getFromLocal?.backImage && <Image src={getFromLocal?.backImage} alt="a" width={100} height={100} />}
-              {getFromLocal?.detailImage && <Image src={getFromLocal?.detailImage} alt="a" width={100} height={100} />}
-              {getFromLocal?.signatureImage && <Image src={getFromLocal?.signatureImage} alt="a" width={100} height={100} />}
-              {getFromLocal?.damageImage && <Image src={getFromLocal?.damageImage} alt="a" width={100} height={100} />}
-              {getFromLocal?.additionalImage && <Image src={getFromLocal?.additionalImage} alt="a" width={100} height={100} />}
+            <div className="flex gap-1">
+              {getFromLocal?.frontImage && <Image className="object-cover rounded-lg border" src={getFromLocal?.frontImage} alt="a" width={100} height={100} />}
+              {getFromLocal?.backImage && <Image className="object-cover rounded-lg border" src={getFromLocal?.backImage} alt="a" width={100} height={100} />}
+              {getFromLocal?.detailImage && <Image className="object-cover rounded-lg border" src={getFromLocal?.detailImage} alt="a" width={100} height={100} />}
+              {getFromLocal?.signatureImage && <Image className="object-cover rounded-lg border" src={getFromLocal?.signatureImage} alt="a" width={100} height={100} />}
+              {getFromLocal?.damageImage && <Image className="object-cover rounded-lg border" src={getFromLocal?.damageImage} alt="a" width={100} height={100} />}
+              {getFromLocal?.additionalImage && <Image className="object-cover rounded-lg border" src={getFromLocal?.additionalImage} alt="a" width={100} height={100} />}
             </div>
           </div>
           <div className="border-b-[1px] mt-6 items-center py-3 flex justify-between">
@@ -167,7 +172,7 @@ export default function Page() {
             <Link className="bg-slate-300 text-center py-2 px-4 rounded-lg" href={'/client/addProducts/4'}>
               BACK
             </Link>
-            <Button onClick={postToDatabase}>SUBMIT</Button>
+            <Button onClick={postToDatabase}>{loadding ? <Image className="animate-spin" src={'/images/spinner.svg'} height={50} width={50} alt="loading" /> : <div>SUBMIT</div>}</Button>
           </div>
         </div>
       </div>

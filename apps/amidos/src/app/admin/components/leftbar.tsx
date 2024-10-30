@@ -18,7 +18,7 @@ export default function LeftBar() {
         </Button>
       </Link>
 
-      <Link href="/income">
+      <Link href="/admin/table">
         <Button variant="def2" className="flex items-center justify-start h-10 hover:bg-[#ECEDF0] w-[222px]">
           <div className="w-14 flex justify-center items-center ">{/* <ImPriceTags className="w-6 h-6" /> */}</div>
           <div className="text-base font-semibold">Ширээ</div>
