@@ -1,7 +1,13 @@
-export default function Index() {
+'use client';
+
+import { HomePageInfo } from '@/components/HomePageInfo';
+import { SchoolPageHeader } from '@/components/SchoolPageHeader';
+
+export default function Page() {
   return (
-    <div>
-      <h1>Ger-Gurus</h1>
+    <div className=" ">
+      <SchoolPageHeader />
+      <HomePageInfo />
     </div>
   );
 }

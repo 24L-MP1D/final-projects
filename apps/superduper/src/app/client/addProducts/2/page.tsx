@@ -24,7 +24,9 @@ export default function Page() {
     signatures: '',
     damage: '',
     restored: '',
-    startBid: Number(''),
+    startBid: 0,
+    startDate: new Date(''),
+    endDate: new Date(''),
   };
   const validationSchema = yup.object({
     countryOfOrigin: yup.string().required('you must enter country of origin'),
@@ -34,15 +36,43 @@ export default function Page() {
     damage: yup.string().required('you must enter damage'),
     restored: yup.string().required('you must enter restored'),
     startBid: yup.number().required('you must enter startBid').min(1),
+    startDate: yup.date().required('start date must be required'),
+    endDate: yup.date().required('end date must be required'),
   });
   const formik = useFormik({
     initialValues,
     onSubmit: (values, { resetForm }) => {
+      const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '[]');
+      addProductObject.countryOfOrigin = values.countryOfOrigin;
+      addProductObject.productName = values.productName;
+      addProductObject.additionalInformation = values.additionalInformation;
+      addProductObject.signatures = values.signatures;
+      addProductObject.damage = values.damage;
+      addProductObject.restored = values.restored;
+      addProductObject.startBid = values.startBid;
+      addProductObject.startDate = values.startDate;
+      addProductObject.endDate = values.endDate;
+      localStorage.setItem('addProduct', JSON.stringify(addProductObject));
       router.push(`/client/addProducts/3`);
     },
     validationSchema,
   });
   useEffect(() => {
+    const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
+    if (addProductObject) {
+      formik.setValues({
+        countryOfOrigin: addProductObject.countryOfOrigin,
+        productName: addProductObject.productName,
+        additionalInformation: addProductObject.additionalInformation,
+        signatures: addProductObject.signatures,
+        damage: addProductObject.damage,
+        restored: addProductObject.restored,
+        startBid: addProductObject.startBid,
+        startDate: addProductObject.startDate,
+        endDate: addProductObject.endDate,
+      });
+    }
+
     setCountry(AllCountry);
   }, []);
 
@@ -84,7 +114,7 @@ export default function Page() {
         <AddProductGeneral
           showCountry={showCountry}
           setShowCountry={setShowCountry}
-          formikSetValues={formik.setValues}
+          formikSetFieldValue={formik.setFieldValue}
           formikValues={formik.values}
           formikErrors={formik.errors}
           formikTouched={formik.touched}

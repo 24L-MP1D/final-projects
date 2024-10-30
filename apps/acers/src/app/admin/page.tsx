@@ -1,15 +1,11 @@
-import { Check } from 'lucide-react';
+'use client';
 
-export default function Index() {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.tailwind file.
-   */
+import { DashboardAside } from './components /DashboardAside';
+
+export default function Home() {
   return (
     <div>
-      <Check />
-      Admin
+      <DashboardAside />
     </div>
   );
 }

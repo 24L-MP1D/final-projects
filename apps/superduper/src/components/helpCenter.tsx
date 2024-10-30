@@ -1,6 +1,7 @@
 import Link from 'next/link';
+import { ProductType } from './productType';
 
-export const HelpCenter = () => {
+export const HelpCenter = ({ oneProduct }: { oneProduct: ProductType }) => {
   return (
     <div className="flex flex-col gap-4 border-2 border-solid border-slate-500 px-4 py-8">
       <div className="font-bold text-2xl">Any questions?</div>

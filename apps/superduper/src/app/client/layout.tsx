@@ -1,9 +1,11 @@
+import { Suspense } from 'react';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <Suspense>
+      <div>
+        <div>{children}</div>
+      </div>
+    </Suspense>
   );
-
 }

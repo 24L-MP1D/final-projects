@@ -1,5 +1,6 @@
 'use client';
 
+
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
@@ -132,3 +133,4 @@ export default function Index() {
     </div>
   );
 }
+

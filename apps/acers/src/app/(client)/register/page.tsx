@@ -1,10 +1,13 @@
 'use client';
+
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
+import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from '../components/ui/Toast';
+import { useToast } from '../components/ui/use-toast';
 
-export default function Page() {
+export default function Register() {
   interface IFormInputs {
     firstName: string;
     lastName: string;
@@ -13,7 +16,9 @@ export default function Page() {
     repassword: string;
   }
 
+  const { toasts } = useToast();
   const onSubmit: SubmitHandler<IFormInputs> = (data) => Submit();
+
   const {
     register,
     formState: { errors },
@@ -22,24 +27,32 @@ export default function Page() {
     watch,
   } = useForm<IFormInputs>();
 
-  function Submit() {
-    fetch('/api/user', {
+  function Submit(): void {
+    fetch('/api/register', {
       method: 'POST',
       body: JSON.stringify({
-        email,
-        password,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
       }),
       headers: {
         'Content-Type': 'application/json',
       },
     }).then((res) => {
       if (res.ok) {
-        console.log('Success');
+        Toast({
+          title: 'Success',
+          description: 'Registration successful!',
+          action: <Link href="/login">Login</Link>,
+        });
       } else {
         console.log('Error');
       }
     });
   }
+  const firstName = watch('firstName', '');
+  const lastName = watch('lastName', '');
   const password = watch('password', '');
   const email = watch('email', '');
   const hasUpperCase = /[A-Z]/.test(password);
@@ -52,11 +65,11 @@ export default function Page() {
 
   return (
     <div className=" vh-100% mx-auto">
-      <form className="w-[300px] border-[1px] border-slate-50 rounded-md shadow p-4 flex flex-col gap-3  mx-auto " onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-[300px] border-[1px] border-slate-50 rounded-md shadow p-4 flex flex-col gap-3 mx-auto " onSubmit={handleSubmit(onSubmit)}>
         <div className="text-center">Хэрэглэгчээр бүртгүүлэх хэсэг</div>
-        <Input type="text" placeholder="Овог" className="border-[1px] border-slate-200 hover:border-slate-400" {...register('firstName', { required: true })} />
+        <Input type="text" placeholder="Нэр" className="border-[1px] border-slate-200 hover:border-slate-400" {...register('firstName', { required: true })} />
         {errors.firstName && <span className="text-red-400 text-[12px] ml-2">Овог нэрээ оруулна уу </span>}
-        <Input type="text" placeholder="Нэр" className="border-[1px] border-slate-200 hover:border-slate-400" {...register('lastName', { required: true })} />
+        <Input type="text" placeholder=" Овог" className="border-[1px] border-slate-200 hover:border-slate-400" {...register('lastName', { required: true })} />
         {errors.lastName && <span className="text-red-400 text-[12px] ml-2">Овог нэрээ оруулна уу</span>}
         <Input
           type="text"
@@ -103,17 +116,41 @@ export default function Page() {
           {...register('repassword', { required: 'Password must be same', validate: (value) => value === getValues('password') })}
         />
         {errors.repassword && <span className="text-red-400 text-[12px] ml-2">Нууц үг адилхан байх</span>}
-        <Button type="submit" className="bg-blue-200">
-          Бүртгүүлэх
+        <Button
+          type="submit"
+          className="bg-blue-200"
+          onClick={() => {
+            firstName;
+            lastName;
+            password;
+          }}
+          disabled={!isValid}
+        >
+          Sign Up
         </Button>
         <div className="text-sm text-slate-500 text-center">
           <p className="">Бүртгэлтэй хэрэглэгч бол </p>
           <Link href="/login" className="text-blue-400 ">
             {' '}
-            Нэвтрэх
+            Sign In
           </Link>
         </div>
       </form>
+      <ToastProvider>
+        {toasts.map(function ({ id, title, description, action, ...props }) {
+          return (
+            <Toast key={id} {...props}>
+              <div className="grid gap-1">
+                {title && <ToastTitle>{title}</ToastTitle>}
+                {description && <ToastDescription>{description}</ToastDescription>}
+              </div>
+              {action}
+              <ToastClose />
+            </Toast>
+          );
+        })}
+        <ToastViewport />
+      </ToastProvider>
     </div>
   );
 }

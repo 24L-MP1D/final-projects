@@ -1,9 +1,12 @@
+import Footer from '../components/footer';
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
-      <div>Client header</div>
       {children}
-      <div>Client footer</div>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 }
