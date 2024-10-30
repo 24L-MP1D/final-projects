@@ -3,7 +3,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-export default function Page() {
+export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,6 +18,7 @@ export default function Page() {
         if (status === 200) {
           alert('Success');
           localStorage.setItem('authToken', data.token);
+          window.location.reload();
         } else {
           alert(statusText);
         }
@@ -25,23 +26,6 @@ export default function Page() {
       .catch(({ message }) => {
         alert(message);
       });
-
-    // fetcher()
-    //   .post('/api/users/login', {
-    //     email,
-    //     password,
-    //   })
-    //   .then(({ data }) => {
-    //     const { token } = data;
-    //     localStorage.setItem('authToken', token);
-    //     alert('success');
-    //   })
-    //   .catch(({ response }) => {
-    //     alert(response.data);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
   }
 
   return (
