@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 
 export default function Header() {
   return (
-    <div className="bg-cyan-200 container mx-auto h-28 flex items-center max-w-[1280px]">
+    <div className="bg-pink-100 container mx-auto h-28 flex items-center max-w-[1280px]">
       <div className="flex flex-1 justify-between">
         <div className="flex items-center gap-4 w-full">
           <div className="w-[55px] h-[55px] bg-blue-500 rounded-full text-red-500 flex items-center justify-center font-extrabold text-[24px]">SD</div>
