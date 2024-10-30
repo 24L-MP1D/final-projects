@@ -59,8 +59,22 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
       toggleCreating();
       const response = await axios.get(`/api/courses/${initialData._id}/chapters`);
       setChapters(response.data);
+      router.refresh();
     } catch {
       toast.error('Something went wrong');
+    }
+  }
+
+  async function onReorder(updateData: { id: string; position: number }[]) {
+    try {
+      setIsUpdating(true);
+      await axios.put(`/api/courses/${initialData._id}/chapters/reorder`, { list: updateData });
+      toast.success('Chapters reordered successfully');
+      router.refresh();
+    } catch (error) {
+      toast.error('Something went wrong');
+    } finally {
+      setIsUpdating(false);
     }
   }
   return (
@@ -102,7 +116,7 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
       {!isCreating && (
         <div className={cn('text-sm mt-2', !initialData.chapters?.length && 'text-slate-500 italic')}>
           {!initialData.chapters.length && 'No chapters'}
-          <ChapterList onEdit={() => {}} onReorder={() => {}} chapters={chapters || []} />
+          <ChapterList onEdit={() => {}} onReorder={onReorder} chapters={chapters || []} />
         </div>
       )}
 

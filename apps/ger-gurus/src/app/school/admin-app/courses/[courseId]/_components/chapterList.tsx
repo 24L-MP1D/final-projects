@@ -2,7 +2,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
+import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd';
 import { Grip, Pencil } from 'lucide-react';
 import { useEffect, useState } from 'react';
 interface Chapter {
@@ -16,7 +16,7 @@ interface Chapter {
 }
 interface ChapterListProps {
   chapters: Chapter[];
-  onReorder: () => void;
+  onReorder: (updateData: { id: string; position: number }[]) => void;
   onEdit: (id: string) => void;
 }
 export default function ChapterList({ chapters, onEdit, onReorder }: ChapterListProps) {
@@ -26,8 +26,26 @@ export default function ChapterList({ chapters, onEdit, onReorder }: ChapterList
     setIsMounted(true);
   }, []);
 
+  if (!isMounted) {
+    return null;
+  }
+
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+    const [reorderedItem] = chapters.splice(result.source.index, 1);
+    chapters.splice(result.destination.index, 0, reorderedItem);
+    const startIndex = Math.min(result.source.index, result.destination.index);
+    const endIndex = Math.max(result.source.index, result.destination.index);
+    const updatedChapters = chapters.slice(startIndex, endIndex + 1);
+    const bulkUpdatedata = updatedChapters.map((chapter) => ({
+      id: chapter._id,
+      position: chapters.findIndex((item) => item._id === chapter._id),
+    }));
+    onReorder(bulkUpdatedata);
+  };
+
   return (
-    <DragDropContext onDragEnd={() => {}}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="chapters">
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>

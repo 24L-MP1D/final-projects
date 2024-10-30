@@ -58,7 +58,7 @@ export default async function Page({ params }: { params: { courseId: string } })
         },
       },
       {
-        $sort: { 'chapters.position': -1 },
+        $sort: { 'chapters.position': 1 },
       },
       {
         $group: {
