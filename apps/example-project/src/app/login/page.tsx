@@ -1,6 +1,6 @@
 'use client';
 
-import { fetcher } from '@/lib/fetcher';
+import axios from 'axios';
 import { useState } from 'react';
 
 export default function Page() {
@@ -12,22 +12,36 @@ export default function Page() {
   function register() {
     setLoading(true);
 
-    fetcher()
-      .post('/api/users/login', {
-        email,
-        password,
+    axios
+      .post('/api/users/login', { email, password })
+      .then(({ data, status, statusText }) => {
+        if (status === 200) {
+          alert('Success');
+          localStorage.setItem('authToken', data.token);
+        } else {
+          alert(statusText);
+        }
       })
-      .then(({ data }) => {
-        const { token } = data;
-        localStorage.setItem('authToken', token);
-        alert('success');
-      })
-      .catch(({ response }) => {
-        alert(response.data);
-      })
-      .finally(() => {
-        setLoading(false);
+      .catch(({ message }) => {
+        alert(message);
       });
+
+    // fetcher()
+    //   .post('/api/users/login', {
+    //     email,
+    //     password,
+    //   })
+    //   .then(({ data }) => {
+    //     const { token } = data;
+    //     localStorage.setItem('authToken', token);
+    //     alert('success');
+    //   })
+    //   .catch(({ response }) => {
+    //     alert(response.data);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   }
 
   return (
