@@ -1,8 +1,8 @@
 'use client;';
-import { use } from 'react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/app/components/ui/accordion';
-import { Button } from '@/app/components/ui/button';
-import { Badge } from '@/app/components/ui/badge';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from 'src/app/components/ui/accordion';
+
+import { Badge } from 'src/app/components/ui/badge';
+import { Button } from 'src/app/components/ui/button';
 
 export default function page() {
   /*

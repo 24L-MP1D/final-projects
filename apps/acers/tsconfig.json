@@ -2,9 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": {
-      "@/*" : ["./src/*","./lib/*", "./components/ui/*", "./components/*"]
-    },
+    
     "jsx": "preserve",
     "allowJs": true,
     "esModuleInterop": true,
