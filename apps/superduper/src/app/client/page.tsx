@@ -1,6 +1,8 @@
 "use client"
+
 import Image from "next/image";
 import { useEffect, useState } from "react";
+
 interface Product {
     name: string,
     image_url: string,
