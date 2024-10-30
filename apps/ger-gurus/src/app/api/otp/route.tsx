@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 export async function POST(request: Request) {
   const body = await request.json();
   const { email } = body;
-  const otp = Math.floor(Math.random() * 8999) + 1000;
+  const otp = (Math.floor(Math.random() * 9000) + 1000).toString();
   const GOOGLE_SECRET = process.env.GOOGLE_SECRET;
   try {
     const createdAt = new Date();

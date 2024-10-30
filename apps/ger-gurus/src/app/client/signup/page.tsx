@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { Toaster, toast } from 'sonner';
 
 export default function Index() {
+  const [loading, setLoading] = useState(false);
+  const [role, setRole] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -52,13 +54,15 @@ export default function Index() {
     setEmail('');
     setPassword('');
     setPasswordConfirm('');
+    setRole('');
   }
 
   function final() {
     if (!name) setNameConfirm(true);
     if (!email) setEmailConfirm(true);
     if (!password) setPasswordEmpty(true);
-    if (!passwordConfirm) return setPasswordConfirmEmpty(true);
+    if (!passwordConfirm) setPasswordConfirmEmpty(true);
+    if (role === '' || role === 'empty') return setRole('empty');
     if (name.length < 2) return setNamelengthConfrim(true);
     if (!emailIsValid) return setEmailValidConfirm(true);
     if (password.length < 8) return setPasswordlenghtConfrim(true);
@@ -67,6 +71,7 @@ export default function Index() {
   }
 
   function submit() {
+    setLoading(true);
     try {
       fetch('/api/user', {
         method: 'POST',
@@ -74,6 +79,7 @@ export default function Index() {
           name,
           email,
           password,
+          role,
         }),
         headers: {
           'Content-type': 'Application/json; charset=UTF-8',
@@ -81,10 +87,17 @@ export default function Index() {
       }).then((res) => {
         if (res.ok) {
           toast.success('Амжилттай бүртгүүллээ.', { className: 'custom-toast success' });
+          if (role === 'Teacher') {
+            setTimeout(() => {
+              window.location.href = '/test';
+            }, 2000);
+          } else {
+            setTimeout(() => {
+              window.location.href = '/login';
+            }, 2000);
+          }
           reset();
-          setTimeout(() => {
-            window.location.href = '/login';
-          }, 2000);
+          setLoading(false);
         } else if (res.status === 401) {
           toast.error('Имэйл хаяг бүртгэлтэй байна.', { className: 'custom-toast error' });
         } else if (!res.ok) {
@@ -179,14 +192,28 @@ export default function Index() {
             {passwordConfirm && (!passwordsAreSame ? <div className="px-3 text-[#E11D48] text-xs font-normal">Давтсан нууц үг буруу байна</div> : null)}
             {passwordConfirmEmpty && (!passwordConfirm ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нууц үг давтаж оруулна уу</div> : null)}
           </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setRole('Teacher')}
+              className={`w-full border border-black rounded-xl ${role === 'Teacher' ? 'border-green-500 bg-green-500' : ''} ${role === 'empty' ? 'border-red-600' : ''}`}
+            >
+              Багш
+            </button>
+            <button
+              onClick={() => setRole('Student')}
+              className={`w-full border border-black rounded-xl ${role === 'Student' ? 'border-green-500 bg-green-500' : ''} ${role === 'empty' ? 'border-red-600' : ''}`}
+            >
+              Сурагч
+            </button>
+          </div>
           <ul className="flex flex-col gap-1 list-disc font-normal text-xs leading-4 pl-3">
             <li className={`${!password ? '!text-[#71717A]' : ''} ${hasUppercase ? 'text-green-600' : 'text-red-600'}`}>Том үсэг орсон байх</li>
             <li className={`${!password ? '!text-[#71717A]' : ''} ${hasLowercase ? 'text-green-600' : 'text-red-600'}`}>Жижиг үсэг орсон байх</li>
             <li className={`${!password ? '!text-[#71717A]' : ''} ${hasNumber ? 'text-green-600' : 'text-red-600'}`}>Тоо орсон байх</li>
             <li className={`${!password ? '!text-[#71717A]' : ''} ${hasSpecialChar ? 'text-green-600' : 'text-red-600'}`}>Тэмдэгт орсон байх</li>
           </ul>
-          <Button onClick={final} className="w-[334px]" type="submit">
-            Үүсгэх
+          <Button disabled={loading} onClick={final} className="w-[334px]" type="submit">
+            {loading ? 'Loading' : 'Үүсгэх'}
           </Button>
         </div>
         <Link href={'/login'}>
