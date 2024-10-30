@@ -1,5 +1,7 @@
 'use client';
 
+import { AdminLayout } from '@/components/adminLayout';
+
 // import Header from "@/components/header";
 // import LeftBar from "@/components/leftBar";
 
@@ -13,22 +15,24 @@ const Home = () => {
   };
 
   return (
-    <div className="container mx-auto flex flex-col gap-30">
-      <h1>
-        <div className="container mx-auto flex flex-col padding-30">
-          {' '}
-          Hello there 👋, <br /> Welcome to the client accepting dashboard{' '}
-        </div>
-      </h1>
-      <button className="border-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" onClick={approveSell}>
-        Approve the seller's request
-      </button>
+    <AdminLayout>
+      <div className="container mx-auto flex flex-col gap-30">
+        <h1>
+          <div className="container mx-auto flex flex-col padding-30">
+            {' '}
+            Hello there 👋, <br /> Welcome to the client accepting dashboard{' '}
+          </div>
+        </h1>
+        <button className="border-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" onClick={approveSell}>
+          Approve the seller's request
+        </button>
 
-      <br />
-      <button className="border-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg" onClick={rejectSell}>
-        Reject the seller's request
-      </button>
-    </div>
+        <br />
+        <button className="border-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg" onClick={rejectSell}>
+          Reject the seller's request
+        </button>
+      </div>
+    </AdminLayout>
   );
 };
 export default Home;
