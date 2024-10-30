@@ -32,7 +32,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div>
+    <div className='w-[1000px] mx-auto p-10'>
       <Link href="/admin-app/courses/create">
         <Button className="p-6">Add new course</Button>
       </Link>

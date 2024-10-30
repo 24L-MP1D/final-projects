@@ -1,8 +1,8 @@
-import { DB } from '@/lib/db';
+import { DB } from '@/lib/db'; // import the database connection
 
 export async function GET(request: Request) {
   try {
-    const collection = DB.collection('productApproveRequest');
+    const collection = DB.collection('approvedlists');
     const approve = await collection.find({}).toArray();
     return Response.json(approve);
   } catch (err) {
@@ -13,10 +13,10 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const collection = DB.collection('productApproveRequest');
-    const approveApproveProduct = await request.json();
-    console.log(approveApproveProduct);
-    const approve = await collection.insertOne(approveApproveProduct);
+    const collection = DB.collection('approvedlists');
+    const approvedProducts = await request.json();
+    console.log(approvedProducts);
+    const approve = await collection.insertOne(approvedProducts);
     console.log(approve);
     return Response.json(approve, { status: 200 });
   } catch (error) {

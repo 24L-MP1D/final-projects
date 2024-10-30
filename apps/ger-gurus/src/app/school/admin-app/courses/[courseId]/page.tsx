@@ -20,8 +20,24 @@ export default async function Page({ params }: { params: { courseId: string } })
   // if (!course) {
   //   return redirect('/');
   // }
+  interface Course {
+    _id: ObjectId;
+    title: string;
+    description: string;
+    imageUrl: string;
+    price: number;
+    chapters: Chapter[];
+  }
+  interface Chapter {
+    _id: string; // Converted to string
+    title: string;
+    courseId: string; // Converted to string
+    isPublished?: boolean;
+    isFree?: boolean;
+    position: number;
+  }
 
-  const course1 = await db
+  const course1 = (await db
     .collection('courses')
     .aggregate([
       {
@@ -38,7 +54,7 @@ export default async function Page({ params }: { params: { courseId: string } })
       {
         $unwind: {
           path: '$chapters',
-          preserveNullAndEmptyArrays: true, // Preserve the course document even if there are no chapters
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -55,7 +71,7 @@ export default async function Page({ params }: { params: { courseId: string } })
         },
       },
     ])
-    .toArray();
+    .toArray()) as Course[];
 
   if (!course1 || course1.length === 0) {
     return redirect('/');
@@ -63,14 +79,15 @@ export default async function Page({ params }: { params: { courseId: string } })
   const course = course1[0];
 
   const courseWithPlainId = {
+    ...course,
     _id: course._id.toString(),
-    title: course.title,
-    description: course.description,
-    imageUrl: course.imageUrl,
-    price: course.price,
-    chapters: course.chapters, // Ensure all required fields are included
+    chapters: course.chapters.map((chapter) => ({
+      ...chapter,
+      _id: chapter._id.toString(),
+      courseId: chapter.courseId.toString(), // Convert nested courseId
+    })),
   };
-  const requiredFields = [course.title, course.description, course.imageUrl, course.price, course.chapters.some((chapter: { isPublished: Boolean }) => chapter.isPublished)];
+  const requiredFields = [course.title, course.description, course.imageUrl, course.price, course.chapters];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `(${completedFields}/${totalFields})`;
