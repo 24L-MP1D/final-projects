@@ -56,7 +56,7 @@ export const SignUp = () => {
       });
       if (response.status === 201) {
         console.log('success');
-        toast('Signed Up successfully');
+        toast('Signed Up Successfully');
 
         setLoading(false);
       } else {

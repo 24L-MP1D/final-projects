@@ -3,51 +3,35 @@
 import { Checkbox } from '@/components/ui/Checkbox';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
+import { Toaster, toast } from 'sonner';
 export default function signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
   async function Submit() {
+    setLoading(true);
     axios
       .post('/api/signin', { email, password })
       .then(({ data, status, statusText }) => {
-        if (status === 200) {
-          alert('Success');
+        if (status === 201) {
           localStorage.setItem('accessToken', data.accessToken);
+          toast('Signed In Successfully!');
         } else {
-          alert(statusText);
         }
         console.log(data);
+        setLoading(false);
       })
       .catch(({ message }) => {
+        toast(message);
         console.log(message);
       });
   }
-
-  // async function Submit() {
-  //   try {
-  //     const response = await fetch('/api/signin', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         email,
-  //         password,
-  //       }),
-  //     });
-  //     if (response.ok) {
-  //       console.log('success');
-  //     } else {
-  //       console.log('error');
-  //     }
-  //   } catch (err) {
-  //     console.log('error in sign up');
-  //   }
-  // }
 
   return (
     <div className="bg-slate-50">
@@ -98,9 +82,11 @@ export default function signin() {
             Forgotten your password?
           </Link>
         </div>
-        <Button className="bg-blue-700 w-full disabled:cursor-not-allowed" onClick={Submit}>
-          Sign in
+        <Button className="bg-blue-700 flex w-full disabled:cursor-not-allowed" onClick={Submit} disabled={loading}>
+          {loading && <Image src={'/images/spinner.svg'} alt="a" width={40} height={40} />}
+          <div>Sign in</div>
         </Button>
+        <Toaster />
       </div>
     </div>
   );
