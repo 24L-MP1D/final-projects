@@ -57,7 +57,7 @@ export default function LoginForm() {
   }
   function SignInbyGoogle() {
     const query = {
-      client_id: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID || '',
+      client_id: oauth_google.client_id || '',
       redirect_uri: oauth_google.redirect_uri,
       response_type: 'code',
       scope: oauth_google.scopes,
