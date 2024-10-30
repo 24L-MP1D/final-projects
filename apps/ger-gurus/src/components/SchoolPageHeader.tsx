@@ -3,7 +3,7 @@ import { CgMenuGridO } from 'react-icons/cg';
 
 export const SchoolPageHeader = () => {
   return (
-    <div className="p-4 min-[480px]:p-8 min-[768px]:p-12 min-[1279]:p-16 flex justify-between items-end">
+    <div className="p-4 min-[480px]:p-8 min-[768px]:p-12 min-[1279px]:p-16 flex justify-between items-end">
       <div className="flex flex-col gap-1 items-center">
         <Image src={'/logo.png'} alt="school-logo" width={40} height={40} />
         <p className="font-bold text-xs">GER GURUS</p>
