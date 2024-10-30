@@ -10,7 +10,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Product, ProductItem } from '../components/productItem';
 
 export default function Index() {
-  // Product data codes
   const [products, setProducts] = useState<Product[]>([]);
 
   const [progress, setProgress] = useState(0);
@@ -20,22 +19,19 @@ export default function Index() {
     image: string;
   }
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch('/api/products');
-        if (!res.ok) throw new Error('Network response was not ok');
-        const data = await res.json();
-        setProducts(data);
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch('/api/products');
+      if (!res.ok) throw new Error('Network response was not ok');
+      const data = await res.json();
+      console.log(data);
+      setProducts(data);
 
-        // Extract image URLs from the products
-        const imageUrls = data.map((product: product) => product.image);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-    fetchProducts();
-  }, []);
+      // Extract image URLs from the products
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
 
   const handleProgressClick = (e: number) => {
     if (swiperRef.current) {
@@ -55,6 +51,7 @@ export default function Index() {
   useEffect(() => {
     const storage = localStorage.getItem('favourites');
     if (storage) setFavourite(JSON.parse(storage));
+    fetchProducts();
   }, []);
 
   const handleFavourite = (productId: string) => {
@@ -118,7 +115,7 @@ export default function Index() {
           >
             {products.slice(0, 6).map((product, index) => (
               <SwiperSlide key={index}>
-                <Image alt={`Slide ${index + 1}`} src={product.image_url} width={1200} height={600} className="w-full h-full object-cover" />
+                <Image alt={`Slide ${index + 1}`} src={product.image_url} width={1200} height={600} className="w-full h-full object-cover hover:cursor-pointer" />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -126,7 +123,7 @@ export default function Index() {
       </div>
       <div className="grid grid-cols-3 gap-2 w-full">
         {products.slice(0, 6).map((product) => (
-          <ProductItem product={product} key={product._id} onClickFavourite={() => handleFavourite(product._id)} isFavourite={!!favourite.find((id) => id === product._id)} />
+          <ProductItem product={product} key={product._id} onClickFavourite={() => handleFavourite(product._id)} isFavourite={!favourite.find((id) => id === product._id)} />
         ))}
       </div>
     </div>
