@@ -25,10 +25,31 @@ export default function Index() {
   }
 
   function loadUser() {
-    fetch(`/api/user`)
-      .then((res) => res.json())
-      .then((data) => setData(data));
+    const token = localStorage.getItem('authtoken') || '';
+
+    fetch(`/api/user`, {
+      headers: {
+        authtoken: token,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setData(data);
+        } else {
+          setData([data]);
+        }
+      })
+      .catch((error) => {
+        console.error('Error loading user:', error);
+      });
   }
+
   useEffect(() => {
     loadUser();
   }, []);

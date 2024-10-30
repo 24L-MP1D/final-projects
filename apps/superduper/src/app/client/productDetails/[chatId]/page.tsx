@@ -113,8 +113,8 @@ function Realtime({ chatId }: { chatId: string }) {
 
   if (!oneProduct) return <div>loading</div>;
   return (
-    <form onSubmit={formik.handleSubmit} className={`max-w-[1240px] mx-auto w-full `}>
-      <div className={`flex gap-24 `}>
+    <form onSubmit={formik.handleSubmit} className={`max-w-[1240px] mx-auto w-full`}>
+      <div className={`flex gap-24`}>
         <ProductDetailImages oneProduct={oneProduct} />
         <div className="flex flex-col gap-8 pb-12">
           <Bid
@@ -132,9 +132,7 @@ function Realtime({ chatId }: { chatId: string }) {
             isSticky={isSticky}
             setIsSticky={setIsSticky}
           />
-
           <Safity oneProduct={oneProduct} />
-
           <HelpCenter oneProduct={oneProduct} />
           {isSticky && (
             <BidSticky

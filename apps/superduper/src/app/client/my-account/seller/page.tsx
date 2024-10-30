@@ -2,6 +2,7 @@
 
 import { ProductType } from '@/components/productType';
 import { ProfileAside } from '@/components/profileAside';
+import { BackgroundGradient } from '@/components/ui/background-gradiant';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -36,13 +37,15 @@ export default function App() {
           {products.map((product) => (
             <div className="flex-1 py-4 border-t flex items-center">
               <div className="flex gap-2 items-center flex-1">
-                <div className="max-w-[150px] w-full border">
-                  <Image className="object-cover w-[80%] h-full mx-auto" src={product.frontImage} width={500} height={500} alt="zurag" />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <div>Country: {product.Country}</div>
-                  <div>Product Name: {product.productName}</div>
-                  <div>Category: {product.category}</div>
+                <div>
+                  <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900">
+                    <Image src={product.frontImage} alt="jordans" height={400} width={400} className="object-cover w-[150px] h-[150px]" />
+                    <div className="flex flex-col gap-2">
+                      <div>Country: {product.Country}</div>
+                      <div>Product Name: {product.productName}</div>
+                      <div>Category: {product.category}</div>
+                    </div>
+                  </BackgroundGradient>
                 </div>
               </div>
               <div className="flex-1">
@@ -73,6 +76,7 @@ export default function App() {
                   </div>
                 </div>
               </div>
+
               <div className="flex-1 flex justify-center">
                 <Button>Detail</Button>
               </div>

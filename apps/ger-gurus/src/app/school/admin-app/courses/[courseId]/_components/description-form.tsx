@@ -24,7 +24,6 @@ interface DescriptionFormProps {
     description: string;
     imageUrl: string;
     price: number;
-    chapters: [];
   };
 }
 export const DescriptionForm: React.FC<DescriptionFormProps> = ({ initialData }) => {
