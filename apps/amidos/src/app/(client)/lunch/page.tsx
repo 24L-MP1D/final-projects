@@ -2,12 +2,12 @@
 import { Button } from '@/app/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Orders } from '@/lib/types';
+import { Food } from '@/lib/types';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function Menu() {
-  const [food, setFood] = useState<Orders[]>([]);
+  const [food, setFood] = useState<Food[]>([]);
   const specialdishes = [
     { url: '/carbonara.jpg', price: 21000, name: 'Carbonara' },
     { url: '/pasta.jpg', price: 15000, name: 'Pasta' },
@@ -58,7 +58,7 @@ export default function Menu() {
           </Carousel>
           <h1 className="text-7xl italic text-center mb-10 mx-auto underline underline-1 text-[#4A433E]">Lunch set</h1>
           <div className="mt-20 mx-auto lg:w-[1200px] flex flex-col lg:flex lg:flex-wrap lg:flex-row  gap-16 mb-20">
-            {food.map((food: Orders) => (
+            {food.map((food: Food) => (
               <div key={food._id} className="w-[320px] h-[380px] border-2 border-[#8B0000]  absoulte rounded-sm p-10 ">
                 <div className="rounded-full width={150} height={150}">
                   <img src={food.photos} width={150} height={150} alt={food.name} className="mx-auto w-[150px] h-[150px] object-cover rounded-full items-center" />

@@ -2,7 +2,7 @@ import { DB } from '@/lib/db';
 
 export async function GET(request: Request) {
   try {
-    const collection = DB.collection('products');
+    const collection = DB.collection('product');
     const result = await collection.find({}).toArray();
     return Response.json(result);
   } catch (err) {

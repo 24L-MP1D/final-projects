@@ -23,7 +23,6 @@ interface TitleFormProps {
     description: string;
     imageUrl: string;
     price: number;
-    chapters: [];
   };
 }
 export const TitleForm: React.FC<TitleFormProps> = ({ initialData }) => {
