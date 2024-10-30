@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { format } from 'date-fns';
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -114,7 +113,7 @@ export default function TableBook() {
     const [number, setNumber] = useState<string>("");
     const [selectTable, setSelectedTable] = useState<number | null>(null);
     const [day, setDay] = useState<Date | undefined>(new Date());
-    const router = useRouter
+    const router = useRouter();
 
     const reset = () => {
         setSelectedTime(null);
@@ -122,27 +121,27 @@ export default function TableBook() {
         setSelectedCalendarDay(undefined);
         setSelectedTable(null);
     };
-    async function CreateOrder() {
-        try {
-            const response = await fetch("/api/tablebook", {
-                method: "POST",
-                body: JSON.stringify({
-                    time: selectedTime?.value,
-                    nums: number,
-                    calendar: selectedCalendarDay,
-                    table: selectTable,
-                    day: format(day as Date, "yyyy-MM-dd")
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            if (!response.ok) throw new Error("Failed to create order");
-            reset();
-        } catch (error) {
-            console.error("Order creation failed:", error);
-        }
-    }
+    // async function CreateOrder() {
+    //     try {
+    //         const response = await fetch("/api/tablebook", {
+    //             method: "POST",
+    //             body: JSON.stringify({
+    //                 time: selectedTime?.value,
+    //                 nums: number,
+    //                 calendar: selectedCalendarDay,
+    //                 table: selectTable,
+    //                 day: format(day as Date, "yyyy-MM-dd")
+    //             }),
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //         });
+    //         if (!response.ok) throw new Error("Failed to create order");
+    //         reset();
+    //     } catch (error) {
+    //         console.error("Order creation failed:", error);
+    //     }
+    // }
     // day: format(day as Date, "yyyy-MM-DD")
     return (
         <div className="flex justify-center gap-10 p-10 mx-auto">
