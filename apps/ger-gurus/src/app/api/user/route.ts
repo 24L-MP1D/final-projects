@@ -17,9 +17,7 @@ export async function GET(request: Request) {
     if (typeof data !== 'object' || data === null || !('userId' in data)) {
       return new Response("Invalid token", { status: 401 });
     }
-    console.log(data.userId)
     const list = await db.collection('users').findOne({ _id: new ObjectId(data.userId) });
-    console.log(list)
     if (!list) {
       return new Response("User not found", { status: 404 });
     }
