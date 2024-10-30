@@ -1,35 +1,52 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useLocalStorage } from "@uidotdev/usehooks";
+import { formatInTimeZone } from 'date-fns-tz';
 import { useState } from "react";
-
 
 export default function TableVerify() {
     const [name, setName] = useState<string>("");
-    const [number, setNumber] = useState<string>("");
+    const [phonenumber, setPhonenumber] = useState<string>("");
+    const [selectedTime, setSelectedTime] = useLocalStorage("selectedTime");
+    const [number, setNumber] = useLocalStorage("number");
+    const [selectedTable, setSelectedTable] = useLocalStorage("selectedTable");
+    const [day, setDay] = useLocalStorage("day");
 
     const reset = () => {
         setName("");
+        setPhonenumber("");
+        setSelectedTime(null);
         setNumber("");
+        setSelectedTable(null);
+        setDay(new Date());
     };
 
     async function CreateOrder() {
+        const formattedDay = new Date(day)
+        // console.log("DAY: ", formattedDay)
+        // console.log("DATE FORMAT: ", formatInTimeZone(new Date(), 'Asia/Shanghai', 'yyyy-MM-dd'))
+        // 
         try {
             const response = await fetch("/api/tablebook-verify", {
                 method: "POST",
                 body: JSON.stringify({
                     name,
-                    number,
+                    phonenumber,
+                    time: selectedTime?.value,
+                    nums: number,
+                    table: selectedTable,
+                    day: formatInTimeZone(formattedDay, 'Asia/Shanghai', 'yyyy-MM-dd')
                 }),
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
-            if (!response.ok) throw new Error("Failed to create order");
-            alert("Order created successfully!");
+            if (!response.ok) throw new Error("Захиалга үүсгэхэд алдаа гарлаа:");
+            alert("Захиалга амжилттай үүслээ.!");
             reset();
         } catch (error) {
-            console.error("Order creation failed:", error);
+            console.error("Захиалга үүсгэхэд алдаа гарлаа:", error);
         }
     }
 
@@ -49,11 +66,12 @@ export default function TableVerify() {
                     <Input
                         placeholder="Утасны дугаар аа оруулна уу?"
                         type="text"
-                        value={number}
-                        onChange={(e) => setNumber(e.target.value)}
+                        value={phonenumber}
+                        onChange={(e) => setPhonenumber(e.target.value)}
                     />
                 </div>
                 <Button variant={"amidos3"} onClick={CreateOrder} className="w-full hover:hover:bg-[#52071b7c]">Захиалга үүсгэх</Button>
+                {day}
             </div>
         </div>
     );
