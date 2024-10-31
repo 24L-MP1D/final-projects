@@ -2,8 +2,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import { format } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function TableVerify() {
     const [name, setName] = useState<string>("");
@@ -45,9 +47,8 @@ export default function TableVerify() {
         }
         setLoading(true);
         const formattedDay = formatInTimeZone(day!, 'Asia/Shanghai', 'yyyy-MM-dd');
-
         try {
-            const response = await fetch("/api/tablebook-verify", {
+            const response = await fetch("/api/tablebook", {
                 method: "POST",
                 body: JSON.stringify({
                     name,
@@ -55,15 +56,14 @@ export default function TableVerify() {
                     time: selectedTime,
                     reservedSeats: reservedSeat,
                     table: selectedTable,
-                    day: formattedDay
+                    day: format(day as Date, "yyyy-MM-dd")
                 }),
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
-
             if (!response.ok) throw new Error("Захиалга үүсгэхэд алдаа гарлаа.");
-            alert("Захиалга амжилттай үүслээ!");
+            toast("Захиалга амжилттай үүслээ!");
             reset();
         } catch (error) {
             console.error("Захиалга үүсгэхэд алдаа гарлаа:", error);
@@ -72,7 +72,6 @@ export default function TableVerify() {
             setLoading(false);
         }
     }
-
     return (
         <div className="max-w-screen-sm items-center mx-auto py-32">
             <div className="flex flex-col gap-7 p-36">
@@ -82,7 +81,7 @@ export default function TableVerify() {
                         placeholder="Нэр ээ оруулна уу?"
                         type="text"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(ev) => setName(ev.target.value)}
                         disabled={loading}
                         aria-label="Нэр"
                     />
@@ -92,7 +91,7 @@ export default function TableVerify() {
                         placeholder="Утасны дугаар аа оруулна уу?"
                         type="text"
                         value={phonenumber}
-                        onChange={(e) => setPhonenumber(e.target.value)}
+                        onChange={(ev) => setPhonenumber(ev.target.value)}
                         disabled={loading}
                         aria-label="Утасны дугаар"
                         className={errorMessage.includes("утасны дугаар") ? "border-red-500" : ""}

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 type Time = { id: number; value: string };
 type PeopleCount = { value: string };
@@ -21,12 +22,10 @@ const times: Time[] = [
     { id: 10, value: "21:00" },
     { id: 11, value: "22:00" },
 ];
-
 const reservedTables: Table[] = Array.from({ length: 15 }, (_, i) => ({
     id: i + 1,
     name: `Table-${i + 1}`,
 }));
-
 const reservedSeats: PeopleCount[] = [
     { value: "1 хүн" },
     { value: "2 хүн" },
@@ -37,21 +36,19 @@ const reservedSeats: PeopleCount[] = [
     { value: "8-10 хүн" },
     { value: "10-с дээш хүн" },
 ];
-
 export default function TableBook() {
     const router = useRouter();
     const [selectedTime, setSelectedTime] = useLocalStorage<Time | null>("selectedTime", null);
     const [reservedSeat, setReservedSeat] = useLocalStorage<string | null>("reservedSeat", null);
     const [selectedTable, setSelectedTable] = useLocalStorage<number | null>("selectedTable", null);
-    const [day, setDay] = useLocalStorage<Date | null>("day", new Date());
+    const [day, setDay] = useLocalStorage("day", new Date().toISOString());
 
     const reset = () => {
         setSelectedTime(null);
         setReservedSeat(null);
         setSelectedTable(null);
-        setDay(new Date());
+        setDay(new Date().toISOString());
     };
-
     const handleSubmit = () => {
         if (selectedTime && selectedTable && reservedSeat) {
             router.push("/tablebook-verify");
@@ -59,7 +56,6 @@ export default function TableBook() {
             alert("Бүх сонголтуудыг хийнэ үү!");
         }
     };
-
     const renderButtons = (items: Array<{ value: string }>, setter: (value: string) => void, selectedValue: string | null) => (
         items.map((item, index) => (
             <Button
@@ -72,10 +68,12 @@ export default function TableBook() {
             </Button>
         ))
     );
-
+    useEffect(() => {
+        reset();
+    }, [])
     return (
         <div className="flex justify-center gap-8 p-10 mx-auto">
-            <div className="grid grid-cols-4 gap-16">
+            <div className="grid grid-cols-4 gap-10">
                 {reservedTables.map((table) => (
                     <Button
                         variant={"amidos2"}
@@ -91,8 +89,11 @@ export default function TableBook() {
                 <div className="self-center">
                     <Calendar
                         mode="single"
-                        selected={new Date()}
-                        onSelect={(date) => setDay(day)}
+                        selected={new Date(day)}
+                        onSelect={(val) => {
+                            // console.log({ val, day })
+                            setDay(val ? new Date(val).toISOString() : new Date().toISOString())
+                        }}
                         className="rounded-md border"
                     />
                 </div>
