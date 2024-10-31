@@ -3,50 +3,73 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { formatInTimeZone } from 'date-fns-tz';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function TableVerify() {
     const [name, setName] = useState<string>("");
     const [phonenumber, setPhonenumber] = useState<string>("");
-    const [selectedTime, setSelectedTime] = useLocalStorage("selectedTime");
-    const [number, setNumber] = useLocalStorage("number");
-    const [selectedTable, setSelectedTable] = useLocalStorage("selectedTable");
-    const [day, setDay] = useLocalStorage("day");
+    const [selectedTime, setSelectedTime] = useLocalStorage<string | null>("selectedTime", null);
+    const [reservedSeat, setReservedSeat] = useLocalStorage<string | null>("reservedSeat", null);
+    const [selectedTable, setSelectedTable] = useLocalStorage<number | null>("selectedTable", null);
+    const [day, setDay] = useLocalStorage<Date | null>("day", new Date());
+    const [loading, setLoading] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     const reset = () => {
         setName("");
         setPhonenumber("");
         setSelectedTime(null);
-        setNumber("");
+        setReservedSeat(null);
         setSelectedTable(null);
         setDay(new Date());
+        setErrorMessage("");
     };
 
+    const isValidPhoneNumber = (number: string) => {
+        const phoneRegex = /^[0-9]{8}$/;
+        return phoneRegex.test(number);
+    };
+
+    useEffect(() => {
+        if (!isValidPhoneNumber(phonenumber)) {
+            setErrorMessage("Утасны дугаар буруу байна.");
+        } else {
+            setErrorMessage("");
+        }
+    }, [phonenumber]);
+
     async function CreateOrder() {
-        const formattedDay = new Date(day)
-        // console.log("DAY: ", formattedDay)
-        // console.log("DATE FORMAT: ", formatInTimeZone(new Date(), 'Asia/Shanghai', 'yyyy-MM-dd'))
-        // 
+        if (!name || !phonenumber || !isValidPhoneNumber(phonenumber)) {
+            setErrorMessage("Бүх талбарыг зөв бөглөх шаардлагатай.");
+            return;
+        }
+        setLoading(true);
+        const formattedDay = formatInTimeZone(day!, 'Asia/Shanghai', 'yyyy-MM-dd');
+
         try {
             const response = await fetch("/api/tablebook-verify", {
                 method: "POST",
                 body: JSON.stringify({
                     name,
                     phonenumber,
-                    time: selectedTime?.value,
-                    nums: number,
+                    time: selectedTime,
+                    reservedSeats: reservedSeat,
                     table: selectedTable,
-                    day: formatInTimeZone(formattedDay, 'Asia/Shanghai', 'yyyy-MM-dd')
+                    day: formattedDay
                 }),
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
-            if (!response.ok) throw new Error("Захиалга үүсгэхэд алдаа гарлаа:");
-            alert("Захиалга амжилттай үүслээ.!");
+
+            if (!response.ok) throw new Error("Захиалга үүсгэхэд алдаа гарлаа.");
+            alert("Захиалга амжилттай үүслээ!");
             reset();
         } catch (error) {
             console.error("Захиалга үүсгэхэд алдаа гарлаа:", error);
+            setErrorMessage("Захиалга үүсгэхэд алдаа гарлаа. Дахин оролдоно уу.");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -60,6 +83,8 @@ export default function TableVerify() {
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        disabled={loading}
+                        aria-label="Нэр"
                     />
                 </div>
                 <div>
@@ -68,10 +93,20 @@ export default function TableVerify() {
                         type="text"
                         value={phonenumber}
                         onChange={(e) => setPhonenumber(e.target.value)}
+                        disabled={loading}
+                        aria-label="Утасны дугаар"
+                        className={errorMessage.includes("утасны дугаар") ? "border-red-500" : ""}
                     />
                 </div>
-                <Button variant={"amidos3"} onClick={CreateOrder} className="w-full hover:hover:bg-[#52071b7c]">Захиалга үүсгэх</Button>
-                {day}
+                {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+                <Button
+                    variant={"amidos3"}
+                    onClick={CreateOrder}
+                    className="w-full hover:hover:bg-[#52071b7c]"
+                    disabled={loading}
+                >
+                    {loading ? "Ажлын явц..." : "Захиалга үүсгэх"}
+                </Button>
             </div>
         </div>
     );
