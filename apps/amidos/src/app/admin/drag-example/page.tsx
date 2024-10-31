@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/app/components/ui/button';
 import { useEffect, useState } from 'react';
 import Draggable from 'react-draggable'; // The default
 import LeftBar from '../components/leftbar';
@@ -26,7 +25,6 @@ const mockTables = [
 
 export default function DragExample() {
   const [tables, setTables] = useState(mockTables);
-  const [addtable, setAddTable] = useState();
 
   useEffect(() => {
     // fetch setTables();
@@ -41,36 +39,20 @@ export default function DragExample() {
 
   function handleStop(_id: string) {
     const updateTable = tables.find((table) => table._id === _id);
-    fetch(`api/admin/tablesDetail`);
-    // TODO //PUT
+
+    // TODO
     console.log(updateTable);
   }
 
-  function createTable() {
-    fetch(`api/admin/tableDetail`, {
-      method: 'POST',
-      body: JSON.stringify({
-        coordinate: addtable,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
-  }
-
   return (
-    <div className="max-w-[1440px] mx-auto flex gap-5">
+    <div>
       <LeftBar />
-      <div className="flex gap-10 mt-5">
-        <div className="w-[800px] h-[800px] bg-slate-400 relative">
-          {tables.map((table) => (
-            <Draggable key={table._id} position={table.position} onDrag={(e, newPosition) => handleDrag(table._id, newPosition)} onStop={() => handleStop(table._id)}>
-              <div className="absolute bg-green-400 w-20 h-20"></div>
-            </Draggable>
-          ))}
-        </div>
-
-        <Button className="">add table</Button>
+      <div className="w-[800px] h-[800px] bg-slate-400 m-10 relative">
+        {tables.map((table) => (
+          <Draggable key={table._id} position={table.position} onDrag={(e, newPosition) => handleDrag(table._id, newPosition)} onStop={() => handleStop(table._id)}>
+            <div className="absolute bg-green-400 w-20 h-20"></div>
+          </Draggable>
+        ))}
       </div>
     </div>
   );
