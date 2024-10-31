@@ -3,7 +3,6 @@ import { Button } from '@/app/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Food } from '@/lib/types';
-
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -31,7 +30,7 @@ export default function Menu() {
       });
   }, []);
   const navs = [
-    { name: 'ЗАХИАЛГА', link: '/order' },
+    { name: 'ЗАХИАЛГА', link: '/food' },
     { name: 'MЕНЮ', link: '/lunch' },
     { name: 'ХҮРГЭЛТ', link: '/delivery' },
   ];
@@ -47,7 +46,6 @@ export default function Menu() {
       <div className="w-full mx-auto flex mt-20 md:mx-auto">
         <div className="relative mx-auto ">
           <h1 className="text-7xl italic text-center underline underline-1 mb-20">Онцлох Меню</h1>
-
           <Carousel className="w-full lg:max-w-md max-w-sm mb-20  md:basis-1/2 lg:basis-1/3 mx-auto">
             <Carousel className="w-full lg:max-w-md max-w-sm mb-20 md:basis-1/2 lg:basis-1/3 mx-auto">
               <CarouselContent>

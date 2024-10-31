@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Food } from '@/lib/types';
 import { Label } from '@radix-ui/react-label';
+import { Heart, Pencil, Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import LeftBar from '../components/leftbar';
@@ -17,10 +18,9 @@ export default function Order() {
   const [price, setPrice] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
-  const [special, setSpecial] = useState([]);
+  const [special, setSpecial] = useState(false);
   const CLOUDINARY_CLOUD_NAME = 'dozicpox6';
   const CLOUDINARY_UPLOAD_PRESET = 'pe3w78vd';
-  const [specialFoods, setSpecialFoods] = useState<Food[]>([]);
 
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -44,7 +44,7 @@ export default function Order() {
     }
   };
 
-  const addFood = () => {
+  const addFood = (data: any) => {
     const newFood = {
       name,
       ingredients,
@@ -78,14 +78,14 @@ export default function Order() {
     }
   };
 
-  const handleDeleteFood = (id: string) => {
-    fetch(`/api/hello/admin/${id}`, {
+  const handleDeleteFood = (_id: string) => {
+    fetch(`/api/hello/admin/${_id}`, {
       method: 'DELETE',
     })
       .then((res) => {
         if (res.status === 200) {
-          setOrder(order.filter((food) => food._id !== id));
-          console.log('Successfully deleted the product');
+          setOrder(order.filter((food) => food._id !== _id));
+          toast('Successfully deleted the product');
         } else {
           console.log('Error occurred during deletion');
         }
@@ -126,25 +126,27 @@ export default function Order() {
       console.error('Error updating food:', error);
     }
   };
-  const handleSpecialFood = async (food: Food) => {
-    if (!specialFoods.some((specialFood) => specialFood._id === food._id)) {
-      setSpecialFoods([...specialFoods, food]);
 
-      try {
-        await fetch('/api/special', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(food),
-        });
-        toast.success('Food added to special items!');
-      } catch (error) {
-        console.error('Error adding special food:', error);
-        toast.error('Error adding to special items');
-      }
-    } else {
-      toast.info('Food is already marked as special.');
+  const handleSpecialFood = async (foodId: string) => {
+    try {
+      await fetch(`/api/special/${foodId}`, {
+        method: 'POST',
+      });
+      toast.success('Food added to special items!');
+    } catch (error) {
+      console.error('Error adding special food:', error);
+      toast.error('Error a  dding to special items');
+    }
+  };
+  const handleRemoveSpecial = async (foodId: string) => {
+    try {
+      await fetch(`/api/special/${foodId}`, {
+        method: 'DELETE',
+      });
+      toast.success('Food removed from special list!');
+    } catch (error) {
+      console.error('Error removing special food:', error);
+      toast.error('Error removing to special items');
     }
   };
 
@@ -162,15 +164,16 @@ export default function Order() {
         setSpecial(data);
       });
   }, []);
+
   return (
-    <form className="text-md">
+    <div className="text-md">
       <div className="bg-slate-100">
         <div className="flex m-10">
           <LeftBar />
           <div className="bg-white  p-10 mt-10 ml-10 text-md rounded-lg mx-auto">
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline" className="mb-10 text-lg">
+                <Button variant="default" className="mb-10 text-lg">
                   Хоол нэмэх
                 </Button>
               </DialogTrigger>
@@ -215,36 +218,32 @@ export default function Order() {
               </DialogContent>
             </Dialog>
             <div>
-              <Table className="text-2xl mb-5">
+              <Table className="text-xl mb-5">
                 <TableHeader>
-                  <TableRow className="text-center font-bold ">
-                    <TableHead className="w-[100px] text-bold ">№</TableHead>
+                  <TableRow className="text-center font-bold text-wrap">
+                    <TableHead className="text-bold ">№</TableHead>
                     <TableHead className="text-bold ">Хоолны нэр, код</TableHead>
                     <TableHead className="text-bold">Орц</TableHead>
                     <TableHead className=" text-bold">Үнэ</TableHead>
-                    <TableHead className="text-bold">Төлөв</TableHead>
                     <TableHead className=" text-bold">Зураг</TableHead>
                     <TableHead className="text-bold">Засах</TableHead>
-                    <TableHead className=" text-bold">Устгах</TableHead>
-                    <TableHead className=" text-bold">Төлөв</TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody className="text-lg">
+                <TableBody className="text-md">
                   {order.map((order: Food) => (
                     <TableRow key={order._id}>
                       <TableCell className="font-medium text-black"></TableCell>
                       <TableCell>{order.name}</TableCell>
                       <TableCell>{order.ingredients}</TableCell>
                       <TableCell className="text-black font-bold">{order.price}</TableCell>
-                      <TableCell className="">төлөв</TableCell>
-                      <TableCell className="w-80 h-50">
-                        <img className=" ml-24 mx-auto w-[150px] h-[150px] object-cover rounded-full items-center" width={150} height={150} src={order.photos} alt={order.name} />
+                      <TableCell className="w-50 h-50">
+                        <img className=" mx-auto w-[50px] h-[50px] object-cover rounded-full items-center" width={150} height={150} src={order.photos} alt={order.name} />
                       </TableCell>
                       <TableCell className="text-center align-middle">
                         <Dialog>
                           <DialogTrigger asChild className="">
-                            <Button className="mb-10 text-lg" variant="edit" onClick={() => handleEditFood(order)}>
-                              Засах
+                            <Button variant="default3">
+                              <Pencil onClick={() => handleEditFood(order)} />
                             </Button>
                           </DialogTrigger>
                           <DialogContent className="w-[600px] bg-white text-center align-items-center z-50">
@@ -288,15 +287,14 @@ export default function Order() {
                           </DialogContent>
                         </Dialog>
                       </TableCell>
-
                       <TableCell className=" text-center align-middle">
-                        <Button variant="destructive" onClick={() => handleDeleteFood(order._id)}>
-                          Устгах
+                        <Button className="hover:bg/40 bg-slate-600">
+                          <Trash onClick={() => handleDeleteFood(order._id)} />
                         </Button>
                       </TableCell>
-                      <TableCell className="text-center align-middle">
-                        <Button variant="default" onClick={() => handleSpecialFood(order)}>
-                          Онцгой
+                      <TableCell className="text-center align-middle flex-col">
+                        <Button>
+                          <Heart onClick={() => handleSpecialFood(order._id)} />
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -307,6 +305,6 @@ export default function Order() {
           </div>
         </div>
       </div>
-    </form>
+    </div>
   );
 }
