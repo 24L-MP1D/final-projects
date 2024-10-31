@@ -44,6 +44,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
       if (sticky.current) {
         const { bottom } = sticky.current.getBoundingClientRect();
         setIsSticky(bottom < 0);
+        console.log(bottom);
       }
     };
     window.addEventListener('scroll', handleScroll);

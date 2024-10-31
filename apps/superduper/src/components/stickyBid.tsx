@@ -2,7 +2,7 @@
 import dayjs from 'dayjs';
 import { FormikErrors, FormikTouched } from 'formik';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { BidType } from './bidType';
 import { ProductType } from './productType';
 import { Button } from './ui/button';
@@ -33,10 +33,13 @@ type DateType = {
 };
 export const BidSticky = ({ bids, maximumBid, formikValues, isSticky, open, setOpen, formikSetFieldValue, formikTouched, oneProduct, formikErrors, formikHandleChange }: Props) => {
   const [showDate, setShowDate] = useState<DateType>();
+
   const endDate = new Date(oneProduct.endDate).getTime();
+
   const [showAllBids, setShowAllBids] = useState(0);
-  const sticky = useRef<HTMLDivElement | null>(null);
+
   const startDate = new Date().getTime();
+
   let betweenDate = endDate - startDate;
 
   useEffect(() => {
@@ -62,7 +65,7 @@ export const BidSticky = ({ bids, maximumBid, formikValues, isSticky, open, setO
   }, [showDate]);
 
   return (
-    <div className={`max-w-[500px] w-full ${isSticky ? 'sticky right-0' : ''}`}>
+    <div className={`sticky right-0 top-0`}>
       <div>
         Closed in {showDate?.day}d {showDate?.dateHours}h {showDate?.dateMinuts}m {showDate?.dateSecunds}s
       </div>
