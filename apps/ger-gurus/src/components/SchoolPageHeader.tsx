@@ -8,13 +8,6 @@ export const SchoolPageHeader = () => {
       <div className="flex flex-col items-center">
         <Image src={'/logo.png'} alt="school-logo" width={100} height={100} />
         <p className="mt-[-10px] bg-gradient-to-r from-fuchsia-500 to-cyan-500 bg-clip-text text-transparent font-semibold font-serif">VERSE</p>
-<div className="p-4 min-[480px]:p-, min-[768px]:p-12 min-[1279px]:p-16 flex justify-between items-center">
-      <div className=" relative">
-        <div className="absolute -inset-2 rounded-lg bg-[conic-gradient(at_bottom,_var(--tw-gradient-stops))] from-sky-600 via-blue-600 to-purple-600 opacity-50 blur-2xl"></div>
-        <div className="relative flex flex-col gap-1 w-full  items-center justify-center border-none rounded-lg bg-transparent">
-          <Image src={'/logo.png'} alt="school-logo" width={40} height={40} />
-          <p className="font-bold text-xs bg-gradient-to-b from-teal-500 via-purple-500 to-red-500 text-transparent bg-clip-text">GER GURUS</p>
-        </div>
       </div>
 
       <Nav />
