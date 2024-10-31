@@ -50,7 +50,9 @@ export default function Page() {
       {/* Main */}
       <div className="w-[1280px] flex flex-col gap-20 bg-white mx-auto py-24">
         <div className="flex flex-col gap-10 px-12">
-          <div className="text-center text-2xl">Танилцуулга</div>
+          <div className="text-center text-2xl">Танилцуулга {data.map((d) => (
+            <div key={d._id}>{d.domain}</div>
+          ))}</div>
           <div className="flex gap-40 justify-center">
             <div className="bg-gray-300 h-[480px] w-[380px] text-center content-center rounded-xl">Өөрийн зураг, бичлэг оруулах</div>
             <div className="w-[250px]">Introduce</div>
