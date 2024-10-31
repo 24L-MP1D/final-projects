@@ -12,29 +12,29 @@ import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 
 import { Toaster, toast } from 'sonner';
-export default function signin() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  async function Submit() {
-    setLoading(true);
-    axios
-      .post('/api/signin', { email, password })
-      .then(({ data, status, statusText }) => {
-        if (status === 201) {
-          localStorage.setItem('accessToken', data.accessToken);
-          toast('Signed In Successfully!');
-        } else {
-        }
-        console.log(data);
-        setLoading(false);
-      })
-      .catch(({ message }) => {
-        toast(message);
-        console.log(message);
-      });
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+const [loading, setLoading] = useState(false);
 
+async function Submit() {
+  setLoading(true);
+  axios
+    .post('/api/signin', { email, password })
+    .then(({ data, status, statusText }) => {
+      if (status === 201) {
+        localStorage.setItem('accessToken', data.accessToken);
+        toast('Signed In Successfully!');
+      } else {
+      }
+      console.log(data);
+      setLoading(false);
+    })
+    .catch(({ message }) => {
+      toast(message);
+      console.log(message);
+    });
+}
 
 export default function signin() {
   const [email, setEmail] = useState('');
@@ -62,7 +62,6 @@ export default function signin() {
     } catch (err) {
       console.log('error in sign up');
     }
-
   }
 
   return (
@@ -120,7 +119,6 @@ export default function signin() {
           <div>Sign in</div>
         </Button>
         <Toaster />
-
       </div>
     </div>
   );
