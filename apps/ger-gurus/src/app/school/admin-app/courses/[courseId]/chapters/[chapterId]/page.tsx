@@ -65,9 +65,9 @@ export default async function Page({ params }: { params: { courseId: string; cha
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={ListCheck} />
-              <h2 className="text-xl">Course chapters</h2>
+              <h2 className="text-xl">Course description</h2>
             </div>
-            <div>{/* <ChaptersForm initialData={courseWithPlainId} /> */}</div>
+            {/* <div><ChapterDescriptionForm initialData={[]}/></div> */}
           </div>
           <div>
             <div className="flex items-center gap-x-2">
