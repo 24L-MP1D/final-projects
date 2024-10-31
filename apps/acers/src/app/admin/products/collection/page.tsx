@@ -1,11 +1,9 @@
 import CreateCollection from './createCollection';
 
-const Page = () => {
+export default function Page() {
   return (
     <div>
       <CreateCollection />
     </div>
   );
-};
-
-export default Page;
+}
