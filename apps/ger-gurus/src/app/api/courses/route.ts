@@ -1,12 +1,23 @@
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
-  const courses = await db.collection('courses').find({}).sort({ metacritic: -1 }).limit(20).toArray();
-  return Response.json(courses);
-}
+// export async function getSchoolId(request: Request) {
+//   const host = new URL(request.url).hostname ;
+//   const school =await db.collection('schools').findOne({domain: host});
+//   return school?._id
+// }
+
+// export async function GET(request: Request) {
+//   const schoolId = getSchoolId(request);
+
+//   const courses = await db.collection('courses').find({schoolId: schoolId}).limit(20).toArray();
+//   return Response.json(courses);
+// }
 
 export async function POST(request: Request) {
+  // const schoolId = getSchoolId(request);
+
+
   // const body = await request.json();
   // const { title, author, description, thumbnail } = body;
   try {
@@ -17,7 +28,7 @@ export async function POST(request: Request) {
       // userId,
       title
     });
-    const insertedCourse={_id: course.insertedId,title}
+    const insertedCourse={_id: course.insertedId,title} //, schoolId
     return NextResponse.json(insertedCourse);
     
   } catch (error) {

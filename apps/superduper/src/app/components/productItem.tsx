@@ -1,4 +1,5 @@
 'use client';
+import { Button } from '@/components/ui/button';
 import { Heart } from 'lucide-react';
 import Image from 'next/image';
 import { CardBody, CardContainer, CardItem } from './ui/card';
@@ -14,13 +15,13 @@ export interface Product {
 
 export function ProductItem({ product, isFavourite, onClickFavourite }: { product: Product; isFavourite: boolean; onClickFavourite: () => void }) {
   return (
-    <CardContainer containerClassName="p-0 !w-full h-auto" key={product.name}>
+    <CardContainer containerClassName="p-0 !w-full h-auto " key={product.name} className="hover:cursor-pointer">
       <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full rounded-xl p-6 border h-auto">
         <CardItem translateZ="50" className="text-xl font-bold text-neutral-600 dark:text-white flex justify-between w-full items-center">
           <p className="overflow-hidden text-nowrap text-ellipsis w-[200px]">{product.name}</p>
-          <button onClick={onClickFavourite} className="rounded-full h-[40px] w-[40px] bg-white items-center flex justify-center text-[#0033FF]">
+          <Button onClick={onClickFavourite} className="rounded-full h-[40px] w-[40px] bg-white items-center flex justify-center text-[#0033FF]">
             <Heart size={22} strokeWidth={2} fill={isFavourite ? '#0033FF' : 'transparent'} />
-          </button>
+          </Button>
         </CardItem>
         <CardItem as="p" translateZ="60" className="text-neutral-500 text-sm mt-2 dark:text-neutral-300">
           {product.description}
