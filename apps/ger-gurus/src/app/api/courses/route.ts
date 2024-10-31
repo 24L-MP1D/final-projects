@@ -1,11 +1,14 @@
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-// export async function getSchoolId(request: Request) {
-//   const host = new URL(request.url).hostname ;
-//   const school =await db.collection('schools').findOne({domain: host});
-//   return school?._id
-// }
+
+export async function GET(request: Request) {
+  const host = new URL(request.url).hostname ;
+ const hostname = host === 'localhost' ? process.env.CURRENT_HOST : host;
+  console.log(hostname)
+  const school = await db.collection('schools').findOne({domain: host});
+  return  new Response(JSON.stringify(school), {status: 200})
+}
 
 // export async function GET(request: Request) {
 //   const schoolId = getSchoolId(request);
