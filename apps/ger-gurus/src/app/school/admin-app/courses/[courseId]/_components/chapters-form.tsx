@@ -77,6 +77,10 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
       setIsUpdating(false);
     }
   }
+
+  const onEdit = (id: string) => {
+    router.push(`/admin-app/courses/${initialData._id}/chapters/${id}`);
+  };
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
@@ -116,7 +120,7 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
       {!isCreating && (
         <div className={cn('text-sm mt-2', !initialData.chapters?.length && 'text-slate-500 italic')}>
           {!initialData.chapters.length && 'No chapters'}
-          <ChapterList onEdit={() => {}} onReorder={onReorder} chapters={chapters || []} />
+          <ChapterList onEdit={onEdit} onReorder={onReorder} chapters={chapters || []} />
         </div>
       )}
 
