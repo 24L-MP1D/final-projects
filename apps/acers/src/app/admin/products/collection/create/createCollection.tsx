@@ -4,9 +4,10 @@ import axios from 'axios';
 import { ObjectId } from 'mongodb';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Badge } from '../../../(client)/components/ui/Badge';
-import { Input } from '../../../(client)/components/ui/Input';
-import { CheckResponse } from '../../components/responseChecker';
+import { Badge } from '../../../../(client)/components/ui/Badge';
+import { Input } from '../../../../(client)/components/ui/Input';
+import { CheckResponse } from '../../../components/responseChecker';
+import { CreateTag } from '../../../components/TagRelatedComponents';
 
 interface CollectionInterface {
   name: string;
@@ -25,20 +26,22 @@ const CreateCollection = () => {
     register,
     handleSubmit,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm<CollectionInterface>();
 
+  register('name', { required: 'Коллекц нэрийг оруулна уу.' });
+  register('collection', { required: 'Ядаж нэг таг оруулна уу.' });
+
   const addCollection = async (data: CollectionInterface) => {
     const res = await axios.post('/api/collection', data);
-    if (!CheckResponse(res.status)) {
-      return false;
-    }
-    return true;
+    return CheckResponse(res.status);
   };
 
-  const onSubmit: SubmitHandler<CollectionInterface> = (data) => {
-    const successful = addCollection(data);
+  const onSubmit: SubmitHandler<CollectionInterface> = async (data) => {
+    const successful = await addCollection(data);
+    if (successful) {
+      console.log('Collection created successfully!');
+    }
   };
 
   const getTags = async () => {
@@ -59,16 +62,20 @@ const CreateCollection = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <ReUsableDiv name="Коллекц нэр">
           <Input {...register('name', { required: 'Нэр оруулна уу.' })} placeholder="Нэр" />
+          {errors.name && <span className="text-red-500">{errors.name?.message}</span>}
         </ReUsableDiv>
         {errors.name && <p>{errors.name.message}</p>}
         <TagSelector tags={tags} setValue={(val: ObjectId[]) => setValue('collection', val)} />
+        {errors.collection && <span className="text-red-500">{errors.collection?.message}</span>}
+
         <div className="mt-8 flex justify-around">
           <button className="text-white py-2 px-4 rounded-xl bg-green-600" type="submit">
             Submit
           </button>
-          <button type="button" className="text-white bg-slate-600 py-2 px-4 rounded-xl">
-            Шинээр Таг оруулах
-          </button>
+          <div className="text-white py-2 px-4 rounded-xl bg-slate-600">
+            {' '}
+            <CreateTag resetTags={getTags} />
+          </div>
         </div>
       </form>
     </div>
