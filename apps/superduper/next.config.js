@@ -16,6 +16,9 @@ const nextConfig = {
       {
         hostname: 'media.wired.com',
       },
+      {
+        hostname: 'assets.aceternity.com',
+      },
     ],
   },
 
