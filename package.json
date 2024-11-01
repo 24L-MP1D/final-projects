@@ -10,6 +10,7 @@
     "@custom-react-hooks/use-geo-location": "^1.5.1",
     "@hello-pangea/dnd": "^17.0.0",
     "@hookform/resolvers": "^3.9.0",
+    "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-checkbox": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.2",
@@ -42,17 +43,11 @@
     "daisyui": "^4.12.13",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
-
     "embla-carousel-autoplay": "^8.3.1",
-    "embla-carousel-react": "^8.3.0",
-    "form": "^0.2.5","formik": "^2.4.6",
-    "framer-motion": "^11.11.9",
-
     "embla-carousel-react": "^8.3.0",
     "form": "^0.2.5",
     "formik": "^2.4.6",
     "framer-motion": "^11.11.10",
-
     "google-auth-library": "^9.14.2",
     "i": "^0.3.7",
     "json-web-token": "^3.2.0",
@@ -62,10 +57,7 @@
     "mongodb": "^6.9.0",
     "next": "14.2.3",
     "next-themes": "^0.3.0",
-
-
     "nodemailer": "^6.9.16",
-
     "npm": "^10.9.0",
     "nuqs": "^2.0.4",
     "react": "18.3.1",
