@@ -1,31 +1,20 @@
 'use client';
 
-import { Button } from '@/app/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import Draggable from 'react-draggable'; // The default
 import LeftBar from '../components/leftbar';
 
-const mockTables = [
-  {
-    _id: '1',
-    position: { x: 100, y: 100 },
-  },
-  {
-    _id: '2',
-    position: { x: 300, y: 400 },
-  },
-  {
-    _id: '3',
-    position: { x: 500, y: 200 },
-  },
-  {
-    _id: '4',
-    position: { x: 600, y: 578 },
-  },
-];
+export type TableModel = {
+  id: string;
+  corditane: {
+    x: number;
+    y: number;
+  };
+};
 
 export default function DragExample() {
-  const [tables, setTables] = useState(mockTables);
+  const [tables, setTables] = useState(null);
   const [addtable, setAddTable] = useState();
 
   useEffect(() => {
@@ -39,38 +28,82 @@ export default function DragExample() {
     setTables(newTables);
   }
 
-  function handleStop(_id: string) {
+  async function handleStop(_id: string, position: { x: number; y: number }) {
     const updateTable = tables.find((table) => table._id === _id);
-    fetch(`api/admin/tablesDetail`);
+    // fetch(`api/admin/tablesDetail`);
     // TODO //PUT
+
+    setTimeout(async () => {
+      await fetch(`/api/admin/tablesDetail/${_id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({
+          cordinate: updateTable?.position,
+        }),
+      });
+      getTables();
+    }, 1000);
+
     console.log(updateTable);
   }
 
-  function createTable() {
-    fetch(`api/admin/tableDetail`, {
+  const getTables = async () => {
+    const response = await fetch(`/api/admin/tablesDetail`);
+    const data = await response.json();
+
+    setTables(data);
+  };
+
+  useEffect(() => {
+    getTables();
+  }, []);
+
+  const createTable = async () => {
+    await fetch(`/api/admin/tablesDetail`, {
       method: 'POST',
       body: JSON.stringify({
-        coordinate: addtable,
+        position: { x: 1, y: 1 },
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
     });
-  }
+
+    setTables((prev) => [...prev, { _id: 'new', position: { x: 1, y: 1 } }]);
+  };
+
+  const [selectedId, setSelectedId] = useState();
+  const deleteOneTable = async (_id: string) => {
+    const select = tables.find((table) => table._id === setSelectedId(_id));
+
+    await fetch(`/api/admin/tablesDetail${_id}`, {
+      method: 'DELETE',
+    });
+    getTables();
+  };
 
   return (
     <div className="max-w-[1440px] mx-auto flex gap-5">
       <LeftBar />
       <div className="flex gap-10 mt-5">
         <div className="w-[800px] h-[800px] bg-slate-400 relative">
-          {tables.map((table) => (
-            <Draggable key={table._id} position={table.position} onDrag={(e, newPosition) => handleDrag(table._id, newPosition)} onStop={() => handleStop(table._id)}>
-              <div className="absolute bg-green-400 w-20 h-20"></div>
-            </Draggable>
-          ))}
+          {tables &&
+            tables.map((table: TableModel) => (
+              <Draggable key={table._id} position={table.cordinate} onDrag={(e, newPosition) => handleDrag(table._id, newPosition)} onStop={() => handleStop(table._id)}>
+                <div onClick={selectedId} className={`${table ? 'bg-green-400' : ''} absolute w-20 h-20`}></div>
+              </Draggable>
+            ))}
         </div>
-
-        <Button className="">add table</Button>
+        <div className="flex flex-col gap-4">
+          <Button onClick={createTable} className="">
+            add table
+          </Button>
+          <Button onClick={deleteOneTable} className="">
+            Delete
+          </Button>
+        </div>
       </div>
     </div>
   );
