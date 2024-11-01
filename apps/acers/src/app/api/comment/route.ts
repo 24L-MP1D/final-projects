@@ -1,81 +1,123 @@
-import { auth, generateSalt } from '../auth/route';
+import jwt from 'jsonwebtoken';
+import { ObjectId } from 'mongodb';
 import { DB } from '../../lib/db';
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
-    const {  }
-    const authResult = await auth(request, params.id);
-  
-    if (authResult.status !== 200) {
-      return new Response(authResult.message, { status: authResult.status });
-    }
-    try {
-      const userId = authResult.userId;
-      const body = await request.json();
-      const { firstName, lastName, phoneNumber, role, password } = body;
-  
-      const updateData: any = {
-        firstName,
-        lastName,
-        phoneNumber,
-        role,
-        updatedAt: new Date(),
-      };
-  
-      await DB.collection('comment').updateOne({ _id: userId }, { $set: updateData });
-      return new Response(null, { status: 204 });
-    } catch (error) {
-      return new Response('Invalid token', { status: 403 });
-    }
-  }
+const JWT_SECRET = process.env.JWT_SECRET || '';
 
-export async function GET getComment = async (req: Request, res: Response) => {
-  const { productId } = req.query;
-  try {
-    const query: any = {};
-    if (productId) query.productId = productId;
-    const data = await Comment.find({ productId }).populate(
-      "userId",
-      "userName"
-    );
-    res.status(200).json(data);
-  } catch (e) {
-    res.status(500).json({ error: e });
-  }
-};
-
-export const editComment = async (req: Request, res: Response) => {
-    const token = req.headers["authtoken"];
-    const { productId, comment, rating } = req.body;
-  
-    try {
-      const userId = jwt.decode(token).id;
-      const selectedComment = await Comment.findOneAndUpdate(
-        {
-          productId,
-          userId
-        },
-        { rating, comment }
-      );
-  
-      res.status(200).json({ val: "success" });
-    } catch (e) {
-      console.error(e);
-      res.status(500).json({ val: "failed" });
-    }
-  };
-
-export async function DELETE deleteComment = async (req: Request, res: Response) => {
-  const token = req.headers["authtoken"];
-  const { productId } = req.body;
+function decodeToken(token: string): { userId: string } {
+  if (!token) throw new Error('No token provided');
 
   try {
-    const userId = jwt.decode(token).id;
-    await Comment.deleteOne({ userId, productId });
-    res.status(200).json({ val: "success" });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ val: "failed" });
+    return jwt.verify(token, JWT_SECRET) as { userId: string };
+  } catch (error) {
+    if (error instanceof jwt.JsonWebTokenError) {
+      throw new Error('Invalid token: ' + error.message);
+    }
+    throw new Error('Token verification failed');
   }
-};
+}
 
+export async function PUT(request: Request, { params }: { params: { recipeId: string } }) {
+  const token = request.headers.get('authtoken');
+  const body = await request.json();
+  const { comment, rating } = body;
 
+  try {
+    const { userId } = decodeToken(token as string);
+
+    if (typeof comment !== 'string' || typeof rating !== 'number') {
+      return new Response('Invalid input data', { status: 400 });
+    }
+
+    const updateData = {
+      comment,
+      rating,
+      updatedAt: new Date(),
+    };
+
+    await DB.collection('comments').updateOne({ recipeId: new ObjectId(params.recipeId), userId }, { $set: updateData });
+
+    return new Response(null, { status: 204 });
+  } catch (error) {
+    console.error(error);
+    return new Response('Internal server error', { status: 500 });
+  }
+}
+
+export async function GET(request: Request, { params }: { params: { id: string } }) {
+  const recipeId = params.id;
+
+  if (!recipeId) {
+    return new Response('Recipe ID is required', { status: 400 });
+  }
+
+  try {
+    const comments = await DB.collection('comments')
+      .find({ recipeId: new ObjectId(recipeId) })
+      .toArray();
+    return new Response(JSON.stringify(comments), { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return new Response('Internal server error', { status: 500 });
+  }
+}
+
+export async function POST(req: Request) {
+  const token = req.headers.get('authtoken');
+  const body = await req.json();
+  const { recipeId, comment, rating = 0 } = body;
+
+  console.log('Received recipeId:', recipeId);
+
+  if (!token || !recipeId || !comment) {
+    return new Response('Missing required fields or invalid data', { status: 400 });
+  }
+
+  try {
+    if (!ObjectId.isValid(recipeId)) {
+      return new Response('Invalid recipeId format', { status: 400 });
+    }
+
+    const { userId } = decodeToken(token as string);
+
+    const newComment = {
+      recipeId: new ObjectId(recipeId),
+      userId,
+      comment,
+      rating,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    await DB.collection('comments').insertOne(newComment);
+    return new Response(JSON.stringify({ val: 'success' }), { status: 201 });
+  } catch (error) {
+    console.error(error);
+    return new Response(JSON.stringify({ val: 'failed' }), { status: 500 });
+  }
+}
+
+export async function DELETE(req: Request) {
+  const token = req.headers.get('authtoken');
+  const body = await req.json();
+  const { recipeId } = body;
+
+  if (!token || !recipeId) {
+    return new Response('Missing required fields', { status: 400 });
+  }
+
+  try {
+    const { userId } = decodeToken(token as string);
+
+    const result = await DB.collection('comments').deleteOne({ recipeId: new ObjectId(recipeId), userId });
+
+    if (result.deletedCount === 0) {
+      return new Response('No comment found to delete', { status: 404 });
+    }
+
+    return new Response(JSON.stringify({ val: 'success' }), { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return new Response(JSON.stringify({ val: 'failed' }), { status: 500 });
+  }
+}
