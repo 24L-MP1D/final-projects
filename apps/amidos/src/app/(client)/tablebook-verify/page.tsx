@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function TableVerify() {
-    const [name, setName] = useState<string>("");
+    // const [name, setName] = useState<string>("");
     const [phonenumber, setPhonenumber] = useState<string>("");
     const [selectedTime, setSelectedTime] = useLocalStorage<string | null>("selectedTime", null);
     const [reservedSeat, setReservedSeat] = useLocalStorage<string | null>("reservedSeat", null);
@@ -18,7 +18,7 @@ export default function TableVerify() {
     const [errorMessage, setErrorMessage] = useState<string>("");
 
     const reset = () => {
-        setName("");
+        // setName("");
         setPhonenumber("");
         setSelectedTime(null);
         setReservedSeat(null);
@@ -42,8 +42,8 @@ export default function TableVerify() {
     }, [phonenumber]);
 
     async function CreateOrder() {
-        if (!name || !phonenumber || !isValidPhoneNumber(phonenumber)) {
-            setErrorMessage("Бүх талбарыг зөв бөглөх шаардлагатай.");
+        if (!phonenumber || !isValidPhoneNumber(phonenumber)) {
+            setErrorMessage("Талбарыг зөв бөглөх шаардлагатай.");
             return;
         }
         setLoading(true);
@@ -52,7 +52,6 @@ export default function TableVerify() {
             const response = await fetch("/api/tablebook", {
                 method: "POST",
                 body: JSON.stringify({
-                    name,
                     phonenumber,
                     time: selectedTime,
                     reservedSeats: reservedSeat,
@@ -76,7 +75,7 @@ export default function TableVerify() {
     return (
         <div className="max-w-screen-sm items-center mx-auto py-32">
             <div className="flex flex-col gap-7 p-36">
-                <div className="flex flex-col gap-3">
+                {/* <div className="flex flex-col gap-3">
                     <p className="text-2xl font-semibold">Та мэдээллээ оруулна уу?</p>
                     <Input
                         placeholder="Нэр ээ оруулна уу?"
@@ -86,7 +85,7 @@ export default function TableVerify() {
                         disabled={loading}
                         aria-label="Нэр"
                     />
-                </div>
+                </div> */}
                 <div>
                     <Input
                         placeholder="Утасны дугаар аа оруулна уу?"
