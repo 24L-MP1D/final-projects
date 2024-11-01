@@ -6,7 +6,7 @@ export const HandyCarousel = ({ data }: { data: any[] }) => {
     <Carousel>
       <CarouselContent>
         {data.map((item) => (
-          <CarouselItem className="basis-3/1 sm:basis-3/3 md:basis-1/3 lg:basis-1/4">
+          <CarouselItem className="basis-3/1 sm:basis-3/3 md:basis-1/3 lg:basis-1/4" key={item.id}>
             <Item item={item} />
           </CarouselItem>
         ))}

@@ -1,92 +1,63 @@
 'use client';
 
+import axios from 'axios';
 import { Bookmark } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { HandyCarousel } from './components/homePageComponents/handyCarousel';
 import { Stars } from './components/itemComponents/stars';
-import { Button } from './components/ui/Button';
 
 export default function Index() {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.tailwind file.
-   */
+  const [collections, setCollections] = useState([]);
+  const getCollection = async () => {
+    const res = await axios('/api/collection');
+    setCollections(res.data.res);
+  };
+
+  useEffect(() => {
+    getCollection();
+  }, []);
+
   return (
     <div className="">
       <div className="flex flex-col gap-16 text-[#222222] ">
         <RecipeOfTheDay />
         <div className="flex flex-col gap-16 max-w-[80%] xl:max-w-[1160px] w-full m-auto">
+          <AvailableContent />
           <Suspense>
             <OccasionMeals />
           </Suspense>
-
-          <GetTheLatest />
-          <Popular />
+          {collections.map((collection: any) => (
+            <CollectionByAdmin key={collection.id} collection={collection} />
+          ))}
         </div>
       </div>
     </div>
   );
 }
 
-const Popular = () => {
-  return (
-    <div className="flex flex-col gap-[30px]">
-      <CheapAndEasyDinnerIdeas />
-      <DiwaliRecipes />
-      <div className="text-center">
-        <Button className="py-3 px-[75px] rounded-full text-[14px] font-semibold border-[#CCCCCC] border-[1px]">See all Editors’ Collections</Button>
-      </div>
-    </div>
-  );
+const AvailableContent = () => {
+  const token = localStorage.getItem('authtoken');
+  console.log(token);
+  // const { userId } = decode(token);
+  return <div></div>;
 };
 
-const CheapAndEasyDinnerIdeas = () => {
-  return (
-    <div>
-      <span className="text-2xl underline">Our Newest Recipes</span>
-      <HandyCarousel data={Array(10).fill(1)} />
-    </div>
-  );
-};
+const CollectionByAdmin = ({ collection }: { collection: any }) => {
+  const [collectionItems, setCollectionItems] = useState([]);
 
-const EasyBakingRecipes = () => {
-  return (
-    <div>
-      <span className="text-2xl underline">Easy Baking Recipes</span>
-      <HandyCarousel data={Array(10).fill(1)} />
-    </div>
-  );
-};
+  const getCollectionItems = async () => {
+    const res = await axios.post('/api/recipe/getRecipe', { tags: collection.collection });
 
-const DiwaliRecipes = () => {
-  const id = 'willFix';
+    setCollectionItems(res.data.hiddenData);
+  };
+  useEffect(() => {
+    getCollectionItems();
+  }, []);
   return (
-    <div className="flex flex-col gap-2">
-      <a href={`/suggestion/${id}`} className=" text-2xl underline">
-        Diwali Recipes
-      </a>
-      <HandyCarousel data={Array(10).fill(1)} />
-    </div>
-  );
-};
-
-const GetTheLatest = () => {
-  return (
-    <div className="border-t-2 border-[#222222] max-w-[1160px] w-full m-auto flex flex-col gap-4">
-      <span className="text-[14px] font-bold">GET THE LATEST</span>
-      <OurNewestRecipes />
-      <MostPopularOfTheWeek />
-    </div>
-  );
-};
-
-const MostPopularOfTheWeek = () => {
-  return (
-    <div>
-      <span className="text-2xl mt-3.5">Most Popular This Week</span>
-      <HandyCarousel data={Array(10).fill(1)} />
+    <div className="flex flex-col gap-4">
+      <span className="text-2xl mt-3.5">{collection.name}</span>
+      <HandyCarousel data={collectionItems} />
     </div>
   );
 };
@@ -142,11 +113,18 @@ const RecipeOfTheDay = () => {
     id: 'Trend',
     prepTime: '40 minutes',
   });
+  const getRecipeOfTheDay = async () => {
+    const res = await axios.get('/api/recipe/trending?number=1');
+    setData(res.data[0]);
+  };
+  useEffect(() => {
+    getRecipeOfTheDay();
+  }, []);
   const { img, title, description, rating, ratingNum, id, prepTime } = data;
   return (
     <div className="flex flex-col lg:flex-row items-center gap-10 max-w-[auto] md:max-w-[80%] xl:max-w-[1160px] w-full m-auto">
       <div className="relative bg-slate-500">
-        <img src={img} className={`max-w-auto sm:w-[710px] object-center`} onClick={() => router.push(`/product/${id}`)} />
+        <img src={img} className={`max-w-auto aspect-video sm:w-[710px] object-cover`} onClick={() => router.push(`/product/${id}`)} />
         <SaveButton id={id} className="absolute right-6 bottom-6" />
       </div>
       <div className="flex flex-col text-[#222222] max-w-[80%]">
