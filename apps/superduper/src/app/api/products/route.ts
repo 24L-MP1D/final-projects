@@ -39,6 +39,7 @@ export async function POST(request: Request) {
     getFromLocal.endDate = new Date(getFromLocal.endDate);
     getFromLocal.createdAt = new Date();
     const result = await collection.insertOne(getFromLocal);
+
     return Response.json(result, { status: 200 });
   } catch (error) {
     return Response.json({ message: 'Failed to create product!' }, { status: 404 });
