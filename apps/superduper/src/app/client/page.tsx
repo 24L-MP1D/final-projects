@@ -79,7 +79,7 @@ export default function Index() {
             </div>
           </div>
           {/* Progress Bar */}
-          <div className="flex w-full mt-[100px] h-[40px] gap-2">
+          <div className="flex w-full mt-[100px] h-[40px] gap-2 items-center">
             {Array.from({ length: products.length })
               .slice(0, 6)
               .map((_, index) => (
@@ -88,7 +88,7 @@ export default function Index() {
                   <div className="absolute top-0 left-0 h-full w-full cursor-pointer" onClick={() => handleProgressClick(index)}></div>
                 </div>
               ))}
-            <Button className="items-center text-[#0033FF] ml-[5px]" onClick={handleNextSlide}>
+            <Button className="items-center text-[#0033FF] bg-white hover:bg-white ml-[5px]" onClick={handleNextSlide}>
               <ChevronRight strokeWidth={1.75} />
             </Button>
           </div>
