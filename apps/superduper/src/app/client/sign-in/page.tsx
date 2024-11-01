@@ -2,19 +2,13 @@
 
 import { Checkbox } from '@/components/ui/Checkbox';
 import { Button } from '@/components/ui/button';
-
 import axios from 'axios';
 import Image from 'next/image';
-
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-
 import { Toaster, toast } from 'sonner';
-
-// const [email, setEmail] = useState('');
-// const [password, setPassword] = useState('');
 
 export default function signin() {
   const [email, setEmail] = useState('');
@@ -39,29 +33,6 @@ export default function signin() {
         console.log(message);
       });
   }
-  // console.log();
-  // async function Submit() {
-  //   console.log(email, password);
-  //   try {
-  //     const response = await fetch('/api/signin', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         email,
-  //         password,
-  //       }),
-  //     });
-  //     if (response.ok) {
-  //       console.log('success');
-  //     } else {
-  //       console.log('error');
-  //     }
-  //   } catch (err) {
-  //     console.log('error in sign up');
-  //   }
-  // }
 
   return (
     <div className="bg-slate-50">

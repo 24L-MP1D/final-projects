@@ -6,7 +6,7 @@ import { Button } from '../ui/button';
 
 export default function Footer() {
   return (
-    <div className="bg-pink-100 container mx-auto h-[650px] items-center max-w-[1280px]">
+    <div className="container mx-auto h-[650px] items-center max-w-[1280px]">
       <div className="flex gap-4 border-y-2 my-10 py-8 items-center justify-between">
         <div className="flex gap-4">
           <Button className="bg-blue-500">Sign Up</Button>
@@ -46,8 +46,7 @@ export default function Footer() {
           <Link href="/help">Help center</Link>
         </div>
       </div>
-      <div className="flex justify-between pt-10 mx-10 border-b-2 pb-10">
-        <div>english drop down</div>
+      <div className="flex justify-end pt-10 mx-10 border-b-2 pb-10">
         <div className="flex gap-10">
           <Link href="https://www.facebook.com">
             <FaFacebook className="text-[24px]" />

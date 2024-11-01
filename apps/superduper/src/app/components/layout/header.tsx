@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { FaRegHeart } from 'react-icons/fa';
 import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
-import { Button } from '../ui/button';
+import { SignUp } from '../signUp';
 
 export default function Header() {
   return (
-    <div className="bg-pink-100 container mx-auto h-28 flex items-center max-w-[1280px]">
+    <div className="container mx-auto h-28 flex items-center max-w-[1280px]">
       <div className="flex flex-1 justify-between">
         <div className="flex items-center gap-4 w-full">
           <div className="w-[55px] h-[55px] bg-blue-500 rounded-full text-red-500 flex items-center justify-center font-extrabold text-[24px]">SD</div>
@@ -17,9 +17,9 @@ export default function Header() {
           <Link href="/S" className="ml-10 mr-8">
             Category
           </Link>
-          <div className="flex flex-1 items-center bg-white">
-            <HiMiniMagnifyingGlass className="bg-white h-6 m-1 text-[24px] ml-3" />
-            <input placeholder="Search.." className="px-2 w-full p-3" />
+          <div className="flex flex-1 items-center bg-slate-200">
+            <HiMiniMagnifyingGlass className="h-6 m-1 text-[24px] ml-3" />
+            <input placeholder="Search.." className="px-2 outline-none w-full p-3 bg-slate-200 border-none" />
           </div>
         </div>
         <div className="flex items-center gap-10 mx-6">
@@ -28,7 +28,7 @@ export default function Header() {
           <Link href="/Heart">
             <FaRegHeart className="text-[24px] text-blue-500" />
           </Link>
-          <Button className="bg-blue-500">Sign Up</Button>
+          <SignUp />
         </div>
       </div>
     </div>

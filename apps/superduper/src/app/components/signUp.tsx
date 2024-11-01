@@ -59,7 +59,6 @@ export const SignUp = () => {
 
         toast('Signed Up Successfully');
 
-
         setLoading(false);
       } else {
         console.log('error');
@@ -72,7 +71,9 @@ export const SignUp = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Sign Up</Button>
+        <Button variant="outline" className="bg-blue-500 text-white">
+          Sign Up
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={formik.handleSubmit}>
