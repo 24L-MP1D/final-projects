@@ -153,9 +153,11 @@ export default function HeaderNavigationMenu() {
             <NavigationMenuTrigger>About</NavigationMenuTrigger>
             <NavigationMenuContent>
               <NavigationMenuLink>
-                <div className="flex flex-col gap-5 w-60] py-8 px-[60px]">
-                  <p className="font-bold">About us</p>
-                  <p className="font-bold">The New York Times Food Section</p>
+                <div className="w-60] py-8 px-[60px] ">
+                  <ul className="flex flex-col gap-5 w-32">
+                    <li className="font-bold">About us</li>
+                    <li className="font-bold">The New York Times Food Section</li>
+                  </ul>
                 </div>
               </NavigationMenuLink>
             </NavigationMenuContent>
