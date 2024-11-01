@@ -17,7 +17,7 @@ const formSchema = z.object({
   description: z.string().min(1),
 });
 
-interface ChapterDescriptionFormProps {
+interface ChapterAccessFormProps {
   initialData: {
     _id: string;
     title?: string;
@@ -26,7 +26,7 @@ interface ChapterDescriptionFormProps {
   courseId: string;
   chapterId: string;
 }
-export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ initialData, courseId, chapterId }) => {
+export const ChapterAccessForm: React.FC<ChapterAccessFormProps> = ({ initialData, courseId, chapterId }) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => setIsEditing((x) => !x);
   const router = useRouter();
