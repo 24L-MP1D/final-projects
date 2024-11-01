@@ -46,8 +46,7 @@ const Home = () => {
   const filtbyStatus = async (status: string) => {
     try {
       setShow(false);
-      console.log('adssa');
-      const response = await fetch(`/api/products?status=${status}&startDate=${date?.from}&endDate=${date?.to}`);
+      const response = await fetch(`/api/products?status=${status}&startDate=${date?.from ? date.from : ''}&endDate=${date?.to ? date.to : ''}`);
       const data = await response.json();
       setProducts(data);
     } catch (err) {
@@ -94,7 +93,6 @@ const Home = () => {
     }
     value?.setLayoutAside('Products');
   }, [date]);
-  if (!products.length) return <div>loading</div>;
   return (
     <AdminLayout>
       <div onClick={() => show && setShow(false)}>
