@@ -1,5 +1,5 @@
-import {}
 import { DB } from '../../lib/db';
+import { } from ;
 
 export async function POST(request: Request) {
   try {
@@ -34,21 +34,4 @@ export async function POST(request: Request) {
     });
   }
 }
-export async function GET(request: Request) {
-  const recipeId = params.id;
 
-  if (!recipeId) {
-    return new Response('Recipe ID is required', { status: 400 });
-  }
-
-  try {
-    const comments = await DB.collection('comments')
-      .find({ recipeId: new ObjectId(recipeId) })
-      .toArray();
-    return new Response(JSON.stringify(comments), { status: 200 });
-  } catch (error) {
-    console.error(error);
-    return new Response('Internal server error', { status: 500 });
-  }
-}
-}
