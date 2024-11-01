@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
 
     const collection = await DB.collection('admins');
     const check = await collection.findOne({ email: payload.email });
-    console.log(check);
+
     if (check) {
       return NextResponse.redirect(new URL('/admin', request.url));
     } else {

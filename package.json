@@ -37,16 +37,16 @@
     "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "cookies-next": "^4.3.0",
     "daisyui": "^4.12.13",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "embla-carousel-react": "^8.3.0",
     "form": "^0.2.5",
     "formik": "^2.4.6",
-    "framer-motion": "^11.11.9",
-    "i": "^0.3.7",
     "framer-motion": "^11.11.10",
     "google-auth-library": "^9.14.2",
+    "i": "^0.3.7",
     "json-web-token": "^3.2.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.453.0",
@@ -74,7 +74,8 @@
     "tailwindcss-animate": "^1.0.7",
     "ws": "^8.18.0",
     "yup": "^1.4.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.8",

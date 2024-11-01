@@ -1,11 +1,12 @@
 import { DB } from '@/lib/db';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   const ADMIN_ACCESS_TOKEN_SECRET = process.env.ADMIN_ACCESS_TOKEN_SECRET || '';
   try {
-    const collection = DB.collection('admins');
+    const collection = DB.collection('users');
     const body = await request.json();
     const { email, password } = body;
     const user = await collection.findOne({ email });
@@ -16,13 +17,12 @@ export async function POST(request: Request) {
       const accessToken = jwt.sign({ userId: user._id, email }, ADMIN_ACCESS_TOKEN_SECRET, {
         expiresIn: '7d',
       });
-      console.log(accessToken);
 
       const response = new Response(null, { status: 201 });
       response.headers.append('Set-cookie', `token=${accessToken}; HttpOnly; Path=/; Max-Age=43200; SameSite=Lax`);
       return response;
     } else {
-      return new Response(null, { status: 404 });
+      return NextResponse.redirect(new URL('/admin', request.url));
     }
   } catch (error) {
     return new Response(null, { status: 404 });
