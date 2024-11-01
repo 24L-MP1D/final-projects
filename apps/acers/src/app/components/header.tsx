@@ -3,7 +3,6 @@
 import { Search, UserCircle } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import HeaderNavigationMenu from './navigationMenu';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
@@ -88,7 +87,7 @@ export default function Header() {
           </button>
         </div>
       </div>
-      <HeaderNavigationMenu />
+      {/* <HeaderNavigationMenu /> */}
     </div>
   );
 }
