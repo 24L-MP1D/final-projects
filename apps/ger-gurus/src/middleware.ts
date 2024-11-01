@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
       domain = 'dashboard';
       break;
     default:
-      domain = 'school';
+      domain = 'client';
 
   }
 

@@ -8,7 +8,7 @@ export const HomePageInfo = () => {
             <a
               href="#"
               title="Get quote now"
-              className="relative bg-white bg-opacity-40 inline-flex items-center justify-center px-4 py-2 text-lg text-white transition-all duration-200 bg-transparent border-solid border-2 border-gradient-to-r from-violet-200 to-pink-200 font-serif rounded-full  focus:ring-0 focus:ring-offset-2 "
+              className="relative bg-white bg-opacity-20 inline-flex items-center justify-center px-4 py-2 text-lg text-white transition-all duration-200 bg-transparent border-solid border-2 border-gradient-to-r from-violet-200 to-pink-200 font-serif rounded-full  focus:ring-0 focus:ring-offset-2 "
               role="button"
             >
               Бүртгүүлэх
@@ -22,7 +22,7 @@ export const HomePageInfo = () => {
             <a
               href="#"
               title="Get quote now"
-              className="relative inline-flex items-center justify-center px-4 py-2 text-lg text-white bg-white bg-opacity-40 transition-all duration-200 bg-transparent border-solid border-2 border-gradient-to-r from-violet-200 to-pink-200 font-serif rounded-full  focus:ring-0 focus:ring-offset-2 "
+              className="relative inline-flex items-center justify-center px-4 py-2 text-lg text-white bg-white bg-opacity-20 transition-all duration-200 bg-transparent border-solid border-2 border-gradient-to-r from-violet-200 to-pink-200 font-serif rounded-full  focus:ring-0 focus:ring-offset-2 "
               role="button"
             >
               Нэвтрэх
@@ -30,20 +30,45 @@ export const HomePageInfo = () => {
           </div>
         </div>
       </div>
-      <div className="relative flex gap-[800px]">
-        <div className="flex flex-col">
-          <div className="w-[200px] h-[150px] shadow-md mt-[-60px] absolute"></div>
-          <div className="w-[200px] h-[150px] shadow-md ml-[-60px] mt-[150px] absolute"></div>
-          <div className="w-[200px] h-[150px] shadow-md ml-[30px] mt-[400px] absolute"></div>
+      <div className=" relative flex flex-col items-center justify-center gap-[30px]">
+        <div className="flex gap-[800px]">
+          <div className="w-[200px] h-[150px] shadow-2xl">
+            <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
+              <source src={'/study.mp4'} type="video/mp4" />
+            </video>
+          </div>
+          <div className="w-[200px] h-[150px] shadow-2xl">
+            <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
+              <source src={'/study.mp4'} type="video/mp4" />
+            </video>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <div className="w-[200px] h-[150px] shadow-md"></div>
-          <div className="w-[200px] h-[150px] shadow-md"></div>
-          <div className="w-[200px] h-[150px] shadow-md"></div>
+        <div className="flex gap-[960px]">
+          <div className="w-[200px] h-[150px] shadow-2xl">
+            <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
+              <source src={'/study.mp4'} type="video/mp4" />
+            </video>
+          </div>
+          <div className="w-[200px] h-[150px] shadow-2xl">
+            <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
+              <source src={'/study.mp4'} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+        <div className="flex gap-[900px]">
+          <div className="w-[200px] h-[150px] shadow-2xl">
+            <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
+              <source src={'/study.mp4'} type="video/mp4" />
+            </video>
+          </div>
+          <div className="w-[200px] h-[150px] shadow-2xl">
+            <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
+              <source src={'/study.mp4'} type="video/mp4" />
+            </video>
+          </div>
         </div>
       </div>
-
-      <div className="max-w-[675px] mx-auto shadow-2xl rounded-xl absolute mt-32">
+      <div className="max-w-[900px] mx-auto shadow-2xl rounded-xl absolute mt-80">
         <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
           <source src={'/study.mp4'} type="video/mp4" />
         </video>
