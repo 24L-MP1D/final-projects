@@ -3,9 +3,9 @@
 import dayjs from 'dayjs';
 import { X } from 'lucide-react';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { DashboardAside } from '../components /DashboardAside';
-import { Input } from '../components /ui/Input';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../components /ui/Table';
+import { DashboardAside } from '../components/DashboardAside';
+import { Input } from '../components/ui/Input';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/Table';
 
 export default function Home() {
   interface User {

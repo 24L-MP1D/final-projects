@@ -6,19 +6,19 @@ export async function DELETE(request: Request) {
   const { _id } = body;
 
   if (!_id) {
-    return new Response(JSON.stringify({ message: 'User ID is required' }), { status: 400 });
+    return new Response(JSON.stringify({ message: 'Recipe ID is required' }), { status: 400 });
   }
 
   try {
     // Convert the string _id to an ObjectId
-    const userId = new ObjectId(_id);
+    const recipeId = new ObjectId(_id);
 
-    const result = await DB.collection('users').deleteOne({ _id: userId });
+    const result = await DB.collection('recipes').deleteOne({ _id: recipeId });
 
     if (result.deletedCount === 1) {
-      return new Response(JSON.stringify({ message: 'User deleted successfully' }), { status: 200 });
+      return new Response(JSON.stringify({ message: 'Recipe deleted successfully' }), { status: 200 });
     } else {
-      return new Response(JSON.stringify({ message: 'User not found' }), { status: 404 });
+      return new Response(JSON.stringify({ message: 'Recipe not found' }), { status: 404 });
     }
   } catch (error) {
     console.error('Error deleting user:', error);

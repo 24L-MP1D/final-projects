@@ -1,37 +1,54 @@
 'use client';
-import { useState } from 'react';
 
+import { Context } from '@/app/admin/layout';
 import { Sidebar, SidebarBody, SidebarLink } from '@/components/ui/Sidebar';
 import { cn } from '@/lib/utils';
-import { IconArrowLeft, IconBrandTabler, IconSettings, IconUserBolt } from '@tabler/icons-react';
+import { IconArrowLeft, IconBrandPaypalFilled, IconBrandProducthunt, IconBrandTabler, IconMoodBitcoin, IconSettings, IconUserBolt } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useContext } from 'react';
 
 export function SidebarDemo() {
+  const value = useContext(Context);
   const links = [
     {
       label: 'Dashboard',
-      href: '/admin/dashboard',
+      href: '/admin/addCategory',
       icon: <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
     },
     {
-      label: 'Profile',
-      href: '#',
-      icon: <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
+      label: 'Leaderboard',
+      href: '/admin/leaderboard',
+      icon: <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
+    },
+    {
+      label: 'Products',
+      href: '/admin/products',
+      icon: <IconBrandProducthunt className={`text-neutral-700  dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700`} />,
+    },
+    {
+      label: 'Bids',
+      href: '/admin/bids',
+      icon: <IconMoodBitcoin className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
+    },
+    {
+      label: 'Payment',
+      href: '/admin/payments',
+      icon: <IconBrandPaypalFilled className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
     },
     {
       label: 'Settings',
       href: '/admin/settings',
-      icon: <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
+      icon: <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
     },
     {
       label: 'Logout',
       href: '/admin/logout',
-      icon: <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
+      icon: <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
     },
   ];
-  const [open, setOpen] = useState(false);
+
   return (
     <div
       className={cn(
@@ -45,7 +62,9 @@ export function SidebarDemo() {
             <Logo />
             <div className="mt-8 flex flex-col gap-2">
               {links.map((link, idx) => (
-                <SidebarLink key={idx} link={link} />
+                <div className={`${link.label == value?.layoutAside && 'border-b-2 border-blue-600'}`}>
+                  <SidebarLink key={idx} link={link} />
+                </div>
               ))}
             </div>
           </div>
@@ -54,7 +73,7 @@ export function SidebarDemo() {
               link={{
                 label: 'Manu Arora',
                 href: '#',
-                icon: <Image src="https://assets.aceternity.com/manu.png" className="h-7 w-7 flex-shrink-0 rounded-full" width={50} height={50} alt="Avatar" />,
+                icon: <Image src="" className="h-7 w-7 flex-shrink-0 rounded-full" width={50} height={50} alt="Avatar" />,
               }}
             />
           </div>
@@ -68,7 +87,7 @@ const Logo = () => {
     <Link href="#" className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20">
       <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
       <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-medium text-black dark:text-white whitespace-pre">
-        Acet Labs
+        SuperDuper Admin
       </motion.span>
     </Link>
   );

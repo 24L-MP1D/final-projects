@@ -1,11 +1,12 @@
 'use client';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { FilePenLine, X } from 'lucide-react';
 import { ObjectId } from 'mongodb';
-import { DashboardAside } from '../components /DashboardAside';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../components /ui/Table';
+import { DashboardAside } from '../components/DashboardAside';
+import { Input } from '../components/ui/Input';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/Table';
 
 export default function Home() {
   interface Recipe {
@@ -27,14 +28,6 @@ export default function Home() {
     tags: ObjectId[];
   }
 
-  // enum Role {
-  //   GOLD = 'gold',
-  //   SILVER = 'silver',
-  //   BRONZE = 'bronze',
-  //   FREE = 'free',
-  //   admin = 'admin',
-  // }
-
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -45,8 +38,9 @@ export default function Home() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await axios.get('/api/recipe/adminFunctions');
-        console.log('Response data:', response.data); // Debugging line
+        const response = await axios.post('/api/recipe/adminFunctions/searchRecipe', { search: searchValue });
+        console.log('Response data:', response.data);
+        // Debugging line
         setRecipes(response.data);
         setLoading(false);
       } catch (error) {
@@ -54,9 +48,65 @@ export default function Home() {
         setError(error.message);
       }
     };
-
     fetchRecipes();
-  }, []);
+  }, [searchValue, currentPage]);
+
+  const searchFilt = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+    setCurrentPage(1); // Reset to the first page on search
+  };
+
+  const handleDeleteRecipe = async (recipeId: string) => {
+    const confirmDelete = window.confirm('Энэ хоолны жорыг устгах уу?');
+    if (!confirmDelete) {
+      return;
+    }
+    try {
+      const response = await fetch(`/api/recipe/adminFunctions/deleteRecipe`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ _id: recipeId }), // backend der
+      });
+
+      if (!response.ok) {
+        window.alert('Recipe deleted successfully');
+        throw new Error('Failed to delete recipe');
+      }
+
+      // Remove the recipe from local state
+      setRecipes(recipes.filter((recipe) => recipe._id !== recipeId));
+    } catch (e: any) {
+      setError(e.message);
+    }
+  };
+
+  const updateRecipe = async (recipeId, updatedFields) => {
+    try {
+      const response = await axios.put(`/api/recipes/${recipeId}`, {
+        _id: recipeId,
+        updatedFields,
+      });
+
+      console.log('Recipe updated successfully:', response.data);
+      // Optionally, handle success (e.g., show a success message, refresh the recipe list, etc.)
+    } catch (error) {
+      if (error.response) {
+        // The request was made, and the server responded with a status code
+        console.error('Error updating recipe:', error.response.data);
+        alert(`Error: ${error.response.data}`);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+        alert('No response from server, please try again later.');
+      } else {
+        // Something happened in setting up the request
+        console.error('Error:', error.message);
+        alert('An error occurred, please try again.');
+      }
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -160,15 +210,9 @@ export default function Home() {
       <DashboardAside />
       <div>
         <div className="text-center font-bold">Хоолны жор хянах хэсэг</div>
-        {/* <div className="justify-center">
-          <Input
-            value={searchValue}
-            onChange={searchFilt}
-            placeholder="search"
-            type="text"
-            className="w-100 ml-5"
-          />
-        </div> */}
+        <div className="justify-center">
+          <Input value={searchValue} onChange={searchFilt} placeholder="search" type="text" className="w-100 ml-5" />
+        </div>
         <Table className="border-[1px] border-[#d1d5db] ml-5 mt-5 w-[800px] rounded-xl bg-white">
           <TableCaption>Хоолны жорны жагсаалт</TableCaption>
           <TableHeader>
@@ -225,18 +269,12 @@ export default function Home() {
                   </TableCell>
                 )} */}
                 <TableCell>
-                  <button
-                    // onClick={() => handleDeleteUser(recipe._id)}
-                    className=" hover:text-red-700"
-                  >
+                  <button onClick={() => updateRecipe(recipe._id)} className=" hover:text-red-700">
                     <FilePenLine />
                   </button>
                 </TableCell>
                 <TableCell>
-                  <button
-                    // onClick={() => handleDeleteUser(recipe._id)}
-                    className=" hover:text-red-700"
-                  >
+                  <button onClick={() => handleDeleteRecipe(recipe._id)} className=" hover:text-red-700">
                     <X />
                   </button>
                 </TableCell>

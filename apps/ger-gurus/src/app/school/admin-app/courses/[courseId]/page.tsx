@@ -58,7 +58,7 @@ export default async function Page({ params }: { params: { courseId: string } })
         },
       },
       {
-        $sort: { 'chapters.position': -1 },
+        $sort: { 'chapters.position': 1 },
       },
       {
         $group: {
@@ -84,7 +84,7 @@ export default async function Page({ params }: { params: { courseId: string } })
     chapters: course.chapters.map((chapter) => ({
       ...chapter,
       _id: chapter._id.toString(),
-      courseId: chapter.courseId.toString(), // Convert nested courseId
+      courseId: chapter.courseId.toString(), 
     })),
   };
   const requiredFields = [course.title, course.description, course.imageUrl, course.price, course.chapters];
