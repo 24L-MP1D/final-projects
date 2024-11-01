@@ -1,11 +1,14 @@
 'use client';
 
 import { AdminLayout } from '@/components/adminLayout';
+import { useContext, useEffect } from 'react';
+import { Context } from '../layout';
 
 // import Header from "@/components/header";
 // import LeftBar from "@/components/leftBar";
 
 const Home = () => {
+  const value = useContext(Context);
   const approveSell = () => {
     console.log('Successfully approved the Sell request');
   };
@@ -13,7 +16,9 @@ const Home = () => {
   const rejectSell = () => {
     console.log('Rejected the Sell request');
   };
-
+  useEffect(() => {
+    value?.setLayoutAside('Dashboard');
+  }, []);
   return (
     <AdminLayout>
       <div className="container mx-auto flex flex-col gap-30">

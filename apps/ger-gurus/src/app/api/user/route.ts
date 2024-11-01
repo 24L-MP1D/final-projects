@@ -13,9 +13,12 @@ export async function GET(request: Request) {
       return new Response("No token provided", { status: 401 });
     }
 
-    const data = jwt.decode(authtoken as string);
+    const data = jwt.decode(authtoken) as { userId?: string; exp?: number } | null;
     if (typeof data !== 'object' || data === null || !('userId' in data)) {
       return new Response("Invalid token", { status: 401 });
+    }
+    if (data.exp && Math.floor(Date.now() / 1000) > data.exp) {
+      return new Response("Token has expired", { status: 401 });
     }
     const list = await db.collection('users').findOne({ _id: new ObjectId(data.userId) });
     if (!list) {

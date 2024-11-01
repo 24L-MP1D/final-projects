@@ -13,8 +13,9 @@ export type tableType =
   | {
       id: ObjectId;
       table: number;
-      nums: string;
+      reservedSeats: string;
       time: string;
+      phoneNumber: number;
       day: Date;
     }
   | undefined;
@@ -124,7 +125,7 @@ const Order = () => {
                           <p className="text-sm font-semibold px-6">#{item.table}</p>
                         </TableCell>
                         <TableCell className="px-6 py-4 max-w-[156px] flex flex-col text-left gap-2">
-                          <p className="text-sm font-semibold">{item.nums}</p>
+                          <p className="text-sm font-semibold">{item.reservedSeats}</p>
                         </TableCell>
                         {/* <TableCell className="px-6 max-w-[156px]">{dayjs(item.time).format('YYYY-MM-DD')}</TableCell>
                         <TableCell className="px-6 max-w-[156px]">{dayjs(item.time).format('HH:mm')}</TableCell> */}

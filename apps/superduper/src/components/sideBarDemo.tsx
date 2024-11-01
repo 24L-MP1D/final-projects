@@ -1,14 +1,16 @@
 'use client';
-import { useState } from 'react';
 
+import { Context } from '@/app/admin/layout';
 import { Sidebar, SidebarBody, SidebarLink } from '@/components/ui/Sidebar';
 import { cn } from '@/lib/utils';
-import { IconArrowLeft, IconBrandPaypalFilled, IconBrandProducthunt, IconBrandTabler, IconMoodBitcoin, IconSettings, IconUserBolt, } from '@tabler/icons-react';
+import { IconArrowLeft, IconBrandPaypalFilled, IconBrandProducthunt, IconBrandTabler, IconMoodBitcoin, IconSettings, IconUserBolt } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useContext } from 'react';
 
 export function SidebarDemo() {
+  const value = useContext(Context);
   const links = [
     {
       label: 'Dashboard',
@@ -16,38 +18,37 @@ export function SidebarDemo() {
       icon: <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
     },
     {
-        label: 'Leaderboard',
-        href: '/admin/leaderboard',
-        icon: <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
-      },
-      {
-        label: 'Products',
-        href: '/admin/products',
-        icon: <IconBrandProducthunt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
-      },
-      {
-        label: 'Bids',
-        href: '/admin/bids',
-        icon: <IconMoodBitcoin className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
-      },
-      {
-        label: 'Payment',
-        href: '/admin/payments',
-        icon: <IconBrandPaypalFilled className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
-      },
-      {
-        label: 'Settings',
-        href: '/admin/settings',
-        icon: <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
-      },
-      {
-        label: 'Logout',
-        href: '/admin/logout',
-        icon: <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
-      },
-    ];
+      label: 'Leaderboard',
+      href: '/admin/leaderboard',
+      icon: <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
+    },
+    {
+      label: 'Products',
+      href: '/admin/products',
+      icon: <IconBrandProducthunt className={`text-neutral-700  dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700`} />,
+    },
+    {
+      label: 'Bids',
+      href: '/admin/bids',
+      icon: <IconMoodBitcoin className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
+    },
+    {
+      label: 'Payment',
+      href: '/admin/payments',
+      icon: <IconBrandPaypalFilled className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
+    },
+    {
+      label: 'Settings',
+      href: '/admin/settings',
+      icon: <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
+    },
+    {
+      label: 'Logout',
+      href: '/admin/logout',
+      icon: <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
+    },
+  ];
 
-  const [open, setOpen] = useState(false);
   return (
     <div
       className={cn(
@@ -61,7 +62,9 @@ export function SidebarDemo() {
             <Logo />
             <div className="mt-8 flex flex-col gap-2">
               {links.map((link, idx) => (
-                <SidebarLink key={idx} link={link} />
+                <div className={`${link.label == value?.layoutAside && 'border-b-2 border-blue-600'}`}>
+                  <SidebarLink key={idx} link={link} />
+                </div>
               ))}
             </div>
           </div>
