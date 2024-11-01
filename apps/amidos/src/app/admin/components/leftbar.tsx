@@ -5,45 +5,26 @@ import Link from 'next/link';
 
 export default function LeftBar() {
   return (
-    <div className="w-[300px] h-[976px] bg-slate-200 pt-6 flex flex-col gap-4 text-[#121316] p-10 relative rounded-lg">
-      <Button variant="def2" className="flex items-center justify-start h-10 hover:bg-[#ECEDF0] w-[222px]">
-        <div className="w-14 flex justify-center items-center ">{/* <MdWindow className="w-6 h-6" /> */}</div>
-        <div className="text-base font-semibold">Хяналтын самбар</div>
+    <div className="w-[300px] h-[900px] bg-white mt-10 pt-6 flex flex-col gap-4 text-[#121316] p-10 relative rounded-lg">
+      <div className="text-2xl mb-4">AMIDO'S</div>
+      <Button>
+        <Link href="Dashboard"> Dashborad</Link>
       </Button>
-
-      <Link href="/admin/order">
-        <Button variant="def2" className="flex items-center justify-start h-10 hover:bg-[#ECEDF0] w-[222px]">
-          <div className="w-14 flex justify-center items-center ">{/* <FaRegClipboard className="w-6 h-6" /> */}</div>
-          <div className="text-base font-semibold">Захиалга</div>
-        </Button>
-      </Link>
-
-      <Link href="/admin/table">
-        <Button variant="def2" className="flex items-center justify-start h-10 hover:bg-[#ECEDF0] w-[222px]">
-          <div className="w-14 flex justify-center items-center ">{/* <ImPriceTags className="w-6 h-6" /> */}</div>
-          <div className="text-base font-semibold">Ширээ</div>
-        </Button>
-      </Link>
-
-      <Link href="/admin/tablesOrder">
-        <Button variant="def2" className="flex items-center justify-start h-10 hover:bg-[#ECEDF0] w-[222px]">
-          <div className="w-14 flex justify-center items-center ">{/* <ImPriceTags className="w-6 h-6" /> */}</div>
-          <div className="text-base font-semibold">Ширээний захиалга</div>
-        </Button>
-      </Link>
-
-      <Link href="/products">
-        <Button variant="def2" className="flex items-center justify-start h-10 hover:bg-[#ECEDF0] w-[222px]">
-          <div className="w-14 flex justify-center items-center ">{/* <RiListView className="w-6 h-6" /> */}</div>
-          <div className="text-base font-semibold">Бүтээгдэхүүн</div>
-        </Button>
-      </Link>
-      <Link href="/settings">
-        <Button variant="def2" className="flex items-center justify-start h-10 hover:bg-[#ECEDF0] w-[222px]">
-          <div className="w-14 flex justify-center items-center ">{/* <IoMdSettings className="w-6 h-6" /> */}</div>
-          <div className="text-base font-semibold">Тохиргоо</div>
-        </Button>
-      </Link>
+      <Button>
+        <Link href="/admin/orders"> Захиалга</Link>
+      </Button>
+      <Button>
+        <Link href="/admin/food">Хоол</Link>
+      </Button>
+      <Button>
+        <Link href="/admin/food">Ширээ</Link>
+      </Button>
+      <Button>
+        <Link href="/admin/tablesOrder"> Ширээ захиалга</Link>
+      </Button>
+      <Button>
+        <Link href="/admin/tablesOrder"> Ширээ захиалга</Link>
+      </Button>
     </div>
   );
 }

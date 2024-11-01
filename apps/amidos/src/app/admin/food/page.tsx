@@ -10,7 +10,7 @@ import { Heart, Pencil, Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import LeftBar from '../components/leftbar';
-export default function Order() {
+export default function Foods() {
   const [order, setOrder] = useState<Food[]>([]);
   const [selectedFood, setSelectedFood] = useState<Food | null>(null);
   const [name, setName] = useState('');
@@ -218,14 +218,16 @@ export default function Order() {
               </DialogContent>
             </Dialog>
             <div>
-              <Table className="text-xl mb-5">
-                <TableHeader>
-                  <TableRow className="text-center font-bold text-wrap">
+              <Table className="text-xl mb-5 ">
+                <TableHeader className="bg-slate-200">
+                  <TableRow className="text-center font-bold text-wrap ">
                     <TableHead className="text-bold ">№</TableHead>
                     <TableHead className="text-bold ">Хоолны нэр, код</TableHead>
                     <TableHead className="text-bold">Орц</TableHead>
                     <TableHead className=" text-bold">Үнэ</TableHead>
                     <TableHead className=" text-bold">Зураг</TableHead>
+                    <TableHead className="text-bold">Засах</TableHead>
+                    <TableHead className="text-bold">Засах</TableHead>
                     <TableHead className="text-bold">Засах</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -292,10 +294,11 @@ export default function Order() {
                           <Trash onClick={() => handleDeleteFood(order._id)} />
                         </Button>
                       </TableCell>
-                      <TableCell className="text-center align-middle flex-col">
+                      <TableCell className="text-center align-middle flex-col ">
                         <Button>
-                          <Heart onClick={() => handleSpecialFood(order._id)} />
+                          <Heart onClick={() => handleSpecialFood(order._id)} className="" />
                         </Button>
+                        <Heart onClick={() => handleRemoveSpecial(order._id)} />
                       </TableCell>
                     </TableRow>
                   ))}
