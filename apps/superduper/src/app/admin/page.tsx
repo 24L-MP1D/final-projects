@@ -1,3 +1,5 @@
+import { AdminLayout } from '@/components/adminLayout';
+
 export default function App() {
-  return <div></div>;
+  return <AdminLayout>Admin page</AdminLayout>;
 }
