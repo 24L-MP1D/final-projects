@@ -5,7 +5,7 @@ type filtType = {
   startDate?: { $gte: Date };
   endDate?: { $lt: Date };
 };
-const collection = DB.collection('products');
+const collection = DB.collection('product');
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
