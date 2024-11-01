@@ -34,6 +34,7 @@ export default function TableVerify() {
 
     useEffect(() => {
         if (!isValidPhoneNumber(phonenumber)) {
+            console.log("phonenumber", phonenumber)
             setErrorMessage("Утасны дугаар буруу байна.");
         } else {
             setErrorMessage("");

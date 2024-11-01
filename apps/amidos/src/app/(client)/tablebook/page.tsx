@@ -3,62 +3,40 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import TimePicker from 'react-time-picker';
-import 'react-time-picker/dist/TimePicker.css';
+
 type Time = { id: number; value: string };
-type PeopleCount = { value: string };
 type Table = { id: number; name: string };
 
-const times: Time[] = [
-    { id: 1, value: "11:00" },
-    { id: 2, value: "12:00" },
-    { id: 3, value: "13:00" },
-    { id: 4, value: "14:00" },
-    { id: 5, value: "15:00" },
-    { id: 6, value: "16:00" },
-    { id: 7, value: "17:00" },
-    { id: 8, value: "18:00" },
-    { id: 9, value: "20:00" },
-    { id: 10, value: "21:00" },
-    { id: 11, value: "22:00" },
-];
 const reservedTables: Table[] = Array.from({ length: 15 }, (_, i) => ({
     id: i + 1,
     name: `Table-${i + 1}`,
 }));
-// const reservedSeats: PeopleCount[] = [
-//     { value: "1 хүн" },
-//     { value: "2 хүн" },
-//     { value: "2-4 хүн" },
-//     { value: "4 хүн" },
-//     { value: "4-6 хүн" },
-//     { value: "6-8 хүн" },
-//     { value: "8-10 хүн" },
-//     { value: "10-с дээш хүн" },
-// ];
+
 export default function TableBook() {
     const router = useRouter();
     const [selectedTime, setSelectedTime] = useLocalStorage<Time | null>("selectedTime", null);
     const [reservedSeat, setReservedSeat] = useLocalStorage<number | null>("reservedSeat", null);
     const [selectedTable, setSelectedTable] = useLocalStorage<number | null>("selectedTable", null);
     const [day, setDay] = useLocalStorage("day", new Date().toISOString());
-    const [value, onChange] = useState('10:00');
+
     const reset = () => {
         setSelectedTime(null);
         setReservedSeat(null);
         setSelectedTable(null);
         setDay(new Date().toISOString());
     };
+
     const handleSubmit = () => {
-        if (selectedTime && selectedTable && reservedSeat) {
-            router.push("/tablebook-verify");
-        } else {
+        if (!selectedTime || !selectedTable || !reservedSeat || reservedSeat <= 0) {
             alert("Бүх сонголтуудыг хийнэ үү!");
+            return;
         }
+        router.push("/tablebook-verify");
     };
+
     const renderButtons = (items: Array<{ value: string }>, setter: (value: string) => void, selectedValue: string | null) => (
         items.map((item, index) => (
             <Button
@@ -71,44 +49,45 @@ export default function TableBook() {
             </Button>
         ))
     );
+
     useEffect(() => {
         reset();
-    }, [])
+    }, []);
     return (
         <div className="flex flex-col justify-center gap-8 p-10 mx-auto">
-            <div className="p-4 flex  gap-6">
-                <div className="flex flex-col gap-4">
-                    <p className="text-xl font-bold">Өдөр сонгох</p>
-                    <DatePicker
-                        selected={new Date(day)}
-                        onSelect={(val) => {
-                            setDay(val ? new Date(val).toISOString() : new Date().toISOString())
-                        }}
-                        className="rounded-md border p-2"
-                    />
-                </div>
-                <div className="flex flex-col gap-4">
-                    <p className="text-xl font-bold">Цаг сонгох</p>
-                    <div className="grid grid-cols-3 gap-4">
-                        {/* {times.map((time) => (
-                            <Button
-                                key={time.id}
-                                variant={"amidos2"}
-                                className={`text-base font-semibold ${selectedTime?.id === time.id ? "bg-[#52071B] text-white" : ""}`}
-                                onClick={() => setSelectedTime(time)}
-                            >
-                                {time.value}
-                            </Button>
-                        ))} */}
-                        <TimePicker onChange={onChange} value={value} />
+            <div className="flex justify-between items-center">
+                <div className="flex gap-6 p-3">
+                    <div className="flex flex-col gap-4">
+                        <p className="text-xl font-bold">Өдөр сонгох</p>
+                        <DatePicker
+                            selected={new Date(day)}
+                            onSelect={(val) => setDay(val ? new Date(val).toISOString() : new Date().toISOString())}
+                            className="rounded-md border p-2"
+                        />
                     </div>
-                </div>
-                <div className="flex flex-col gap-4">
-                    <p className="text-xl font-bold">Хүний тоо</p>
-                    <div className="grid grid-cols-3 gap-4">
-                        {/* {renderButtons(reservedSeats, setReservedSeat, reservedSeat)} */}
-                        <Input placeholder="Хүний тоо" type="number" value={reservedSeat}
-                            onChange={(e) => setReservedSeat(e.target.value)} />
+                    <div className="flex flex-col gap-4">
+                        <p className="text-xl font-bold">Цаг сонгох</p>
+                        <input
+                            type="time"
+                            id="time"
+                            className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            min="10:00"
+                            max="22:00"
+                            value={selectedTime?.value || "00:00"}
+                            required
+                            onChange={(e) => setSelectedTime({ id: Date.now(), value: e.target.value })}
+                        />
+                    </div>
+                    <div className="flex flex-col gap-4">
+                        <p className="text-xl font-bold">Хүний тоо</p>
+                        <Input
+                            placeholder="Хүний тоо"
+                            type="number"
+                            min="1"
+                            value={reservedSeat || ''}
+                            onChange={(e) => setReservedSeat(Number(e.target.value) || null)}
+                            className="p-5"
+                        />
                     </div>
                 </div>
                 <Button
@@ -119,7 +98,7 @@ export default function TableBook() {
                     Үргэлжлүүлэх
                 </Button>
             </div>
-            <div className="grid grid-cols-5 gap-10">
+            <div className="grid grid-cols-5 gap-10 p-3">
                 {reservedTables.map((table) => (
                     <Button
                         variant={"amidos2"}
