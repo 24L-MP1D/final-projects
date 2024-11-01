@@ -9,7 +9,7 @@ export async function POST(req: Request) {
       return new Response('Missing fields', { status: 400 });
     }
 
-    var salt = bcrypt.genSaltSync(Number(process.env.saltNumber));
+    const salt = bcrypt.genSaltSync(Number(process.env.saltNumber));
     const hashedPassword = await bcrypt.hash(password, salt);
 
     await DB.collection('users').insertOne({

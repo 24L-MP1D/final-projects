@@ -14,7 +14,7 @@ export default function Header() {
             <div className="bg-slate-300 h-1 w-full"></div>
             <p className="font-extrabold">Auction</p>
           </div>
-          <Link href="/S" className="ml-10 mr-8">
+          <Link href='/client/category' className="ml-10 mr-8">
             Category
           </Link>
           <div className="flex flex-1 items-center bg-white">

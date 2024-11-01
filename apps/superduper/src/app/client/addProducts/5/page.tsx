@@ -37,7 +37,7 @@ export default function Page() {
   };
   useEffect(() => {
     const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
-    addProductObject.status = 'pending';
+    addProductObject.status = 'Pending';
     setGetFromLocal(addProductObject);
   }, []);
   return (
