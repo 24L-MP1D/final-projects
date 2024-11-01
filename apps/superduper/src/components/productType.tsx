@@ -1,4 +1,5 @@
 export type ProductType = {
+  _id: string;
   Country: string;
   additionalInformation: string;
   backImage: string;
@@ -22,4 +23,5 @@ export type ProductType = {
   startDate: Date;
   endDate: Date;
   status: string;
+  createdAt: Date;
 };

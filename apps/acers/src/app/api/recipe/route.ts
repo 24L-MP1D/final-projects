@@ -1,5 +1,4 @@
 import { DB } from '../../lib/db';
-import { } from ;
 
 export async function POST(request: Request) {
   try {

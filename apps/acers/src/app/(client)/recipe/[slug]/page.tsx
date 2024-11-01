@@ -109,7 +109,7 @@ export default function RecipeComponent() {
       .post('/api/comment', commentData)
       .then(({ status }) => {
         if (status === 201) {
-          setComments((prevComments) => [...prevComments, commentData]); // Add the new comment to the state
+          setComments((prevComments) => [...prevComments, commentData]);
           setNewComment('');
           alert('Comment posted successfully!');
         }
