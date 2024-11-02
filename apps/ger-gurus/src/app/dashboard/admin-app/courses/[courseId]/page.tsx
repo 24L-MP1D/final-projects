@@ -11,7 +11,7 @@ import { PriceForm } from './_components/price-form';
 import { ChapterTitleForm } from './chapters/[chapterId]/_components/chapter-title-form';
 
 export default async function Page({ params }: { params: { courseId: string } }) {
-  const { courseId } = await params;
+  const { courseId } = params;
   // const {userId}=auth()
   // if (!userId){return redirect("/")}
 
