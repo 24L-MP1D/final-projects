@@ -14,9 +14,11 @@ export async function GET(request: Request) {
   const dateTo = searchParams.get('endDate');
 
   const filt: filtType = {};
+
   if (stat) {
     filt.status = stat;
   }
+
   if (dateFrom && dateTo) {
     filt.startDate = { $gte: new Date(dateFrom) };
     filt.endDate = { $lt: new Date(dateTo) };
