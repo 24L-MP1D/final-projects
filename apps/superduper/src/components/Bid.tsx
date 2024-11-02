@@ -50,7 +50,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
     window.addEventListener('scroll', handleScroll);
 
     const timeInterval = setInterval(() => {
-      if (new Date().getTime() <= startDate) {
+      if (new Date().getTime() >= startDate) {
         const time = {
           day: Math.floor(betweenDate / (1000 * 60 * 60 * 24)),
           dateHours: Math.floor((betweenDate % (1000 * 60 * 60 * 24)) / (60 * 60 * 1000)),
@@ -75,9 +75,13 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
 
   return (
     <div className="max-w-[500px] w-full" ref={sticky}>
-      <div>
-        Closed in {showDate?.day}d {showDate?.dateHours}h {showDate?.dateMinuts}m {showDate?.dateSecunds}s
-      </div>
+      {new Date().getTime() >= startDate ? (
+        <div>
+          Closed in {showDate?.day}d {showDate?.dateHours}h {showDate?.dateMinuts}m {showDate?.dateSecunds}s
+        </div>
+      ) : (
+        <div>start soon</div>
+      )}
       <div className="border-2 border-t-2 border-t-blue-600 border-b-2 border-slate-300">
         <div className="mt-3  py-8 px-6">
           <div className="flex flex-col gap-2">

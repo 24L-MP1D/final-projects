@@ -14,13 +14,17 @@ type Context = {
   setDetailImage: (value: File) => void;
   setSignatureImage: (value: File) => void;
   setDamagedImage: (value: File) => void;
+  additionalImage: File | null;
+  setAdditionalImage: (value: File) => void;
 };
 export const Context = createContext<Context | null>(null);
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [frontImage, setFrontImage] = useState<File | null>(null);
+
   const [backImage, setBackImage] = useState<File | null>(null);
 
+  const [additionalImage, setAdditionalImage] = useState<File | null>(null);
   const [detailImage, setDetailImage] = useState<File | null>(null);
 
   const [signatureImage, setSignatureImage] = useState<File | null>(null);
@@ -31,7 +35,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <Suspense>
       <div>
         <Header />
-        <Context.Provider value={{ frontImage, setFrontImage, setBackImage, setDetailImage, setSignatureImage, setDamagedImage, backImage, detailImage, signatureImage, damagedImage }}>
+        <Context.Provider
+          value={{
+            frontImage,
+            additionalImage,
+            setAdditionalImage,
+            setFrontImage,
+            setBackImage,
+            setDetailImage,
+            setSignatureImage,
+            setDamagedImage,
+            backImage,
+            detailImage,
+            signatureImage,
+            damagedImage,
+          }}
+        >
           <div>{children}</div>
         </Context.Provider>
         <Footer />
