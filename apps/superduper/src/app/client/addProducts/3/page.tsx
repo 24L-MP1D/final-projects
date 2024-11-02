@@ -8,20 +8,22 @@ import { Camera, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import * as yup from 'yup';
+import { Context } from '../../layout';
 const CLOUDINARYNAME = process.env.NEXT_PUBLIC_CLOUDINARYNAME;
 const CLOUDINARYPRESET = process.env.NEXT_PUBLIC_CLOUDINARYPRESET || '';
 export default function Page() {
+  const value = useContext(Context);
   const [loading, setLoading] = useState('');
   const router = useRouter();
   const initialValues = {
-    frontImage: '',
-    backImage: '',
-    detailImage: '',
-    signatureImage: '',
-    damageImage: '',
-    additionalImage: '',
+    frontImage: null,
+    backImage: null,
+    detailImage: null,
+    signatureImage: null,
+    damageImage: null,
+    additionalImage: null,
   };
 
   const validationSchema = yup.object().shape({
@@ -49,36 +51,35 @@ export default function Page() {
     if (!event.currentTarget.files?.length) return;
     setLoading(fieldName);
     const file = event.currentTarget.files[0];
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', CLOUDINARYPRESET);
-    try {
-      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARYNAME}/upload`, {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await response.json();
+    formik.setFieldValue(fieldName, file);
+    // const formData = new FormData();
+    // formData.append('file', file);
+    // formData.append('upload_preset', CLOUDINARYPRESET);
+    // try {
+    //   const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARYNAME}/upload`, {
+    //     method: 'POST',
+    //     body: formData,
+    //   });
+    //   const data = await response.json();
 
-      formik.setFieldValue(fieldName, data.secure_url);
-      setLoading('');
-    } catch (err) {
-      console.error('error upload to image', err);
-    }
+    //   formik.setFieldValue(fieldName, data.secure_url);
+    //   setLoading('');
+    // } catch (err) {
+    //   console.error('error upload to image', err);
+    // }
+    setLoading('');
   };
   const handleFileDelete = async (fieldName: string) => {
     formik.setFieldValue(fieldName, null);
   };
   useEffect(() => {
-    const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
-    if (addProductObject) {
-      formik.setValues({
-        frontImage: addProductObject.frontImage,
-        backImage: addProductObject.backImage,
-        detailImage: addProductObject.detailImage,
-        signatureImage: addProductObject.signatureImage,
-        damageImage: addProductObject.damageImage,
-        additionalImage: addProductObject.additionalImage,
-      });
+    if (value?.frontImage) {
+      formik.setFieldValue('frontImage', value.frontImage);
+      // backImage: addProductObject.backImage,
+      // detailImage: addProductObject.detailImage,
+      // signatureImage: addProductObject.signatureImage,
+      // damageImage: addProductObject.damageImage,
+      // additionalImage: addProductObject.additionalImage,
     }
   }, []);
   return (
@@ -126,7 +127,7 @@ export default function Page() {
 
               {formik.values.frontImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
-                  <Image src={formik.values.frontImage} alt="frontImage" width={1000} height={1000} className="w-full h-full object-cover" />
+                  <Image src={URL.createObjectURL(formik.values.frontImage)} alt="frontImage" width={1000} height={1000} className="w-full h-full object-cover" />
                   <div>
                     <X onClick={() => handleFileDelete('frontImage')} className="w-10 h-10 absolute right-0" />
                   </div>
@@ -138,7 +139,7 @@ export default function Page() {
                   onChange={(e) => {
                     handleFileChange(e, 'frontImage');
                   }}
-                  className="absolute w-full h-full opacity-0 z-30"
+                  className="absolute hover:cursor-pointer w-full h-full opacity-0 z-30"
                 />
               )}
               {loading === 'frontImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
@@ -152,7 +153,7 @@ export default function Page() {
               <div className="mt-10">Back</div>
               {formik.values.backImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
-                  <Image src={formik.values.backImage} alt="backImage" width={1000} height={1000} className="w-full h-full object-cover" />
+                  <Image src={URL.createObjectURL(formik.values.backImage)} alt="backImage" width={1000} height={1000} className="w-full h-full object-cover" />
                   <div>
                     <X onClick={() => handleFileDelete('backImage')} className="w-10 h-10 absolute right-0" />
                   </div>
@@ -164,7 +165,7 @@ export default function Page() {
                   onChange={(e) => {
                     handleFileChange(e, 'backImage');
                   }}
-                  className="absolute w-full h-full opacity-0 z-30"
+                  className="absolute cursor-pointer w-full h-full opacity-0 z-30"
                 />
               )}
               {loading === 'backImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
@@ -179,7 +180,7 @@ export default function Page() {
               <div className="mt-10">Details</div>
               {formik.values.detailImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
-                  <Image src={formik.values.detailImage} alt="detailImage" width={1000} height={1000} className="w-full h-full object-cover" />
+                  <Image src={URL.createObjectURL(formik.values.detailImage)} alt="detailImage" width={1000} height={1000} className="w-full h-full object-cover" />
                   <div>
                     <X onClick={() => handleFileDelete('detailImage')} className="w-10 h-10 absolute right-0" />
                   </div>
@@ -191,7 +192,7 @@ export default function Page() {
                   onChange={(e) => {
                     handleFileChange(e, 'detailImage');
                   }}
-                  className="absolute w-full h-full opacity-0 z-30"
+                  className="absolute cursor-pointer w-full h-full opacity-0 z-30"
                 />
               )}
               {loading === 'detailImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
@@ -206,7 +207,7 @@ export default function Page() {
               <div className="mt-10">Signature</div>
               {formik.values.signatureImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
-                  <Image src={formik.values.signatureImage} alt="signatureImage" width={1000} height={1000} className="w-full h-full object-cover" />
+                  <Image src={URL.createObjectURL(formik.values.signatureImage)} alt="signatureImage" width={1000} height={1000} className="w-full h-full object-cover" />
                   <div>
                     <X onClick={() => handleFileDelete('signatureImage')} className="w-10 h-10 absolute right-0" />
                   </div>
@@ -218,7 +219,7 @@ export default function Page() {
                   onChange={(e) => {
                     handleFileChange(e, 'signatureImage');
                   }}
-                  className="absolute w-full h-full opacity-0 z-30"
+                  className="absolute cursor-pointer w-full h-full opacity-0 z-30"
                 />
               )}
               {loading === 'signatureImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
@@ -233,7 +234,7 @@ export default function Page() {
               <div className="mt-10">Damage</div>
               {formik.values.damageImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
-                  <Image src={formik.values.damageImage} alt="damageImage" width={1000} height={1000} className="w-full h-full object-cover" />
+                  <Image src={URL.createObjectURL(formik.values.damageImage)} alt="damageImage" width={1000} height={1000} className="w-full h-full object-cover" />
                   <div>
                     <X onClick={() => handleFileDelete('damageImage')} className="w-10 h-10 absolute right-0" />
                   </div>
@@ -245,7 +246,7 @@ export default function Page() {
                   onChange={(e) => {
                     handleFileChange(e, 'damageImage');
                   }}
-                  className="absolute w-full h-full opacity-0 z-30"
+                  className="absolute cursor-pointer w-full h-full opacity-0 z-30"
                 />
               )}
 
@@ -262,7 +263,7 @@ export default function Page() {
 
               {formik.values.additionalImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
-                  <Image src={formik.values.additionalImage} alt="additionalImage" width={1000} height={1000} className="w-full h-full object-cover" />
+                  <Image src={URL.createObjectURL(formik.values.additionalImage)} alt="additionalImage" width={1000} height={1000} className="w-full h-full object-cover" />
                   <div>
                     <X onClick={() => handleFileDelete('additionalImage')} className="w-10 h-10 absolute right-0" />
                   </div>
@@ -274,7 +275,7 @@ export default function Page() {
                   onChange={(e) => {
                     handleFileChange(e, 'additionalImage');
                   }}
-                  className="absolute w-full h-full opacity-0 z-30"
+                  className="absolute w-full cursor-pointer h-full opacity-0 z-30"
                 />
               )}
               {loading === 'additionalImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}

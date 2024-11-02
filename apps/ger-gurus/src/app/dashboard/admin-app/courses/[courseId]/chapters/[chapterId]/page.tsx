@@ -1,9 +1,11 @@
 import { IconBadge } from '@/components/icon-badge';
 import { db } from '@/lib/db';
-import { ArrowLeft, CircleDollarSign, LayoutDashboard, ListCheck } from 'lucide-react';
+import { ArrowLeft, CircleDollarSign, Eye, LayoutDashboard } from 'lucide-react';
 import { ObjectId } from 'mongodb';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { ChapterAccessForm } from './_components/chapter-access-form';
+import { ChapterDescriptionForm } from './_components/chapter-description-form';
 import { ChapterTitleForm } from './_components/chapter-title-form';
 
 export default async function Page({ params }: { params: { courseId: string; chapterId: string } }) {
@@ -60,22 +62,21 @@ export default async function Page({ params }: { params: { courseId: string; cha
             <h2 className="text-xl">Customize your chapter</h2>
           </div>
           <ChapterTitleForm initialData={chapterWithPlainId} />
+          <ChapterDescriptionForm initialData={chapterWithPlainId} courseId={params.courseId} chapterId={params.chapterId} />
         </div>
-        <div className="space-y-6">
-          <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={ListCheck} />
-              <h2 className="text-xl">Course description</h2>
-            </div>
-            {/* <div><ChapterDescriptionForm initialData={[]}/></div> */}
+        <div>
+          <div className="flex items-center gap-x-2">
+            <IconBadge icon={Eye} />
+            <h2 className="text-xl">Access settings</h2>
           </div>
-          <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={CircleDollarSign} />
-              <h2 className="text-xl">Sell your course</h2>
-            </div>
-            {/* <PriceForm initialData={courseWithPlainId} /> */}
+          <ChapterAccessForm initialData={chapterWithPlainId} courseId={params.courseId} chapterId={params.chapterId} />
+        </div>
+        <div>
+          <div className="flex items-center gap-x-2">
+            <IconBadge icon={CircleDollarSign} />
+            <h2 className="text-xl">Sell your course</h2>
           </div>
+          {/* <PriceForm initialData={courseWithPlainId} /> */}
         </div>
       </div>
     </div>
