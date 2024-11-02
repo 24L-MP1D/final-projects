@@ -1,9 +1,12 @@
+'use client';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FaRegHeart } from 'react-icons/fa';
 import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
 import { Button } from '../ui/button';
 
 export default function Header() {
+  const router = useRouter();
   return (
     <div className="bg-pink-100 container mx-auto h-28 flex items-center max-w-[1280px]">
       <div className="flex flex-1 justify-between">
@@ -14,7 +17,7 @@ export default function Header() {
             <div className="bg-slate-300 h-1 w-full"></div>
             <p className="font-extrabold">Auction</p>
           </div>
-          <Link href='/client/category' className="ml-10 mr-8">
+          <Link href="/client/category" className="ml-10 mr-8">
             Category
           </Link>
           <div className="flex flex-1 items-center bg-white">
@@ -23,12 +26,14 @@ export default function Header() {
           </div>
         </div>
         <div className="flex items-center gap-10 mx-6">
-          <Link href="/Sell">Sell</Link>
+          <Link href="/client/addProducts">Sell</Link>
           <Link href="/Help">Help</Link>
           <Link href="/Heart">
             <FaRegHeart className="text-[24px] text-blue-500" />
           </Link>
-          <Button className="bg-blue-500">Sign Up</Button>
+          <Button onClick={() => router.push(`/client/sign-up`)} className="bg-blue-500">
+            Sign Up
+          </Button>
         </div>
       </div>
     </div>

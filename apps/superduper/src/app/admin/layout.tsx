@@ -4,11 +4,11 @@ import { createContext, ReactNode, useState } from 'react';
 interface RootLayoutProps {
   children: ReactNode;
 }
-type Context = {
+type adminLayoutContext = {
   layoutAside: string;
   setLayoutAside: (value: string) => void;
 };
-export const Context = createContext<Context | null>(null);
+export const Context = createContext<adminLayoutContext | null>(null);
 
 export default function RootLayout({ children }: RootLayoutProps) {
   const [layoutAside, setLayoutAside] = useState('');

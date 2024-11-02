@@ -95,6 +95,12 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
           )}
         </Button>
       </div>
+      {/* {!isCreating && ( */}
+      <div className={cn('text-sm mt-2', !initialData.chapters?.length && 'text-slate-500 italic')}>
+        {!initialData.chapters.length && 'No chapters'}
+        <ChapterList onEdit={onEdit} onReorder={onReorder} chapters={chapters || []} />
+      </div>
+      {/* )} */}
       {isCreating && (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
@@ -116,12 +122,6 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
             </Button>
           </form>
         </Form>
-      )}
-      {!isCreating && (
-        <div className={cn('text-sm mt-2', !initialData.chapters?.length && 'text-slate-500 italic')}>
-          {!initialData.chapters.length && 'No chapters'}
-          <ChapterList onEdit={onEdit} onReorder={onReorder} chapters={chapters || []} />
-        </div>
       )}
 
       {!isCreating && <p className="text-sm text-muted-foreground mt-4">Drag and drop to reorder the chapters</p>}

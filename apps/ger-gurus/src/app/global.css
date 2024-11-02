@@ -98,3 +98,6 @@
         font-feature-settings: "rlig" 1, "calt" 1;
     }
 }
+.ql-container{
+    font-size: 18px !important
+}
