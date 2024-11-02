@@ -12,6 +12,8 @@ import { BidSticky } from '@/components/stickyBid';
 import * as Ably from 'ably';
 import { AblyProvider, ChannelProvider, useChannel } from 'ably/react';
 import { useFormik } from 'formik';
+import Cookies from 'js-cookie';
+
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 const client = new Ably.Realtime({ key: process.env.NEXT_PUBLIC_ABLYKEY });
@@ -27,7 +29,7 @@ export default function App({ params }: { params: { chatId: string } }) {
 }
 
 function Realtime({ chatId }: { chatId: string }) {
-  const id = '671f3e9409e0a506b97f5c89';
+  const id = '672487f4082353b1703bc665';
 
   const [bids, setBids] = useState<BidType[]>([]);
 
@@ -55,12 +57,17 @@ function Realtime({ chatId }: { chatId: string }) {
       bid: 0,
     },
     onSubmit: async (values, { resetForm }) => {
+      const cookie = Cookies.get('token');
+
+      if (!cookie) {
+        return alert('you want to set bid first sign in');
+      }
       if (open) {
         sendBid();
         console.log('safas');
         fetch('/api/bids', {
           method: 'POST',
-          body: JSON.stringify({ bid: values.bid, userId: 'badral', createdAt: new Date() }),
+          body: JSON.stringify({ bid: values.bid, userId: '6721c778cb0c0682808254fd', productId: id, createdAt: new Date() }),
           headers: {
             'Content-Type': 'application/json',
           },
@@ -98,7 +105,7 @@ function Realtime({ chatId }: { chatId: string }) {
   };
 
   const sendBid = () => {
-    channel.publish('auction-bids', { bid: formik.values.bid, userId: 'badral', createdAt: new Date() });
+    channel.publish('auction-bids', { bid: formik.values.bid, productId: id, userId: '6721c778cb0c0682808254fd', createdAt: new Date() });
   };
 
   const loadProductDetail = async () => {
@@ -110,7 +117,7 @@ function Realtime({ chatId }: { chatId: string }) {
     loadBids();
     loadProductDetail();
   }, []);
-
+  console.log(bids);
   if (!oneProduct) return <div>loading</div>;
   return (
     <form onSubmit={formik.handleSubmit} className={`max-w-[1240px] mx-auto w-full`}>

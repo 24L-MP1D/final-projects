@@ -61,9 +61,9 @@ export function SidebarDemo() {
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
             <Logo />
             <div className="mt-8 flex flex-col gap-2">
-              {links.map((link, idx) => (
-                <div className={`${link.label == value?.layoutAside && 'border-b-2 border-blue-600'}`}>
-                  <SidebarLink key={idx} link={link} />
+              {links.map((link) => (
+                <div key={link.label} className={`${link.label == value?.layoutAside && 'border-b-2 border-blue-600'}`}>
+                  <SidebarLink link={link} />
                 </div>
               ))}
             </div>

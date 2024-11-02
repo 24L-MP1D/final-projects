@@ -36,7 +36,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
   const endDate = new Date(oneProduct.endDate).getTime();
   const [showAllBids, setShowAllBids] = useState(0);
   const sticky = useRef<HTMLDivElement | null>(null);
-  const startDate = new Date().getTime();
+  const startDate = new Date(oneProduct.startDate).getTime();
   let betweenDate = endDate - startDate;
 
   useEffect(() => {
@@ -48,20 +48,23 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
       }
     };
     window.addEventListener('scroll', handleScroll);
-    const timeInterval = setInterval(() => {
-      const time = {
-        day: Math.floor(betweenDate / (1000 * 60 * 60 * 24)),
-        dateHours: Math.floor((betweenDate % (1000 * 60 * 60 * 24)) / (60 * 60 * 1000)),
-        dateMinuts: Math.floor((betweenDate % (60 * 60 * 1000)) / (60 * 1000)),
-        dateSecunds: Math.floor((betweenDate % (60 * 1000)) / 1000),
-      };
 
-      if (betweenDate < 0) {
-        clearInterval(timeInterval);
-        setShowDate(undefined);
-        return;
+    const timeInterval = setInterval(() => {
+      if (new Date().getTime() <= startDate) {
+        const time = {
+          day: Math.floor(betweenDate / (1000 * 60 * 60 * 24)),
+          dateHours: Math.floor((betweenDate % (1000 * 60 * 60 * 24)) / (60 * 60 * 1000)),
+          dateMinuts: Math.floor((betweenDate % (60 * 60 * 1000)) / (60 * 1000)),
+          dateSecunds: Math.floor((betweenDate % (60 * 1000)) / 1000),
+        };
+
+        if (betweenDate < 0) {
+          clearInterval(timeInterval);
+          setShowDate(undefined);
+          return;
+        }
+        setShowDate(time);
       }
-      setShowDate(time);
     }, 1000);
 
     return () => {
@@ -126,7 +129,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
           <div className="overflow-y-scroll relative w-full max-h-80 flex flex-col gap-2">
             {bids.slice(0, 3).map((bid, index) => (
               <div key={bid._id} className="flex justify-between items-center">
-                <div>{bid.userId}</div>
+                <div>{bid.userInfo[0].email}</div>
                 <div className="p-2">{bid.bid}</div>
                 <div>{dayjs(bid.createdAt).format('YYYY-MM-DD')}</div>
               </div>

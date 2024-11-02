@@ -39,22 +39,18 @@
     "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "cookies-next": "^4.3.0",
     "daisyui": "^4.12.13",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
-
     "embla-carousel-autoplay": "^8.3.1",
-    "embla-carousel-react": "^8.3.0",
-    "form": "^0.2.5","formik": "^2.4.6",
-    "framer-motion": "^11.11.9",
-
     "embla-carousel-react": "^8.3.0",
     "form": "^0.2.5",
     "formik": "^2.4.6",
     "framer-motion": "^11.11.10",
-
     "google-auth-library": "^9.14.2",
     "i": "^0.3.7",
+    "js-cookie": "^3.0.5",
     "json-web-token": "^3.2.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.453.0",
@@ -62,10 +58,7 @@
     "mongodb": "^6.9.0",
     "next": "14.2.3",
     "next-themes": "^0.3.0",
-
-
     "nodemailer": "^6.9.16",
-
     "npm": "^10.9.0",
     "nuqs": "^2.0.4",
     "react": "18.3.1",

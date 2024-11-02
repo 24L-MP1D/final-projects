@@ -121,7 +121,7 @@ export default function Page() {
           formikHandleChange={formik.handleChange}
         />
         <ProductCondition formikErrors={formik.errors} formikValues={formik.values} formikHandleChange={formik.handleChange} formikTouched={formik.touched} />
-        <ProductPrice formikErrors={formik.errors} formikHandleChange={formik.handleChange} formikTouched={formik.touched} formikValues={formik.values} />
+        <ProductPrice formikSetFieldValue={formik.setFieldValue} formikErrors={formik.errors} formikHandleChange={formik.handleChange} formikTouched={formik.touched} formikValues={formik.values} />
       </div>
       <div className="flex gap-2 w-full justify-center fixed bottom-0 bg-[#ffffff] py-2 left-[50%] translate-x-[-50%]">
         <div>Click “continue” to save your progress for this step</div>

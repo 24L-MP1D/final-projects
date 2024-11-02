@@ -2,6 +2,7 @@
 // const channel = ably.channels.get('auction-bids');
 
 import { DB } from '@/lib/db';
+import { ObjectId } from 'mongodb';
 
 // export async function POST(request: Request) {
 //   try {
@@ -53,7 +54,28 @@ import { DB } from '@/lib/db';
 export async function GET(request: Request) {
   try {
     const collection = DB.collection('bids');
-    const result = await collection.find({}).toArray();
+
+    const result = await collection
+      .aggregate([
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'userId',
+            foreignField: '_id',
+            as: 'userInfo',
+          },
+        },
+        {
+          $lookup: {
+            from: 'product',
+            localField: 'productId',
+            foreignField: '_id',
+            as: 'productInfo',
+          },
+        },
+        { $sort: { createdAt: -1 } },
+      ])
+      .toArray();
     return Response.json(result);
   } catch (err) {
     return Response.json({ message: err });
@@ -62,12 +84,69 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-
+    data.userId = new ObjectId(String(data.userId));
+    data.productId = new ObjectId(String(data.productId));
     const collection = DB.collection('bids');
+
     await collection.insertOne(data);
     return new Response(JSON.stringify({ message: 'Successfully published' }), { status: 200 });
   } catch (err) {
     console.error('Error while publishing bid:', err); // Log any errors encountered
     return new Response(JSON.stringify({ message: 'Error publishing bid' }), { status: 500 });
+  }
+}
+export async function PUT(request: Request) {
+  const collection = DB.collection('bids');
+
+  const body = await request.json();
+  const { searchValue } = body;
+
+  const pipeline = [];
+  try {
+    pipeline.push(
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'userInfo',
+        },
+      },
+      {
+        $lookup: {
+          from: 'product',
+          localField: 'productId',
+          foreignField: '_id',
+          as: 'productInfo',
+        },
+      }
+    );
+    if (searchValue) {
+      pipeline.push({
+        $match: {
+          $or: [
+            {
+              $expr: {
+                $regexMatch: {
+                  input: { $toString: '$bid' },
+                  regex: searchValue,
+                },
+              },
+            },
+            {
+              userInfo: { $elemMatch: { email: { $regex: searchValue, $options: 'i' } } },
+            },
+            {
+              productInfo: { $elemMatch: { productName: { $regex: searchValue, $options: 'i' } } },
+            },
+          ],
+        },
+      });
+    }
+
+    const response = await collection.aggregate(pipeline).toArray();
+    return Response.json(response);
+  } catch (err) {
+    return Response.json({ message: 'not found' }, { status: 404 });
   }
 }
