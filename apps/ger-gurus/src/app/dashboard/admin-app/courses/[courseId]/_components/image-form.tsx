@@ -19,10 +19,11 @@ const formSchema = z.object({
 interface ImageFormProps {
   initialData: {
     _id: string;
-    title: string;
-    description: string;
-    imageUrl: string;
-    price: number;
+    title?: string;
+    description?: string;
+    imageUrl?: string;
+    price?: number;
+    categoryId?: string;
   };
 }
 export const ImageForm: React.FC<ImageFormProps> = ({ initialData }) => {

@@ -8,18 +8,20 @@ import { ChaptersForm } from './_components/chapters-form';
 import { DescriptionForm } from './_components/description-form';
 import { ImageForm } from './_components/image-form';
 import { PriceForm } from './_components/price-form';
-import { TitleForm } from './_components/title-form';
+import { ChapterTitleForm } from './chapters/[chapterId]/_components/chapter-title-form';
 
 export default async function Page({ params }: { params: { courseId: string } }) {
+  const { courseId } = await params;
   // const {userId}=auth()
   // if (!userId){return redirect("/")}
 
   // const course = await db.collection('courses').findOne({
-  //   _id: new ObjectId(params.courseId),
+  //   _id: new ObjectId(courseId),
   // });
   // if (!course) {
   //   return redirect('/');
   // }
+
   interface Course {
     _id: ObjectId;
     title: string;
@@ -41,7 +43,7 @@ export default async function Page({ params }: { params: { courseId: string } })
     .collection('courses')
     .aggregate([
       {
-        $match: { _id: new ObjectId(params.courseId) },
+        $match: { _id: new ObjectId(courseId) },
       },
       {
         $lookup: {
@@ -84,7 +86,7 @@ export default async function Page({ params }: { params: { courseId: string } })
     chapters: course.chapters.map((chapter) => ({
       ...chapter,
       _id: chapter._id.toString(),
-      courseId: chapter.courseId.toString(), 
+      courseId: chapter.courseId.toString(),
     })),
   };
   const requiredFields = [course.title, course.description, course.imageUrl, course.price, course.chapters];
@@ -105,7 +107,7 @@ export default async function Page({ params }: { params: { courseId: string } })
             <IconBadge icon={LayoutDashboard} />
             <h2 className="text-xl">Customize your course</h2>
           </div>
-          <TitleForm initialData={courseWithPlainId} />
+          <ChapterTitleForm initialData={courseWithPlainId} />
           <DescriptionForm initialData={courseWithPlainId} />
           <ImageForm initialData={courseWithPlainId} />
         </div>

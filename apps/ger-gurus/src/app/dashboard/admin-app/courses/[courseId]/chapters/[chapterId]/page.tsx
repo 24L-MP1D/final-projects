@@ -11,10 +11,11 @@ import { ChapterTitleForm } from './_components/chapter-title-form';
 export default async function Page({ params }: { params: { courseId: string; chapterId: string } }) {
   // const {userId}=auth()
   // if (!userId){return redirect("/")}
+  const { courseId, chapterId } = await params;
 
   const chapter = await db.collection('chapters').findOne({
-    _id: new ObjectId(params.chapterId),
-    courseId: new ObjectId(params.courseId),
+    _id: new ObjectId(chapterId),
+    courseId: new ObjectId(courseId),
   });
   // include: {muxData: true}
   if (!chapter) {
@@ -41,10 +42,11 @@ export default async function Page({ params }: { params: { courseId: string; cha
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `(${completedFields}/${totalFields})`;
+
   return (
     <div className="p-6">
       <div className="flex items-center justify-between">
-        <Link href={`/admin-app/courses/${params.courseId}`} className="flex items-center text-sm hover:opacity-75 transition mb-6">
+        <Link href={`/admin-app/courses/${courseId}`} className="flex items-center text-sm hover:opacity-75 transition mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to course setup
         </Link>
@@ -62,14 +64,14 @@ export default async function Page({ params }: { params: { courseId: string; cha
             <h2 className="text-xl">Customize your chapter</h2>
           </div>
           <ChapterTitleForm initialData={chapterWithPlainId} />
-          <ChapterDescriptionForm initialData={chapterWithPlainId} courseId={params.courseId} chapterId={params.chapterId} />
+          <ChapterDescriptionForm initialData={chapterWithPlainId} />
         </div>
         <div>
           <div className="flex items-center gap-x-2">
             <IconBadge icon={Eye} />
             <h2 className="text-xl">Access settings</h2>
           </div>
-          <ChapterAccessForm initialData={chapterWithPlainId} courseId={params.courseId} chapterId={params.chapterId} />
+          <ChapterAccessForm initialData={chapterWithPlainId} />
         </div>
         <div>
           <div className="flex items-center gap-x-2">

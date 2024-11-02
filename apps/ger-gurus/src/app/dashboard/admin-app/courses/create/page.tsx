@@ -38,8 +38,8 @@ export default function Page() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto flex items-center justify-center p-10">
-      <span>
+    <div className="max-w-5xl mx-auto ">
+      <div>
         <h1 className="text-2xl">Та хичээлдээ нэр өгнө үү</h1>
         <p>Хичээлийн нэрийг дараа сольж болно</p>
 
@@ -71,8 +71,7 @@ export default function Page() {
             </div>
           </form>
         </Form>
-
-      </span>
+      </div>
     </div>
   );
 }

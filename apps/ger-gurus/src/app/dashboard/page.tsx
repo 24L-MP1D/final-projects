@@ -23,7 +23,7 @@ export default function Page() {
         <p className="mb-6 text-center text-gray-700">We're excited to have you here! Start by creating your unique space where you can share your skills and knowledge with the world.</p>
         <div className="flex flex-col items-center">
           <span className="flex items-center!">
-            <Input onChange={(e) => setDomain(e.target.value)} type="text" placeholder="Enter your unique name" className="w-full max-w-xs text-right text-base" />
+            <Input onChange={(e) => setDomain(e.target.value)} value={domain} type="text" placeholder="Enter your unique name" className="w-full max-w-xs text-right text-base" />
             <span className="flex items-center">
               <p>.verse.mn</p>
             </span>
@@ -32,8 +32,7 @@ export default function Page() {
               <Search />
             </Button>
           </span>
-
-          <Button onClick={create} className="w-full max-w-xs mt-10" disabled={true}>
+          <Button className="w-full max-w-xs mt-10" disabled={true} onClick={() => create()}>
             Create My Space
           </Button>
         </div>
