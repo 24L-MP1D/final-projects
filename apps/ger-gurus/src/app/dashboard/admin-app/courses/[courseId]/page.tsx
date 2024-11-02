@@ -10,8 +10,10 @@ import { ImageForm } from './_components/image-form';
 import { PriceForm } from './_components/price-form';
 import { ChapterTitleForm } from './chapters/[chapterId]/_components/chapter-title-form';
 
-export default async function Page({ params }: { params: { courseId: string } }) {
-  const { courseId } = params;
+type Params = Promise<{ courseId: string }>;
+
+export default async function Page({ params }: { params: Params }) {
+  const { courseId } = await params;
   // const {userId}=auth()
   // if (!userId){return redirect("/")}
 

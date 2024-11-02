@@ -8,7 +8,9 @@ import { ChapterAccessForm } from './_components/chapter-access-form';
 import { ChapterDescriptionForm } from './_components/chapter-description-form';
 import { ChapterTitleForm } from './_components/chapter-title-form';
 
-export default async function Page({ params }: { params: { courseId: string; chapterId: string } }) {
+type Params = Promise<{ courseId: string; chapterId: string }>;
+
+export default async function Page({ params }: { params: Params }) {
   // const {userId}=auth()
   // if (!userId){return redirect("/")}
   const { courseId, chapterId } = await params;

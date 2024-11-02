@@ -2,8 +2,8 @@ import { db } from '@/lib/db';
 import { ObjectId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 
-
-export async function GET(request: NextRequest, { params }: { params: { courseId: string; chapterId: string} }) {
+type Params = Promise<{ courseId: string, chapterId: string}>
+export async function GET(request: NextRequest, { params }: { params: Params}) {
   const {courseId, chapterId}= await params
   const oneChapter = await db.collection('courses').findOne({ _id: new ObjectId(chapterId), 
     courseId: new ObjectId(courseId)
@@ -14,13 +14,15 @@ export async function GET(request: NextRequest, { params }: { params: { courseId
   return NextResponse.json(oneChapter);
 }
 
-export async function PUT(request: Request, { params }: { params: { courseId: string } }) {
-  const {courseId}=params
+export async function PUT(request: Request, { params }: { params: Params }) {
+  const {chapterId, courseId}= await params
   const body = await request.json();
 
   await db.collection('courses').updateOne(
     {
-      _id: new ObjectId(courseId),
+      _id: new ObjectId(chapterId),
+      courseId: new ObjectId(courseId)
+
     },
     {
       $set: body,
@@ -29,8 +31,8 @@ export async function PUT(request: Request, { params }: { params: { courseId: st
   return new NextResponse(null, { status: 204 });
 }
 
-export async function PATCH(request: Request, { params }: { params: { courseId: string , chapterId: string} }) {
-  const {courseId, chapterId}=params
+export async function PATCH(request: Request, { params }: { params: Params}) {
+  const {courseId, chapterId}= await params
   try {
       // const userId=auth()
       // if (!userId){ 
