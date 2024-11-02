@@ -60,15 +60,23 @@ function Realtime({ chatId }: { chatId: string }) {
         console.log('safas');
         fetch('/api/bids', {
           method: 'POST',
-          body: JSON.stringify({ bid: values.bid, userId: 'badral', createdAt: new Date() }),
+          body: JSON.stringify({ bid: values.bid, productId: id, userId: '6724b8b3b9394b611d0b1871', createdAt: new Date() }),
           headers: {
             'Content-Type': 'application/json',
           },
         });
+        loadBids();
         setDialogsBid(formik.values.bid);
         resetForm();
         setOpen(false);
 
+        const audio = new Audio('/images/bidaudio.mp3');
+
+        audio.play();
+        setTimeout(() => {
+          audio.pause();
+          audio.currentTime = 0;
+        }, 5000);
         setSecondDialog(true);
       } else {
         setOpen(true);
@@ -99,7 +107,7 @@ function Realtime({ chatId }: { chatId: string }) {
   };
 
   const sendBid = () => {
-    channel.publish('auction-bids', { bid: formik.values.bid, userId: 'badral', createdAt: new Date() });
+    channel.publish('auction-bids', { bid: formik.values.bid, productId: id, userId: '6724b8b3b9394b611d0b1871', createdAt: new Date() });
   };
 
   const loadProductDetail = async () => {
@@ -112,7 +120,6 @@ function Realtime({ chatId }: { chatId: string }) {
     loadProductDetail();
   }, []);
 
-  console.log(oneProduct);
   if (!oneProduct) return <div>loading</div>;
   return (
     <form onSubmit={formik.handleSubmit} className={`max-w-[1240px] mx-auto w-full`}>

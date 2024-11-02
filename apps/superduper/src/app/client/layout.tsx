@@ -18,7 +18,12 @@ type Context = {
   setAdditionalImage: (value: File) => void;
 };
 export const Context = createContext<Context | null>(null);
-
+declare global {
+  interface Window {
+    google: any;
+    googleTranslateElementInit: () => void;
+  }
+}
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [frontImage, setFrontImage] = useState<File | null>(null);
 
