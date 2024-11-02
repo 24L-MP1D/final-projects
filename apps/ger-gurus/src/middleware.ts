@@ -11,10 +11,10 @@ export function middleware(request: NextRequest) {
   let domain = '';
 
   switch (currentHost) {
-    case 'ger-gurus.vercel.app':
+    case 'verse.mn':
       domain = 'client';
       break;
-    case 'dashboard-ger-gurus.vercel.app':
+    case 'dash.verse.mn':
       domain = 'dashboard';
       break;
     default:

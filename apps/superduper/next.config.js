@@ -16,6 +16,21 @@ const nextConfig = {
       {
         hostname: 'media.wired.com',
       },
+      {
+        hostname: 'assets.aceternity.com',
+      },
+      {
+        hostname: 'example.com',
+      },
+      {
+        hostname: 'cdn.pixabay.com',
+      },
+      {
+        hostname: 'images.pexels.com',
+      },
+      {
+        hostname: 'media.istockphoto.com',
+      },
     ],
   },
 

@@ -13,8 +13,14 @@ const nextConfig = {
     svgr: false,
   },
   images: {
-    domains: ['res.cloudinary.com'],  // Add this section to configure allowed image domains
-  },
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      }
+    ],
+  }
 };
 
 const plugins = [

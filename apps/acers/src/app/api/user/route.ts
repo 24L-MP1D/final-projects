@@ -1,10 +1,12 @@
 import jwt from 'jsonwebtoken';
 import { DB } from '../../lib/db';
 
+
 const JWT_SECRET = process.env.JWT_SECRET || '';
 
 export async function GET(request: Request) {
   const token = request.headers.get('authtoken');
+
 
   if (!token) {
     return new Response('Unauthorized', { status: 401 });
@@ -15,6 +17,7 @@ export async function GET(request: Request) {
     const userId = decoded.userId;
 
     const user = await DB.collection('users').findOne({ _id: userId });
+
     if (!user) {
       return new Response('User not found', { status: 404 });
     }
@@ -36,4 +39,5 @@ export async function GET(request: Request) {
     return new Response('Invalid token', { status: 403 });
   }
 }
+
 

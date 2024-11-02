@@ -84,11 +84,11 @@ export default function Page() {
                     setOpen(true);
                     setCategory(category);
                   }}
-                  src={'/'}
+                  src={category.image}
                   alt="image"
                   width={500}
                   height={500}
-                  className="w-10 h-10"
+                  className="w-12 h-12 object-cover"
                 />
               </div>
             </div>

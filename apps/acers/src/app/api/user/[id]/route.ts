@@ -18,7 +18,8 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     if (userId !== params.id) {
       return new Response('Forbidden', { status: 403 });
     }
-    var salt = bcrypt.genSaltSync(Number(process.env.saltNumber));
+    const salt = bcrypt.genSaltSync(Number(process.env.saltNumber));
+    console.log('salt: ', salt);
     const body = await request.json();
     const { firstName, lastName, phoneNumber, role, password } = body;
 

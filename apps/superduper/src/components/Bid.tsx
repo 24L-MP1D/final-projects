@@ -20,6 +20,10 @@ type Props = {
   oneProduct: ProductType;
   maximumBid: number;
   formikSetFieldValue: (name: string, value: number) => void;
+  open: boolean;
+  setOpen: (value: boolean) => void;
+  isSticky: boolean;
+  setIsSticky: (value: boolean) => void;
 };
 type DateType = {
   day: number;
@@ -27,20 +31,20 @@ type DateType = {
   dateMinuts: number;
   dateSecunds: number;
 };
-export const Bid = ({ bids, maximumBid, formikValues, formikSetFieldValue, formikTouched, oneProduct, formikErrors, formikHandleChange }: Props) => {
+export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, open, setOpen, formikSetFieldValue, formikTouched, oneProduct, formikErrors, formikHandleChange }: Props) => {
   const [showDate, setShowDate] = useState<DateType>();
   const endDate = new Date(oneProduct.endDate).getTime();
   const [showAllBids, setShowAllBids] = useState(0);
   const sticky = useRef<HTMLDivElement | null>(null);
   const startDate = new Date().getTime();
   let betweenDate = endDate - startDate;
-  const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       if (sticky.current) {
         const { bottom } = sticky.current.getBoundingClientRect();
         setIsSticky(bottom < 0);
+        console.log(bottom);
       }
     };
     window.addEventListener('scroll', handleScroll);
@@ -67,7 +71,7 @@ export const Bid = ({ bids, maximumBid, formikValues, formikSetFieldValue, formi
   }, [showDate]);
 
   return (
-    <div ref={sticky} className={`${isSticky ? 'sticky right-0 top-0' : ''} z-[100] bg-white`}>
+    <div className="max-w-[500px] w-full" ref={sticky}>
       <div>
         Closed in {showDate?.day}d {showDate?.dateHours}h {showDate?.dateMinuts}m {showDate?.dateSecunds}s
       </div>
