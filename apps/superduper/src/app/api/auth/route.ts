@@ -48,8 +48,8 @@ export async function GET(request: NextRequest) {
     }
 
     const collection = await DB.collection('users');
-    const check = await collection.findOne({ email: payload.email, status: 'admin' });
-    const accessToken = jwt.sign({ email: payload.email }, ADMIN_ACCESS_TOKEN_SECRET, {
+    const check = await collection.findOne({ email: payload.email, role: 'admin' });
+    const accessToken = jwt.sign({ email: payload.email, userId: check?._id }, ADMIN_ACCESS_TOKEN_SECRET, {
       expiresIn: '1d',
     });
     if (!check) return new Response(JSON.stringify({ message: '404' }), { status: 404 });

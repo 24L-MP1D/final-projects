@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 export async function POST(request: Request) {
   const ADMIN_ACCESS_TOKEN_SECRET = process.env.ADMIN_ACCESS_TOKEN_SECRET || '';
   try {
-    const collection = DB.collection('admins');
+    const collection = DB.collection('users');
     const body = await request.json();
     const { email, password } = body;
     const user = await collection.findOne({ email });
