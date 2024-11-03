@@ -48,9 +48,10 @@ export default function LoginForm() {
       },
       body: JSON.stringify(values),
     });
+    window.location.href = '/admin';
     if (res.ok) {
       console.log('successfully signed in');
-      reset();
+      window.location.href = '/admin';
     } else {
       console.log('unsuccessful');
     }
