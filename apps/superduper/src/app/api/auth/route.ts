@@ -45,8 +45,8 @@ export async function GET(request: NextRequest) {
       throw new Error('Failed to verify token payload');
     }
 
-    const collection = await DB.collection('admins');
-    const check = await collection.findOne({ email: payload.email });
+    const collection = await DB.collection('users');
+    const check = await collection.findOne({ email: payload.email, status: 'admin' });
     console.log(check);
     if (check) {
       return NextResponse.redirect(new URL('/admin', request.url));
