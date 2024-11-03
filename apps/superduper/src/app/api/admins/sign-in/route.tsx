@@ -14,12 +14,12 @@ export async function POST(request: Request) {
 
     if (isSame) {
       const accessToken = jwt.sign({ userId: user._id, email }, ADMIN_ACCESS_TOKEN_SECRET, {
-        expiresIn: '7d',
+        expiresIn: '1d',
       });
       console.log(accessToken);
 
       const response = new Response(null, { status: 201 });
-      response.headers.append('Set-cookie', `token=${accessToken}; HttpOnly; Path=/; Max-Age=43200; SameSite=Lax`);
+      response.headers.append('Set-cookie', `token=${accessToken}; Path=/; Max-Age=43200; SameSite=Lax`);
       return response;
     } else {
       return new Response(null, { status: 404 });
