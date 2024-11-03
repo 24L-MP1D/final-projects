@@ -32,7 +32,7 @@ export const PriceForm: React.FC<PriceFormProps> = ({ initialData }) => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { price: initialData?.price || undefined },
+    defaultValues: { price: initialData?.price || 0 },
   });
 
   const { isSubmitting, isValid } = form.formState;

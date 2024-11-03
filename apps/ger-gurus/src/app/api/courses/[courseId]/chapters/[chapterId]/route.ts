@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 
 type Params = Promise<{ courseId: string, chapterId: string}>
+
 export async function GET(request: NextRequest, { params }: { params: Params}) {
   const {courseId, chapterId}= await params
   const oneChapter = await db.collection('courses').findOne({ _id: new ObjectId(chapterId), 
@@ -58,6 +59,6 @@ export async function PATCH(request: Request, { params }: { params: Params}) {
       return new NextResponse(null, { status: 204 });
       
   } catch (error: any) {
-      console.log("[REORDER]", error.message)
+      console.log("[CHAPTER UPDATE]", error.message)
       return new NextResponse("Internal error", {status: 500})     
   } }

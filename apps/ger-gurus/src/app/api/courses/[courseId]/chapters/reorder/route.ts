@@ -5,9 +5,11 @@ interface ChapterItem {
     _id: string;
     position: number;
 }
-type Params = Promise<{ courseId: string }>
+type Params = Promise<{ courseId: string, chapterId: string }>
+
 export async function PUT(request: Request, { params }: {params: Params} ) {
     const {courseId}= await params
+
     try {
         // const userId=auth()
         // if (!userId){ 

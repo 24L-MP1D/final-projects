@@ -8,7 +8,7 @@ import { ChaptersForm } from './_components/chapters-form';
 import { DescriptionForm } from './_components/description-form';
 import { ImageForm } from './_components/image-form';
 import { PriceForm } from './_components/price-form';
-import { ChapterTitleForm } from './chapters/[chapterId]/_components/chapter-title-form';
+import { TitleForm } from './_components/title-form';
 
 type Params = Promise<{ courseId: string }>;
 
@@ -109,7 +109,7 @@ export default async function Page({ params }: { params: Params }) {
             <IconBadge icon={LayoutDashboard} />
             <h2 className="text-xl">Customize your course</h2>
           </div>
-          <ChapterTitleForm initialData={courseWithPlainId} />
+          <TitleForm initialData={courseWithPlainId} />
           <DescriptionForm initialData={courseWithPlainId} />
           <ImageForm initialData={courseWithPlainId} />
         </div>
