@@ -12,6 +12,7 @@ import { BidSticky } from '@/components/stickyBid';
 import * as Ably from 'ably';
 import { AblyProvider, ChannelProvider, useChannel } from 'ably/react';
 import { useFormik } from 'formik';
+import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 const client = new Ably.Realtime({ key: process.env.NEXT_PUBLIC_ABLYKEY });
@@ -55,6 +56,11 @@ function Realtime({ chatId }: { chatId: string }) {
       bid: 0,
     },
     onSubmit: async (values, { resetForm }) => {
+      const cookie = Cookies.get('token');
+      if (!cookie) {
+        formik.setFieldValue('bid', 0);
+        return alert('first you must sign-in');
+      }
       if (open) {
         sendBid();
         console.log('safas');

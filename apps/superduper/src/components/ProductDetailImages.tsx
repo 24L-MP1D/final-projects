@@ -28,7 +28,7 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
           <div className="w-full">
             <Image className="object-cover rounded-lg w-full shadow drop-shadow-xl" src={frontImage} alt="front-image" width={1000} height={1000} />
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 relative">
             <Image
               onClick={() => setFrontImage(oneProduct.frontImage)}
               className="object-cover rounded-lg w-[150px] h-[150px] hover:cursor-pointer shadow drop-shadow-xl"
@@ -40,7 +40,7 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
 
             <Image
               onClick={() => setFrontImage(oneProduct.backImage)}
-              className={`object-cover w-[150px] h-[150px] rounded-lg shadow hover:cursor-pointer drop-shadow-xl`}
+              className={`object-cover  w-[150px] h-[150px] rounded-lg shadow hover:cursor-pointer drop-shadow-xl`}
               src={oneProduct.backImage}
               alt="front-image"
               width={1000}

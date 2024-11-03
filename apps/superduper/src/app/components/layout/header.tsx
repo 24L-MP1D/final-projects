@@ -1,4 +1,5 @@
 'use client';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FaRegHeart } from 'react-icons/fa';
@@ -24,6 +25,11 @@ export default function Header() {
   //   };
   // }, []);
   const router = useRouter();
+  const cookieValidation = () => {
+    const cookie = Cookies.get('token');
+    if (!cookie) return alert('first you must sign in');
+    router.push('/client/addProducts');
+  };
   return (
     <div className="bg-pink-100 container mx-auto h-28 flex items-center max-w-[1280px]">
       <div id="google_translate_element"></div>
@@ -44,7 +50,7 @@ export default function Header() {
           </div>
         </div>
         <div className="flex items-center gap-10 mx-6">
-          <Link href="/client/addProducts">Sell</Link>
+          <Button onClick={cookieValidation}>Sell</Button>
           <Link href="/Help">Help</Link>
           <Link href="/Heart">
             <FaRegHeart className="text-[24px] text-blue-500" />

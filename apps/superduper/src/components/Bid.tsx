@@ -110,7 +110,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
               onChange={formikHandleChange}
               value={formikValues.bid > 0 ? formikValues.bid : ''}
               className="w-full p-2 bg-[#f8f7f8]"
-              placeholder={`${maximumBid ? maximumBid : oneProduct.startBid} or up`}
+              placeholder={`${maximumBid ? maximumBid + 50 : oneProduct.startBid + 50} or up`}
               type="number"
             />
           </label>
