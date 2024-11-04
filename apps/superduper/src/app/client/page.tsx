@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Swiper as SwiperType } from 'swiper';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { OTP } from '../components/input-otp';
 import { Product, ProductItem } from '../components/productItem';
 
 export default function Index() {
@@ -127,7 +126,6 @@ export default function Index() {
           <ProductItem product={product} key={product._id} onClickFavourite={() => handleFavourite(product._id)} isFavourite={!favourite.find((id) => id === product._id)} />
         ))}
       </div>
-      <OTP />
     </div>
   );
 }
