@@ -43,7 +43,7 @@ export async function PUT(request: Request) {
         text: `Your OTP for verification is :${otp}`,
       });
 
-      return new Response(null, { status: 200 });
+      return Response.json({ email });
     } catch (err) {
       return Response.json({ message: 'error' });
     }

@@ -7,20 +7,23 @@ import { useState } from 'react';
 import { toast, Toaster } from 'sonner';
 
 export default function Page() {
-  const [email, setEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   function Submit() {
     setLoading(true);
+    const email = JSON.parse(localStorage.getItem('email') || '{}');
+
     axios
-      .put('/api/otp', { email })
+      .put('/api/forgotPassword/resetPassword', { password: newPassword, email })
       .then(({ data, status, statusText }) => {
         if (status === 200) {
-          toast('Check your e-mail!');
-          window.location.href = '/client/otp';
+          toast('Successfully changed the password!');
+          localStorage.removeItem('email');
+          window.location.href = '/client';
         } else {
           status === 404;
-          toast('This e-mail does not registered!');
+          toast('Error!');
         }
         console.log(data);
         setLoading(false);
@@ -31,17 +34,16 @@ export default function Page() {
         setLoading(false);
       });
   }
-
   return (
     <div>
       <div className=" container mx-auto w-[500px] border-2 rounded-lg mt-[50px] flex flex-col gap-6">
-        <p className="text-[24px] font-bold mt-8">Enter your e-mail address</p>
-        <p>Enter your email address and press the SEND button. You will receive an email with OTP number in five minutes.</p>
+        <p className="text-[24px] font-bold mt-8">Reset your password</p>
+        <p>Enter your NEW password and press the SEND button.</p>
         <div>
-          <input onChange={(e) => setEmail(e.target.value)} placeholder="Email address" className="border-2 bg-slate-50 rounded-3xl w-full p-3" />
+          <input placeholder="New password" className="border-2 bg-slate-50 rounded-3xl w-full p-3" onChange={(e) => setNewPassword(e.target.value)} />
         </div>
-        <Button className="bg-blue-500 mb-8 disabled:cursor-not-allowed" onClick={Submit} disabled={loading}>
-          {loading && <Image src={'/images/spinner.svg'} alt="a" width={40} height={40} />}
+        <Button onClick={Submit} className="bg-blue-500 mb-8" disabled={loading}>
+          {loading && <Image src={'/image/spinner.svg'} alt="a" width={40} height={40} />}
           <div>Send</div>
         </Button>
         <Toaster />
