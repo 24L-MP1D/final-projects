@@ -4,11 +4,13 @@ import { AdminLayout } from '@/components/adminLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { useContext, useEffect } from 'react';
+import { Context } from '../layout';
 
 export default function CarouselSize() {
   const approveButton = true;
   const approveRequest = true;
-
+  const value = useContext(Context);
   const approvedSellRequest = async () => {
     const response = await fetch('/api/sellerRequest', {
       method: 'POST',
@@ -26,7 +28,9 @@ export default function CarouselSize() {
   function cancelSellRequest(event: React.MouseEvent<HTMLButtonElement>): void {
     throw new Error('Function not implemented.');
   }
-
+  useEffect(() => {
+    value?.setLayoutAside('Leaderboard');
+  }, []);
   return (
     <AdminLayout>
       <div className="container w-[550px] peer-has-[]: mx-auto flex justify-center p-6 bg-slate-100 rounded-sm">

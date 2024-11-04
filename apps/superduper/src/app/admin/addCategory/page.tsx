@@ -3,11 +3,12 @@ import { AdminLayout } from '@/components/adminLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/Input';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { Context } from '../layout';
 
 export default function CardWithForm() {
   const [category, setCategory] = useState('');
-
+  const value = useContext(Context);
   const addCategory = async () => {
     const response = await fetch('/api/categories', {
       method: 'POST',
@@ -24,6 +25,9 @@ export default function CardWithForm() {
     }
   };
 
+  useEffect(() => {
+    value?.setLayoutAside('Dashboard');
+  }, []);
   return (
     <AdminLayout>
       <div className="container mx-auto flex justify-center p-6">

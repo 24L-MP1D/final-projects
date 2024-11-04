@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from '../components/ui/Toast';
-import { useToast } from '../components/ui/use-toast';
+
 
 export default function Register() {
   interface IFormInputs {
@@ -16,7 +16,7 @@ export default function Register() {
     repassword: string;
   }
 
-  const { toasts } = useToast();
+
   const onSubmit: SubmitHandler<IFormInputs> = (data) => Submit();
 
   const {
@@ -40,15 +40,7 @@ export default function Register() {
         'Content-Type': 'application/json',
       },
     }).then((res) => {
-      if (res.ok) {
-        Toast({
-          title: 'Success',
-          description: 'Registration successful!',
-          action: <Link href="/login">Login</Link>,
-        });
-      } else {
-        console.log('Error');
-      }
+      
     });
   }
   const firstName = watch('firstName', '');
@@ -137,18 +129,7 @@ export default function Register() {
         </div>
       </form>
       <ToastProvider>
-        {toasts.map(function ({ id, title, description, action, ...props }) {
-          return (
-            <Toast key={id} {...props}>
-              <div className="grid gap-1">
-                {title && <ToastTitle>{title}</ToastTitle>}
-                {description && <ToastDescription>{description}</ToastDescription>}
-              </div>
-              {action}
-              <ToastClose />
-            </Toast>
-          );
-        })}
+          
         <ToastViewport />
       </ToastProvider>
     </div>

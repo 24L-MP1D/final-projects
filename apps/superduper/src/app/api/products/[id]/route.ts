@@ -4,7 +4,6 @@ const collection = DB.collection('product');
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   const _id = params.id;
-
   try {
     const data = await collection.findOne({ _id: new ObjectId(_id) });
     return Response.json(data);

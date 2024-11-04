@@ -18,10 +18,10 @@ const Nav: React.FC = () => {
   };
 
   return (
-    <nav className="bg-white shadow">
+    <nav className="bg-transparrent">
       <ul className="flex space-x-8 p-4">
         <li>
-          <a href="/" className="text-gray-800 hover:text-blue-600">
+          <a href="/" className="text-gray-800 font-serif font-bold hover:text-blue-600">
             Нүүр хуудас
           </a>
         </li>

@@ -89,7 +89,7 @@ export default function Index() {
           toast.success('Амжилттай бүртгүүллээ.', { className: 'custom-toast success' });
           if (role === 'Teacher') {
             setTimeout(() => {
-              window.location.href = 'https://school-ger-gurus.vercel.app/admin-app';
+              window.location.href = '/createschool';
             }, 2000);
           } else {
             setTimeout(() => {

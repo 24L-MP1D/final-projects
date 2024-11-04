@@ -3,6 +3,8 @@ import { AdminLayout } from '@/components/adminLayout';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/Table';
 import { IconBrandVisa } from '@tabler/icons-react';
+import { useContext, useEffect } from 'react';
+import { Context } from '../layout';
 
 const approvedSellRequest = [
   {
@@ -20,6 +22,10 @@ const approvedSellRequest = [
 ];
 
 export default function TableDemo() {
+  const value = useContext(Context);
+  useEffect(() => {
+    value?.setLayoutAside('Payment');
+  }, []);
   return (
     <AdminLayout>
       <div className="container w-[550px] peer-has-[]: mx-auto flex justify-center p-6 bg-slate-100 rounded-sm">

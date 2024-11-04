@@ -1,5 +1,6 @@
 'use client';
 
+import { useAuthStore } from '@/app/components/auth/useAuthStore';
 import { ProductType } from '@/components/productType';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -8,6 +9,10 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function Page() {
+  const currentUser = useAuthStore((state) => state.currentUser);
+
+  console.log(currentUser);
+
   const router = useRouter();
   const [getFromLocal, setGetFromLocal] = useState<ProductType>();
   const [loadding, setLoading] = useState(false);
@@ -37,7 +42,7 @@ export default function Page() {
   };
   useEffect(() => {
     const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
-    addProductObject.status = 'pending';
+    addProductObject.status = 'Pending';
     setGetFromLocal(addProductObject);
   }, []);
   return (
