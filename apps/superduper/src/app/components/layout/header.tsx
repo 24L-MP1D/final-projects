@@ -36,17 +36,20 @@ export default function Header() {
     if (!cookie) return router.push('/client/sign-in');
     router.push('/client/save');
   };
+  const reload = () => {
+    router.push('/client');
+  };
   return (
     <div className=" h-28 flex items-center max-w-[1280px]">
       <div id="google_translate_element"></div>
       <div className="flex flex-1 justify-between">
         <div className="flex items-center gap-4 w-full">
           <div className="w-[55px] h-[55px] bg-[#03f] text-white flex items-center justify-center font-extrabold text-[24px]">SD</div>
-          <div className="text-[#03f]">
+          <button className="text-[#03f]" onClick={reload}>
             <p className="font-extrabold">SuperDuper</p>
             <div className="bg-slate-200 h-0.5 w-full"></div>
             <p className="font-extrabold">Auction</p>
-          </div>
+          </button>
           <Link href="/client/category" className="ml-10 mr-8 flex gap-1 items-center">
             Categories
             <ChevronDown size={16} color="blue" />
