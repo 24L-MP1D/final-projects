@@ -16,10 +16,11 @@ export async function GET(request: Request) {
     const cookieStore = cookies();
     const cookie = await cookieStore.get('token');
     const userToken = cookie?.value;
-    console.log(userToken);
-    if (!userToken) return new Response('unauthenticated', { status: 400 });
-    const { userId } = <jwt.JwtPayload>jwt.verify(userToken, ADMIN_ACCESS_TOKEN_SECRET);
 
+    if (!userToken) return new Response('unauthenticated', { status: 400 });
+    console.log('line 21');
+    const { userId } = <jwt.JwtPayload>jwt.verify(userToken, ADMIN_ACCESS_TOKEN_SECRET);
+    console.log('line 23');
     if (!userId) return new Response('unauthenticated', { status: 404 });
     const currentUser = await DB.collection('users').findOne({ _id: new ObjectId(String(userId)) });
     if (!currentUser) return new Response('unauthenticated', { status: 404 });

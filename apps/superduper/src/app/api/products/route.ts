@@ -6,8 +6,9 @@ type filtType = {
   startDate?: { $gte: Date };
   endDate?: { $lt: Date };
 };
-const collection = DB.collection('product');
 
+const collection = DB.collection('product');
+const ACCESS_TOKEN_SECRET = process.env.ADMIN_ACCESS_TOKEN_SECRET || '';
 export async function GET(request: Request) {
   const token = cookies().get('token');
 
