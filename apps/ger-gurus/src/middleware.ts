@@ -11,9 +11,11 @@ export function middleware(request: NextRequest) {
   let domain = '';
 
   switch (currentHost) {
+    case 'www.verse.mn':
     case 'verse.mn':
       domain = 'client';
       break;
+    case 'dashboard.verse.mn':
     case 'dash.verse.mn':
       domain = 'dashboard';
       break;
