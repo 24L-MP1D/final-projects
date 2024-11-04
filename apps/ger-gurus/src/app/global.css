@@ -101,3 +101,9 @@
 .ql-container{
     font-size: 18px !important
 }
+img {
+    width: auto; /* or set a max-width */
+    height: auto; /* This maintains the aspect ratio */
+    max-width: 100%; /* Ensures responsiveness */
+  }
+  
