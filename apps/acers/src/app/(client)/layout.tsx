@@ -1,3 +1,4 @@
+import Footer from '../components/footer';
 import Header from '../components/header';
 
 export const metadata = {
@@ -11,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Header />
         {children}
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );
