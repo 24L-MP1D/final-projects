@@ -1,5 +1,6 @@
 import { DB } from '@/lib/db';
 import { ObjectId } from 'mongodb';
+import { cookies } from 'next/headers';
 type filtType = {
   status?: string;
   startDate?: { $gte: Date };
@@ -8,6 +9,8 @@ type filtType = {
 const collection = DB.collection('product');
 
 export async function GET(request: Request) {
+  const token = cookies().get('token');
+
   const { searchParams } = new URL(request.url);
   const stat = searchParams.get('status');
   const dateFrom = searchParams.get('startDate');
@@ -41,6 +44,7 @@ export async function POST(request: Request) {
     getFromLocal.endDate = new Date(getFromLocal.endDate);
     getFromLocal.createdAt = new Date();
     const result = await collection.insertOne(getFromLocal);
+
     return Response.json(result, { status: 200 });
   } catch (error) {
     return Response.json({ message: 'Failed to create product!' }, { status: 404 });

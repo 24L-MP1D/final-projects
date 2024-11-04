@@ -1,6 +1,7 @@
 import { DB } from '@/lib/db';
 import { oauth_google } from 'config';
 import { OAuth2Client } from 'google-auth-library';
+import jwt from 'jsonwebtoken';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -14,6 +15,7 @@ export async function GET(request: NextRequest) {
     picture: string;
     sub: string;
   }
+  const ADMIN_ACCESS_TOKEN_SECRET = process.env.ADMIN_ACCESS_TOKEN_SECRET || '';
 
   try {
     const params = new URLSearchParams({
@@ -45,16 +47,18 @@ export async function GET(request: NextRequest) {
       throw new Error('Failed to verify token payload');
     }
 
-    const collection = await DB.collection('admins');
-    const check = await collection.findOne({ email: payload.email });
-    console.log(check);
-    if (check) {
-      return NextResponse.redirect(new URL('/admin', request.url));
-    } else {
-      return new Response(JSON.stringify({ message: '404' }), { status: 404 });
-    }
+    const collection = await DB.collection('users');
+    const check = await collection.findOne({ email: payload.email, role: 'admin' });
+    const accessToken = jwt.sign({ email: payload.email, userId: check?._id }, ADMIN_ACCESS_TOKEN_SECRET, {
+      expiresIn: '1d',
+    });
+    if (!check) return new Response(JSON.stringify({ message: '404' }), { status: 404 });
 
-    // return new Response(JSON.stringify(user), { status: 201 });
+    const response = NextResponse.redirect(new URL('/admin', request.url));
+    response.headers.append('Set-Cookie', `token=${accessToken}; Path=/; Max-Age=43200; SameSite=Lax`); //12 hours
+
+    console.log('Redirecting to /admin and setting cookie.');
+    return response;
   } catch (error) {}
-  return new Response(JSON.stringify({ message: '404' }), { status: 200 });
+  return new Response(JSON.stringify({ message: '404' }), { status: 404 });
 }
