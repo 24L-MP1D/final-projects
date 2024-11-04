@@ -79,7 +79,7 @@ export default function signin() {
             <Checkbox />
             <p>Remember me</p>
           </div>
-          <Link className="text-blue-500" href="/">
+          <Link className="text-blue-500" href="/client/forgotten">
             Forgotten your password?
           </Link>
         </div>
