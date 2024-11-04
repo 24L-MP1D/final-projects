@@ -9,7 +9,7 @@ import { toast } from "sonner";
 
 export default function TableVerify() {
     const [phonenumber, setPhonenumber] = useState<string>("");
-    const [selectedTime, setSelectedTime] = useLocalStorage<string | null>("selectedTime", null);
+    const [selectedTime, setSelectedTime] = useLocalStorage<string | null>("");
     const [reservedSeat, setReservedSeat] = useLocalStorage<string | null>("reservedSeat", null);
     const [selectedTable, setSelectedTable] = useLocalStorage<number | null>("selectedTable", null);
     const [day, setDay] = useLocalStorage<Date | null>("day", new Date());
@@ -18,7 +18,7 @@ export default function TableVerify() {
 
     const reset = () => {
         setPhonenumber("");
-        setSelectedTime(null);
+        setSelectedTime("");
         setReservedSeat(null);
         setSelectedTable(null);
         setDay(new Date());

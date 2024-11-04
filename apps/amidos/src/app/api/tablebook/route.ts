@@ -1,5 +1,13 @@
 import { db } from "@/lib/db";
 
+export async function GET(request: Request) {
+  const tablesDetail = await request.body;
+  const Get = await db
+    .collection("tablesDetail")
+    .find({ tablesDetail })
+    .toArray();
+  return Response.json(Get);
+}
 export async function POST(request: Request) {
   const body = await request.json();
   const { phonenumber, time, table, day, reservedSeats } = body;
@@ -10,7 +18,6 @@ export async function POST(request: Request) {
     day,
     reservedSeats
   });
-
   return new Response(null, {
     status: 200,
     headers: { "Content-Type": "application/json" }
