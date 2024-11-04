@@ -25,7 +25,7 @@ export default function Menu() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    fetch('/api/hello/admin')
+    fetch('/api/addFood')
       .then((res) => res.json())
       .then(setFood)
       .catch((error) => console.error('Error fetching food:', error));
@@ -40,7 +40,7 @@ export default function Menu() {
   }, []);
 
   //   if (oneFoodId) {
-  //     fetch(`/api/hello/admin/${oneFoodId}`)
+  //     fetch(`/api/hello/addFood/${oneFoodId}`)
   //       .then((res) => res.json())
   //       .then((data) => setSelectedFood(data))
   //       .catch((error) => console.error('Error fetching specific food:', error));

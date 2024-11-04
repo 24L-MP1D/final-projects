@@ -2,13 +2,12 @@
 
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/table';
 import { TableHeader } from '@/components/ui/table';
-import LeftBar from '../components/leftbar';
 
 export default function Order() {
   return (
-    <div className="flex mx-auto m-6 p-6 gap-6">
-      <LeftBar />
-      <Table className="bg-[##F7F7F8] border-b-[1px] w-[1218px] rounded-none">
+    <div className="ml-6 my-6 ">
+      <h1 className="text-2xl p-2">Хүргэлтийн захиалга</h1>
+      <Table className="bg-white border-b-[1px] w-[1218px] rounded-none">
         <TableHeader>
           <TableRow className="bg-[#D6D8DB] text-lg">
             <TableHead className="max-w-[191px] text-lg font-semibold px-6 text-black py-[14px]">№-</TableHead>
