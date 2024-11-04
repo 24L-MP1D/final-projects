@@ -23,7 +23,7 @@ export function Googlemap() {
     return (
       <div style={{ height: '500px', width: 'full' }} className="relative">
         <APIProvider apiKey="AIzaSyCYuf3C9btTOUo7_OddJlPg0rjJuwLWf_I">
-          <Map defaultCenter={position} defaultZoom={10} mapId="myMap" fullscreenControl={false}>
+          <Map defaultCenter={position} defaultZoom={10} mapId="myMap" fullscreenControl={true}>
             <AdvancedMarker position={position} />
           </Map>
           <Directions latitude={latitude} longitude={longitude} />
@@ -84,7 +84,7 @@ function Directions({ latitude, longitude }: Props) {
         <p className="text-xs">Хугацаа: {leg.duration?.text}</p>
       </div>
       <div>
-        <h2 className="md:text-lg text-base font-bold text-white">Other routes</h2>
+        <h2 className="md:text-lg text-base font-bold text-white">Бусад замууд</h2>
         <ul>
           {routes.map((route, index) => (
             <li key={route.summary} className="text-xs text-yellow-200 list-disc">

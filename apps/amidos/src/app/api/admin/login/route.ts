@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     const isValid = await bcrypt.compareSync(password, user.password);
     if (!isValid) return new Response('Wrong password', { status: 401 });
     if (isValid) {
-      const token = jwt.sign({ userid: user._id, email: email }, TOKEN_SECRET, { expiresIn: '2h' });
+      const token = jwt.sign({ userId: user._id, email: email, role: user.role ?? '' }, TOKEN_SECRET, { expiresIn: '1d' });
 
       return Response.json({ token });
     }

@@ -109,7 +109,7 @@ function Directions({ latitude, longitude, deliverychannel }: Props) {
         <p className="text-xs">Хугацаа: {leg.duration?.text}</p>
       </div>
       <div>
-        <h2 className="text-lg font-bold text-white">Other routes</h2>
+        <h2 className="text-lg font-bold text-white">Бусад замууд</h2>
         <ul>
           {routes.map((route, index) => (
             <li key={route.summary} className="text-xs text-yellow-200 list-disc">

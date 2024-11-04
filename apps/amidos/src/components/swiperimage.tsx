@@ -6,16 +6,6 @@ import { Autoplay, Pagination, Scrollbar } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 export function Swipersnew() {
-  //   const [news, setNews] = useState([]);
-  //   useEffect(() => {
-  //     fetch(`https://dev.to/api/articles?username=ben&per_page=9`)
-  //       .then((response) => {
-  //         return response.json();
-  //       })
-  //       .then((data) => {
-  //         setNews(data);
-  //       });
-  //   }, []);
   return (
     <div className="text-center py-16">
       <div className="text-[#8B0000] font-semibold text-3xl pb-4">7 ХОНОГИЙН ОНЦЛОХ MЕНЮ</div>

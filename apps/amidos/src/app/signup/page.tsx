@@ -59,13 +59,20 @@ export default function Signup() {
         }
       })
       .catch(function (error) {
+        setLoading(false);
         if (error.response.status === 400) {
-          return toast.error('Бүртгэгдсэн хэрэглэгч байна');
-        } else if (error.response.status === 402 && error.message === 'Нэр хамгийн багадаа 2 үсэг орсон байх') {
+          reset();
+          console.log(error);
+          toast.error('Бүртгэгдсэн хэрэглэгч байна. Нэвтрэх хэсэг рүү чиглүүлж байна');
+          setTimeout(() => {
+            window.location.href = '/login';
+          }, 1000);
+          return;
+        } else if (error.response.status === 402 && error.data === 'Нэр хамгийн багадаа 2 үсэг орсон байх') {
           return toast.error('Нэр хамгийн багадаа 2 үсэг орсон байх');
-        } else if (error.response.status === 402 && error.message === 'Имэйл буруу байна') {
+        } else if (error.response.status === 402 && error.data === 'Имэйл буруу байна') {
           return toast.error('Имэйл буруу байна');
-        } else if (error.response.status === 402 && error.message === 'Нууц үг шаардлага хангахгүй байна') {
+        } else if (error.response.status === 402 && error.data === 'Нууц үг шаардлага хангахгүй байна') {
           return toast.error('Нууц үг шаардлага хангахгүй байна');
         } else toast.error('Алдаа гарлаа. Дахин оролдоно уу');
       });
@@ -109,7 +116,7 @@ export default function Signup() {
         </div>
         <div className="flex flex-col gap-12 w-[334px]">
           <Button className={`rounded-[18px] bg-[#52071B]  hover:bg-[#8B0000] text-[#FAFAFA] text-sm font-medium  disabled:opacity-30`} type="submit">
-            {loading ? <span className="loading loading-spinner loading-md loading-white"></span> : <span className="text-red">Үүсгэх</span>}
+            {loading ? <span className="loading loading-spinner loading-md text-white">Уншиж байна...</span> : <span className="text-red">Үүсгэх</span>}
           </Button>
         </div>
       </form>
