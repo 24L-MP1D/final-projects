@@ -13,56 +13,55 @@ import { FcGoogle } from 'react-icons/fc';
 
 import { Toaster, toast } from 'sonner';
 
-const [email, setEmail] = useState('');
-const [password, setPassword] = useState('');
-const [loading, setLoading] = useState(false);
-
-async function Submit() {
-  setLoading(true);
-  axios
-    .post('/api/signin', { email, password })
-    .then(({ data, status, statusText }) => {
-      if (status === 201) {
-        localStorage.setItem('accessToken', data.accessToken);
-        toast('Signed In Successfully!');
-      } else {
-      }
-      console.log(data);
-      setLoading(false);
-    })
-    .catch(({ message }) => {
-      toast(message);
-      console.log(message);
-    });
-}
+// const [email, setEmail] = useState('');
+// const [password, setPassword] = useState('');
 
 export default function signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  console.log();
   async function Submit() {
-    console.log(email, password);
-    try {
-      const response = await fetch('/api/signin', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
+    setLoading(true);
+    axios
+      .post('/api/signin', { email, password })
+      .then(({ data, status, statusText }) => {
+        if (status === 201) {
+          localStorage.setItem('accessToken', data.accessToken);
+          toast('Signed In Successfully!');
+        } else {
+        }
+        console.log(data);
+        setLoading(false);
+      })
+      .catch(({ message }) => {
+        toast(message);
+        console.log(message);
       });
-      if (response.ok) {
-        console.log('success');
-      } else {
-        console.log('error');
-      }
-    } catch (err) {
-      console.log('error in sign up');
-    }
   }
+  // console.log();
+  // async function Submit() {
+  //   console.log(email, password);
+  //   try {
+  //     const response = await fetch('/api/signin', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         email,
+  //         password,
+  //       }),
+  //     });
+  //     if (response.ok) {
+  //       console.log('success');
+  //     } else {
+  //       console.log('error');
+  //     }
+  //   } catch (err) {
+  //     console.log('error in sign up');
+  //   }
+  // }
 
   return (
     <div className="bg-slate-50">

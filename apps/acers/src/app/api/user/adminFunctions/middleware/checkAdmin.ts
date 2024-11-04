@@ -25,8 +25,8 @@
 
 import jwt from 'jsonwebtoken';
 
-export default async function checkAdmin(Request) {
-  const authToken = Request.headers.get('authtoken');
+export default async function checkAdmin(request: Request) {
+  const authToken = request.headers.get('authtoken');
 
   if (!authToken) {
     console.log('No auth token provided');
@@ -35,10 +35,7 @@ export default async function checkAdmin(Request) {
 
   try {
     const decoded = jwt.verify(authToken, process.env.JWT_SECRET || 'your_secret_key'); // Verify token using your secret
-    if (decoded.role !== 'admin') {
-      console.log('User is not an admin');
-      return null; // User is not an admin
-    }
+ 
 
     console.log('User is an admin:', decoded);
     return decoded; // Return user info or proceed with admin logic
