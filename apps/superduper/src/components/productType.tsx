@@ -1,5 +1,6 @@
 export type ProductType = {
   _id: string;
+  userId: string;
   Country: string;
   additionalInformation: string;
   backImage: string;
