@@ -26,10 +26,15 @@ export default function Header() {
   //   };
   // }, []);
   const router = useRouter();
-  const cookieValidation = () => {
+  const sell = () => {
     const cookie = Cookies.get('token');
-    if (!cookie) return alert('first you must sign in');
+    if (!cookie) return router.push('/client/sign-in');
     router.push('/client/addProducts');
+  };
+  const save = () => {
+    const cookie = Cookies.get('token');
+    if (!cookie) return router.push('/client/sign-in');
+    router.push('/client/save');
   };
   return (
     <div className=" h-28 flex items-center max-w-[1280px]">
@@ -52,17 +57,17 @@ export default function Header() {
           </div>
         </div>
         <div className="flex items-center gap-10 mx-6">
-          <button onClick={cookieValidation} className="bg-white hover:border-b-[1px] hover:border-black">
+          <button onClick={sell} className="bg-white hover:border-b-[1px] hover:border-black">
             Sell
           </button>
           <Link href="/Help" className="bg-white hover:border-b-[1px] hover:border-black">
             Help
           </Link>
-          <Link href="/Heart">
-            <FaRegHeart size={24} color="blue" />
-          </Link>
-          <Button onClick={() => router.push(`/client/sign-up`)} className="bg-[#03f] rounded-none">
-            Sign Up
+
+          <FaRegHeart size={24} color="blue" onClick={save} />
+
+          <Button onClick={() => router.push(`/client/sign-in`)} className="bg-[#03f] rounded-none">
+            Sign In
           </Button>
         </div>
       </div>

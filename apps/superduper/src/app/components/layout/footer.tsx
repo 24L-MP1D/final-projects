@@ -1,25 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { BsInstagram } from 'react-icons/bs';
 import { FaFacebook, FaTwitter } from 'react-icons/fa';
 import { TbCopyright } from 'react-icons/tb';
-import { Button } from '../ui/button';
 
 export default function Footer() {
-  const router = useRouter();
   return (
-    <div className="bg-pink-100 container mx-auto h-[650px] items-center max-w-[1280px]">
-      <div className="flex gap-4 border-y-2 my-10 py-8 items-center justify-between">
-        <div className="flex gap-4">
-          <Button onClick={() => router.push(`/client/sign-up`)} className="bg-blue-500">
-            Sign Up
-          </Button>
-          <Button onClick={() => router.push(`/client/sign-in`)} className="bg-blue-500">
-            Sign In
-          </Button>
-        </div>
+    <div className="container pt-[200px] h-[650px] items-center ">
+      <div className="flex gap-4 border-y-2 my-10 py-8 items-center justify-center ">
         <div>Bid on over 65,000 special objects everyweek! Selected over 250+ experts</div>
       </div>
       <div className="flex justify-evenly pb-10">
