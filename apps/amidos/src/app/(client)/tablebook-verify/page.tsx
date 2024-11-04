@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function TableVerify() {
-    // const [name, setName] = useState<string>("");
     const [phonenumber, setPhonenumber] = useState<string>("");
     const [selectedTime, setSelectedTime] = useLocalStorage<string | null>("selectedTime", null);
     const [reservedSeat, setReservedSeat] = useLocalStorage<string | null>("reservedSeat", null);
@@ -18,7 +17,6 @@ export default function TableVerify() {
     const [errorMessage, setErrorMessage] = useState<string>("");
 
     const reset = () => {
-        // setName("");
         setPhonenumber("");
         setSelectedTime(null);
         setReservedSeat(null);
@@ -75,17 +73,6 @@ export default function TableVerify() {
     return (
         <div className="max-w-screen-sm items-center mx-auto py-32">
             <div className="flex flex-col gap-7 p-36">
-                {/* <div className="flex flex-col gap-3">
-                    <p className="text-2xl font-semibold">Та мэдээллээ оруулна уу?</p>
-                    <Input
-                        placeholder="Нэр ээ оруулна уу?"
-                        type="text"
-                        value={name}
-                        onChange={(ev) => setName(ev.target.value)}
-                        disabled={loading}
-                        aria-label="Нэр"
-                    />
-                </div> */}
                 <div>
                     <Input
                         placeholder="Утасны дугаар аа оруулна уу?"
@@ -99,7 +86,7 @@ export default function TableVerify() {
                 </div>
                 {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                 <Button
-                    variant={"amidos3"}
+                    variant={"outline"}
                     onClick={CreateOrder}
                     className="w-full hover:hover:bg-[#52071b7c]"
                     disabled={loading}

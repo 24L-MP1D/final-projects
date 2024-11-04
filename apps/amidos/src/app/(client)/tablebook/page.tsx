@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-type Time = { id: number; value: string };
 type Table = { id: number; name: string };
 const reservedTables: Table[] = Array.from({ length: 15 }, (_, i) => ({
     id: i + 1,
@@ -15,12 +14,12 @@ const reservedTables: Table[] = Array.from({ length: 15 }, (_, i) => ({
 }));
 export default function TableBook() {
     const router = useRouter();
-    const [selectedTime, setSelectedTime] = useLocalStorage<Time | null>("selectedTime", null);
+    const [selectedTime, setSelectedTime] = useLocalStorage<string>("");
     const [reservedSeat, setReservedSeat] = useLocalStorage<number | null>("reservedSeat", null);
     const [selectedTable, setSelectedTable] = useLocalStorage<number | null>("selectedTable", null);
     const [day, setDay] = useLocalStorage("day", new Date().toISOString());
     const reset = () => {
-        setSelectedTime(null);
+        setSelectedTime("");
         setReservedSeat(null);
         setSelectedTable(null);
         setDay(new Date().toISOString());
@@ -58,6 +57,7 @@ export default function TableBook() {
                             selected={new Date(day)}
                             onSelect={(val) => setDay(val ? new Date(val).toISOString() : new Date().toISOString())}
                             className="rounded-md border p-2"
+                            minDate={new Date()}
                         />
                     </div>
                     <div className="flex flex-col gap-4">
@@ -67,10 +67,10 @@ export default function TableBook() {
                             id="time"
                             className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             min="10:00"
-                            max="22:00"
-                            value={selectedTime?.value || "00:00"}
+                            max="23:00"
+                            value={selectedTime || "10:00"}
                             required
-                            onChange={(e) => setSelectedTime({ id: Date.now(), value: e.target.value })}
+                            onChange={(e) => setSelectedTime(e.target.value)}
                         />
                     </div>
                     <div className="flex flex-col gap-4">
