@@ -8,6 +8,7 @@ export default function Page() {
     <div className=" ">
       <SchoolPageHeader />
       <HomePageInfo />
+      <div className="h-[2000px] w-[1000px]"></div>
     </div>
   );
 }

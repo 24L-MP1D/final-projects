@@ -48,24 +48,29 @@ export default function LoginForm() {
       },
       body: JSON.stringify(values),
     });
+    window.location.href = '/admin';
     if (res.ok) {
       console.log('successfully signed in');
-      reset();
+      window.location.href = '/admin';
     } else {
       console.log('unsuccessful');
     }
   }
   function SignInbyGoogle() {
     const query = {
-      client_id: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID || '',
+      client_id: oauth_google.client_id || '',
       redirect_uri: oauth_google.redirect_uri,
       response_type: 'code',
       scope: oauth_google.scopes,
+      prompt: 'consent',
     };
+
     const url = new URL(oauth_google.endpoint);
     url.search = new URLSearchParams(query).toString();
+
     window.location.href = url.toString();
   }
+
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200 ml-6">🤗 Welcome to Bidscape's admin 🤗</h2>

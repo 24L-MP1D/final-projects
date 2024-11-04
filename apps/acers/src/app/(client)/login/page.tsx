@@ -32,7 +32,7 @@ export default function Login() {
       console.log(token);
       console.log('Login successful');
       localStorage.setItem('authtoken', token.authtoken);
-      router.push('/register');
+      router.push('/recipe/id');
     } else {
       console.error('Login failed');
       alert('Login failed');
