@@ -2,8 +2,9 @@
 import axios from 'axios';
 import { ChangeEvent, useEffect, useState } from 'react';
 
-import { FilePenLine, X } from 'lucide-react';
+import { FilePenLine, Plus, X } from 'lucide-react';
 import { ObjectId } from 'mongodb';
+import Link from 'next/link';
 import { DashboardAside } from '../components/DashboardAside';
 import { Input } from '../components/ui/Input';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/Table';
@@ -116,85 +117,6 @@ export default function Home() {
     return <div>Error: {error}</div>;
   }
 
-  // useEffect(() => {
-  //   const fetchRecipes = async () => {
-  //     try {
-  //       const response = await fetch('/api/recipe/adminFunctions', { method: 'POST', body: JSON.stringify({ search: searchValue }) });
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       const data: Recipe[] = await response.json();
-  //       setRecipes(data);
-  //     } catch (e: any) {
-  //       setError(e.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchRecipes();
-  // }, [searchValue]);
-
-  // const searchFilt = (event: ChangeEvent<HTMLInputElement>) => {
-  //   setSearchValue(event.target.value);
-  //   setCurrentPage(1); // Reset to the first page on search
-  // };
-
-  // const handleRoleChange = async (recipeId: string, newRole: Role) => {
-  //   try {
-  //     const response = await fetch(`/api/recipe/adminFunctions/updateRecipes`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ userId, newRole }),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Failed to update role');
-  //     }
-
-  // Update the local state
-  //     const updatedUsers = users.map((user) => (user._id === userId ? { ...user, role: newRole } : user));
-  //     setRecipes(updatedUsers);
-  //   } catch (e: any) {
-  //     setError(e.message);
-  //   }
-  // };
-
-  // const handleDeleteRecipe = async (recipeId: string) => {
-  //   const confirmDelete = window.confirm('Энэ хэрэглэгчийг устгах уу?');
-  //   if (!confirmDelete) {
-  //     return;
-  //   }
-  //   try {
-  //     const response = await fetch(`/api/user/adminFunctions/deleteUser`, {
-  //       method: 'DELETE',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ _id: recipeId }), // backend der
-  //     });
-
-  //     if (!response.ok) {
-  //       window.alert('Recipe deleted successfully');
-  //       throw new Error('Failed to delete recipe');
-  //     }
-
-  //     // Remove the recipe from local state
-  //     setRecipes(recipes.filter((recipe) => recipe._id !== recipeId));
-  //   } catch (e: any) {
-  //     setError(e.message);
-  //   }
-  // };
-
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>Error: {error}</div>;
-  // }
-
   // Pagination logic
   const totalPages = Math.ceil(recipes.length / recipesPerPage);
   const indexOfLastRecipe = currentPage * recipesPerPage;
@@ -208,11 +130,18 @@ export default function Home() {
   return (
     <div className="flex">
       <DashboardAside />
-      <div>
+      <div className="bg-slate-100 rounded-xl mx-auto  mt-2 p-5 ">
         <div className="text-center font-bold">Хоолны жор хянах хэсэг</div>
-        <div className="justify-center">
-          <Input value={searchValue} onChange={searchFilt} placeholder="search" type="text" className="w-100 ml-5" />
+        <div className="flex justify-between">
+          <div className="">
+            <Input value={searchValue} onChange={searchFilt} placeholder="жор хайх" type="text" className="w-100 ml-5 bg-blue-200 rounded-lg hover:bg-blue-300  " />
+          </div>
+          <Link className="bg-blue-200 hover:bg-blue-300 h-9 w-[210px] rounded-lg text-center p-1 flex justify-evenly text-slate-600" href="/admin/products/create">
+            <Plus />
+            <p>Хоолны жор нэмэх</p>
+          </Link>
         </div>
+
         <Table className="border-[1px] border-[#d1d5db] ml-5 mt-5 w-[800px] rounded-xl bg-white">
           <TableCaption>Хоолны жорны жагсаалт</TableCaption>
           <TableHeader>

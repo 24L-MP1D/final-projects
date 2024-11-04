@@ -44,7 +44,7 @@ export async function PATCH(request: Request, { params }: { params: { courseId: 
         // userId: userId
       },
       {
-          $set: { title: values.title }
+          $set: values
       }
     )
     
