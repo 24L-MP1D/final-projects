@@ -8,20 +8,22 @@ import { Camera, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import * as yup from 'yup';
+import { Context } from '../../layout';
 const CLOUDINARYNAME = process.env.NEXT_PUBLIC_CLOUDINARYNAME;
 const CLOUDINARYPRESET = process.env.NEXT_PUBLIC_CLOUDINARYPRESET || '';
 export default function Page() {
-  const [loading, setLoading] = useState(false);
+  const value = useContext(Context);
+  const [loading, setLoading] = useState('');
   const router = useRouter();
   const initialValues = {
-    frontImage: '',
-    backImage: '',
-    detailImage: '',
-    signatureImage: '',
-    damageImage: '',
-    additionalImage: '',
+    frontImage: null,
+    backImage: null,
+    detailImage: null,
+    signatureImage: null,
+    damageImage: null,
+    additionalImage: null,
   };
 
   const validationSchema = yup.object().shape({
@@ -33,12 +35,12 @@ export default function Page() {
   const formik = useFormik({
     initialValues,
     onSubmit: (values, {}) => {
-      const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
+      const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '');
       addProductObject.frontImage = values.frontImage;
       addProductObject.backImage = values.backImage;
       addProductObject.detailImage = values.detailImage;
-      addProductObject.signatureImage = values.signatureImage;
       addProductObject.damageImage = values.damageImage;
+      addProductObject.signatureImage = values.signatureImage;
       addProductObject.additionalImage = values.additionalImage;
       localStorage.setItem('addProduct', JSON.stringify(addProductObject));
       router.push('/client/addProducts/4');
@@ -47,8 +49,9 @@ export default function Page() {
   });
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>, fieldName: string) => {
     if (!event.currentTarget.files?.length) return;
-    setLoading(true);
+    setLoading(fieldName);
     const file = event.currentTarget.files[0];
+
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', CLOUDINARYPRESET);
@@ -60,16 +63,16 @@ export default function Page() {
       const data = await response.json();
 
       formik.setFieldValue(fieldName, data.secure_url);
-      setLoading(false);
     } catch (err) {
       console.error('error upload to image', err);
     }
+    setLoading('');
   };
   const handleFileDelete = async (fieldName: string) => {
     formik.setFieldValue(fieldName, null);
   };
   useEffect(() => {
-    const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
+    const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '');
     if (addProductObject) {
       formik.setValues({
         frontImage: addProductObject.frontImage,
@@ -138,9 +141,10 @@ export default function Page() {
                   onChange={(e) => {
                     handleFileChange(e, 'frontImage');
                   }}
-                  className="absolute w-full h-full opacity-0 z-30"
+                  className="absolute hover:cursor-pointer w-full h-full opacity-0 z-30"
                 />
               )}
+              {loading === 'frontImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
               {formik.touched.frontImage && formik.errors.frontImage && <p className="text-red-500">{formik.errors.frontImage}</p>}
             </div>
             <div className="hover:cursor-pointer h-[200px] text-center border-dashed border-[1px] flex flex-col justify-center items-center relative p-4">
@@ -163,9 +167,11 @@ export default function Page() {
                   onChange={(e) => {
                     handleFileChange(e, 'backImage');
                   }}
-                  className="absolute w-full h-full opacity-0 z-30"
+                  className="absolute cursor-pointer w-full h-full opacity-0 z-30"
                 />
               )}
+              {loading === 'backImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
+
               {formik.touched.backImage && formik.errors.backImage && <p className="text-red-500">{formik.errors.backImage}</p>}
             </div>
             <div className="hover:cursor-pointer text-center border-dashed border-[1px] flex flex-col justify-center items-center relative p-4">
@@ -188,9 +194,10 @@ export default function Page() {
                   onChange={(e) => {
                     handleFileChange(e, 'detailImage');
                   }}
-                  className="absolute w-full h-full opacity-0 z-30"
+                  className="absolute cursor-pointer w-full h-full opacity-0 z-30"
                 />
               )}
+              {loading === 'detailImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
 
               {formik.touched.detailImage && formik.errors.detailImage && <p className="text-red-500">{formik.errors.detailImage}</p>}
             </div>
@@ -214,9 +221,10 @@ export default function Page() {
                   onChange={(e) => {
                     handleFileChange(e, 'signatureImage');
                   }}
-                  className="absolute w-full h-full opacity-0 z-30"
+                  className="absolute cursor-pointer w-full h-full opacity-0 z-30"
                 />
               )}
+              {loading === 'signatureImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
 
               {formik.touched.signatureImage && formik.errors.signatureImage && <p className="text-red-500">{formik.errors.signatureImage}</p>}
             </div>
@@ -240,9 +248,12 @@ export default function Page() {
                   onChange={(e) => {
                     handleFileChange(e, 'damageImage');
                   }}
-                  className="absolute w-full h-full opacity-0 z-30"
+                  className="absolute cursor-pointer w-full h-full opacity-0 z-30"
                 />
               )}
+
+              {loading === 'damageImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
+
               {formik.touched.damageImage && formik.errors.damageImage && <p className="text-red-500">{formik.errors.damageImage}</p>}
             </div>
             <div className="hover:cursor-pointer text-center border-dashed border-[1px] flex flex-col justify-center items-center relative p-4">
@@ -266,9 +277,10 @@ export default function Page() {
                   onChange={(e) => {
                     handleFileChange(e, 'additionalImage');
                   }}
-                  className="absolute w-full h-full opacity-0 z-30"
+                  className="absolute w-full cursor-pointer h-full opacity-0 z-30"
                 />
               )}
+              {loading === 'additionalImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
 
               {formik.touched.additionalImage && formik.errors.additionalImage && <p className="text-red-500">{formik.errors.additionalImage}</p>}
             </div>

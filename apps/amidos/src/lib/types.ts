@@ -1,9 +1,10 @@
 export type Food = {
-  _id: any;
+  _id: string;
   name: string;
-  price: string;
+  price: number;
   ingredients: string;
   key: number;
   id: string;
   photos: string;
+  special: string;
 };

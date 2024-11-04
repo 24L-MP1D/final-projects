@@ -1,9 +1,35 @@
 import { DB } from '@/lib/db';
+import { ObjectId } from 'mongodb';
+import { cookies } from 'next/headers';
+type filtType = {
+  status?: string;
+  startDate?: { $gte: Date };
+  endDate?: { $lt: Date };
+};
 
+const collection = DB.collection('product');
+const ACCESS_TOKEN_SECRET = process.env.ADMIN_ACCESS_TOKEN_SECRET || '';
 export async function GET(request: Request) {
+  const token = cookies().get('token');
+
+  const { searchParams } = new URL(request.url);
+  const stat = searchParams.get('status');
+  const dateFrom = searchParams.get('startDate');
+  const dateTo = searchParams.get('endDate');
+
+  const filt: filtType = {};
+
+  if (stat) {
+    filt.status = stat;
+  }
+
+  if (dateFrom && dateTo) {
+    filt.startDate = { $gte: new Date(dateFrom) };
+    filt.endDate = { $lt: new Date(dateTo) };
+  }
+
   try {
-    const collection = DB.collection('product');
-    const result = await collection.find({}).toArray();
+    const result = await collection.find(filt).toArray();
     return Response.json(result);
   } catch (err) {
     console.error(err);
@@ -13,7 +39,6 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const collection = DB.collection('product');
     const newProduct = await request.json();
     const { getFromLocal } = newProduct;
     getFromLocal.startDate = new Date(getFromLocal.startDate);
@@ -24,5 +49,15 @@ export async function POST(request: Request) {
     return Response.json(result, { status: 200 });
   } catch (error) {
     return Response.json({ message: 'Failed to create product!' }, { status: 404 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  const { ids } = await request.json();
+  try {
+    await collection.deleteOne({ _id: { $in: ids.map((id: string) => new ObjectId(id)) } });
+    return new Response(null, { status: 200 });
+  } catch (err) {
+    return new Response(null, { status: 400 });
   }
 }

@@ -2,7 +2,7 @@
 import dayjs from 'dayjs';
 import { FormikErrors, FormikTouched } from 'formik';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { BidType } from './bidType';
 import { ProductType } from './productType';
 import { Button } from './ui/button';
@@ -33,27 +33,32 @@ type DateType = {
 };
 export const BidSticky = ({ bids, maximumBid, formikValues, isSticky, open, setOpen, formikSetFieldValue, formikTouched, oneProduct, formikErrors, formikHandleChange }: Props) => {
   const [showDate, setShowDate] = useState<DateType>();
+
   const endDate = new Date(oneProduct.endDate).getTime();
+
   const [showAllBids, setShowAllBids] = useState(0);
-  const sticky = useRef<HTMLDivElement | null>(null);
-  const startDate = new Date().getTime();
+
+  const startDate = new Date(oneProduct.startDate).getTime();
+
   let betweenDate = endDate - startDate;
 
   useEffect(() => {
     const timeInterval = setInterval(() => {
-      const time = {
-        day: Math.floor(betweenDate / (1000 * 60 * 60 * 24)),
-        dateHours: Math.floor((betweenDate % (1000 * 60 * 60 * 24)) / (60 * 60 * 1000)),
-        dateMinuts: Math.floor((betweenDate % (60 * 60 * 1000)) / (60 * 1000)),
-        dateSecunds: Math.floor((betweenDate % (60 * 1000)) / 1000),
-      };
+      if (new Date().getTime() >= startDate) {
+        const time = {
+          day: Math.floor(betweenDate / (1000 * 60 * 60 * 24)),
+          dateHours: Math.floor((betweenDate % (1000 * 60 * 60 * 24)) / (60 * 60 * 1000)),
+          dateMinuts: Math.floor((betweenDate % (60 * 60 * 1000)) / (60 * 1000)),
+          dateSecunds: Math.floor((betweenDate % (60 * 1000)) / 1000),
+        };
 
-      if (betweenDate < 0) {
-        clearInterval(timeInterval);
-        setShowDate(undefined);
-        return;
+        if (betweenDate < 0) {
+          clearInterval(timeInterval);
+          setShowDate(undefined);
+          return;
+        }
+        setShowDate(time);
       }
-      setShowDate(time);
     }, 1000);
 
     return () => {
@@ -62,10 +67,14 @@ export const BidSticky = ({ bids, maximumBid, formikValues, isSticky, open, setO
   }, [showDate]);
 
   return (
-    <div className={`max-w-[500px] w-full ${isSticky ? 'sticky right-0' : ''}`}>
-      <div>
-        Closed in {showDate?.day}d {showDate?.dateHours}h {showDate?.dateMinuts}m {showDate?.dateSecunds}s
-      </div>
+    <div className={`sticky right-0 top-0`}>
+      {new Date().getTime() >= startDate ? (
+        <div>
+          Closed in {showDate?.day}d {showDate?.dateHours}h {showDate?.dateMinuts}m {showDate?.dateSecunds}s
+        </div>
+      ) : (
+        <div>start soon</div>
+      )}
       <div className="border-2 border-t-2 border-t-blue-600 border-b-2 border-slate-300">
         <div className="mt-3  py-8 px-6">
           <div className="flex flex-col gap-2">
