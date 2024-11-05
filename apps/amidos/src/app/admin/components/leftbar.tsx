@@ -1,49 +1,52 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { Sidebar } from 'flowbite-react';
+import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser } from 'react-icons/hi';
 
 export default function LeftBar() {
   return (
-    <div className="w-[300px] h-[976px] bg-slate-200 pt-6 flex flex-col gap-4 text-[#121316] p-10 relative rounded-lg">
-      <Button variant="def2" className="flex items-center justify-start h-10 hover:bg-[#ECEDF0] w-[222px]">
-        <div className="w-14 flex justify-center items-center ">{/* <MdWindow className="w-6 h-6" /> */}</div>
-        <div className="text-base font-semibold">Хяналтын самбар</div>
-      </Button>
-
-      <Link href="/admin/order">
-        <Button variant="def2" className="flex items-center justify-start h-10 hover:bg-[#ECEDF0] w-[222px]">
-          <div className="w-14 flex justify-center items-center ">{/* <FaRegClipboard className="w-6 h-6" /> */}</div>
-          <div className="text-base font-semibold">Захиалга</div>
-        </Button>
-      </Link>
-
-      <Link href="/admin/table">
-        <Button variant="def2" className="flex items-center justify-start h-10 hover:bg-[#ECEDF0] w-[222px]">
-          <div className="w-14 flex justify-center items-center ">{/* <ImPriceTags className="w-6 h-6" /> */}</div>
-          <div className="text-base font-semibold">Ширээ</div>
-        </Button>
-      </Link>
-
-      <Link href="/admin/tablesOrder">
-        <Button variant="def2" className="flex items-center justify-start h-10 hover:bg-[#ECEDF0] w-[222px]">
-          <div className="w-14 flex justify-center items-center ">{/* <ImPriceTags className="w-6 h-6" /> */}</div>
-          <div className="text-base font-semibold">Ширээний захиалга</div>
-        </Button>
-      </Link>
-
-      <Link href="/products">
-        <Button variant="def2" className="flex items-center justify-start h-10 hover:bg-[#ECEDF0] w-[222px]">
-          <div className="w-14 flex justify-center items-center ">{/* <RiListView className="w-6 h-6" /> */}</div>
-          <div className="text-base font-semibold">Бүтээгдэхүүн</div>
-        </Button>
-      </Link>
-      <Link href="/settings">
-        <Button variant="def2" className="flex items-center justify-start h-10 hover:bg-[#ECEDF0] w-[222px]">
-          <div className="w-14 flex justify-center items-center ">{/* <IoMdSettings className="w-6 h-6" /> */}</div>
-          <div className="text-base font-semibold">Тохиргоо</div>
-        </Button>
-      </Link>
+    <div>
+      <Component1 />
     </div>
   );
 }
+function Component1() {
+  return (
+    <div className="dropdown bg-white pl-6 ml-6 my-6 w-[400px]">
+      <Sidebar className="dropdown">
+        <div className="text-3xl">AMIDO'S</div>
+        <Sidebar.Items className="">
+          <Sidebar.ItemGroup>
+            <Sidebar.Item href="/admin" icon={HiChartPie}>
+              Dashboard
+            </Sidebar.Item>
+            <Sidebar.Collapse icon={HiShoppingBag} label="Amido's">
+              <Sidebar.Item href="/admin/addProduct">Бүтээгдэхүүн</Sidebar.Item>
+              <Sidebar.Item href="/admin/orders">Хүргэлт</Sidebar.Item>
+              <Sidebar.Item href="#">Буцаалт</Sidebar.Item>
+              <Sidebar.Item href="/admin/tablesOrder">Ширээ захиалга</Sidebar.Item>
+            </Sidebar.Collapse>
+            <Sidebar.Item href="#" icon={HiInbox}>
+              Inbox
+            </Sidebar.Item>
+            <Sidebar.Item href="#" icon={HiUser}>
+              Users
+            </Sidebar.Item>
+            <Sidebar.Item href="#" icon={HiArrowSmRight}>
+              Sign In
+            </Sidebar.Item>
+            <Sidebar.Item href="#" icon={HiTable}>
+              Sign Up
+            </Sidebar.Item>
+          </Sidebar.ItemGroup>
+        </Sidebar.Items>
+      </Sidebar>
+    </div>
+  );
+}
+//href="/admin/orders"
+//href="/admin/food"
+
+//
+//className="w-[300px] h-[900px] bg-white mt-10 pt-6 flex flex-col gap-4 text-[#121316] p-10 relative rounded-lg"
+//className="text-2xl mb-4"
