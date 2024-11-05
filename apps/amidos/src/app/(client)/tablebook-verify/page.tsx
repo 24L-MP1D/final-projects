@@ -11,7 +11,7 @@ export default function TableVerify() {
     const [phonenumber, setPhonenumber] = useState<string>("");
     const [selectedTime, setSelectedTime] = useLocalStorage<string | null>("selectedTime", null);
     const [reservedSeat, setReservedSeat] = useLocalStorage<string | null>("reservedSeat", null);
-    const [selectedTable, setSelectedTable] = useLocalStorage<number | null>("selectedTable", null);
+    const [selectedTable, setSelectedTable] = useLocalStorage<string>("");
     const [day, setDay] = useLocalStorage<Date | null>("day", new Date());
     const [loading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -20,7 +20,7 @@ export default function TableVerify() {
         setPhonenumber("");
         setSelectedTime(null);
         setReservedSeat(null);
-        setSelectedTable(null);
+        setSelectedTable("");
         setDay(new Date());
         setErrorMessage("");
     };
@@ -29,7 +29,6 @@ export default function TableVerify() {
         const phoneRegex = /^[0-9]{8}$/;
         return phoneRegex.test(number);
     };
-
     useEffect(() => {
         if (!isValidPhoneNumber(phonenumber)) {
             console.log("phonenumber", phonenumber)
@@ -71,7 +70,7 @@ export default function TableVerify() {
         }
     }
     return (
-        <div className="max-w-screen-sm items-center mx-auto py-32">
+        <div className="max-w-screen-sm items-center mx-auto py-48">
             <div className="flex flex-col gap-7 p-36">
                 <div>
                     <Input
