@@ -51,9 +51,7 @@ export default function Login() {
           localStorage.setItem('accesstoken', res.data.token);
           toast.success('Амжилттай нэвтэрлээ');
           setTimeout(() => {
-            if (currentUser?.role == 'admin') {
-              window.location.href = '/admin/food';
-            }
+            window.location.href = '/admin/food';
           }, 1000);
 
           return;
@@ -62,9 +60,11 @@ export default function Login() {
       .catch(function (error) {
         if (error.response.status === 401) {
           setLoading(false);
+          reset();
           return toast.error('Бүртгэлгүй хэрэглэгч байна. Та бүртгүүлнэ үү');
         } else {
           setLoading(false);
+          reset();
           toast.error('Алдаа гарлаа. Дахин оролдоно уу');
         }
       });

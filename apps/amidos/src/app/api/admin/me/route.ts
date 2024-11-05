@@ -18,13 +18,16 @@ export async function GET(request: Request) {
   const authorization = headersList.get('authorization') || '';
   console.log(authorization);
   if (!authorization) {
-    return new Response('Unauthenticated', { status: 40 });
+    return new Response('Unauthenticated', { status: 401 });
   }
 
   const { userId } = <jwt.UserIDJwtPayload>jwt.verify(authorization, TOKEN_SECRET);
   const { role } = <jwt.UserIDJwtPayload>jwt.verify(authorization, TOKEN_SECRET);
-  console.log(userId);
+  console.log(userId, role);
   if (!userId) {
+    return new Response('Unauthenticated', { status: 401 });
+  }
+  if (role !== 'admin') {
     return new Response('Unauthenticated', { status: 401 });
   }
 

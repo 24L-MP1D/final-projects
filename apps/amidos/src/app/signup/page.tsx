@@ -55,6 +55,9 @@ export default function Signup() {
         if (res.status === 200) {
           reset();
           toast.success('Амжилттай бүртгэгдлээ');
+          setTimeout(() => {
+            window.location.href = '/login';
+          }, 1000);
           return;
         }
       })

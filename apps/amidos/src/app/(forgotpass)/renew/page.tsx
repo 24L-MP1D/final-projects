@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -26,8 +26,14 @@ type Inputs = {
   password: string;
   confirmedPassword: string;
 };
+
 export default function NewPassword() {
   const [loading, setLoading] = useState(false);
+  const [otp, setOtp] = useState('');
+  useEffect(() => {
+    const OTP = localStorage.getItem('otp');
+    setOtp(OTP ?? '');
+  }, []);
   const {
     register,
     handleSubmit,
@@ -45,6 +51,7 @@ export default function NewPassword() {
       .put('api/admin/renewpass', {
         email: email,
         password: data.password,
+        otp: otp,
       })
       .then((res) => {
         setLoading(false);
@@ -55,6 +62,7 @@ export default function NewPassword() {
             window.location.href = '/login';
           }, 1000);
           localStorage.removeItem('otpemail');
+          localStorage.removeItem('otp');
           return;
         }
       })

@@ -23,18 +23,28 @@ export default function Confirm() {
       })
       .then((res) => {
         if (res.status === 200) {
-          (window as Window).location = '/renew';
-          localStorage.removeItem('otp');
+          setTimeout(() => {
+            (window as Window).location = '/renew';
+          }, 1000);
         }
       })
       .catch(function (error) {
         if (error.response.status === 401) {
+          setOPT('');
+          localStorage.removeItem('otp');
           toast.error('Бүртгэлгүй хэрэглэгч байна. Та бүртгүүлнэ үү');
-          localStorage.removeItem('otp');
           return;
-        } else {
-          toast.error('Алдаа гарлаа. Дахин оролдоно уу');
+        } else if (error.response.status === 404) {
+          setOPT('');
           localStorage.removeItem('otp');
+          toast.error('Баталгаажуулах код хүчингүй байна. Нууц үг сэргээх хуудас руу шилжүүлж байна.');
+          setTimeout(() => {
+            (window as Window).location = '/forgotpass';
+          }, 1000);
+        } else {
+          setOPT('');
+          localStorage.removeItem('otp');
+          toast.error('Алдаа гарлаа. Дахин оролдоно уу');
         }
       });
   }
@@ -42,7 +52,9 @@ export default function Confirm() {
   return (
     <div className="flex flex-col items-center gap-5 py-20">
       <h1 className="text-lg text-[#09090B] font-semibold">Баталгаажуулах</h1>
-      <h2 className="text-nowrap text-[#18181B]">{recoveryemail} хаягт илгээсэн баталгаажуулах кодыг оруулна уу</h2>
+      <h2 className="text-nowrap text-[#18181B] flex gap-2">
+        <p className="font-bold">{recoveryemail}</p> <p>хаягт илгээсэн баталгаажуулах кодыг оруулна уу</p>
+      </h2>
 
       <InputOTP maxLength={6} value={otp} onChange={setOPT}>
         <InputOTPGroup>
@@ -57,7 +69,7 @@ export default function Confirm() {
           <InputOTPSlot index={5} />
         </InputOTPGroup>
       </InputOTP>
-      <Button className="w-full max-w-[334px] mx-auto bg-[#2563EB] rounded-full" onClick={onSubmit}>
+      <Button className="w-full max-w-[334px] mx-auto bg-[#2563EB] rounded-full" onClick={onSubmit} disabled={otp.length < 6}>
         Баталгаажуулах
       </Button>
     </div>

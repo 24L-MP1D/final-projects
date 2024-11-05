@@ -21,10 +21,10 @@ export async function POST(request: Request) {
     if (password.lenght < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password) || !/[ !@#$%^&*(),.?":{}|<> ]/.test(password)) {
       return new Response('Нууц үг шаардлага хангахгүй байна', { status: 402 });
     }
-    await db.collection('user').insertOne({ username: username, email: email, password: hashedPassword, role: 'admin' });
+    await db.collection('user').insertOne({ username: username, email: email, password: hashedPassword, otp: '', role: '', createdat: '' });
     return new Response('Successfully signed up', { status: 200 });
   } catch (error) {
     console.log(error);
-    new Response('Failed to signup');
+    new Response('Failed to signup', { status: 500 });
   }
 }
