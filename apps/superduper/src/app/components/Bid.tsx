@@ -1,8 +1,8 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { Button } from './ui/Button';
 import { Input } from './ui/Input';
+import { Button } from './ui/button';
 
 interface FormValues {
   bid: string;

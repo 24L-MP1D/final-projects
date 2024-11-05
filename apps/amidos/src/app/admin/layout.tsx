@@ -1,11 +1,11 @@
+import LeftBar from './components/leftbar';
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      <div>
-        <div className="bg-slate-200 "></div>
-      </div>
+    <div className="flex bg-slate-100">
+      <LeftBar />
       {children}
-      <div>Admin footer</div>
+      <div></div>
     </div>
   );
 }

@@ -5,5 +5,27 @@
   "projectType": "application",
   "tags": [],
   "// targets": "to see all targets run: nx show project example-project --web",
-  "targets": {}
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/example-project"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/example-project"
+        },
+        "production": {}
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rm -rf dist", "rm -rf .vercel", "mkdir .vercel", "cp -r ./apps/example-project/vercel.json .vercel/project.json", "vercel build --prod", "vercel --prebuilt --prod"],
+        "parallel": false
+      }
+    }
+  }
 }
