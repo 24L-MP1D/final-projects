@@ -19,10 +19,11 @@ const formSchema = z.object({
 interface AttachmentFormProps {
   initialData: {
     _id: string;
-    title: string;
-    description: string;
-    imageUrl: string;
-    price: number;
+    title?: string;
+    description?: string;
+    imageUrl?: string;
+    price?: number;
+    categoryId?: string;
   };
 }
 export const AttachmentForm: React.FC<AttachmentFormProps> = ({ initialData }) => {

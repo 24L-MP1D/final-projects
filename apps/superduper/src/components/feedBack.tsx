@@ -9,14 +9,15 @@ type FeedBackInput = {
   setFeedBackInput: (value: boolean) => void;
 
   loadProduct: () => void;
+  userId: string;
 
   productId: string;
 };
-export const FeedBackInput = ({ setFeedBackInput, loadProduct, productId }: FeedBackInput) => {
+export const FeedBackInput = ({ setFeedBackInput, userId, loadProduct, productId }: FeedBackInput) => {
   const messageSchema = z.object({
     feedback: z.string().min(5, { message: 'at least must be 5 letters' }).max(100, { message: 'max letters 100' }),
   });
-  const mocId = '6718b9dc39bfecd2dfd94fd1';
+
   type messageSchemaType = z.infer<typeof messageSchema>;
 
   const {
@@ -32,18 +33,20 @@ export const FeedBackInput = ({ setFeedBackInput, loadProduct, productId }: Feed
         method: 'PUT',
         body: JSON.stringify({
           status: 'Deny',
+          userId: userId,
+          message: values.feedback,
         }),
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      await fetch(`/api/users/${mocId}`, {
-        method: 'PUT',
-        body: JSON.stringify({ message: values.feedback }),
-        headers: {
-          'Content-type': 'application/json',
-        },
-      });
+      // await fetch(`/api/users/${userId}`, {
+      //   method: 'PUT',
+      //   body: JSON.stringify({ message: values.feedback }),
+      //   headers: {
+      //     'Content-type': 'application/json',
+      //   },
+      // });
       loadProduct();
       toast('succesfully sent');
       setFeedBackInput(false);

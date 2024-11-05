@@ -167,7 +167,8 @@ const RecipeOfTheDay = () => {
   return (
     <div className="flex flex-col lg:flex-row items-center gap-10 max-w-[auto] md:max-w-[80%] xl:max-w-[1160px] w-full m-auto">
       <div className="relative bg-slate-500">
-        <img src={img} className={`max-w-auto aspect-video sm:w-[710px] object-cover`} onClick={() => router.push(`/product/${id}`)} />
+        <img src={img} className={`max-w-auto aspect-video sm:w-[710px] object-cover`} onClick={() => router.push(`/recipe/${id}`)} />
+
         <SaveButton id={id} className="absolute right-6 bottom-6" />
       </div>
       <div className="flex flex-col text-[#222222] max-w-[80%]">

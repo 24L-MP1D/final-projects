@@ -1,8 +1,7 @@
 'use client';
 import { Button } from '@/app/components/ui/button';
 import { Dialog, DialogContent } from '@/components/dialog';
-import { Card, CardContent } from '@/components/ui/card';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Food } from '@/lib/types';
 import { X } from 'lucide-react';
 import Link from 'next/link';
@@ -25,48 +24,41 @@ export default function Menu() {
   const [selectedFood, setSelectedFood] = useState<Food | null>(null);
   const [open, setOpen] = useState(false);
 
-
   useEffect(() => {
-    fetch('/api/hello/admin')
+    fetch('/api/addFood')
       .then((res) => res.json())
       .then(setFood)
       .catch((error) => console.error('Error fetching food:', error));
   }, []);
 
   useEffect(() => {
-
     fetch('/api/special')
       .then((res) => res.json())
       .then((data) => {
-        setFood(data);
+        setSpecial(data);
       });
   }, []);
 
-    if (oneFoodId) {
-      fetch(`/api/hello/admin/${oneFoodId}`)
-        .then((res) => res.json())
-        .then((data) => setSelectedFood(data))
-        .catch((error) => console.error('Error fetching specific food:', error));
-    }
-  }, [oneFoodId]);
+  //   if (oneFoodId) {
+  //     fetch(`/api/hello/addFood/${oneFoodId}`)
+  //       .then((res) => res.json())
+  //       .then((data) => setSelectedFood(data))
+  //       .catch((error) => console.error('Error fetching specific food:', error));
+  //   }
+  // }, [oneFoodId]);
 
-  useEffect(() => {
-    if (selectedFood) {
-      setTotalPrice(selectedCount * selectedFood.price);
-    }
-  }, [selectedCount, selectedFood]);
-
-  const handleQuantityChange = (increment: number) => {
-    setSelectedCount((prevCount) => Math.max(prevCount + increment, 1));
-  };
-
+  //  }
+  // }, [selectedCount, selectedFood]);
+  // const handleQuantityChange = (increment: number) => {
+  //   setSelectedCount((prevCount) => Math.max(prevCount + increment, 1));
+  // };
 
   const navs = [
+    { name: 'ЗАХИАЛГА', link: '/order' },
     { name: 'ЗАХИАЛГА', link: '/food' },
     { name: 'MЕНЮ', link: '/lunch' },
     { name: 'ХҮРГЭЛТ', link: '/delivery' },
   ];
-
   return (
     <div>
       <div className="flex justify-center gap-7 pt-10 z-10 mx-auto">
@@ -83,24 +75,29 @@ export default function Menu() {
           <Carousel className="w-full lg:max-w-md max-w-sm mb-20  md:basis-1/2 lg:basis-1/3 mx-auto">
             <Carousel className="w-full lg:max-w-md max-w-sm mb-20 md:basis-1/2 lg:basis-1/3 mx-auto">
               <CarouselContent>
-                {special.map((specialDish: Food) => (
+                {/* {special.map((specialDish: Food) => (
                   <CarouselItem key={specialDish._id}>
 
-          <Carousel className="w-full lg:max-w-md max-w-sm mb-20 md:basis-1/2 lg:basis-1/3 mx-auto">
-            <CarouselContent>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <CarouselItem key={index}>
-                  <div className="p-1">
+          // <Carousel className="w-full lg:max-w-md max-w-sm mb-20 md:basis-1/2 lg:basis-1/3 mx-auto">
+          //   <CarouselContent>
+          //     {Array.from({ length: 5 }).map((_, index) => (
+          //       <CarouselItem key={index}>
+          //         <div className="p-1">
 
-                    <Card>
-                      <CardContent className="flex aspect-square items-center justify-center p-6">
-                        <img src={specialDish.photos} alt={specialDish.name} className="w-full h-full object-cover" />
-                        <h2 className="text-lg font-bold">{specialDish.name}</h2>
-                        <p className="text-lg">{specialDish.price}₮</p>
-                      </CardContent>
-                    </Card>
-                  </CarouselItem>
-                ))}
+          //           <Card>
+          //             <CardContent className="flex aspect-square items-center justify-center p-6">
+          //               <span className="text-4xl font-semibold">{index + 1}</span>
+          //               <img src={specialDish.photos} alt={specialDish.name} className="w-full h-full object-cover" />
+          //               <h2 className="text-lg font-bold">{specialDish.name}</h2>
+          //               <p className="text-lg">{specialDish.price}₮</p>
+          //             </CardContent>
+          //           </Card>
+          //         </div>
+          //       </CarouselItem>
+          //     ))}
+          //   </CarouselContent>
+          //         </CarouselItem>
+          //       ))} */}
               </CarouselContent>
               <CarouselPrevious />
               <CarouselNext />
@@ -125,7 +122,6 @@ export default function Menu() {
                       setOpen(true);
                     }}
                   />
-
                   <DialogContent>
                     {selectedFood && (
                       <div className="bg-white w-[400px] relative mx-auto p-4">
