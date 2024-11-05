@@ -99,7 +99,6 @@ export default function TableVerify() {
                 </div>
                 {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                 <Button
-                    variant={"amidos3"}
                     onClick={CreateOrder}
                     className="w-full hover:hover:bg-[#52071b7c]"
                     disabled={loading}
