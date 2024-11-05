@@ -9,7 +9,7 @@ import { FaRegHeart } from 'react-icons/fa';
 import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
 
 import { useAuthStore } from '../auth/useAuthStore';
-import { Button } from '../ui/button';
+
 type notifications = {
   _id: string;
   message: string;

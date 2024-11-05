@@ -70,55 +70,55 @@ export default function Page() {
             </div>
           </div>
           <div className="flex gap-10 justify-center items-center ">
-            <div>Category</div>
-            <div>Detail</div>
-            <div>Photos</div>
-            <div>Logistics</div>
-            <div>Review</div>
+            <div>Ангилал</div>
+            <div>Дэлгэрэнгүй</div>
+            <div>Зураг</div>
+            <div>Логистик</div>
+            <div>Хянан үзэх</div>
           </div>
         </div>
-        <div className="mt-8 text-center text-[#333] text-[48px] mb-16">Review information</div>
+        <div className="mt-8 text-center text-[#333] text-[48px] mb-16">Мэдээллийг хянан үзэх</div>
         <div>
           <div className="border-b-[1px] items-center py-3 flex justify-between">
-            <div className="text-2xl ">Category</div>
+            <div className="text-2xl ">Ангилал</div>
             <Link className="text-2xl py-2 px-4 bg-slate-100 active:bg-red-200 border-[1px] hover:bg-red-500 rounded-lg" href={'/client/addProducts'}>
-              edit
+            засварлах
             </Link>
           </div>
-          <div className="text-center my-10 text-xl">Category: {getFromLocal?.category}</div>
+          <div className="text-center my-10 text-xl">Ангилал: {getFromLocal?.category}</div>
           <div className="border-b-[1px] mb-8 items-center py-3 flex justify-between">
             <div className="text-2xl">Details</div>
             <Link className="text-2xl py-2 px-4 bg-slate-100 active:bg-red-200 border-[1px] hover:bg-red-500 rounded-lg" href={'/client/addProducts/2'}>
-              edit
+            засварлах
             </Link>
           </div>
           <div className="flex flex-col gap-2 text-xl items-center justify-center">
             <div className="text-center flex gap-4">
-              <div>Product Name:</div>
+              <div>Бүтээгдэхүүний нэр:</div>
               <div>{getFromLocal?.productName}</div>
             </div>
             <div className="text-center flex gap-4">
-              <div>Item's Country of Origin:</div>
+              <div>Тухайн зүйлийн гарал үүслийн улс:</div>
               <div>{getFromLocal?.Country}</div>
             </div>
             <div className="text-center flex gap-4">
-              <div>Additional information:</div>
+              <div>Нэмэлт мэдээлэл:</div>
               <div>{getFromLocal?.additionalInformation}</div>
             </div>
             <div className="text-center flex gap-4">
-              <div>Signatures, Labels or Markings:</div>
+              <div>Гарын үсэг, шошго эсвэл тэмдэглэгээ:</div>
               <div>{getFromLocal?.signatures}</div>
             </div>
             <div className="text-center flex gap-4">
-              <div>Areas of Damage:</div>
+              <div>Гэмтэлтэй хэсэг:</div>
               <div>{getFromLocal?.damage}</div>
             </div>
             <div className="text-center flex gap-4">
-              <div>Has it been restored? If so, to what extent?:</div>
+              <div>Тухайн бараа сэргээгдсэн үү? Хэрэв тийм бол ямар хэмжээгээр?:</div>
               <div>{getFromLocal?.restored}</div>
             </div>
             <div className="text-center flex gap-4">
-              <div>Price Paid:</div>
+              <div>Төлсөн үнэ:</div>
               <div>{getFromLocal?.startBid}</div>
             </div>
             <div className="text-center flex gap-4">

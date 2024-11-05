@@ -124,11 +124,11 @@ export default function Page() {
         <ProductPrice formikSetFieldValue={formik.setFieldValue} formikErrors={formik.errors} formikHandleChange={formik.handleChange} formikTouched={formik.touched} formikValues={formik.values} />
       </div>
       <div className="flex gap-2 w-full justify-center fixed bottom-0 bg-[#ffffff] py-2 left-[50%] translate-x-[-50%]">
-        <div>Click “continue” to save your progress for this step</div>
+        <div>"Үргэлжлүүлэх" дээр дарж энэ алхамын явцаа хадгална уу</div>
         <Link className="bg-slate-300 text-center py-2 px-4 rounded-lg" href={'/client/addProducts'}>
-          BACK
+        БУЦАХ
         </Link>
-        <Button type="submit">CONTINUE</Button>
+        <Button type="submit">ҮРГЭЛЖЛҮҮЛЭХ</Button>
       </div>
     </form>
   );

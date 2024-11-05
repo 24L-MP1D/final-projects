@@ -110,14 +110,14 @@ export default function Page() {
             </div>
           </div>
           <div className="flex gap-10 justify-center items-center">
-            <div>Category</div>
-            <div>Detail</div>
-            <div>Photos</div>
-            <div className="text-[#f3f3f3]">Logistics</div>
-            <div className="text-[#f3f3f3]">Review</div>
+            <div>Ангилал</div>
+            <div>Дэлгэрэнгүй</div>
+            <div>Зураг</div>
+            <div className="text-[#f3f3f3]">Логистик</div>
+            <div className="text-[#f3f3f3]">Хянан үзэх</div>
           </div>
         </div>
-        <div className="mt-8 text-center text-[#333] text-[48px] mb-16">Upload photos and documents</div>
+        <div className="mt-8 text-center text-[#333] text-[48px] mb-16">Зураг болон баримт бичгийг байршуулах</div>
         <div className="flex  gap-4 text-[#333333]">
           <div className="max-w-[600px] grid gap-6 grid-cols-2 w-full">
             <div className="hover:cursor-pointer text-center h-[420px] row-span-3 col-span-2 border-dashed border-[1px] flex flex-col justify-center items-center relative p-4">
