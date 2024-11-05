@@ -105,10 +105,10 @@ export default function Header() {
         </div>
         <div className="flex items-center gap-10 mx-6">
           <button onClick={sell} className="bg-white hover:border-b-[1px] hover:border-black">
-          Зарах
+            Зарах
           </button>
           <Link href="/Help" className="bg-white hover:border-b-[1px] hover:border-black">
-          Тусламж
+            Тусламж
           </Link>
 
           <FaRegHeart size={24} color="blue" onClick={save} />
