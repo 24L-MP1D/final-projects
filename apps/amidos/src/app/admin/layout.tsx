@@ -25,6 +25,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <SignedInAmidos>
         <Logout />
       </SignedInAmidos>
+ 
     </div>
+  
   );
 }

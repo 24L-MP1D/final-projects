@@ -25,7 +25,13 @@ export async function POST(request: Request) {
       from: 'anarchulu@gmail.com',
       to: email,
       subject: 'OTP verification',
-      html: `<h1>Your recovery OTP is ${otp} </h1>`,
+      html: `<div>
+      <p style="color: gray; font-size: large; ">Сайн байна уу? Танд энэ өдрийн мэнд хүргэе</p>
+      <p style="color: gray; font-size: medium;">Таны нэвтрэх нэг удаагийн баталгаажуулах код:</p>
+      <span style="color: white; font-size: large; padding: 3px; background-color: green;">  ${otp} </span>
+      <p style="color: gray; font-size: medium;">энэхүү код нь 5 мин хүчинтэй болно.</p>
+      <p style="color: gray; font-size: medium;">Amido's</p>
+    </div>`,
     });
     return new Response('OTP is successfully sent');
   } catch (error) {
