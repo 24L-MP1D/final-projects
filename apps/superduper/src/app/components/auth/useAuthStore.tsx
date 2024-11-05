@@ -1,10 +1,11 @@
 'use client';
 
 import { create } from 'zustand';
-type User = {
+export type User = {
   _id: string;
   email: string;
   role: string;
+  firstname: string;
 };
 type AuthState = {
   currentUser: User | null | undefined;

@@ -7,6 +7,7 @@ type filtType = {
 };
 
 const collection = DB.collection('product');
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const stat = searchParams.get('status');
@@ -36,12 +37,12 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const newProduct = await request.json();
-    const { getFromLocal } = newProduct;
+    const { getFromLocal, userId } = newProduct;
+    getFromLocal.userId = new ObjectId(String(userId));
     getFromLocal.startDate = new Date(getFromLocal.startDate);
     getFromLocal.endDate = new Date(getFromLocal.endDate);
     getFromLocal.createdAt = new Date();
     const result = await collection.insertOne(getFromLocal);
-
     return Response.json(result, { status: 200 });
   } catch (error) {
     return Response.json({ message: 'Failed to create product!' }, { status: 404 });
