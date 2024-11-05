@@ -32,7 +32,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className='w-[1000px] mx-auto p-10'>
+    <div className="w-[1000px] mx-auto p-10">
       <Link href="/admin-app/courses/create">
         <Button className="p-6">Add new course</Button>
       </Link>
@@ -52,7 +52,7 @@ export default function Page() {
         </TableHeader>
         <TableBody>
           {courses.map((course) => (
-            <TableRow>
+            <TableRow key={course._id}>
               <TableCell className="font-medium"> {course.imageUrl && <Image src={course.imageUrl} height={40} width={40} alt="thumbnail" />}</TableCell>
               <TableCell>{course.title}</TableCell>
               <TableCell>{course.author}</TableCell>

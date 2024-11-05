@@ -11,8 +11,6 @@ import { useEffect, useState } from 'react';
 export default function Page() {
   const currentUser = useAuthStore((state) => state.currentUser);
 
-  console.log(currentUser);
-
   const router = useRouter();
   const [getFromLocal, setGetFromLocal] = useState<ProductType>();
   const [loadding, setLoading] = useState(false);
@@ -24,6 +22,7 @@ export default function Page() {
           method: 'POST',
           body: JSON.stringify({
             getFromLocal,
+            userId: currentUser?._id,
           }),
           headers: {
             'Content-type': 'application/json',

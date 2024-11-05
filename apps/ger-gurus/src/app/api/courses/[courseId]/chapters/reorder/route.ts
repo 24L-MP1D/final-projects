@@ -5,14 +5,17 @@ interface ChapterItem {
     _id: string;
     position: number;
 }
+type Params = Promise<{ courseId: string, chapterId: string }>
 
-export async function PUT(request: Request, { params }: { params: { courseId: string } }) {
+export async function PUT(request: Request, { params }: {params: Params} ) {
+    const {courseId}= await params
+
     try {
         // const userId=auth()
         // if (!userId){ 
         //     return new NextResponse("Unauthorized", {status:401})
         // }
-        const ownCourse= await db.collection("courses").findOne({_id: new ObjectId(params.courseId)})//userId=userId gej shalgah
+        const ownCourse= await db.collection("courses").findOne({_id: new ObjectId(courseId)})//userId=userId gej shalgah
         if (!ownCourse){
             return new NextResponse("Unauthorized", {status:401})
         }
