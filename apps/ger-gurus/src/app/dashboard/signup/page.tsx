@@ -23,8 +23,6 @@ export default function Index() {
     setShowPasswordConfirm((prev) => !prev);
   };
 
-  console.log({ name, email, password, passwordConfirm });
-
   const hasUppercase = /[A-Z]/.test(password);
   const hasLowercase = /[a-z]/.test(password);
   const hasNumber = /[0-9]/.test(password);
@@ -84,20 +82,21 @@ export default function Index() {
         headers: {
           'Content-type': 'Application/json; charset=UTF-8',
         },
-      }).then((res) => {
+      }).then(async (res) => {
         if (res.ok) {
+          const token = await res.text();
+          localStorage.setItem('token', token);
           toast.success('Амжилттай бүртгүүллээ.', { className: 'custom-toast success' });
           if (role === 'Teacher') {
             setTimeout(() => {
-              window.location.href = '/createschool';
+              window.location.href = '#';
             }, 2000);
           } else {
             setTimeout(() => {
-              window.location.href = '/login';
+              window.location.href = '#';
             }, 2000);
           }
           reset();
-          setLoading(false);
         } else if (res.status === 401) {
           toast.error('Имэйл хаяг бүртгэлтэй байна.', { className: 'custom-toast error' });
         } else if (!res.ok) {
@@ -114,7 +113,7 @@ export default function Index() {
           ),
             { className: 'custom-toast error' };
         }
-        return res.text();
+        return;
       });
     } catch (error) {
       toast.error(
@@ -130,6 +129,7 @@ export default function Index() {
       ),
         { className: 'custom-toast error' };
     }
+    setLoading(false);
   }
   const customToast = {
     success: 'custom-toast success',
@@ -152,7 +152,7 @@ export default function Index() {
               type="email"
               placeholder="Имэйл хаяг"
               value={email}
-              onChange={(e) => setEmail(e.target.value.toLowerCase())}
+              onChange={(e) => setEmail(e.target.value)}
             />
             {emailConfirm && (!email ? <div className="px-3 text-[#E11D48] text-xs font-normal">Имэйл хаяг оруулна уу</div> : null)}
             {emailValidConfirm && (!emailIsValid ? <div className="px-3 text-[#E11D48] text-xs font-normal">Зөв имэйл хаяг оруулна уу</div> : null)}

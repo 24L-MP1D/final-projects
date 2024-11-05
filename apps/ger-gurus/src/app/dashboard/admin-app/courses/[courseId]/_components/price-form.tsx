@@ -18,10 +18,11 @@ const formSchema = z.object({
 interface PriceFormProps {
   initialData: {
     _id: string;
-    title: string;
-    description: string;
-    imageUrl: string;
-    price: number;
+    title?: string;
+    description?: string;
+    imageUrl?: string;
+    price?: number;
+    categoryId?: string;
   };
 }
 export const PriceForm: React.FC<PriceFormProps> = ({ initialData }) => {
@@ -31,7 +32,7 @@ export const PriceForm: React.FC<PriceFormProps> = ({ initialData }) => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { price: initialData?.price || undefined },
+    defaultValues: { price: initialData?.price || 0 },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -49,7 +50,7 @@ export const PriceForm: React.FC<PriceFormProps> = ({ initialData }) => {
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course price ( ₮ )
+        Course price
         <Button variant="ghost" onClick={toggleEdit}>
           {isEditing && <>Cancel</>}
           {!isEditing && (

@@ -43,8 +43,7 @@ export default function Footer() {
           <Link href="/help">Help center</Link>
         </div>
       </div>
-      <div className="flex justify-between pt-10 mx-10 border-b-2 pb-10">
-        <div>english drop down</div>
+      <div className="flex justify-end pt-10 mx-10 border-b-2 pb-10">
         <div className="flex gap-10">
           <Link href="https://www.facebook.com">
             <FaFacebook className="text-[24px]" />

@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 
 import { Input } from '@/components/input';
 import { IconBrandGithub, IconBrandGoogle, IconBrandOnlyfans } from '@tabler/icons-react';
-import { oauth_google } from 'config';
+import { oauth_github, oauth_google } from 'config';
 import { z } from 'zod';
 
 const SignInSchema = z.object({
@@ -30,7 +30,7 @@ const SignInSchema = z.object({
 
 type SignInSchemaType = z.infer<typeof SignInSchema>;
 
-export default function Signin() {
+export default function LoginForm() {
   const {
     register,
     handleSubmit,
@@ -48,9 +48,10 @@ export default function Signin() {
       },
       body: JSON.stringify(values),
     });
+    window.location.href = '/admin';
     if (res.ok) {
       console.log('successfully signed in');
-      reset();
+      window.location.href = '/admin';
     } else {
       console.log('unsuccessful');
     }
@@ -69,9 +70,20 @@ export default function Signin() {
 
     window.location.href = url.toString();
   }
+  function SignInbyGithub() {
+    const query = {
+      client_id: oauth_github.client_id || '',
+      redirect_uri: oauth_github.redirect_uri,
+      scope: oauth_github.scopes,
+      prompt: 'consent',
+    };
+    const url = new URL(oauth_github.endpoint);
+    url.search = new URLSearchParams(query).toString();
+    window.location.href = url.toString();
+  }
 
   return (
-    <div className="max-w-md my-12 w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
+    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200 ml-6">🤗 Welcome to Bidscape's admin 🤗</h2>
 
       <form className="my-8 form" onSubmit={handleSubmit(onSubmit)}>
@@ -117,18 +129,19 @@ export default function Signin() {
           <button
             className="relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
             type="button" // Change type to button to avoid form submission
+            onClick={SignInbyGoogle}
           >
-            <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-            <span className="text-neutral-700 dark:text-neutral-300 text-sm">GitHub</span>
+            <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+            <span className="text-neutral-700 dark:text-neutral-300 text-sm">Google</span>
             <BottomGradient />
           </button>
           <button
             className="relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
             type="button" // Change type to button to avoid form submission
-            onClick={SignInbyGoogle}
+            onClick={SignInbyGithub}
           >
-            <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-            <span className="text-neutral-700 dark:text-neutral-300 text-sm">Google</span>
+            <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+            <span className="text-neutral-700 dark:text-neutral-300 text-sm">GitHub</span>
             <BottomGradient />
           </button>
           <button

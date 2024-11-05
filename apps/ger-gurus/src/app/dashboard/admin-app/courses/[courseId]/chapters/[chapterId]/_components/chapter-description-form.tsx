@@ -1,5 +1,4 @@
 'use client';
-import { Editor } from '@/components/editor';
 import { Preview } from '@/components/preview';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
@@ -22,11 +21,10 @@ interface ChapterDescriptionFormProps {
     _id: string;
     title?: string;
     description?: string;
+    courseId: string;
   };
-  courseId: string;
-  chapterId: string;
 }
-export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ initialData, courseId, chapterId }) => {
+export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ initialData }) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => setIsEditing((x) => !x);
   const router = useRouter();
@@ -40,7 +38,7 @@ export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
+      const response = await axios.patch(`/api/courses/${initialData.courseId}/chapters/${initialData._id}`, values);
       toast.success('Chapter description updated');
       toggleEdit();
       router.refresh();
@@ -76,9 +74,7 @@ export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ 
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormControl>
-                    <Editor {...field} />
-                  </FormControl>
+                  <FormControl>{/* <Editor {...field} /> */}</FormControl>
                   <FormMessage />
                 </FormItem>
               )}

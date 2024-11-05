@@ -6,47 +6,65 @@ import Draggable from 'react-draggable'; // The default
 import LeftBar from '../components/leftbar';
 
 export type TableModel = {
-  id: string;
-  corditane: {
+  _id: string;
+  coordinate: {
     x: number;
     y: number;
   };
 };
 
-export default function DragExample() {
-  const [tables, setTables] = useState(null);
-  const [addtable, setAddTable] = useState();
+export default function Table() {
+  const [tables, setTables] = useState<TableModel[]>([]);
+  const [deletedId, setDeletedId] = useState<string | null>(null); // Use a nullable type for deletedId
+
+  const deleteOneTable = async () => {
+    if (!deletedId) {
+      console.error('No table selected for deletion');
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/admin/tablesDetail/${deletedId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        // Optionally refresh the table list after deletion
+        setTables(tables.filter((table) => table._id !== deletedId));
+        setDeletedId(null); // Clear the selected ID
+      } else {
+        const errorText = await response.text();
+        console.error('Failed to delete table:', errorText);
+      }
+    } catch (error) {
+      console.error('Error deleting table:', error);
+    }
+  };
 
   useEffect(() => {
     // fetch setTables();
   }, []);
 
-  function handleDrag(id: string, newPosition: { x: number; y: number }) {
-    const index = tables.findIndex((table) => table._id === id);
+  function handleDrag(index: number, newPosition: { x: number; y: number }) {
     const newTables = [...tables];
-    newTables[index].position = { x: newPosition.x, y: newPosition.y };
+    newTables[index].coordinate = { x: newPosition.x, y: newPosition.y };
     setTables(newTables);
   }
 
-  async function handleStop(_id: string, position: { x: number; y: number }) {
-    const updateTable = tables.find((table) => table._id === _id);
-    // fetch(`api/admin/tablesDetail`);
-    // TODO //PUT
+  async function handleStop(index: number) {
+    const current = tables[index];
 
-    setTimeout(async () => {
-      await fetch(`/api/admin/tablesDetail/${_id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-        body: JSON.stringify({
-          cordinate: updateTable?.position,
-        }),
-      });
-      getTables();
-    }, 1000);
+    await fetch(`/api/admin/tablesDetail/${current._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify({
+        coordinate: current?.coordinate,
+      }),
+    });
 
-    console.log(updateTable);
+    return false;
   }
 
   const getTables = async () => {
@@ -70,17 +88,6 @@ export default function DragExample() {
         'Content-type': 'application/json; charset=UTF-8',
       },
     });
-
-    setTables((prev) => [...prev, { _id: 'new', position: { x: 1, y: 1 } }]);
-  };
-
-  const [selectedId, setSelectedId] = useState();
-  const deleteOneTable = async (_id: string) => {
-    const select = tables.find((table) => table._id === setSelectedId(_id));
-
-    await fetch(`/api/admin/tablesDetail${_id}`, {
-      method: 'DELETE',
-    });
     getTables();
   };
 
@@ -90,9 +97,16 @@ export default function DragExample() {
       <div className="flex gap-10 mt-5">
         <div className="w-[800px] h-[800px] bg-slate-400 relative">
           {tables &&
-            tables.map((table: TableModel) => (
-              <Draggable key={table._id} position={table.cordinate} onDrag={(e, newPosition) => handleDrag(table._id, newPosition)} onStop={() => handleStop(table._id)}>
-                <div onClick={selectedId} className={`${table ? 'bg-green-400' : ''} absolute w-20 h-20`}></div>
+            tables.map((table: TableModel, index: number) => (
+              <Draggable
+                key={table._id}
+                position={table.coordinate}
+                onDrag={(e, newPosition) => handleDrag(index, newPosition)}
+                onStop={() => {
+                  handleStop(index);
+                }}
+              >
+                <div className={`${table ? 'bg-green-400' : ''} absolute w-20 h-20 rounded-full`}></div>
               </Draggable>
             ))}
         </div>

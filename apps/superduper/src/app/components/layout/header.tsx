@@ -1,4 +1,5 @@
 'use client';
+import { Button } from '@/components/ui/button';
 import Cookies from 'js-cookie';
 import { ChevronDown, UserRoundPen } from 'lucide-react';
 import Link from 'next/link';
@@ -6,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
+
 import { useAuthStore } from '../auth/useAuthStore';
 import { Button } from '../ui/button';
 type notifications = {
@@ -15,6 +17,7 @@ type notifications = {
   productId: string;
   isSeen: boolean;
 };
+
 export default function Header() {
   const [signin, setSignin] = useState(false);
   const [isSeenNotif, setIsSeenNotif] = useState<notifications[]>([]);

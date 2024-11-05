@@ -13,14 +13,14 @@ export async function GET(request: Request) {
   const ADMIN_ACCESS_TOKEN_SECRET = process.env.ADMIN_ACCESS_TOKEN_SECRET || '';
   if (!ADMIN_ACCESS_TOKEN_SECRET) return new Response('internal server error:missing token secret', { status: 500 });
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const cookie = await cookieStore.get('token');
     const userToken = cookie?.value;
 
     if (!userToken) return new Response('unauthenticated', { status: 400 });
-    console.log('line 21');
+
     const { userId } = <jwt.JwtPayload>jwt.verify(userToken, ADMIN_ACCESS_TOKEN_SECRET);
-    console.log('line 23');
+
     if (!userId) return new Response('unauthenticated', { status: 404 });
     const currentUser = await DB.collection('users').findOne({ _id: new ObjectId(String(userId)) });
     if (!currentUser) return new Response('unauthenticated', { status: 404 });

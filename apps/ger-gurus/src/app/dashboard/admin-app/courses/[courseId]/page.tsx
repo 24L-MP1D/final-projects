@@ -10,16 +10,20 @@ import { ImageForm } from './_components/image-form';
 import { PriceForm } from './_components/price-form';
 import { TitleForm } from './_components/title-form';
 
-export default async function Page({ params }: { params: { courseId: string } }) {
+type Params = Promise<{ courseId: string }>;
+
+export default async function Page({ params }: { params: Params }) {
+  const { courseId } = await params;
   // const {userId}=auth()
   // if (!userId){return redirect("/")}
 
   // const course = await db.collection('courses').findOne({
-  //   _id: new ObjectId(params.courseId),
+  //   _id: new ObjectId(courseId),
   // });
   // if (!course) {
   //   return redirect('/');
   // }
+
   interface Course {
     _id: ObjectId;
     title: string;
@@ -41,7 +45,7 @@ export default async function Page({ params }: { params: { courseId: string } })
     .collection('courses')
     .aggregate([
       {
-        $match: { _id: new ObjectId(params.courseId) },
+        $match: { _id: new ObjectId(courseId) },
       },
       {
         $lookup: {
@@ -84,7 +88,7 @@ export default async function Page({ params }: { params: { courseId: string } })
     chapters: course.chapters.map((chapter) => ({
       ...chapter,
       _id: chapter._id.toString(),
-      courseId: chapter.courseId.toString(), 
+      courseId: chapter.courseId.toString(),
     })),
   };
   const requiredFields = [course.title, course.description, course.imageUrl, course.price, course.chapters];

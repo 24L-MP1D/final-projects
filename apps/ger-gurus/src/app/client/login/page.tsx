@@ -24,6 +24,13 @@ export default function Index() {
     return submit();
   }
 
+  // const urlParams = new URLSearchParams(window.location.search);
+  // const authtoken = urlParams.get('authtoken');
+  // if (authtoken) {
+  //   localStorage.setItem('authtoken', authtoken);
+  //   window.history.replaceState({}, document.title, '/');
+  // }
+
   const submit = async () => {
     try {
       const res = await fetch(`/api/user/login`, {
@@ -36,7 +43,7 @@ export default function Index() {
       if (res.ok) {
         toast.success('Амжилттай нэвтэрлээ.', { className: 'custom-toast success' });
         setTimeout(() => {
-          window.location.href = '/test';
+          window.location.href = `http://www.verse.mn?authtoken=${authtoken}`;
         }, 1000);
       } else if (res.status === 401) {
         toast.error('Хэрэглэгч бүртгэлгүй байна.', { className: 'custom-toast error' });
@@ -80,7 +87,7 @@ export default function Index() {
                 }`}
                 placeholder="Имэйл хаяг"
                 value={email}
-                onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                onChange={(e) => setEmail(e.target.value)}
               />
               {emailConfirm && (!email ? <div className="px-3 text-[#E11D48] text-xs font-normal">Имэйл хаяг оруулна уу</div> : null)}
             </div>
