@@ -29,10 +29,8 @@ export default function Login() {
 
     if (response.ok) {
       const token = await response.json();
-      console.log(token);
-      console.log('Login successful');
       localStorage.setItem('authtoken', token.authtoken);
-      router.push('/recipe/id');
+      router.push('/');
     } else {
       console.error('Login failed');
       alert('Login failed');
