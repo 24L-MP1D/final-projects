@@ -47,7 +47,7 @@ export default function TableBook() {
         reset();
     }, []);
     return (
-        <div className="flex flex-col justify-center gap-8 p-10 mx-auto">
+        <div className="flex flex-col justify-center gap-8 p-10 mx-auto py-40">
             <div className="flex justify-between items-center">
                 <div className="flex gap-8 p-3">
                     <div className="flex flex-col gap-4">
