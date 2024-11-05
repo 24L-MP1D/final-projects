@@ -7,14 +7,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Search } from 'lucide-react';
 import { ObjectId } from 'mongodb';
 import { useEffect, useState } from 'react';
-import LeftBar from '../components/leftbar';
 
 export type tableType =
   | {
       id: ObjectId;
       table: number;
-      nums: string;
+      reservedSeats: string;
       time: string;
+      phoneNumber: number;
       day: Date;
     }
   | undefined;
@@ -58,7 +58,6 @@ const Order = () => {
 
   return (
     <div className="flex max-w-[1440px] mx-auto">
-      <LeftBar />
       <div className="flex flex-col w-full">
         <div className="mx-[23.5px] mt-[34px] mb-6 flex justify-between ">
           <div className="flex  gap-2">
@@ -124,7 +123,7 @@ const Order = () => {
                           <p className="text-sm font-semibold px-6">#{item.table}</p>
                         </TableCell>
                         <TableCell className="px-6 py-4 max-w-[156px] flex flex-col text-left gap-2">
-                          <p className="text-sm font-semibold">{item.nums}</p>
+                          <p className="text-sm font-semibold">{item.reservedSeats}</p>
                         </TableCell>
                         {/* <TableCell className="px-6 max-w-[156px]">{dayjs(item.time).format('YYYY-MM-DD')}</TableCell>
                         <TableCell className="px-6 max-w-[156px]">{dayjs(item.time).format('HH:mm')}</TableCell> */}

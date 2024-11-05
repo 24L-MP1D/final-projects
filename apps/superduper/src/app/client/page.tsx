@@ -21,7 +21,7 @@ export default function Index() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch('/api/products');
+      const res = await fetch('/api/product');
       if (!res.ok) throw new Error('Network response was not ok');
       const data = await res.json();
       console.log(data);

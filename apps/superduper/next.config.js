@@ -19,6 +19,18 @@ const nextConfig = {
       {
         hostname: 'assets.aceternity.com',
       },
+      {
+        hostname: 'example.com',
+      },
+      {
+        hostname: 'cdn.pixabay.com',
+      },
+      {
+        hostname: 'images.pexels.com',
+      },
+      {
+        hostname: 'media.istockphoto.com',
+      },
     ],
   },
 

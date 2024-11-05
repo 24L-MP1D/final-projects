@@ -5,7 +5,7 @@ export async function POST(request: Request) {
     const collection = DB.collection('users');
     const user = await request.json();
 
-    const salt = 10;
+    const salt = process.env.SECRET_SALT || '';
     const hashedPass = bcrypt.hashSync(user.password, salt);
 
     let form = {

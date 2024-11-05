@@ -1,39 +1,77 @@
-import { Button } from './ui/button';
-
 export const HomePageInfo = () => {
   return (
-    <div style={{ position: 'relative', height: '400px', overflow: 'hidden' }}>
-      <video
-        autoPlay
-        muted
-        loop
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover', // Ensures the video covers the container
-        }}
-      >
-        <source src="/video.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <div
-        className="font-bold justify-center"
-        style={{
-          position: 'absolute',
-          top: '70%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          color: 'white',
-          fontSize: '3rem',
-          textAlign: 'center',
-          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
-        }}
-      >
-        <div> Ger Gurus </div>
-        <div className="flex gap-4">
-          <Button className="bg-[#8c8c8c] rounded-full hover:bg-[#333333] text-[18px]">Танилцах</Button>
-          <Button className="bg-[#8c8c8c] rounded-full hover:bg-[#333333] text-[18px]">Бүртгүүлэх</Button>
+    <div className="flex  max-w-[1440px] mx-auto flex-col items-center gap-12 justify-center">
+      <div className="flex mx-auto gap-7">
+        <div className="flex justify-center items-center">
+          <div className="relative inline-flex group">
+            <div className="absolute transitiona-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt"></div>
+            <a
+              href="https://dash.verse.mn/signup"
+              title="Get quote now"
+              className="relative bg-white bg-opacity-20 inline-flex items-center justify-center px-4 py-2 text-lg text-white transition-all duration-200 bg-transparent border-solid border-2 border-gradient-to-r from-violet-200 to-pink-200 font-serif rounded-full  focus:ring-0 focus:ring-offset-2 "
+              role="button"
+            >
+              Бүртгүүлэх
+            </a>
+          </div>
         </div>
+
+        <div className="flex justify-center items-center">
+          <div className="relative inline-flex group">
+            <div className="absolute transitiona-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt"></div>
+            <a
+              href="/login"
+              title="Get quote now"
+              className="relative inline-flex items-center justify-center px-4 py-2 text-lg text-white bg-white bg-opacity-20 transition-all duration-200 bg-transparent border-solid border-2 border-gradient-to-r from-violet-200 to-pink-200 font-serif rounded-full  focus:ring-0 focus:ring-offset-2 "
+              role="button"
+            >
+              Нэвтрэх
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className=" relative flex flex-col items-center justify-center gap-[30px]">
+        <div className="flex gap-[800px]">
+          <div className="w-[200px] h-[150px] shadow-2xl">
+            <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
+              <source src={'/study.mp4'} type="video/mp4" />
+            </video>
+          </div>
+          <div className="w-[200px] h-[150px] shadow-2xl">
+            <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
+              <source src={'/study.mp4'} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+        <div className="flex gap-[960px]">
+          <div className="w-[200px] h-[150px] shadow-2xl">
+            <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
+              <source src={'/study.mp4'} type="video/mp4" />
+            </video>
+          </div>
+          <div className="w-[200px] h-[150px] shadow-2xl">
+            <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
+              <source src={'/study.mp4'} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+        <div className="flex gap-[900px]">
+          <div className="w-[200px] h-[150px] shadow-2xl">
+            <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
+              <source src={'/study.mp4'} type="video/mp4" />
+            </video>
+          </div>
+          <div className="w-[200px] h-[150px] shadow-2xl">
+            <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
+              <source src={'/study.mp4'} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      </div>
+      <div className="max-w-[900px] mx-auto shadow-2xl rounded-xl absolute mt-80">
+        <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
+          <source src={'/study.mp4'} type="video/mp4" />
+        </video>
       </div>
     </div>
   );
