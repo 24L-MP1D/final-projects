@@ -1,12 +1,5 @@
 'use client';
 
-import { DashboardAside } from '../components/DashboardAside';
-
 export default function Home() {
-  return (
-    <div className="flex">
-      <DashboardAside />
-      settings
-    </div>
-  );
+  return <div className="flex">settings</div>;
 }

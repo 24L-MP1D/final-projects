@@ -1,134 +1,148 @@
 'use client';
 
+import axios from 'axios';
+import { decode } from 'jsonwebtoken';
 import { Bookmark } from 'lucide-react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { HandyCarousel } from './components/homePageComponents/handyCarousel';
 import { Stars } from './components/itemComponents/stars';
-import { Button } from './components/ui/Button';
 
 export default function Index() {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.tailwind file.
-   */
+  const [collections, setCollections] = useState([]);
+
+  const getCollection = async () => {
+    const res = await axios('/api/collection');
+    setCollections(res.data.res);
+  };
+
+  useEffect(() => {
+    getCollection();
+  }, []);
+
+  console.log(collections);
+
   return (
     <div className="">
       <div className="flex flex-col gap-16 text-[#222222] ">
         <RecipeOfTheDay />
         <div className="flex flex-col gap-16 max-w-[80%] xl:max-w-[1160px] w-full m-auto">
-          <Suspense>
-            <OccasionMeals />
-          </Suspense>
-
-          <GetTheLatest />
-          <Popular />
+          <AvailableContent />
+          <OccasionMeals />
+          {collections.map((collection: any) => (
+            <CollectionByAdmin key={collection._id} collection={collection} />
+          ))}
         </div>
       </div>
     </div>
   );
 }
 
-const Popular = () => {
-  return (
-    <div className="flex flex-col gap-[30px]">
-      <CheapAndEasyDinnerIdeas />
-      <DiwaliRecipes />
-      <div className="text-center">
-        <Button className="py-3 px-[75px] rounded-full text-[14px] font-semibold border-[#CCCCCC] border-[1px]">See all Editors’ Collections</Button>
-      </div>
-    </div>
-  );
-};
+const AvailableContent = () => {
+  const [recipes, setRecipes] = useState([]);
+  const [data, setData] = useState([]);
+  const [token, setToken] = useState<null | string>(null);
+  const [role, setRole] = useState('');
 
-const CheapAndEasyDinnerIdeas = () => {
-  return (
-    <div>
-      <span className="text-2xl underline">Our Newest Recipes</span>
-      <HandyCarousel data={Array(10).fill(1)} />
-    </div>
-  );
-};
+  // Decode the token and handle the null case
 
-const EasyBakingRecipes = () => {
-  return (
-    <div>
-      <span className="text-2xl underline">Easy Baking Recipes</span>
-      <HandyCarousel data={Array(10).fill(1)} />
-    </div>
-  );
-};
+  const getRecipes = async (role: string) => {
+    const res = await axios.post('/api/recipe/getRecipe', { role });
+    console.log(res.data.hiddenData);
+    setData(res.data.hiddenData);
+  };
 
-const DiwaliRecipes = () => {
-  const id = 'willFix';
-  return (
-    <div className="flex flex-col gap-2">
-      <a href={`/suggestion/${id}`} className=" text-2xl underline">
-        Diwali Recipes
-      </a>
-      <HandyCarousel data={Array(10).fill(1)} />
-    </div>
-  );
-};
+  useEffect(() => {
+    const token = localStorage.getItem('authtoken');
+    if (token) {
+      const decodedToken = decode(token);
+      if (decodedToken) {
+        // Now we can safely extract role
+        const { role } = decodedToken as { role: string };
 
-const GetTheLatest = () => {
+        setToken(token);
+        setRole(role);
+        getRecipes(role);
+      }
+    }
+  }, []);
+
+  if (!token) return;
+
   return (
     <div className="border-t-2 border-[#222222] max-w-[1160px] w-full m-auto flex flex-col gap-4">
-      <span className="text-[14px] font-bold">GET THE LATEST</span>
-      <OurNewestRecipes />
-      <MostPopularOfTheWeek />
+      <span className="text-[23px]">{role} хэрэглэгчдэд </span>
+      <HandyCarousel data={data} name="available" />
     </div>
   );
 };
 
-const MostPopularOfTheWeek = () => {
-  return (
-    <div>
-      <span className="text-2xl mt-3.5">Most Popular This Week</span>
-      <HandyCarousel data={Array(10).fill(1)} />
-    </div>
-  );
-};
+const CollectionByAdmin = ({ collection }: { collection: any }) => {
+  const [collectionItems, setCollectionItems] = useState([]);
 
-const OurNewestRecipes = () => {
+  const getCollectionItems = async () => {
+    const res = await axios.post('/api/recipe/getRecipe', { tags: collection.collection });
+
+    setCollectionItems(res.data.hiddenData);
+  };
+  useEffect(() => {
+    getCollectionItems();
+  }, []);
   return (
-    <div>
-      <span className="text-2xl underline">Our Newest Recipes</span>
-      <HandyCarousel data={Array(10).fill(1)} />
+    <div className="flex flex-col gap-4">
+      <span className="text-2xl mt-3.5">{collection.name}</span>
+      <HandyCarousel data={collectionItems} name={collection.name} />
     </div>
   );
 };
 
 const OccasionMeals = () => {
-  const searchParams = useSearchParams();
-  const holiday = searchParams.get('holiday');
-  const handleHolidayChange = (name: string) => {
-    const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set('holiday', name);
+  const [holiday, setHoliday] = useState<null | string>();
+  const [data, setData] = useState([]);
+  const [holidays, setHolidays] = useState([]);
 
-    window.history.pushState({}, '', `?${newSearchParams.toString()}`);
+  const getRecipes = async () => {
+    const body = holiday ? { tags: [holiday] } : null;
+    const res = await axios.post(`/api/recipe/getRecipe`, body);
+    setData(res.data.hiddenData);
   };
+
+  const getHolidays = async () => {
+    const res = await axios.get('/api/holidays');
+    setHolidays(res.data);
+  };
+
+  useEffect(() => {
+    getHolidays();
+  }, []);
+
+  useEffect(() => {
+    getRecipes();
+  }, [holiday]);
 
   return (
     <div className="border-t-2 border-[#222222] max-w-[1160px] w-full m-auto flex flex-col">
-      <span className="text-[23px]">Make Something to Celebrate</span>
-      <span className="text-[17px]">Delicious recipes for Canadian Thanksgiving, Halloween, Diwali and more.</span>
+      <span className="text-[23px]">Баярын ширээ</span>
       <div className="mt-2 flex gap-1 flex-wrap mb-4">
-        {holidays.map((day) => (
-          <span key={day.name} onClick={() => handleHolidayChange(day.name)} className={`py-3 px-4 rounded-[4px] whitespace-nowrap ${holiday === day.name ? 'bg-[#fddc79]' : ' hover:bg-[#fddc79]'}`}>
+        {holidays.map((day: { _id: any; name: string }) => (
+          <span
+            key={day.name}
+            onClick={() => {
+              if (day._id == holiday) {
+                setHoliday(null);
+                return;
+              }
+              setHoliday(day._id);
+            }}
+            className={`py-3 px-4 rounded-[4px] whitespace-nowrap ${holiday === day._id ? 'bg-[#fddc79]' : ' hover:bg-[#fddc79]'}`}
+          >
             {day.name}
           </span>
         ))}
       </div>
-      <HolidayCarousal />
+      <HandyCarousel data={data} name="occastion" />
     </div>
   );
-};
-
-const HolidayCarousal = () => {
-  // will fetch here
-  return <HandyCarousel data={Array(5).fill(1)} />;
 };
 
 const RecipeOfTheDay = () => {
@@ -142,11 +156,19 @@ const RecipeOfTheDay = () => {
     id: 'Trend',
     prepTime: '40 minutes',
   });
+  const getRecipeOfTheDay = async () => {
+    const res = await axios.get('/api/recipe/trending?number=1');
+    setData(res.data[0]);
+  };
+  useEffect(() => {
+    getRecipeOfTheDay();
+  }, []);
   const { img, title, description, rating, ratingNum, id, prepTime } = data;
   return (
     <div className="flex flex-col lg:flex-row items-center gap-10 max-w-[auto] md:max-w-[80%] xl:max-w-[1160px] w-full m-auto">
       <div className="relative bg-slate-500">
-        <img src={img} className={`max-w-auto sm:w-[710px] object-center`} onClick={() => router.push(`/recipe/${id}`)} />
+        <img src={img} className={`max-w-auto aspect-video sm:w-[710px] object-cover`} onClick={() => router.push(`/recipe/${id}`)} />
+
         <SaveButton id={id} className="absolute right-6 bottom-6" />
       </div>
       <div className="flex flex-col text-[#222222] max-w-[80%]">
@@ -176,16 +198,3 @@ const SaveButton = ({ id, className }: { id: string; className?: string }) => {
     </button>
   );
 };
-
-const holidays = [
-  { name: "New Year's Day" },
-  { name: "Valentine's Day" },
-  { name: 'Easter' },
-  { name: 'Independence Day' },
-  { name: 'Halloween' },
-  { name: 'Thanksgiving' },
-  { name: 'Christmas' },
-  { name: 'Diwali' },
-  { name: 'Hanukkah' },
-  { name: 'Lunar New Year' },
-];
