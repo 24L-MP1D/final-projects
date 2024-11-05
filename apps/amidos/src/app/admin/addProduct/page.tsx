@@ -3,15 +3,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/app/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Switch } from '@/components/ui/switch';
 import { Food } from '@/lib/types';
 import { Label } from '@radix-ui/react-label';
 import { Heart, Pencil, Trash } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 export default function Foods() {
   const [order, setOrder] = useState<Food[]>([]);
+  const [foods, setFoods] = useState([]);
   const [buttonColor, setButtonColor] = useState<string>('bg-slate-600');
   const [selectedFood, setSelectedFood] = useState<Food | null>(null);
   const [name, setName] = useState('');
@@ -27,7 +27,7 @@ export default function Foods() {
     fetch('api/addFood')
       .then((res) => res.json())
       .then((data) => {
-        setOrder(data);
+        setFoods(data);
       });
   }
 
@@ -53,56 +53,26 @@ export default function Foods() {
     }
   };
 
-  // const addFood = (data: any) => {
-  //   const newFood = {
-  //     name,
-  //     ingredients,
-  //     price,
-  //     photos: imageUrl,
-  //   };
-  //   try {
-  //     const response = fetch('/api/addFood', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(newFood),
-  //     });
-  //     toast('Хоол амжилттай нэмэгдлээ');
-  //     console.log('created');
-  //   } catch (error) {
-  //     console.log('error');
-  //   }
-  // };
-  const addFood = async () => {
+  const addFood = (data: any) => {
     const newFood = {
       name,
       ingredients,
       price,
       photos: imageUrl,
     };
-
     try {
-      const response = await fetch('/api/addFood', {
+      const response = fetch('/api/addFood', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newFood),
       });
+      toast('Хоол амжилттай нэмэгдлээ');
 
-      if (response.ok) {
-        await response.json();
-        toast('Successfully added the product');
-        loadlist();
-        console.log('Created');
-      } else {
-        toast.error('Failed to add food');
-        console.log('Error:', response.statusText);
-      }
+      console.log('created');
     } catch (error) {
-      console.error('Error adding food:', error);
-      toast.error('An error occurred while adding food');
+      console.log('error');
     }
   };
 
@@ -176,6 +146,7 @@ export default function Foods() {
     } catch (error) {
       console.error('Error adding special food:', error);
       toast.error('Error a  dding to special items');
+      loadlist();
     }
   };
   const handleRemoveSpecial = async (foodId: string) => {
@@ -187,6 +158,7 @@ export default function Foods() {
     } catch (error) {
       console.error('Error removing special food:', error);
       toast.error('Error removing to special items');
+      loadlist();
     }
   };
   const handleSpecialToggle = async (foodId: string, isSpecial: string) => {
@@ -207,21 +179,23 @@ export default function Foods() {
   const toggleButtonColor = () => {
     setButtonColor((prevColor) => (prevColor === 'bg-slate-600' ? 'bg-red-600' : 'bg-slate-600'));
   };
-  // useEffect(() => {
-  //   fetch('/api/addFood')
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setOrder(data);
-  //     });
-  // }, []);
-  // useEffect(() => {
-  //   // fetch('/api/special')
-  //   //   .then((res) => res.json())
-  //   //   .then((data) => {
-  //   //     setSpecial(data);
-  //   //   });
-  //   loadlist();
-  // }, []);
+  useEffect(() => {
+    fetch('/api/addFood')
+      .then((res) => res.json())
+      .then((data) => {
+        setOrder(data);
+        loadlist();
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/special')
+      .then((res) => res.json())
+      .then((data) => {
+        setSpecial(data);
+      });
+    loadlist();
+  }, []);
 
   return (
     <div className="text-md mb-10 ">
@@ -285,7 +259,7 @@ export default function Foods() {
                     <TableHead className=" text-bold">Зураг</TableHead>
                     <TableHead className="text-bold">Засах</TableHead>
                     <TableHead className="text-bold">Устгах</TableHead>
-                    <TableHead className="text-bold">Онгой меню</TableHead>
+                    <TableHead className="text-bold">Онцгой меню</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody className="text-md">
@@ -325,19 +299,23 @@ export default function Foods() {
                                 </Label>
                                 <Input id="width" className="col-span-2 h-12" onChange={(e) => setPrice(e.target.value)} defaultValue={selectedFood?.price || ''} />
                               </div>
-                              {/* <div className="grid grid-cols-3 align-items-center gap-2 ">
+                              <div className="grid grid-cols-3 align-items-center gap-2 ">
                                 <Label htmlFor="images" className="text-lg h-12">
                                   Зураг
                                 </Label>
-                                <Input type="file" className="col-span-2 h-12 bg-zinc-100 " id="images" onChange={handleUpload} defaultValue={selectedFood?.photos || ''} />
+                                {/* <Input type="file" className="col-span-2 h-12 bg-zinc-100 " id="images" onChange={(e) => setImageUrl(e.target.value)} defaultValue={selectedFood?.photos || ''} />
                                 {loading && <span className="text-red">Loading...</span>}
-                                {imageUrl && <img className="w-50 h-50 ml-24" src={imageUrl} alt="Uploaded" />}
-                              </div> */}
+                                {imageUrl && <img className="w-50 h-50 ml-24" src={order.photos} alt="Uploaded" />}
+                              </div>
                               <div className="grid grid-cols-3 align-items-center gap-2 ">
                                 <Label htmlFor="width" className="text-lg h-12">
-                                  <Switch />
+                                  <Switch
+                                    onClick={() => {
+                                      handleSpecialFood(order._id);
+                                    }}
+                                  />
                                 </Label>
-                                <Input id="width" className="col-span-2 h-12" />
+                                <Input id="width" className="col-span-2 h-12" /> */}
                               </div>
                               <Button variant="outline" className="mt-3" onClick={updateFood}>
                                 Шинэчлэх
@@ -357,7 +335,7 @@ export default function Foods() {
                             onClick={() => {
                               handleSpecialFood(order._id);
                             }}
-                            className={order.special ? 'fill-red-600' : 'fill-white'}
+                            className={order.setSpecial ? 'fill-red-600' : 'fill-white'}
                           />
                         </Button>
                       </TableCell>

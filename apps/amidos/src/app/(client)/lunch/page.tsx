@@ -21,7 +21,7 @@ export default function Menu() {
   const [oneFoodId, setOneFoodId] = useQueryState('id');
   const [selectedCount, setSelectedCount] = useState<number>(1);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [selectedFood, setSelectedFood] = useState<Food | null>(null);
+  const [selectedFood, setSelectedFood] = useState<Food[]>([]);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -38,23 +38,21 @@ export default function Menu() {
         setSpecial(data);
       });
   }, []);
+  const handleAddToCart = (foodItem: Food) => {
+    const item = {
+      name: foodItem.name,
+      price: foodItem.price,
+      ingredients: foodItem.ingredients,
+      photos: foodItem.photos,
+    };
+    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    existingCart.push(item);
+    localStorage.setItem('cart', JSON.stringify(existingCart));
 
-  //   if (oneFoodId) {
-  //     fetch(`/api/hello/addFood/${oneFoodId}`)
-  //       .then((res) => res.json())
-  //       .then((data) => setSelectedFood(data))
-  //       .catch((error) => console.error('Error fetching specific food:', error));
-  //   }
-  // }, [oneFoodId]);
-
-  //  }
-  // }, [selectedCount, selectedFood]);
-  // const handleQuantityChange = (increment: number) => {
-  //   setSelectedCount((prevCount) => Math.max(prevCount + increment, 1));
-  // };
+    alert('Сагсанд амжилттай нэмлээ');
+  };
 
   const navs = [
-    { name: 'ЗАХИАЛГА', link: '/order' },
     { name: 'ЗАХИАЛГА', link: '/food' },
     { name: 'MЕНЮ', link: '/lunch' },
     { name: 'ХҮРГЭЛТ', link: '/delivery' },
@@ -106,16 +104,16 @@ export default function Menu() {
             <CarouselNext />
           </Carousel>
           <h1 className="text-7xl italic text-center mb-10 mx-auto underline underline-1 text-[#4A433E]">Lunch set</h1>
-          <div className="mt-20 mx-auto lg:w-[1200px] flex flex-col lg:flex lg:flex-wrap lg:flex-row gap-16 mb-20">
+          <div className="mt-20 mx-auto lg:w-[1300px] flex flex-col lg:flex lg:flex-wrap lg:flex-row gap-6 mb-20">
             {food.map((foodItem: Food) => (
-              <div key={foodItem._id} className="relative w-[320px] h-[380px] border-2 border-[#8B0000] rounded-sm p-10">
+              <div key={foodItem._id} className="relative w-[400px] h-[600px] border-2 border-[#8B0000] rounded-sm p-10">
                 <Dialog open={open}>
                   <img
                     src={foodItem.photos}
-                    width={150}
-                    height={150}
+                    width={300}
+                    height={300}
                     alt={foodItem.name}
-                    className="mx-auto w-[150px] h-[150px] object-cover rounded-full cursor-pointer"
+                    className="mx-auto w-[300px] h-[300px] object-cover rounded-full cursor-pointer"
                     onClick={() => {
                       setSelectedFood(foodItem);
                       setOneFoodId(foodItem._id);
@@ -142,7 +140,7 @@ export default function Menu() {
                           </button>
                         </div>
                         <div className="flex flex-row mt-6 gap-10 items-center text-xl m-6">
-                          <Button variant="amidos" className="row-1">
+                          <Button variant="amidos" className="row-1" onClick={() => handleAddToCart(selectedFood)}>
                             Сагсанд нэмэх
                           </Button>
                           <Button variant="amidos2" className="row-1">
@@ -153,14 +151,14 @@ export default function Menu() {
                     )}
                   </DialogContent>
                 </Dialog>
-                <h1 className="absolute text-[#8B0000] font-bold text-2xl">{foodItem.price}</h1>
-                <h1 className="font-bold absolute mt-10 text-2xl">{foodItem.name}</h1>
-                <h2 className="text-xl mt-20 text-wrap">{foodItem.ingredients}</h2>
-                <div className="flex flex-row mt-4 gap-5 items-center text-xl">
-                  <Button variant="amidos" className="row-1">
+                <h1 className="absolute text-[#8B0000] font-bold text-2xl">{foodItem.price}k</h1>
+                <h1 className="font-bold absolute mt-10 text-3xl">{foodItem.name}</h1>
+                <h2 className="text-2xl mt-24 text-wrap mb-8">{foodItem.ingredients}</h2>
+                <div className="flex flex-row mt-4 ml-2 items-center text-2xl gap-10">
+                  <Button variant="amidos" size="xxl" className="row-1 " onClick={() => handleAddToCart(selectedFood)}>
                     Сагсанд нэмэх
                   </Button>
-                  <Button variant="amidos2" className="row-1">
+                  <Button variant="amidos2" size="xxl" className="row-1">
                     Захиалах
                   </Button>
                 </div>

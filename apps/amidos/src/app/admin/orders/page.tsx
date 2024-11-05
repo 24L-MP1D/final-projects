@@ -1,11 +1,11 @@
 'use client';
 
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/table';
-import { TableHeader } from '@/components/ui/table';
+import { TableFooter, TableHeader } from '@/components/ui/table';
 
 export default function Order() {
   return (
-    <div className="ml-6 my-6 ">
+    <div className="ml-6 my-6">
       <h1 className="text-2xl p-2">Хүргэлтийн захиалга</h1>
       <Table className="bg-white border-b-[1px] w-[1218px] rounded-none">
         <TableHeader>
@@ -36,6 +36,17 @@ export default function Order() {
             <TableCell className="px-6 py-4 max-w-[156px]"></TableCell>
           </TableRow>
         </TableBody>
+        <TableFooter>
+          {/* <TableRow>
+            <TableFooter className="max-w-[191px] text-lg font-semibold px-6 text-black py-[14px]">Нийт дугаар:</TableFooter>
+            <TableFooter className="max-w-[209px] text-lg font-semibold px-6 text-black py-[14px]">Хоолны тоо:</TableFooter>
+            <TableFooter className="max-w-[168px] text-lg font-semibold px-6 text-black py-[14px]">Нийт мөнгөн дүн:</TableFooter>
+            <TableFooter className="max-w-[129px] text-lg font-semibold px-6 text-black py-[14px]">Нийт тоо ширхэг</TableFooter>
+            <TableFooter className="max-w-[129px] text-lg font-semibold px-6 text-black py-[14px] text-wrap">Захиалагчийн утасны дугаар, Имэйл хаяг</TableFooter>
+            <TableFooter className="max-w-[214px] text-lg font-semibold px-6 text-black py-[14px] text-center">Захиалагчийн хаяг</TableFooter>
+            <TableFooter className="max-w-[214px] text-lg font-semibold px-6 text-black py-[14px] text-center">Нийт дүн</TableFooter>
+          </TableRow> */}
+        </TableFooter>
       </Table>
     </div>
   );
