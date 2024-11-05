@@ -35,12 +35,12 @@ export default function Page() {
   const formik = useFormik({
     initialValues,
     onSubmit: (values, {}) => {
-      const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
+      const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '');
       addProductObject.frontImage = values.frontImage;
       addProductObject.backImage = values.backImage;
       addProductObject.detailImage = values.detailImage;
-      addProductObject.signatureImage = values.signatureImage;
       addProductObject.damageImage = values.damageImage;
+      addProductObject.signatureImage = values.signatureImage;
       addProductObject.additionalImage = values.additionalImage;
       localStorage.setItem('addProduct', JSON.stringify(addProductObject));
       router.push('/client/addProducts/4');
@@ -51,35 +51,37 @@ export default function Page() {
     if (!event.currentTarget.files?.length) return;
     setLoading(fieldName);
     const file = event.currentTarget.files[0];
-    formik.setFieldValue(fieldName, file);
-    // const formData = new FormData();
-    // formData.append('file', file);
-    // formData.append('upload_preset', CLOUDINARYPRESET);
-    // try {
-    //   const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARYNAME}/upload`, {
-    //     method: 'POST',
-    //     body: formData,
-    //   });
-    //   const data = await response.json();
 
-    //   formik.setFieldValue(fieldName, data.secure_url);
-    //   setLoading('');
-    // } catch (err) {
-    //   console.error('error upload to image', err);
-    // }
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARYPRESET);
+    try {
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARYNAME}/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+
+      formik.setFieldValue(fieldName, data.secure_url);
+    } catch (err) {
+      console.error('error upload to image', err);
+    }
     setLoading('');
   };
   const handleFileDelete = async (fieldName: string) => {
     formik.setFieldValue(fieldName, null);
   };
   useEffect(() => {
-    if (value?.frontImage) {
-      formik.setFieldValue('frontImage', value.frontImage);
-      // backImage: addProductObject.backImage,
-      // detailImage: addProductObject.detailImage,
-      // signatureImage: addProductObject.signatureImage,
-      // damageImage: addProductObject.damageImage,
-      // additionalImage: addProductObject.additionalImage,
+    const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '');
+    if (addProductObject) {
+      formik.setValues({
+        frontImage: addProductObject.frontImage,
+        backImage: addProductObject.backImage,
+        detailImage: addProductObject.detailImage,
+        signatureImage: addProductObject.signatureImage,
+        damageImage: addProductObject.damageImage,
+        additionalImage: addProductObject.additionalImage,
+      });
     }
   }, []);
   return (
@@ -127,7 +129,7 @@ export default function Page() {
 
               {formik.values.frontImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
-                  <Image src={URL.createObjectURL(formik.values.frontImage)} alt="frontImage" width={1000} height={1000} className="w-full h-full object-cover" />
+                  <Image src={formik.values.frontImage} alt="frontImage" width={1000} height={1000} className="w-full h-full object-cover" />
                   <div>
                     <X onClick={() => handleFileDelete('frontImage')} className="w-10 h-10 absolute right-0" />
                   </div>
@@ -153,7 +155,7 @@ export default function Page() {
               <div className="mt-10">Back</div>
               {formik.values.backImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
-                  <Image src={URL.createObjectURL(formik.values.backImage)} alt="backImage" width={1000} height={1000} className="w-full h-full object-cover" />
+                  <Image src={formik.values.backImage} alt="backImage" width={1000} height={1000} className="w-full h-full object-cover" />
                   <div>
                     <X onClick={() => handleFileDelete('backImage')} className="w-10 h-10 absolute right-0" />
                   </div>
@@ -180,7 +182,7 @@ export default function Page() {
               <div className="mt-10">Details</div>
               {formik.values.detailImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
-                  <Image src={URL.createObjectURL(formik.values.detailImage)} alt="detailImage" width={1000} height={1000} className="w-full h-full object-cover" />
+                  <Image src={formik.values.detailImage} alt="detailImage" width={1000} height={1000} className="w-full h-full object-cover" />
                   <div>
                     <X onClick={() => handleFileDelete('detailImage')} className="w-10 h-10 absolute right-0" />
                   </div>
@@ -207,7 +209,7 @@ export default function Page() {
               <div className="mt-10">Signature</div>
               {formik.values.signatureImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
-                  <Image src={URL.createObjectURL(formik.values.signatureImage)} alt="signatureImage" width={1000} height={1000} className="w-full h-full object-cover" />
+                  <Image src={formik.values.signatureImage} alt="signatureImage" width={1000} height={1000} className="w-full h-full object-cover" />
                   <div>
                     <X onClick={() => handleFileDelete('signatureImage')} className="w-10 h-10 absolute right-0" />
                   </div>
@@ -234,7 +236,7 @@ export default function Page() {
               <div className="mt-10">Damage</div>
               {formik.values.damageImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
-                  <Image src={URL.createObjectURL(formik.values.damageImage)} alt="damageImage" width={1000} height={1000} className="w-full h-full object-cover" />
+                  <Image src={formik.values.damageImage} alt="damageImage" width={1000} height={1000} className="w-full h-full object-cover" />
                   <div>
                     <X onClick={() => handleFileDelete('damageImage')} className="w-10 h-10 absolute right-0" />
                   </div>
@@ -263,7 +265,7 @@ export default function Page() {
 
               {formik.values.additionalImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
-                  <Image src={URL.createObjectURL(formik.values.additionalImage)} alt="additionalImage" width={1000} height={1000} className="w-full h-full object-cover" />
+                  <Image src={formik.values.additionalImage} alt="additionalImage" width={1000} height={1000} className="w-full h-full object-cover" />
                   <div>
                     <X onClick={() => handleFileDelete('additionalImage')} className="w-10 h-10 absolute right-0" />
                   </div>

@@ -24,13 +24,6 @@ export default function Index() {
     return submit();
   }
 
-  // const urlParams = new URLSearchParams(window.location.search);
-  // const authtoken = urlParams.get('authtoken');
-  // if (authtoken) {
-  //   localStorage.setItem('authtoken', authtoken);
-  //   window.history.replaceState({}, document.title, '/');
-  // }
-
   const submit = async () => {
     try {
       const res = await fetch(`/api/user/login`, {
@@ -43,7 +36,7 @@ export default function Index() {
       if (res.ok) {
         toast.success('Амжилттай нэвтэрлээ.', { className: 'custom-toast success' });
         setTimeout(() => {
-          window.location.href = `http://www.verse.mn?authtoken=${authtoken}`;
+          window.location.href = '/';
         }, 1000);
       } else if (res.status === 401) {
         toast.error('Хэрэглэгч бүртгэлгүй байна.', { className: 'custom-toast error' });

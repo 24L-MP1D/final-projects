@@ -1,26 +1,25 @@
 'use client';
 
+import { Checkbox } from '@/components/ui/Checkbox';
 import { FormikValues, useFormik } from 'formik';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { Toaster, toast } from 'sonner';
 import * as yup from 'yup';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from './ui/Dialog';
+import { Dialog, DialogContent, DialogFooter, DialogTitle } from './ui/Dialog';
 import { Input } from './ui/Input';
 import { Button } from './ui/button';
 
-export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
+export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
+  const [dialogOpen, setDialogOpen] = useState(true);
   const initialValues = {
-    firstName: '',
-    lastName: '',
     email: '',
     password: '',
   };
   const validationSchema = yup.object({
-    firstName: yup.string().min(1).required('First name is required'),
-    lastName: yup.string().min(1).required('Last name required'),
     email: yup.string().email('Wrong e-mail').required('e-mail required'),
     password: yup
       .string()
@@ -46,7 +45,7 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
   async function Submit(values: FormikValues) {
     setLoading(true);
     try {
-      const response = await fetch('/api/signup', {
+      const response = await fetch('/api/signin', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -68,15 +67,18 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
   }
 
   return (
-    <Dialog open>
+    <Dialog open={dialogOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={formik.handleSubmit}>
-          <DialogTitle className="font-bold text-center">Sign in or Create an account</DialogTitle>
+          <DialogTitle className="font-thin text-center">Sign in or Create an account</DialogTitle>
+          {/* <button onClick={() => setDialogOpen(false)} className="text-gray-500 hover:text-gray-700">
+            ✕
+          </button> */}
           <div className="h-[2px] bg-slate-300 my-3"></div>
           <div className="flex justify-between">
             <p className="font-bold">Welcome Back!</p>
             <span onClick={toggleForm}>
-              <div className="text-blue-500">Sign in</div>
+              <div className="text-[#03f]">Create account</div>
             </span>
           </div>
           <p className="text-slate-500 mb-3">Continue with</p>
@@ -95,12 +97,7 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
             <p>or</p>
             <div className="h-[2px] flex-1 bg-slate-300"></div>
           </div>
-          <div className="flex gap-2 mb-3">
-            <Input name="firstName" placeholder="First name" value={formik.errors.firstName} onChange={formik.handleChange} />
-            {<span className="text-red-600">{formik.errors.firstName}</span>}
-            <Input name="lastName" placeholder="Last name" value={formik.values.lastName} onChange={formik.handleChange} />
-            {<span className="text-red-600">{formik.errors.lastName}</span>}
-          </div>
+
           <div>
             <Input name="email" placeholder="E-mail" value={formik.values.email} onChange={formik.handleChange} />
             {<span className="text-red-600">{formik.errors.email}</span>}
@@ -109,12 +106,22 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
             <Input name="password" placeholder="Password" value={formik.values.password} onChange={formik.handleChange} />
             {<span className="text-red-600">{formik.errors.password}</span>}
           </div>
-          <DialogDescription>At least 8 characters, one capital letter, one lower case letter, one number and one special character.</DialogDescription>
+          <div className="flex justify-between m-3">
+            <div className="flex items-center gap-3">
+              <Checkbox />
+              <p>Remember me</p>
+            </div>
+            <Link className="text-blue-500" href="/">
+              Forgotten your password?
+            </Link>
+          </div>
+
           <DialogFooter>
-            <Button className="bg-blue-700 flex-1 disabled:cursor-not-allowed" type="submit" disabled={loading}>
-              {loading && <Image src={'/images/spinner.svg'} alt="a" width={40} height={40} color="white" />}
-              Agree and Continue
+            <Button className="bg-blue-700 flex w-full disabled:cursor-not-allowed" onClick={Submit} disabled={loading}>
+              {loading && <Image src={'/images/spinner.svg'} alt="a" width={40} height={40} />}
+              <div>Sign in</div>
             </Button>
+            <Toaster />
           </DialogFooter>
         </form>
       </DialogContent>
