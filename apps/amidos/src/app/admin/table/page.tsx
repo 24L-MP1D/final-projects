@@ -1,8 +1,8 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { Button } from 'flowbite-react';
 import { useEffect, useState } from 'react';
-import Draggable from 'react-draggable'; // The default
+import Draggable from 'react-draggable';
 import LeftBar from '../components/leftbar';
 
 export type TableModel = {
@@ -15,7 +15,7 @@ export type TableModel = {
 
 export default function Table() {
   const [tables, setTables] = useState<TableModel[]>([]);
-  const [deletedId, setDeletedId] = useState<string | null>(null); // Use a nullable type for deletedId
+  const [deletedId, setDeletedId] = useState<string>('');
 
   const deleteOneTable = async () => {
     if (!deletedId) {
@@ -31,7 +31,7 @@ export default function Table() {
       if (response.ok) {
         // Optionally refresh the table list after deletion
         setTables(tables.filter((table) => table._id !== deletedId));
-        setDeletedId(null); // Clear the selected ID
+        setDeletedId('');
       } else {
         const errorText = await response.text();
         console.error('Failed to delete table:', errorText);
@@ -63,8 +63,6 @@ export default function Table() {
         coordinate: current?.coordinate,
       }),
     });
-
-    return false;
   }
 
   const getTables = async () => {
@@ -99,14 +97,14 @@ export default function Table() {
           {tables &&
             tables.map((table: TableModel, index: number) => (
               <Draggable
-                key={table._id}
-                position={table.coordinate}
-                onDrag={(e, newPosition) => handleDrag(index, newPosition)}
-                onStop={() => {
-                  handleStop(index);
-                }}
+              // key={table._id}
+              // position={table.coordinate}
+              // onDrag={(e, newPosition) => handleDrag(index, newPosition)}
+              // onStop={() => {
+              //   handleStop(index);
+              // }}
               >
-                <div className={`${table ? 'bg-green-400' : ''} absolute w-20 h-20 rounded-full`}></div>
+                <div></div>
               </Draggable>
             ))}
         </div>

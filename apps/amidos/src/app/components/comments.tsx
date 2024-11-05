@@ -4,8 +4,8 @@ import { Star } from 'lucide-react';
 export default function Comments() {
   const comments = [
     { star: 5, title: 'Mаш тохилог гоё хоолтой газар байна', description: 'Mаш их таалагдлаа хурдан шуурхай үйлчилгээтэй байлаа' },
-    { star: 1, title: 'Mаш тохилог гоё хоолтой газар байна', description: 'Mаш их таалагдлаа хурдан шуурхай үйлчилгээтэй байлаа' },
-    { star: 3, title: 'Mаш тохилог гоё хоолтой газар байна', description: 'Mаш их таалагдлаа хурдан шуурхай үйлчилгээтэй байлаа' },
+    { star: 1, title: 'тохилог гоё хоолтой газар байна', description: 'Mаш их таалагдлаа хурдан шуурхай үйлчилгээтэй байлаа' },
+    { star: 3, title: 'гоё хоолтой газар байна', description: 'Mаш их таалагдлаа хурдан шуурхай үйлчилгээтэй байлаа' },
   ];
   return (
     <div className="flex gap-6 ">
