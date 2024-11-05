@@ -115,14 +115,14 @@ export default function Index() {
           >
             {products.slice(0, 6).map((product, index) => (
               <SwiperSlide key={index}>
-                <Image alt={`Slide ${index + 1}`} src={product.image_url} width={1200} height={600} className="w-full h-full object-cover hover:cursor-pointer" />
+                <Image alt={`Slide ${index + 1}`} src={product.frontImage} width={1200} height={600} className="w-full h-full object-cover hover:cursor-pointer" />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-2 w-full">
-        {products.slice(0, 6).map((product) => (
+      <div className="grid grid-cols-3 gap-10 w-full">
+        {products.slice(0, 20).map((product) => (
           <ProductItem product={product} key={product._id} onClickFavourite={() => handleFavourite(product._id)} isFavourite={!favourite.find((id) => id === product._id)} />
         ))}
       </div>
