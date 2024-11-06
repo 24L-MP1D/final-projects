@@ -12,3 +12,11 @@ export async function POST(request: Request) {
     return new Response(null, { status: 404 })
   }
 }
+export async function GET(request: Request) {
+  try {
+    const categories = await collection.find({}).toArray()
+    return Response.json(categories)
+  } catch (err) {
+    return Response.json({ message: "categories deer aldaa garlaa" })
+  }
+}

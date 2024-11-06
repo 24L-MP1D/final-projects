@@ -14,7 +14,7 @@ export default function Page() {
     const [category, setCategory] = useState<Category>();
     const [categories, setCategories] = useState<Category[]>([]);
     const loadCategory = async () => {
-        const response = await fetch('/api/AddProducts');
+        const response = await fetch('/api/categories');
         const data = await response.json();
         setCategories(data);
     };
@@ -85,7 +85,7 @@ export default function Page() {
                                         setOpen(true);
                                         setCategory(category);
                                     }}
-                                    src={'/'}
+                                    src={category.image || "/"}
                                     alt="image"
                                     width={500}
                                     height={500}
