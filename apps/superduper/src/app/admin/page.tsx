@@ -6,7 +6,7 @@ return (
 
 <AdminLayout>
 
-<div>Admin</div>
+<div>Админ</div>
 
 </AdminLayout>
 
