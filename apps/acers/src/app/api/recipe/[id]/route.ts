@@ -46,7 +46,6 @@ export async function POST(request: Request) {
       visits: 0,
       createdAt: date.toDateString(),
       updatedAt: date.toDateString(),
-      userId,
       comment,
     });
 
@@ -64,7 +63,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
   console.log('Fetching recipe with ID:', params?.id);
 
   try {
-    if (params && params.id) {
+    if (params && params?.id) {
       const { id } = params;
 
       const trimmedId = id.trim();

@@ -93,7 +93,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 export async function POST(req: Request) {
   const token = req.headers.get('authtoken');
   const body = await req.json();
-  const { recipeId, comment, rating = 0 } = body;
+  const { recipeId, comment, rating } = body;
 
   console.log('Received recipeId:', recipeId);
 
@@ -110,7 +110,7 @@ export async function POST(req: Request) {
 
     const newComment = {
       recipeId: new ObjectId(recipeId),
-      userId,
+      userId: new ObjectId(userId),
       comment,
       rating,
       createdAt: new Date(),
