@@ -58,7 +58,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 export async function POST(req: Request) {
   const token = req.headers.get('authtoken');
   const body = await req.json();
-  const { recipeId, comment } = body;
+  const { recipeId, comment, rating } = body;
 
   if (!token || !recipeId || !comment) {
     return new Response('Missing required fields', { status: 400 });
@@ -72,7 +72,7 @@ export async function POST(req: Request) {
     const { userId } = decodeToken(token);
     const newComment = {
       recipeId: new ObjectId(recipeId),
-      userId,
+      userId: new ObjectId(userId),
       comment,
       createdAt: new Date(),
     };
