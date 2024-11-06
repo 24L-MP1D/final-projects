@@ -21,7 +21,7 @@ export function ProductItem({ product, isFavourite, onClickFavourite }: { produc
   return (
     <CardContainer containerClassName="p-0 !w-full h-auto " key={product.productName} className="hover:cursor-pointer">
       <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full rounded-xl p-6 border h-auto">
-        <CardItem translateZ="50" className="text-xl font-bold text-neutral-600 dark:text-white flex justify-between w-full items-center">
+        <CardItem translateZ="50" className="text-xl font-bold text-neutral-600 dark:text-white flex justify-between w-[330px] items-center">
           <p className="overflow-hidden text-nowrap text-ellipsis w-[200px]">{product.productName}</p>
           <Button onClick={onClickFavourite} className=" hover:bg-white rounded-full h-[40px] w-[40px] bg-white items-center flex justify-center text-[#0033FF]">
             <Heart size={22} strokeWidth={2} fill={isFavourite ? '#0033FF' : 'transparent'} />
@@ -31,7 +31,7 @@ export function ProductItem({ product, isFavourite, onClickFavourite }: { produc
           {product.description}
         </CardItem>
         <CardItem translateZ="100" className="w-full mt-4">
-          <Image alt={product.frontImage} src={product.frontImage} width={100} height={100} className="!w-full !h-[200px] !object-cover" />
+          <Image alt={product.frontImage} src={product.frontImage} width={100} height={100} className="!w-full !h-[200px] !object-cover rounded-md" />
         </CardItem>
         <CardItem translateZ="50" className="text-xl font-bold text-neutral-600 dark:text-white mt-5">
           {product.category}

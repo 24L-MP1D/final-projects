@@ -9,11 +9,12 @@ import { useEffect, useState } from 'react';
 
 export default function Page() {
     const router = useRouter();
+
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useState<Category>();
     const [categories, setCategories] = useState<Category[]>([]);
     const loadCategory = async () => {
-        const response = await fetch('/api/addProducts');
+        const response = await fetch('/api/AddProducts');
         const data = await response.json();
         setCategories(data);
     };
