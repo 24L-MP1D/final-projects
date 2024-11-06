@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import { ObjectId } from 'mongodb';
-import { NextResponse } from 'next/server';
 import { DB } from '../../../lib/db';
 
 const JWT_SECRET = process.env.JWT_SECRET || '';
@@ -53,24 +52,41 @@ export async function PUT(request: Request, { params }: { params: any }) {
   }
 }
 
-export async function GET(request: Request, { params }: { params: any }) {
-  const recipeId = params.id;
-
-  if (!recipeId) {
-    return new NextResponse('Recipe ID is required', { status: 400 });
-  }
+export async function GET(request: Request, { params }: { params: { id: string } | any }) {
+  const url = new URL(request.url);
+  const recipeId = url.searchParams.get('recipeId');
 
   try {
-    // Fetch comments based on the recipeId
-    const comments = await DB.collection('comments')
-      .find({ recipeId: new ObjectId(recipeId) })
-      .toArray();
+    const query: any = {};
+    if (recipeId) query.recipeId = recipeId;
 
-    // Return comments in the response
-    return new NextResponse(JSON.stringify(comments), { status: 200 });
+    const comments = await DB.collection('comments').find(query).toArray();
+
+    if (comments.length > 0) {
+      const recipeIds = comments.map((comment: any) => comment.recipeId);
+
+      // const recipes = await DB.collection('recipes')
+      //   .find({ _id: { $in: recipeIds } })
+      //   .toArray();
+
+      const populatedComments = comments.map((comment: any) => {
+        //const recipe = recipes.find((recipe: any) => recipe._id.toString() === comment.recipeId.toString());
+        return {
+          ...comment,
+          // recipe,
+        };
+      });
+
+      return new Response(JSON.stringify(populatedComments), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    } else {
+      return new Response('No comments found', { status: 404 });
+    }
   } catch (error) {
-    console.error(error);
-    return new NextResponse('Internal server error', { status: 500 });
+    console.error('Error fetching comments:', error);
+    return new Response('Internal server error', { status: 500 });
   }
 }
 
