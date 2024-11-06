@@ -11,6 +11,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
+
 const formSchema = z.object({
   description: z.string().min(1, {
     message: 'Title is required',
@@ -20,19 +21,21 @@ const formSchema = z.object({
 interface DescriptionFormProps {
   initialData: {
     _id: string;
-    title: string;
-    description: string;
-    imageUrl: string;
-    price: number;
+    title?: string;
+    description?: string;
+    imageUrl?: string;
+    price?: number;
+    categoryId?: string;
   };
 }
 export const DescriptionForm: React.FC<DescriptionFormProps> = ({ initialData }) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => setIsEditing((x) => !x);
   const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: { description: initialData?.description || '' },
   });
 
   const { isSubmitting, isValid } = form.formState;

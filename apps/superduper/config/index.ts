@@ -7,3 +7,11 @@ export const oauth_google: Record<GOOGLE_AUTH_KEYS, string> = {
   redirect_uri: process.env.NEXT_PUBLIC_BASE_URL || '',
   scopes: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
 };
+
+export const oauth_github: Record<GOOGLE_AUTH_KEYS, string> = {
+  client_id: process.env.NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID || '',
+  client_secret: process.env.NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_SECRET || '',
+  endpoint: 'https://github.com/login/oauth/authorize',
+  redirect_uri: process.env.NEXT_PUBLIC_GITHUB_BASE_URL || '',
+  scopes: 'read:user user:email',
+};

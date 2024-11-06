@@ -12,9 +12,7 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
 
   function Submit() {
-    console.log(otpCode, 'jj');
     setLoading(true);
-    console.log(otpCode, 'jj');
     const email = JSON.parse(localStorage.getItem('email') || '{}');
     axios
       .put('/api/forgotPassword/otp', { otp: otpCode, email })

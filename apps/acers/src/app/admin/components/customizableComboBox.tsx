@@ -7,7 +7,7 @@ import { ObjectId } from 'mongodb';
 import { Button } from '../../(client)/components/ui/Button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../../(client)/components/ui/Commmand';
 import { Popover, PopoverContent, PopoverTrigger } from '../../(client)/components/ui/Popover';
-import { cn } from '../../lib/util';
+import { cn } from '../../lib/utils';
 
 interface ComboboxDemoProps {
   data: { label: string; value: ObjectId }[];

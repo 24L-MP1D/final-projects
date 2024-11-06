@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { editComment } from '../../api/comment/route';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../components/ui/dialog';
-import StarRating from '../recipe/[slug]/StarRating';
+// import { editComment } from '../../api/comment/route';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../components/ui/Dialog';
+import StarRating from '../recipe/[id]/StarRating';
 import { Button } from './ui/Button';
 
 export default function EditComment({ open, setOpen, reset, slug }: { open: boolean; setOpen: any; reset: any; slug: string }) {
@@ -21,7 +21,7 @@ export default function EditComment({ open, setOpen, reset, slug }: { open: bool
               variant="outline"
               className="rounded-full px-9 py-2 text-white bg-blue-600 text-sm mt-2"
               onClick={async () => {
-                await editComment(slug, rating, comment);
+                // await editComment(slug, rating, comment);
                 reset();
                 setOpen();
               }}

@@ -1,9 +1,12 @@
 'use client';
 
 import { Checkbox } from '@/components/ui/Checkbox';
-import { FormikValues, useFormik } from 'formik';
+import { useFormik } from 'formik';
+import { X } from 'lucide-react';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
@@ -14,6 +17,7 @@ import { Input } from './ui/Input';
 import { Button } from './ui/button';
 
 export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
+  const router = useRouter();
   const [dialogOpen, setDialogOpen] = useState(true);
   const initialValues = {
     email: '',
@@ -33,13 +37,34 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
 
   const formik = useFormik({
     initialValues,
-    onSubmit: (values) => {
-      console.log(values);
-      Submit(values);
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/sign-in', {
+          method: 'POST',
+          body: JSON.stringify(values),
+          headers: {
+            'Content-type': 'application/json',
+          },
+        });
+
+        if (response.status === 201) {
+          console.log('success');
+
+          toast('Signed Up Successfully');
+
+          setLoading(false);
+        } else {
+          console.log('error');
+        }
+        setDialogOpen(false);
+        router.push('/client');
+      } catch (err) {
+        console.log('error in sign in');
+      }
     },
     validationSchema,
   });
-
   const [loading, setLoading] = useState(false);
 
   async function Submit(values: FormikValues) {
@@ -71,7 +96,13 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
     <Dialog open={dialogOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={formik.handleSubmit}>
-          <DialogTitle className="font-thin text-center">Sign in or Create an account</DialogTitle>
+          <DialogTitle className="font-thin text-center flex justify-between">
+            <div>Sign in or Create an account</div>
+            <Link href="/client">
+              <X onClick={() => setDialogOpen(false)} className="h-4 w-4" />
+            </Link>
+          </DialogTitle>
+
           {/* <button onClick={() => setDialogOpen(false)} className="text-gray-500 hover:text-gray-700">
             ✕
           </button> */}
