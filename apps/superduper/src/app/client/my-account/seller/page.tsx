@@ -29,9 +29,9 @@ export default function App() {
       <ProfileAside queryValue={queryValue} />
       <div className="flex-1 bg-white px-4 py-8">
         <div className="flex mb-6">
-          <div className="flex-1">Item Description</div>
-          <div className="flex-1 flex justify-center">Status</div>
-          <div className="flex-1 text-center">Action</div>
+          <div className="flex-1">Барааны тодорхойлолт</div>
+          <div className="flex-1 flex justify-center">Төлөв</div>
+          <div className="flex-1 text-center">Үйлдэл</div>
         </div>
         <div className="flex flex-col">
           {products.map((product) => (
@@ -41,9 +41,9 @@ export default function App() {
                   <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900">
                     <Image src={product.frontImage} alt="jordans" height={400} width={400} className="object-cover w-[150px] h-[150px]" />
                     <div className="flex flex-col gap-2">
-                      <div>Country: {product.Country}</div>
-                      <div>Product Name: {product.productName}</div>
-                      <div>Category: {product.category}</div>
+                      <div>Улс: {product.Country}</div>
+                      <div>Бүтээгдэхүүний нэр: {product.productName}</div>
+                      <div>Ангилал: {product.category}</div>
                     </div>
                   </BackgroundGradient>
                 </div>
@@ -68,17 +68,17 @@ export default function App() {
                     </div>
                   </div>
                   <div className="flex gap-8 ml-4 items-center ">
-                    <div>Received</div>
-                    {product.status == 'denied' && <div className="text-[#f3f3f3]">closed</div>}
-                    {product.status !== 'denied' && <div className="text-[#f3f3f3]">Accepted</div>}
-                    {product.status !== 'denied' && <div className="text-[#f3f3f3]">Listed</div>}
-                    {product.status !== 'denied' && <div className="text-[#f3f3f3]">Sold</div>}
+                    <div>Хүлээн авсан</div>
+                    {product.status == 'denied' && <div className="text-[#f3f3f3]">Хаагдсан</div>}
+                    {product.status !== 'denied' && <div className="text-[#f3f3f3]">Хүлээн зөвшөөрсөн</div>}
+                    {product.status !== 'denied' && <div className="text-[#f3f3f3]">Жагсаалтад орсон</div>}
+                    {product.status !== 'denied' && <div className="text-[#f3f3f3]">Худалдсан</div>}
                   </div>
                 </div>
               </div>
 
               <div className="flex-1 flex justify-center">
-                <Button>Detail</Button>
+                <Button>Дэлгэрэнгүй</Button>
               </div>
             </div>
           ))}

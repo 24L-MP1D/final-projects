@@ -20,11 +20,11 @@ export const ProductPrice = ({ formikErrors, formikHandleChange, formikSetFieldV
   }, [date]);
   return (
     <section className="pb-28">
-      <header className="mt-16 mb-8 text-[#333333] text-2xl">Price</header>
+      <header className="mt-16 mb-8 text-[#333333] text-2xl">Үнэ</header>
       <div className="flex justify-between gap-2">
         <div className="flex-1">
           <div className="flex justify-between items-center">
-            <div className="text-[#23448d] text-sm mb-1.5">Price Paid*</div>
+            <div className="text-[#23448d] text-sm mb-1.5">Төлсөн үнэ*</div>
           </div>
           <div className="flex relative border-b-[1px]">
             <Input id="startBid" value={formikValues.startBid > 0 ? formikValues.startBid : ''} onChange={formikHandleChange} maxLength={200} type="number" className="flex-1 border-none" />
@@ -33,16 +33,16 @@ export const ProductPrice = ({ formikErrors, formikHandleChange, formikSetFieldV
         </div>
         <div className="flex-1">
           <div className="">
-            <div className="text-[#23448d] text-sm mb-1.5">Currency*</div>
+            <div className="text-[#23448d] text-sm mb-1.5">Валют*</div>
           </div>
           <div className="flex border-b-[1px] relative">
             <Input maxLength={200} type="text" className="flex-1 border-none" />
           </div>
         </div>
       </div>
-      <header className="mt-16 mb-8 text-[#333333] text-2xl">Bid Date</header>
+      <header className="mt-16 mb-8 text-[#333333] text-2xl">Үнэ хэлэх огноо</header>
 
-      <div className="text-xl">startDate - endDate</div>
+      <div className="text-xl">эхлэх огноо - дуусах огноо</div>
       <div>
         <DatePickerWithRange date={date} setDate={setDate} />
         {formikTouched.startDate && formikErrors.startDate && <p className="text-red-">{String(formikErrors.startDate)}</p>}

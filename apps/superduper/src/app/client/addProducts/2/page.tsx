@@ -102,15 +102,15 @@ export default function Page() {
             </div>
           </div>
           <div className="flex gap-10 justify-center items-center ">
-            <div>Category</div>
-            <div>Detail</div>
-            <div className="text-[#f3f3f3]">Photos</div>
-            <div className="text-[#f3f3f3]">Logistics</div>
-            <div className="text-[#f3f3f3]">Review</div>
+            <div>Ангилал</div>
+            <div>Дэлгэрэнгүй</div>
+            <div className="text-[#f3f3f3]">Зураг</div>
+            <div className="text-[#f3f3f3]">Логистик</div>
+            <div className="text-[#f3f3f3]">Хянан үзэх</div>
           </div>
         </div>
-        <div className="mt-8 text-center text-[#333] text-[48px]">Tell us about your item</div>
-        <header className="text-[#333333] text-2xl mb-8">General</header>
+        <div className="mt-8 text-center text-[#333] text-[48px]">Барааныхаа талаар бидэнд хэлнэ үү</div>
+        <header className="text-[#333333] text-2xl mb-8">Ерөнхий</header>
         <AddProductGeneral
           showCountry={showCountry}
           setShowCountry={setShowCountry}

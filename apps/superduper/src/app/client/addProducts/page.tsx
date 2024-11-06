@@ -52,7 +52,7 @@ export default function Page() {
           </div>
         </div>
         <div className="flex gap-10 justify-center items-center ">
-          <div>Category</div>
+          <div>Ангилал</div>
           <div className="text-[#f3f3f3]">Дэлгэрэнгүй</div>
           <div className="text-[#f3f3f3]">Зураг</div>
           <div className="text-[#f3f3f3]">Логистик</div>

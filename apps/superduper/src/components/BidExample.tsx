@@ -66,13 +66,13 @@ export const Auction = ({ oneProduct }: { oneProduct: ProductType }) => {
 
   return (
     <div>
-      <h2>Live Auction Bids</h2>
+      <h2>Шууд дуудлага худалдаа</h2>
       <Input type="number" value={bid > 0 ? bid : ''} onChange={(e) => setBid(Number(e.target.value))} />
-      <button onClick={bidPost}>Publish</button>
+      <button onClick={bidPost}>Нийтлэх</button>
       <ul>
         {bids.map((bid, index) => (
           <li key={index}>
-            {bid.user} placed a bid of ${bid.amount}
+            {bid.user} Үнийн санал оруулах доллар{bid.amount}
           </li>
         ))}
       </ul>
