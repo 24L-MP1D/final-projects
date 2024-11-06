@@ -6,19 +6,29 @@ import { db } from "@/lib/db";
 //   return Response.json(schools);
 // }
 
-export async function GET(request: Request) {
+
+async function getCurrentSchool(request: Request) {
   const host = new URL(request.url).hostname ;
-  const hostname = host === 'localhost' ? process.env.NAME : host;
+  const hostname = host === 'localhost' ? process.env.CURRENT_HOST : host;
   const school = await db.collection('schools').findOne({domain: hostname});
-  if (!school){
-    throw new Error (`School not found for domain : ${hostname}`)
+  return school
+}
+
+export async function GET(request: Request) {
+  const currentSchool = await getCurrentSchool(request);
+
+  
+
+
+  if (!currentSchool){
+    return new Response('Not Found', { status: 404 });
   }
   // const id=  school?._id
   // const oneSchool = await db.collection('schools').findOne({ _id: new ObjectId(id) });
   // if (!oneSchool) {
   //   return new Response('Not Found', { status: 404 });
   // }
-  return Response.json(school[0]);
+  return Response.json(currentSchool);
 }
 
 export async function POST(request: Request) {
