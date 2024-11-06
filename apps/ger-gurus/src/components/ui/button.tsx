@@ -15,6 +15,7 @@ const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         defaultProjects: 'rounded-full bg-gradient-to-r from-violet-200 to-pink-200  text-white text-xs',
+        teacherButton: 'px-4 py-3 bg-green-900 rounded-lg text-white',
       },
       size: {
         default: 'h-10 px-4 py-2',

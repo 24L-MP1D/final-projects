@@ -1,15 +1,16 @@
 const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
 const { join } = require('path');
 const { fontFamily } = require("tailwindcss/defaultTheme")
+const {withUt}=require("uploadthing/tw")
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+module.exports = withUt({
   darkMode: ["class"],
   content: ["app/**/*.{ts,tsx}", "components/**/*.{ts,tsx}", join(__dirname, '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'), ...createGlobPatternsForDependencies(__dirname)],
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "28px",
       screens: {
         "2xl": "1400px",
       },
@@ -87,4 +88,4 @@ module.exports = {
     },
     plugins: [],
   }
-};
+});
