@@ -23,7 +23,7 @@ interface AttachmentFormProps {
     imageUrl?: string;
     price?: number;
     categoryId?: string;
-    attachments: Attachment[];
+    attachments?: [];
   };
 }
 export const AttachmentForm: React.FC<AttachmentFormProps> = ({ initialData }) => {
