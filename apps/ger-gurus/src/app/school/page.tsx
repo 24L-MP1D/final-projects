@@ -1,13 +1,30 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 // type Data = {
 //   _id: string;
 //   domain: string;
 // };
+interface SchoolData{
+  domain?: string
+}
 
 export default function Page() {
+  const [schoolData, setSchoolData]= useState<SchoolData>({domain: ""})
+
+  const getSchool= async()=>{
+    const response=await fetch('/api/schools')
+    const data= await response.json()
+      setSchoolData(data?.[0])
+  }
+
+  useEffect(() => {
+    getSchool();
+  }, []);
+
+
   // const [data, setData] = useState<Data[]>([]);
 
   // function loadUser() {
@@ -49,7 +66,9 @@ export default function Page() {
       {/* Main */}
       <div className="w-[1280px] flex flex-col gap-20 bg-white mx-auto py-24">
         <div className="flex flex-col gap-10 px-12">
-          <div className="text-center text-2xl">Танилцуулга </div>
+          <div className="text-center text-2xl">Танилцуулга 
+            {schoolData?.domain}
+          </div>
           {/* {data.map((d) => (
             <div key={d._id}>{d.domain}</div>
           ))} */}

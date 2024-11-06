@@ -1,24 +1,26 @@
 import { db } from '@/lib/db';
 import { ObjectId } from 'mongodb';
 
-// export async function GET(request: Request) {
-//   const host = new URL(request.url).hostname ;
-//  const hostname = host === 'localhost' ? process.env.NAME : host;
-//   console.log(hostname)
-//   const school = await db.collection('schools').findOne({domain: hostname});
-//   return  new Response(JSON.stringify(school), {status: 200})
-// }
+export async function findSchoolId(request: Request) {
+  const host = new URL(request.url).hostname ;
+ const hostname = host === 'localhost' ? process.env.NAME : host;
+  const school = await db.collection('schools').findOne({domain: hostname});
+  if (!school){
+    throw new Error (`School not found for domain : ${hostname}`)
+  }
+  return school?._id
+}
 
-type Params = Promise<{ id: string }>
-
-export async function GET(request: Request, { params }: { params: Params }) {
-  const {id}= await params
+export async function GET(request: Request) {
+  const id=await  findSchoolId(request)
   const oneSchool = await db.collection('schools').findOne({ _id: new ObjectId(id) });
   if (!oneSchool) {
     return new Response('Not Found', { status: 404 });
   }
   return Response.json(oneSchool);
 }
+
+type Params = Promise<{ id: string }>
 
 export async function PUT(request: Request, { params }: { params: Params }) {
   const {id}= await params
