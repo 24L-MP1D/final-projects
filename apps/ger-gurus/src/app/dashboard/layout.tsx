@@ -15,9 +15,11 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <ToastProvider />
-      {children}
-    </>
+    <html lang="en">
+      <body>
+        <ToastProvider />
+        {children}
+      </body>
+    </html>
   );
 }

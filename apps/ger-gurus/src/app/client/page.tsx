@@ -16,10 +16,9 @@ export default function Page() {
     }
   }, []);
   return (
-    <div className=" ">
+    <main>
       <SchoolPageHeader />
       <HomePageInfo />
-      <div className="h-[2000px] w-[1000px]"></div>
-    </div>
+    </main>
   );
 }
