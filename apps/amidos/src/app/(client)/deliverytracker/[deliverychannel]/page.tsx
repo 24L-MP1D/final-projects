@@ -60,11 +60,8 @@ function Directions({ latitude, longitude, deliverychannel }: Props) {
   const [messages, setMessages] = useState<Ably.Message>();
   const deliverypersonposition = messages?.data;
   const deliveryperson = deliverypersonposition?.join(', ');
-  console.log(deliveryperson);
 
-  useConnectionStateListener('connected', () => {
-    console.log('Connected to Ably');
-  });
+  useConnectionStateListener('connected', () => {});
 
   const { channel } = useChannel(deliverychannel, 'message', (message) => {
     setMessages(message);
@@ -96,7 +93,6 @@ function Directions({ latitude, longitude, deliverychannel }: Props) {
       });
   }, [directionsService, directionsRenderer]);
 
-  console.log(routes);
   if (!leg) return null;
   return (
     <div className="directions absolute top-0 right-0 bg-slate-500 text-white w-[400px] p-6 rounded-lg flex flex-col gap-3">

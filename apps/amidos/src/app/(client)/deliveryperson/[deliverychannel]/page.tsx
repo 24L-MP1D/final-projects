@@ -57,12 +57,9 @@ function Directions({ latitude, longitude, deliverychannel }: Props) {
   const [routeIndex, setRouteIndex] = useState(0);
   const selected = routes[routeIndex];
   const leg = selected?.legs[0];
-  useConnectionStateListener('connected', () => {
-    console.log('Connected to Ably');
-  });
+  useConnectionStateListener('connected', () => {});
 
   const { channel } = useChannel(deliverychannel, 'message');
-  console.log(channel);
   const sendPosition = () => {
     channel.publish('message', [latitude, longitude]);
   };
@@ -96,7 +93,6 @@ function Directions({ latitude, longitude, deliverychannel }: Props) {
       });
   }, [directionsService, directionsRenderer]);
 
-  console.log(routes);
   if (!leg) return null;
   return (
     <div className="directions absolute top-0 right-0 bg-slate-500 text-white w-[400px] p-6 rounded-lg flex flex-col gap-3">

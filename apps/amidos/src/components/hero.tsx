@@ -15,10 +15,8 @@ export default function Hero() {
   const [searchid, setSearchid] = useState('');
 
   const [searcheddata, setSearcheddata] = useState('');
-  console.log(searchid);
 
   const [searchValue, setSearchvalue] = useState('');
-  console.log(searchValue);
   const onStateChange = ({ uiState, setUiState }: Props) => {
     setUiState(uiState);
     setSearchvalue(uiState.amidos.query);

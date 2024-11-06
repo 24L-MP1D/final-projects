@@ -1,3 +1,5 @@
+'use client';
+
 import { AuthProvider } from '@/components/authprovider';
 import { Logout } from '@/components/logout';
 import { Protect } from '@/components/protect';
@@ -6,8 +8,17 @@ import { SignedOutAmidos } from '@/components/signedout';
 
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <div>
       <AuthProvider>
@@ -25,8 +36,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <SignedInAmidos>
         <Logout />
       </SignedInAmidos>
- 
     </div>
-  
   );
 }

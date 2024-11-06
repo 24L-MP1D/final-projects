@@ -51,7 +51,7 @@ export default function Login() {
           localStorage.setItem('accesstoken', res.data.token);
           toast.success('Амжилттай нэвтэрлээ');
           setTimeout(() => {
-            window.location.href = '/admin/food';
+            window.location.href = '/admin/users';
           }, 1000);
 
           return;

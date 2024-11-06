@@ -12,7 +12,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .get('/api/admin/me')
       .then(({ data }) => {
         setCurrentUser(data);
-        console.log(data);
       })
       .catch(() => {
         setCurrentUser(null);

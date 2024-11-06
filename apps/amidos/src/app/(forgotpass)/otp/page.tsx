@@ -16,6 +16,7 @@ export default function Confirm() {
 
   function onSubmit() {
     localStorage.setItem('otp', otp);
+
     const res = axios
       .post('api/admin/otpget', {
         recoveryemail,
@@ -31,19 +32,25 @@ export default function Confirm() {
       .catch(function (error) {
         if (error.response.status === 401) {
           setOPT('');
+
           localStorage.removeItem('otp');
+
           toast.error('Бүртгэлгүй хэрэглэгч байна. Та бүртгүүлнэ үү');
           return;
         } else if (error.response.status === 404) {
           setOPT('');
+
           localStorage.removeItem('otp');
+
           toast.error('Баталгаажуулах код хүчингүй байна. Нууц үг сэргээх хуудас руу шилжүүлж байна.');
           setTimeout(() => {
             (window as Window).location = '/forgotpass';
           }, 1000);
         } else {
           setOPT('');
+
           localStorage.removeItem('otp');
+
           toast.error('Алдаа гарлаа. Дахин оролдоно уу');
         }
       });

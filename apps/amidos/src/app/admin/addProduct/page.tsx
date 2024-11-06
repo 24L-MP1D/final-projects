@@ -95,7 +95,6 @@ export default function Foods() {
         await response.json();
         toast('Successfully added the product');
         loadlist();
-        console.log('Created');
       } else {
         toast.error('Failed to add food');
         console.log('Error:', response.statusText);

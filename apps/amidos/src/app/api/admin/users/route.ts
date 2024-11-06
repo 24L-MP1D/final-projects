@@ -4,7 +4,6 @@ import { ObjectId } from 'mongodb';
 export async function GET(request: Request) {
   try {
     const allUsers = await db.collection('user').find({}).toArray();
-    console.log(allUsers);
     if (!allUsers) {
       return new Response('Any user found', { status: 404 });
     }

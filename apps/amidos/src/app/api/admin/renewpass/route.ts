@@ -1,13 +1,12 @@
 import { db } from '@/lib/db';
 export async function PUT(request: Request) {
   const bcrypt = require('bcryptjs');
-  
+
   try {
     const body = await request.json();
     const salt = await bcrypt.genSaltSync(10);
 
     const { email, password, otp } = body;
-    console.log(otp);
     if (!otp) {
       return new Response('OTP not found', { status: 401 });
     }
@@ -22,7 +21,6 @@ export async function PUT(request: Request) {
     if (!isValid) {
       return new Response('OTP not found', { status: 401 });
     }
-   
 
     const hashedPassword = await bcrypt.hashSync(password, salt);
     const dataofperson = await db.collection('user').updateOne({ email: email }, { $set: { password: hashedPassword } });

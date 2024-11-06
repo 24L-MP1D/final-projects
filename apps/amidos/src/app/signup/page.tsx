@@ -65,7 +65,6 @@ export default function Signup() {
         setLoading(false);
         if (error.response.status === 400) {
           reset();
-          console.log(error);
           toast.error('Бүртгэгдсэн хэрэглэгч байна. Нэвтрэх хэсэг рүү чиглүүлж байна');
           setTimeout(() => {
             window.location.href = '/login';

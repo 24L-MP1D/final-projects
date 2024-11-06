@@ -80,7 +80,6 @@ function Directions({ latitude, longitude }: Props) {
       });
   }, [directionsService, directionsRenderer]);
 
-  console.log(routes);
   if (!leg) return null;
   return (
     <div className="directions">
