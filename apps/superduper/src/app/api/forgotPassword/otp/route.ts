@@ -11,10 +11,9 @@ export async function PUT(request: Request) {
     const collection = DB.collection('users');
     const { otp, email } = await request.json();
     const user = await collection.findOne({ email });
+    if (!user) return new Response(null, { status: 404 });
 
-    if (!user) return new Response(null, { status: 400 });
-
-    if (otp == user.otp) return new Response(null, { status: 200 });
+    if (Number(otp) == user.otp) return new Response(null, { status: 200 });
     return new Response(null, { status: 404 });
   } catch (err) {
     return new Response(null, { status: 404 });

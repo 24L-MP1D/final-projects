@@ -54,15 +54,16 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
       });
       if (response.status === 201) {
         console.log('success');
+        setLoading(false);
 
         toast('Signed Up Successfully');
-
-        setLoading(false);
+        window.location.href = '/client';
       } else {
         console.log('error');
+        setLoading(false);
       }
     } catch (err) {
-      console.log('error in sign up');
+      console.log('error in sign in');
     }
   }
 
@@ -111,17 +112,16 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
               <Checkbox />
               <p>Remember me</p>
             </div>
-            <Link className="text-blue-500" href="/">
-              Forgotten your password?
+            <Link className="text-blue-500" href="/client/forgotten-email">
+              <div>Forgotten your password?</div>
             </Link>
           </div>
 
           <DialogFooter>
-            <Button className="bg-blue-700 flex w-full disabled:cursor-not-allowed" onClick={Submit} disabled={loading}>
+            <Button className="bg-blue-700 flex w-full disabled:cursor-not-allowed" type="submit" disabled={loading}>
               {loading && <Image src={'/images/spinner.svg'} alt="a" width={40} height={40} />}
               <div>Sign in</div>
             </Button>
-            <Toaster />
           </DialogFooter>
         </form>
       </DialogContent>

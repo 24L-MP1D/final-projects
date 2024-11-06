@@ -1,5 +1,6 @@
 'use client';
 
+import { Input } from '@/components/input';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
 import Image from 'next/image';
@@ -11,7 +12,9 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
 
   function Submit() {
+    console.log(otpCode, 'jj');
     setLoading(true);
+    console.log(otpCode, 'jj');
     const email = JSON.parse(localStorage.getItem('email') || '{}');
     axios
       .put('/api/forgotPassword/otp', { otp: otpCode, email })
@@ -38,7 +41,7 @@ export default function Page() {
         <p className="text-[24px] font-bold mt-8">Enter your OTP</p>
         <p>Enter your OTP number press the SEND button.</p>
         <div>
-          <input placeholder="Insert OTP" className="border-2 bg-slate-50 rounded-3xl w-full p-3" onChange={(e) => setOtpCode(e.target.value)} />
+          <Input placeholder="Insert OTP" className="border-2 bg-slate-50 rounded-3xl w-full p-3" onChange={(e) => setOtpCode(e.target.value)} />
         </div>
         <Button onClick={Submit} className="bg-blue-500 mb-8" disabled={loading}>
           {loading && <Image src={'/image/spinner.svg'} alt="a" width={40} height={40} />}

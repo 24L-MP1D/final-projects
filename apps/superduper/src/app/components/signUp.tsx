@@ -55,12 +55,13 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
       });
       if (response.status === 201) {
         console.log('success');
-
-        toast('Signed Up Successfully');
-
         setLoading(false);
+
+        toast('Signed In Successfully');
+        window.location.href = '/client';
       } else {
         console.log('error');
+        setLoading(false);
       }
     } catch (err) {
       console.log('error in sign up');
