@@ -9,8 +9,8 @@ export default function Comments() {
   ];
   return (
     <div className="flex gap-6 ">
-      {comments.map((comment) => (
-        <div className="flex  flex-col gap-7 p-28 border border-gray-100 text-justify" key={comment.title}>
+      {comments.map((comment, index) => (
+        <div className="flex  flex-col gap-7 p-28 border border-gray-100 text-justify" key={comment.title + index}>
           <div className="flex">
             <Star color="#FFEA00" fill="#FFEA00" />
             <Star color="#FFEA00" fill={comment.star !== 1 ? '#FFEA00' : 'white'} />

@@ -3,7 +3,6 @@
 import { Button } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
-import LeftBar from '../components/leftbar';
 
 export type TableModel = {
   _id: string;
@@ -91,28 +90,28 @@ export default function Table() {
 
   return (
     <div className="max-w-[1440px] mx-auto flex gap-5">
-      <LeftBar />
       <div className="flex gap-10 mt-5">
         <div className="w-[800px] h-[800px] bg-slate-400 relative">
           {tables &&
             tables.map((table: TableModel, index: number) => (
               <Draggable
-              // key={table._id}
-              // position={table.coordinate}
-              // onDrag={(e, newPosition) => handleDrag(index, newPosition)}
-              // onStop={() => {
-              //   handleStop(index);
-              // }}
+                key={table._id}
+                position={table.coordinate}
+                onDrag={(e, newPosition) => handleDrag(index, newPosition)}
+                onStop={() => {
+                  handleStop(index);
+                }}
               >
-                <div></div>
+                {/* <div className={`${table ? 'bg-green-400' : ''} absolute w-20 h-20`}></div> */}
+                <div onClick={() => setDeletedId(table._id)} className={` ${deletedId === table._id ? 'bg-emerald-100 border border-white' : ''} bg-emerald-600 rounded-full absolute w-20 h-20`}></div>
               </Draggable>
             ))}
         </div>
         <div className="flex flex-col gap-4">
-          <Button onClick={createTable} className="">
-            add table
+          <Button onClick={createTable} className="bg-black text-white">
+            add
           </Button>
-          <Button onClick={deleteOneTable} className="">
+          <Button onClick={deleteOneTable} className="bg-black text-white">
             Delete
           </Button>
         </div>
