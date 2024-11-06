@@ -26,10 +26,11 @@ export async function GET(request: Request) {
   }
 
   try {
-    const result = await collection.find(filt).toArray();
+    const result = await collection.find({}).toArray();
+    console.log(result)
     return Response.json(result);
   } catch (err) {
-    console.error(err);
+    return new Response(null, { status: 404 })
   }
   return Response.json({ message: 'Heelo world!' });
 }

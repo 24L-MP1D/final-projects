@@ -17,7 +17,42 @@ function decodeToken(authtoken: string): { userId: string } {
   }
 }
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, { params }: { params: any }) {
+  const token = request.headers.get('authtoken');
+  const body = await request.json();
+  const { comment, rating } = body;
+
+  if (!token) {
+    return new Response('Authentication token is required', { status: 401 });
+  }
+
+  try {
+    const { userId } = decodeToken(token);
+
+    if (typeof comment !== 'string' || typeof rating !== 'number') {
+      return new Response('Invalid input data', { status: 400 });
+    }
+
+    const updateData = {
+      comment,
+      rating,
+      updatedAt: new Date(),
+    };
+
+    const result = await DB.collection('comments').updateOne({ recipeId: new ObjectId(params.recipeId), userId }, { $set: updateData });
+
+    if (result.matchedCount === 0) {
+      return new Response('No comment found to update', { status: 404 });
+    }
+
+    return new Response(null, { status: 204 });
+  } catch (error) {
+    console.error('Error updating comment:', error);
+    return new Response('Internal server error', { status: 500 });
+  }
+}
+
+export async function GET(request: Request, { params }: { params: { id: string } | any }) {
   const url = new URL(request.url);
   const recipeId = url.searchParams.get('recipeId');
 
@@ -60,21 +95,26 @@ export async function POST(req: Request) {
   const body = await req.json();
   const { recipeId, comment, rating } = body;
 
-  if (!token || !recipeId || !comment) {
-    return new Response('Missing required fields', { status: 400 });
-  }
+  console.log('Received recipeId:', recipeId);
 
-  if (!ObjectId.isValid(recipeId)) {
-    return new Response('Invalid recipeId format', { status: 400 });
+  if (!token || !recipeId || !comment) {
+    return new Response('Missing required fields or invalid data', { status: 400 });
   }
 
   try {
-    const { userId } = decodeToken(token);
+    if (!ObjectId.isValid(recipeId)) {
+      return new Response('Invalid recipeId format', { status: 400 });
+    }
+
+    const { userId } = decodeToken(token as string);
+
     const newComment = {
       recipeId: new ObjectId(recipeId),
       userId: new ObjectId(userId),
       comment,
+      rating,
       createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
     await DB.collection('comments').insertOne(newComment);
@@ -82,41 +122,6 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error(error);
     return new Response(JSON.stringify({ val: 'failed' }), { status: 500 });
-  }
-}
-
-export async function PUT(request: Request, { params }: { params: { recipeId: string } }) {
-  const token = request.headers.get('authtoken');
-  const body = await request.json();
-  const { comment, rating } = body;
-
-  if (!token) {
-    return new Response('Authentication token is required', { status: 401 });
-  }
-
-  try {
-    const { userId } = decodeToken(token);
-
-    if (typeof comment !== 'string' || typeof rating !== 'number') {
-      return new Response('Invalid input data', { status: 400 });
-    }
-
-    const updateData = {
-      comment,
-      rating,
-      updatedAt: new Date(),
-    };
-
-    const result = await DB.collection('comments').updateOne({ recipeId: new ObjectId(params.recipeId), userId }, { $set: updateData });
-
-    if (result.matchedCount === 0) {
-      return new Response('No comment found to update', { status: 404 });
-    }
-
-    return new Response(null, { status: 204 });
-  } catch (error) {
-    console.error('Error updating comment:', error);
-    return new Response('Internal server error', { status: 500 });
   }
 }
 

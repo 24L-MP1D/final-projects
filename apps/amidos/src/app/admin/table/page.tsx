@@ -1,9 +1,8 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { Button } from 'flowbite-react';
 import { useEffect, useState } from 'react';
-import Draggable from 'react-draggable'; // The default
-import LeftBar from '../components/leftbar';
+import Draggable from 'react-draggable';
 
 export type TableModel = {
   _id: string;
@@ -15,7 +14,7 @@ export type TableModel = {
 
 export default function Table() {
   const [tables, setTables] = useState<TableModel[]>([]);
-  const [deletedId, setDeletedId] = useState<string | null>(null); // Use a nullable type for deletedId
+  const [deletedId, setDeletedId] = useState<string>('');
 
   const deleteOneTable = async () => {
     if (!deletedId) {
@@ -31,7 +30,7 @@ export default function Table() {
       if (response.ok) {
         // Optionally refresh the table list after deletion
         setTables(tables.filter((table) => table._id !== deletedId));
-        setDeletedId(null); // Clear the selected ID
+        setDeletedId('');
       } else {
         const errorText = await response.text();
         console.error('Failed to delete table:', errorText);
@@ -63,8 +62,6 @@ export default function Table() {
         coordinate: current?.coordinate,
       }),
     });
-
-    return false;
   }
 
   const getTables = async () => {
@@ -93,7 +90,6 @@ export default function Table() {
 
   return (
     <div className="max-w-[1440px] mx-auto flex gap-5">
-      <LeftBar />
       <div className="flex gap-10 mt-5">
         <div className="w-[800px] h-[800px] bg-slate-400 relative">
           {tables &&
@@ -106,15 +102,16 @@ export default function Table() {
                   handleStop(index);
                 }}
               >
-                <div className={`${table ? 'bg-green-400' : ''} absolute w-20 h-20 rounded-full`}></div>
+                {/* <div className={`${table ? 'bg-green-400' : ''} absolute w-20 h-20`}></div> */}
+                <div onClick={() => setDeletedId(table._id)} className={` ${deletedId === table._id ? 'bg-emerald-100 border border-white' : ''} bg-emerald-600 rounded-full absolute w-20 h-20`}></div>
               </Draggable>
             ))}
         </div>
         <div className="flex flex-col gap-4">
-          <Button onClick={createTable} className="">
-            add table
+          <Button onClick={createTable} className="bg-black text-white">
+            add
           </Button>
-          <Button onClick={deleteOneTable} className="">
+          <Button onClick={deleteOneTable} className="bg-black text-white">
             Delete
           </Button>
         </div>
