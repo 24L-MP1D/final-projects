@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocalStorage } from "@uidotdev/usehooks";
@@ -6,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
 type Table = {
     _id: string,
     name: string
@@ -14,20 +16,38 @@ type Table = {
         y: number
     }
 };
-export default function TableBook() {
+
+
+export default function Page() {
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, []);
+
+    if (!mounted) {
+        return null;
+    }
+
+    return <TableBook />
+}
+
+function TableBook() {
     const router = useRouter();
     const [selectedTime, setSelectedTime] = useLocalStorage<string | null>("selectedTime", null);
     const [reservedSeat, setReservedSeat] = useLocalStorage<number | null>("reservedSeat", null);
-    const [selectedTable, setSelectedTable] = useLocalStorage<string>("");
+    const [selectedTable, setSelectedTable] = useLocalStorage<string | null>("selectedTable", null);
     const [day, setDay] = useLocalStorage("day", new Date().toISOString());
     const [tables, setTables] = useState<Table[]>([]);
     const [loading, setLoading] = useState(true);
+
     const reset = () => {
         setSelectedTime(null);
         setReservedSeat(null);
         setSelectedTable("");
         setDay(new Date().toISOString());
     };
+
     const handleSubmit = () => {
         if (!selectedTime || !selectedTable || !reservedSeat || reservedSeat <= 0) {
             alert("Please complete all fields!");
@@ -38,12 +58,13 @@ export default function TableBook() {
             alert("Please select a time between 10:00 and 23:00.");
             return;
         }
-        if (reservedSeat > 10) {
-            alert("The maximum number of people per table is 10.");
+        if (reservedSeat > 50) {
+            alert("The maximum number of people per table is 50.");
             return;
         }
         router.push("/tablebook-verify");
     };
+
     useEffect(() => {
         const getTablesDetail = async () => {
             setLoading(true);
@@ -62,12 +83,13 @@ export default function TableBook() {
         reset();
         getTablesDetail();
     }, []);
+
     return (
         <div className="flex flex-col justify-center gap-8 p-20 mx-auto">
             <div className="flex justify-between items-center">
                 <div className="flex gap-8 p-3">
                     <div className="flex flex-col gap-4">
-                        <p className="text-xl font-semibold">Select Date</p>
+                        <p className="text-xl font-semibold">Өдөр сонгох</p>
                         <DatePicker
                             selected={new Date(day)}
                             onSelect={(val) => setDay(val ? new Date(val).toISOString() : new Date().toISOString())}
@@ -76,7 +98,7 @@ export default function TableBook() {
                         />
                     </div>
                     <div className="flex flex-col gap-4">
-                        <p className="text-xl font-semibold">Select Time</p>
+                        <p className="text-xl font-semibold">Цаг сонгох</p>
                         <input
                             type="time"
                             id="time"
@@ -89,9 +111,9 @@ export default function TableBook() {
                         />
                     </div>
                     <div className="flex flex-col gap-4">
-                        <p className="text-xl font-semibold">Number of Guests</p>
+                        <p className="text-xl font-semibold">Хүний тоо</p>
                         <Input
-                            placeholder="Number of guests"
+                            placeholder="Хүний тоо"
                             type="number"
                             min="1"
                             value={reservedSeat || ''}
@@ -101,8 +123,8 @@ export default function TableBook() {
                     </div>
                 </div>
                 <Button
-                    className={`w-[200px] h-[40px] py-2 text-center bg-[#52071B] rounded-xl text-white text-base font-semibold hover:bg-[#52071b92] ${!selectedTime || !selectedTable || !reservedSeat ? "opacity-50 cursor-not-allowed" : ""
-                        }`}
+                    className={`w-[200px] h-[40px] py-2 text-center bg-[#52071B] rounded-xl text-white text-base font-semibold hover:bg-[#52071b92] 
+                        ${!selectedTime || !selectedTable || !reservedSeat ? "opacity-50 cursor-not-allowed" : ""}`}
                     onClick={handleSubmit}
                     disabled={!selectedTime || !selectedTable || !reservedSeat}
                 >
@@ -112,10 +134,10 @@ export default function TableBook() {
             {loading ? (
                 <div>Loading tables...</div>
             ) : (
-                <div className="relative h-[100vh] w-full">
+                <div className="relative h-[800px] w-[800px]">
                     {tables.map((table) => (
                         <div style={{ top: table.coordinate.y, left: table.coordinate.x }}
-                            className={`absolute w-40 h-16 ${selectedTable === table._id ? "bg-[#52071B] text-white" : "bg-yellow-400 hover:bg-yellow-600"}`}
+                            className={`absolute w-20 h-20 rounded-full ${selectedTable === table._id ? "bg-[#52071B] text-white" : "bg-yellow-400 hover:bg-yellow-600"}`}
                             key={table._id}
                             onClick={() => setSelectedTable(table._id)}>
                             {table.name}

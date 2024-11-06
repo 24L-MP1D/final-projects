@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocalStorage } from "@uidotdev/usehooks";
@@ -11,7 +12,7 @@ export default function TableVerify() {
     const [phonenumber, setPhonenumber] = useState<string>("");
     const [selectedTime, setSelectedTime] = useLocalStorage<string | null>("selectedTime", null);
     const [reservedSeat, setReservedSeat] = useLocalStorage<string | null>("reservedSeat", null);
-    const [selectedTable, setSelectedTable] = useLocalStorage<string>("");
+    const [selectedTable, setSelectedTable] = useLocalStorage<string | null>("", null);
     const [day, setDay] = useLocalStorage<Date | null>("day", new Date());
     const [loading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
