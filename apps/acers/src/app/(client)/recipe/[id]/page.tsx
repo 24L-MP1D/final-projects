@@ -283,7 +283,7 @@ export default function RecipeComponent({ params }: { params?: { id: string } })
                 <TableBody className="flex flex-col">
                   {comments.length > 0 ? (
                     comments.map((comment, index) => (
-                      <TableRow key={index} className="flex gap-5">
+                      <TableRow key={index + comment.userId} className="flex gap-5">
                         <TableCell>
                           <div className="w-10 h-10 rounded-full bg-gray-300"></div>
                         </TableCell>

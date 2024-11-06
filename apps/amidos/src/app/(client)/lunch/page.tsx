@@ -39,6 +39,16 @@ export default function Menu() {
       });
   }, []);
 
+  //   if (oneFoodId) {
+  //     fetch(`/api/hello/addFood/${oneFoodId}`)
+  //       .then((res) => res.json())
+  //       .then((data) => setSelectedFood(data))
+  //       .catch((error) => console.error('Error fetching specific food:', error));
+  //   }
+  // }, [oneFoodId]);
+
+  //  }
+  // }, [selectedCount, selectedFood]);
   const handleQuantityChange = (increment: number) => {
     setSelectedCount((prevCount) => Math.max(prevCount + increment, 1));
   };

@@ -3,18 +3,16 @@ import { useGeolocation } from '@uidotdev/usehooks';
 import { APIProvider, AdvancedMarker, Map, useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 import * as Ably from 'ably';
 import { AblyProvider, ChannelProvider, useChannel, useConnectionStateListener } from 'ably/react';
-import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const client = new Ably.Realtime({ key: 'Nh6tIw.Klcmeg:giWLIzmJQ9jQ_ovhkmin61JtSF5QScEZb_EQgxLTr5I' });
 
-export default function Deliveryperson() {
+export default function Deliveryperson({ params }: { params: { deliverychannel: string } }) {
   const state = useGeolocation();
+  const deliverychannel = params.deliverychannel;
   const latitude = state.latitude;
   const longitude = state.longitude;
   const GOOGLE_API = String(process.env.GOOGLE_API);
-  const searchParams = useSearchParams();
-  const deliverychannel = searchParams.get('deliverychannel');
   if (state.loading) {
     return <p>loading... (you may need to enable permissions)</p>;
   }
@@ -48,7 +46,7 @@ export default function Deliveryperson() {
 type Props = {
   latitude: Number | null;
   longitude: Number | null;
-  deliverychannel: any;
+  deliverychannel: string;
 };
 function Directions({ latitude, longitude, deliverychannel }: Props) {
   const map = useMap();
