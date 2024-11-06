@@ -60,7 +60,6 @@ export default function Page() {
                     <div className="text-[#f3f3f3]">Review</div>
                 </div>
             </div>
-
             <div className="mt-8 text-center text-[#333] text-[48px]">Choose your category</div>
 
             <div className="text-[#aeaeae] w-full text-3xl">

@@ -13,7 +13,7 @@ type Props = {
   formikSetFieldValue: (name: string, value: Date) => void;
 };
 export const ProductPrice = ({ formikErrors, formikHandleChange, formikSetFieldValue, formikTouched, formikValues }: Props) => {
-  const [date, setDate] = useState<DateRange | undefined>();
+  const [date, setDate] = useState<DateRange>();
   useEffect(() => {
     if (date?.from) formikSetFieldValue('startDate', date?.from);
     if (date?.to) formikSetFieldValue('endDate', date.to);
