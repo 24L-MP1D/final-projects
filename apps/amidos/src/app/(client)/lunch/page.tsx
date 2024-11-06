@@ -49,9 +49,9 @@ export default function Menu() {
 
   //  }
   // }, [selectedCount, selectedFood]);
-  // const handleQuantityChange = (increment: number) => {
-  //   setSelectedCount((prevCount) => Math.max(prevCount + increment, 1));
-  // };
+  const handleQuantityChange = (increment: number) => {
+    setSelectedCount((prevCount) => Math.max(prevCount + increment, 1));
+  };
 
   const navs = [
     { name: 'ЗАХИАЛГА', link: '/order' },
