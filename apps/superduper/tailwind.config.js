@@ -2,7 +2,6 @@ const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
 const { join } = require('path');
 const { fontFamily } = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
-const { default: flattenColorPalette } = require('tailwindcss/lib/utils/flattenColorPalette');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -89,8 +88,17 @@ module.exports = {
 
 // Custom plugin to add CSS variables for colors
 function addVariablesForColors({ addBase, theme }) {
-  const allColors = flattenColorPalette(theme('colors'));
-  const newVars = Object.fromEntries(Object.entries(allColors).map(([key, val]) => [`--${key}`, val]));
+  const colors = theme('colors');
+  const newVars = Object.keys(colors).reduce((vars, color) => {
+    if (typeof colors[color] === 'object') {
+      Object.entries(colors[color]).forEach(([shade, value]) => {
+        vars[`--${color}-${shade}`] = value;
+      });
+    } else {
+      vars[`--${color}`] = colors[color];
+    }
+    return vars;
+  }, {});
 
   addBase({
     ':root': newVars,
