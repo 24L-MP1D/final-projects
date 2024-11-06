@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@/app/components/ui/button';
-import { Dialog, DialogContent } from '@/components/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/dialog';
 import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Food } from '@/lib/types';
 import { X } from 'lucide-react';
@@ -38,17 +38,27 @@ export default function Menu() {
         setSpecial(data);
       });
   }, []);
-  const handleAddToCart = (foodItem: Food) => {
-    const item = {
-      name: foodItem.name,
-      price: foodItem.price,
-      ingredients: foodItem.ingredients,
-      photos: foodItem.photos,
-    };
-    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
-    existingCart.push(item);
-    localStorage.setItem('cart', JSON.stringify(existingCart));
 
+  const handleAddToCart = (foodItem: Food) => {
+    const existingCart: Array<any> = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    const existingItemIndex = existingCart.findIndex((item) => item.id === foodItem._id);
+
+    if (existingItemIndex !== -1) {
+      existingCart[existingItemIndex].quantity += selectedCount;
+    } else {
+      const item = {
+        id: foodItem._id,
+        name: foodItem.name,
+        price: foodItem.price,
+        ingredients: foodItem.ingredients,
+        photos: foodItem.photos,
+        quantity: selectedCount,
+      };
+      existingCart.push(item);
+    }
+    localStorage.setItem('cart', JSON.stringify(existingCart));
+    setTotalPrice((prev) => prev + foodItem.price * selectedCount);
     alert('Сагсанд амжилттай нэмлээ');
   };
 
@@ -57,6 +67,10 @@ export default function Menu() {
     { name: 'MЕНЮ', link: '/lunch' },
     { name: 'ХҮРГЭЛТ', link: '/delivery' },
   ];
+  function handleQuantityChange(arg0: number): void {
+    throw new Error('Function not implemented.');
+  }
+
   return (
     <div>
       <div className="flex justify-center gap-7 pt-10 z-10 mx-auto">
@@ -120,6 +134,7 @@ export default function Menu() {
                       setOpen(true);
                     }}
                   />
+                  <DialogTitle></DialogTitle>
                   <DialogContent>
                     {selectedFood && (
                       <div className="bg-white w-[400px] relative mx-auto p-4">
@@ -139,11 +154,11 @@ export default function Menu() {
                             +
                           </button>
                         </div>
-                        <div className="flex flex-row mt-6 gap-10 items-center text-xl m-6">
-                          <Button variant="amidos" className="row-1" onClick={() => handleAddToCart(selectedFood)}>
+                        <div className="flex mt-6 gap-6 items-center text-xl   ">
+                          <Button variant="amidos" size="lgg" onClick={() => handleAddToCart(foodItem)}>
                             Сагсанд нэмэх
                           </Button>
-                          <Button variant="amidos2" className="row-1">
+                          <Button variant="amidos2" size="lgg">
                             Захиалах
                           </Button>
                         </div>
@@ -155,7 +170,7 @@ export default function Menu() {
                 <h1 className="font-bold absolute mt-10 text-3xl">{foodItem.name}</h1>
                 <h2 className="text-2xl mt-24 text-wrap mb-8">{foodItem.ingredients}</h2>
                 <div className="flex flex-row mt-4 ml-2 items-center text-2xl gap-10">
-                  <Button variant="amidos" size="xxl" className="row-1 " onClick={() => handleAddToCart(selectedFood)}>
+                  <Button variant="amidos" size="xxl" className="row-1 " onClick={() => handleAddToCart(foodItem)}>
                     Сагсанд нэмэх
                   </Button>
                   <Button variant="amidos2" size="xxl" className="row-1">

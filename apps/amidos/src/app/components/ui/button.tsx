@@ -21,7 +21,7 @@ const buttonVariants = cva(
 
         default2: 'bg-[#FFFFFF] py-2 px-16 rounded-[16px] text-sm font-semibold w-[244px] h-9  text-black flex justify-start ',
         default3: 'bg-[#2563EB] rounded-[18px] text-[#FAFAFA] px-[36px] py-2 text-sm font-medium hover:bg-blue-800',
-        amidos: 'bg-[#52071B] rounded-[16px], text-white lg:w-[110px] w-[110px] h-[36px]  hover:outline hover:bg-[#52071B]/80 hover:text-white',
+        amidos: 'bg-[#52071B] rounded-[16px], text-white w-[110px] w-[110px] h-[36px]  hover:outline hover:bg-[#52071B]/80 hover:text-white',
         amidos2: 'outline outline-[#52071B] w-[110px] h-[36px] hover:bg-[#52071B] hover:text-white  ',
         blue: 'bg-[#38bdf8], rounded-[18px] text-white',
         edit: 'bg-blue-500 rounded-[18px], text-white',
@@ -32,6 +32,7 @@ const buttonVariants = cva(
         lg: 'h-10 rounded-md px-8',
         xl: 'h-12 rounded-md px-8',
         xxl: 'h-14 rounded-md px-16 w-24 text-lg',
+        lgg: 'h-14 w-24 rounded-md px-16 text-lg',
         icon: 'h-9 w-9',
       },
     },
