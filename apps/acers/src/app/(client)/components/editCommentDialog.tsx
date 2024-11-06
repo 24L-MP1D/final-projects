@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { editComment } from '../../api/comment/route';
+import { editComment } from '../../api/comment/[id]/route';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../components/ui/dialog';
-import StarRating from '../recipe/[slug]/StarRating';
+import StarRating from '../recipe/[id]/StarRating';
 import { Button } from './ui/Button';
 
 export default function EditComment({ open, setOpen, reset, slug }: { open: boolean; setOpen: any; reset: any; slug: string }) {

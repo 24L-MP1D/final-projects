@@ -14,6 +14,7 @@ export default function Page() {
   const router = useRouter();
   const [getFromLocal, setGetFromLocal] = useState<ProductType>();
   const [loadding, setLoading] = useState(false);
+
   const postToDatabase = async () => {
     try {
       if (getFromLocal) {

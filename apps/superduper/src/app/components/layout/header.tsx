@@ -1,5 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
+import * as Ably from 'ably';
 import Cookies from 'js-cookie';
 import { ChevronDown, UserRoundPen } from 'lucide-react';
 import Link from 'next/link';
@@ -10,7 +11,9 @@ import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
 
 import { useAuthStore } from '../auth/useAuthStore';
 
-type notifications = {
+const ably = new Ably.Realtime(process.env.NEXT_PUBLIC_ABLYKEY || '');
+
+export type notifications = {
   _id: string;
   message: string;
   userId: string;
@@ -24,6 +27,7 @@ export default function Header() {
   const [showNotif, setShowNotif] = useState(false);
   const [notifications, setNotifications] = useState<notifications[]>([]);
   const currentUser = useAuthStore((state) => state.currentUser);
+  console.log(currentUser);
 
   const loadNotif = async () => {
     const response = await fetch('/api/notifications', {
@@ -42,10 +46,13 @@ export default function Header() {
         return !data.isSeen && data;
       })
     );
+    const channel = ably.channels.get('notifications');
+    await channel.subscribe('new-notification', (message) => {
+      setNotifications((prev) => [...prev, message.data]);
+    });
   };
   useEffect(() => {
     const cookie = Cookies.get('token');
-
     if (cookie) {
       setSignin(true);
       loadNotif();
@@ -68,6 +75,7 @@ export default function Header() {
   //     delete (window as any).googleTranslateElementInit;
   //   };
   // }, []);
+
   const router = useRouter();
   const sell = () => {
     const cookie = Cookies.get('token');

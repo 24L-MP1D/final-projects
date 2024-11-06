@@ -8,13 +8,12 @@ import { Camera, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import * as yup from 'yup';
-import { Context } from '../../layout';
+
 const CLOUDINARYNAME = process.env.NEXT_PUBLIC_CLOUDINARYNAME;
 const CLOUDINARYPRESET = process.env.NEXT_PUBLIC_CLOUDINARYPRESET || '';
 export default function Page() {
-  const value = useContext(Context);
   const [loading, setLoading] = useState('');
   const router = useRouter();
   const initialValues = {
