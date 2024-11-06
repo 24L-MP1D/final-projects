@@ -14,7 +14,6 @@ import { useAuthStore } from '../auth/useAuthStore';
 const ably = new Ably.Realtime(process.env.NEXT_PUBLIC_ABLYKEY || '');
 
 export type notifications = {
-
   _id: string;
   message: string;
   userId: string;
@@ -114,10 +113,10 @@ export default function Header() {
         </div>
         <div className="flex items-center gap-10 mx-6">
           <button onClick={sell} className="bg-white hover:border-b-[1px] hover:border-black">
-          Зарах
+            Зарах
           </button>
           <Link href="/Help" className="bg-white hover:border-b-[1px] hover:border-black">
-          Тусламж
+            Тусламж
           </Link>
 
           <FaRegHeart size={24} color="blue" onClick={save} />
@@ -130,12 +129,12 @@ export default function Header() {
 
                   {isSeenNotif.length > 0 && <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm left-4 text-white">{isSeenNotif.length}</div>}
                 </div>
-                <div>{currentUser?.firstname}</div>
+                <div>{currentUser?.firstName}</div>
               </div>
               {showNotif && (
                 <div className="absolute top-12 left-0 z-50">
                   {notifications.map((notification) => (
-                    <div onClick={() => setShowNotif(false)} className={`p-2 hover:cursor-pointer shadow border ${notification.isSeen ? 'bg-slate-100' : 'bg-red-200'}`}>
+                    <div key={notification._id} onClick={() => setShowNotif(false)} className={`p-2 hover:cursor-pointer shadow border ${notification.isSeen ? 'bg-slate-100' : 'bg-red-200'}`}>
                       {notification.message}
                     </div>
                   ))}
