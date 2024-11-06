@@ -1,5 +1,6 @@
 import { DB } from '@/lib/db';
 import { ObjectId } from 'mongodb';
+
 const collection = DB.collection('product');
 const notifCollection = DB.collection('notifications');
 

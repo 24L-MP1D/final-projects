@@ -34,29 +34,29 @@ export default function Page() {
           <div className="p-0.5 border-2 border-[#00253e] rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
           </div>
-          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[100px]"></div>
           <div className="p-0.5 rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
           </div>
-          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[100px]"></div>
           <div className="p-0.5 rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
           </div>
-          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[100px]"></div>
           <div className="p-0.5 rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
           </div>
-          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[100px]"></div>
           <div className="p-0.5 rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
           </div>
         </div>
-        <div className="flex gap-10 justify-center items-center ">
+        <div className="flex gap-5 relative left-[-50px] items-center">
           <div>Category</div>
           <div className="text-[#f3f3f3]">Дэлгэрэнгүй</div>
           <div className="text-[#f3f3f3]">Зураг</div>
-          <div className="text-[#f3f3f3]">Логистик</div>
-          <div className="text-[#f3f3f3]">Хянан үзэх</div>
+          <div className="text-[#f3f3f3] ml-3">Логистик</div>
+          <div className="text-[#f3f3f3] ml-5">Хянан үзэх</div>
         </div>
       </div>
 
@@ -84,7 +84,7 @@ export default function Page() {
                     setOpen(true);
                     setCategory(category);
                   }}
-                  src={category.image}
+                  src={category.image || '/'}
                   alt="image"
                   width={500}
                   height={500}

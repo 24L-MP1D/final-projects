@@ -6,6 +6,7 @@ import { X } from 'lucide-react';
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
@@ -16,6 +17,7 @@ import { Input } from './ui/Input';
 import { Button } from './ui/button';
 
 export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
+  const router = useRouter();
   const [dialogOpen, setDialogOpen] = useState(true);
   const initialValues = {
     email: '',
@@ -56,6 +58,7 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
           console.log('error');
         }
         setDialogOpen(false);
+        router.push('/client');
       } catch (err) {
         console.log('error in sign in');
       }
