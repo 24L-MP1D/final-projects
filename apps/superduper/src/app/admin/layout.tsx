@@ -11,7 +11,7 @@ type AdminLayoutContext = {
 };
 export const Context = createContext<AdminLayoutContext | null>(null);
 
-export function RootLayout({ children }: { children: ReactNode }): any {
+export default function RootLayout({ children }: { children: ReactNode }): any {
   const [layoutAside, setLayoutAside] = useState('');
 
   return (

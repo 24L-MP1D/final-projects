@@ -1,9 +1,10 @@
 'use client';
 
+import { oauth_github_client_signUp, oauth_google_client_signUp } from 'config';
 import { FormikValues, useFormik } from 'formik';
+import { Github } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
-import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { Toaster, toast } from 'sonner';
 import * as yup from 'yup';
@@ -66,6 +67,31 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
       console.log('error in sign up');
     }
   }
+  function SignInbyGoogle() {
+    const query = {
+      client_id: oauth_google_client_signUp.client_id || '',
+      redirect_uri: oauth_google_client_signUp.redirect_uri,
+      response_type: 'code',
+      scope: oauth_google_client_signUp.scopes,
+      prompt: 'consent',
+    };
+
+    const url = new URL(oauth_google_client_signUp.endpoint);
+    url.search = new URLSearchParams(query).toString();
+
+    window.location.href = url.toString();
+  }
+  function SignInbyGithub() {
+    const query = {
+      client_id: oauth_github_client_signUp.client_id || '',
+      redirect_uri: oauth_github_client_signUp.redirect_uri,
+      scope: oauth_github_client_signUp.scopes,
+      prompt: 'consent',
+    };
+    const url = new URL(oauth_github_client_signUp.endpoint);
+    url.search = new URLSearchParams(query).toString();
+    window.location.href = url.toString();
+  }
 
   return (
     <Dialog open>
@@ -81,14 +107,14 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
           </div>
           <p className="text-slate-500 mb-3">Continue with</p>
           <div className="flex gap-4">
-            <div className="w-full h-[30px] border-2 flex items-center gap-2 p-8 bg-blue-500 rounded-lg">
-              <FaFacebook className="bg-blue-500 text-white" />
-              <p className="text-white">Facebook</p>
-            </div>
-            <div className="w-full h-[30px] border-2 flex items-center gap-2 p-8 rounded-lg">
+            <Button className="w-full h-[30px] border-2 flex items-center gap-2 p-8 bg-blue-500 rounded-lg" onClick={SignInbyGithub}>
+              <Github />
+              <p className="text-white">Github</p>
+            </Button>
+            <Button className="w-full h-[30px] border-2 flex items-center gap-2 p-8 rounded-lg" onClick={SignInbyGoogle}>
               <FcGoogle />
               <p>Google</p>
-            </div>
+            </Button>
           </div>
           <div className="flex items-center gap-2 py-3">
             <div className="h-[2px] flex-1 bg-slate-300"></div>
