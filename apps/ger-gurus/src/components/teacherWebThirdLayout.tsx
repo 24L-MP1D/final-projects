@@ -74,12 +74,6 @@ const TeacherWebThirdLayout: React.FC = () => {
       description:
         'Take your business to the next level with expert insights and personalized guidance.',
     },
-    {
-      number: '03',
-      title: { main: 'Unlock', highlight: 'opportunities.' },
-      description:
-        'Discover untapped markets and scale your business with our industry-leading tools.',
-    },
   ];
 
   // Create navigation items dynamically
