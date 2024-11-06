@@ -34,40 +34,40 @@ export default function Page() {
           <div className="p-0.5 border-2 border-[#00253e] rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
           </div>
-          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[100px]"></div>
           <div className="p-0.5 rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
           </div>
-          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[100px]"></div>
           <div className="p-0.5 rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
           </div>
-          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[100px]"></div>
           <div className="p-0.5 rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
           </div>
-          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[100px]"></div>
           <div className="p-0.5 rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
           </div>
         </div>
-        <div className="flex gap-10 justify-center items-center ">
+        <div className="flex gap-5 relative left-[-50px] items-center">
           <div>Category</div>
-          <div className="text-[#f3f3f3]">Detail</div>
-          <div className="text-[#f3f3f3]">Photos</div>
-          <div className="text-[#f3f3f3]">Logistics</div>
-          <div className="text-[#f3f3f3]">Review</div>
+          <div className="text-[#f3f3f3]">Дэлгэрэнгүй</div>
+          <div className="text-[#f3f3f3]">Зураг</div>
+          <div className="text-[#f3f3f3] ml-3">Логистик</div>
+          <div className="text-[#f3f3f3] ml-5">Хянан үзэх</div>
         </div>
       </div>
 
-      <div className="mt-8 text-center text-[#333] text-[48px]">Choose your category</div>
+      <div className="mt-8 text-center text-[#333] text-[48px]">Ангилалаа сонгоно уу</div>
 
       <div className="text-[#aeaeae] w-full text-3xl">
         <div className="flex gap-2 items-center py-8">
           <div>
             <ChevronLeft className="w-10 h-10" />
           </div>
-          <div>Categories</div>
+          <div>Ангилалууд</div>
         </div>
         <div>
           {categories.map((category, index) => (
@@ -84,7 +84,7 @@ export default function Page() {
                     setOpen(true);
                     setCategory(category);
                   }}
-                  src={category.image}
+                  src={category.image || '/'}
                   alt="image"
                   width={500}
                   height={500}

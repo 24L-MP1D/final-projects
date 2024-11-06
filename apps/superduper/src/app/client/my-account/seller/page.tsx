@@ -35,7 +35,7 @@ export default function App() {
         </div>
         <div className="flex flex-col">
           {products.map((product) => (
-            <div className="flex-1 py-4 border-t flex items-center">
+            <div key={product._id} className="flex-1 py-4 border-t flex items-center">
               <div className="flex gap-2 items-center flex-1">
                 <div>
                   <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900">

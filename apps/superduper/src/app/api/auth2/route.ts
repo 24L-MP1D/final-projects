@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
     });
     if (!userResponse) throw new Error('failed to retrieve user info');
     const githubUser = await userResponse.json();
-    const gitHubUser = await userResponse.json();
+
     const collection = await DB.collection('users');
     const check = await collection.findOne({ email: githubUser.email, role: 'admin' });
     if (!check) return new Response('failed to find the user', { status: 404 });
