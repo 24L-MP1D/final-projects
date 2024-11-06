@@ -96,37 +96,40 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
     <Dialog open={dialogOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={formik.handleSubmit}>
+
+         
           <DialogTitle className="font-thin text-center flex justify-between">
-            <div>Sign in or Create an account</div>
+            <div>Нэвтрэх эсвэл бүртгэл үүсгэх</div>
             <Link href="/client">
               <X onClick={() => setDialogOpen(false)} className="h-4 w-4" />
             </Link>
           </DialogTitle>
+
 
           {/* <button onClick={() => setDialogOpen(false)} className="text-gray-500 hover:text-gray-700">
             ✕
           </button> */}
           <div className="h-[2px] bg-slate-300 my-3"></div>
           <div className="flex justify-between">
-            <p className="font-bold">Welcome Back!</p>
+            <p className="font-bold">Эргээд тавтай морил!</p>
             <span onClick={toggleForm}>
-              <div className="text-[#03f]">Create account</div>
+              <div className="text-[#03f]">Бүртгэл үүсгэх</div>
             </span>
           </div>
-          <p className="text-slate-500 mb-3">Continue with</p>
+          <p className="text-slate-500 mb-3">үргэлжлүүлнэ үү</p>
           <div className="flex gap-4">
             <div className="w-full h-[30px] border-2 flex items-center gap-2 p-8 bg-blue-500 rounded-lg">
               <FaFacebook className="bg-blue-500 text-white" />
-              <p className="text-white">Facebook</p>
+              <p className="text-white">Фэйсбүүк</p>
             </div>
             <div className="w-full h-[30px] border-2 flex items-center gap-2 p-8 rounded-lg">
               <FcGoogle />
-              <p>Google</p>
+              <p>Гүүгл</p>
             </div>
           </div>
           <div className="flex items-center gap-2 py-3">
             <div className="h-[2px] flex-1 bg-slate-300"></div>
-            <p>or</p>
+            <p>эсвэл</p>
             <div className="h-[2px] flex-1 bg-slate-300"></div>
           </div>
 
@@ -141,17 +144,19 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
           <div className="flex justify-between m-3">
             <div className="flex items-center gap-3">
               <Checkbox />
-              <p>Remember me</p>
+              <p>Намайг санах</p>
             </div>
-            <Link className="text-blue-500" href="/client/forgotten-email">
-              <div>Forgotten your password?</div>
+
+            <Link className="text-blue-500" href="/">
+            Нууц үгээ мартсан уу?
+
             </Link>
           </div>
 
           <DialogFooter>
             <Button className="bg-blue-700 flex w-full disabled:cursor-not-allowed" type="submit" disabled={loading}>
               {loading && <Image src={'/images/spinner.svg'} alt="a" width={40} height={40} />}
-              <div>Sign in</div>
+              <div>Нэвтрэх</div>
             </Button>
           </DialogFooter>
         </form>

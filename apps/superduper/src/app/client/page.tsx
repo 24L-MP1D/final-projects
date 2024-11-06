@@ -72,10 +72,10 @@ export default function Index() {
         <div className="gap-10 grid py-10">
           <div className="flex gap-20">
             <div className="grid gap-5">
-              <div className="text-[#565B60] text-sm">11 - 20 OCTOBER 2024</div>
-              <div className="text-[#0033FF] text-5xl font-semibold">Most Wanted</div>
-              <div className="text-[#565B60] text-sm">Get your hands on this years most sought-after objects, from top luxury brands to niche finds.</div>
-              <div className="text-[#0033FF] text-sm">Explore now</div>
+              <div className="text-[#565B60] text-sm">2024 оны 10-р сарын 11-20</div>
+              <div className="text-[#0033FF] text-5xl font-semibold">Хамгийн их хүсдэг</div>
+              <div className="text-[#565B60] text-sm">Энэ жилийн хамгийн эрэлттэй тансаг зэрэглэлийн брэндүүдээс эхлээд чамин олдворуудыг өөрийн болгоорой.</div>
+              <div className="text-[#0033FF] text-sm">Яг одоо судлаарай</div>
             </div>
           </div>
           {/* Progress Bar */}

@@ -154,12 +154,12 @@ export default function Page() {
               </div>
             </div>
             <div className="border-b-[1px]">
-              <p>Хот</p>
+              <p>Хот:</p>
               <Input className="border-none" type="text" maxLength={20} id="city" value={formik.values.city} onChange={formik.handleChange} />
               {formik.touched.city && formik.errors.city && <p className="text-red-600">{formik.errors.city}</p>}
             </div>
             <div className="border-b-[1px]">
-              <p>Имэйл хаяг</p>
+              <p>Имэйл хаяг:</p>
               <Input className="border-none" type="email" maxLength={32} id="email" value={formik.values.email} onChange={formik.handleChange} />
               {formik.touched.email && formik.errors.email && <p className="text-red-600">{formik.errors.email}</p>}
             </div>
