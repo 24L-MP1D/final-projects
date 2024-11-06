@@ -1,5 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
+import * as Ably from 'ably';
 import Cookies from 'js-cookie';
 import { ChevronDown, UserRoundPen } from 'lucide-react';
 import Link from 'next/link';
@@ -9,8 +10,11 @@ import { FaRegHeart } from 'react-icons/fa';
 import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
 
 import { useAuthStore } from '../auth/useAuthStore';
-import { Button } from '../ui/button';
-type notifications = {
+
+const ably = new Ably.Realtime(process.env.NEXT_PUBLIC_ABLYKEY || '');
+
+export type notifications = {
+
   _id: string;
   message: string;
   userId: string;
@@ -24,6 +28,7 @@ export default function Header() {
   const [showNotif, setShowNotif] = useState(false);
   const [notifications, setNotifications] = useState<notifications[]>([]);
   const currentUser = useAuthStore((state) => state.currentUser);
+  console.log(currentUser);
 
   const loadNotif = async () => {
     const response = await fetch('/api/notifications', {
@@ -42,10 +47,13 @@ export default function Header() {
         return !data.isSeen && data;
       })
     );
+    const channel = ably.channels.get('notifications');
+    await channel.subscribe('new-notification', (message) => {
+      setNotifications((prev) => [...prev, message.data]);
+    });
   };
   useEffect(() => {
     const cookie = Cookies.get('token');
-
     if (cookie) {
       setSignin(true);
       loadNotif();
@@ -68,6 +76,7 @@ export default function Header() {
   //     delete (window as any).googleTranslateElementInit;
   //   };
   // }, []);
+
   const router = useRouter();
   const sell = () => {
     const cookie = Cookies.get('token');
@@ -88,27 +97,27 @@ export default function Header() {
       <div id="google_translate_element"></div>
       <div className="flex flex-1 justify-between">
         <div className="flex items-center gap-4 w-full">
-          <div className="w-[55px] h-[55px] bg-[#03f] text-white flex items-center justify-center font-extrabold text-[24px]">SD</div>
+          <div className="w-[55px] h-[55px] bg-[#03f] text-white flex items-center justify-center font-extrabold text-[24px]">СД</div>
           <button className="text-[#03f]" onClick={reload}>
-            <p className="font-extrabold">SuperDuper</p>
+            <p className="font-extrabold">СуперДупер</p>
             <div className="bg-slate-200 h-0.5 w-full"></div>
-            <p className="font-extrabold">Auction</p>
+            <p className="font-extrabold">Дуудлага худалдаа</p>
           </button>
           <Link href="/client/category" className="ml-10 mr-8 flex gap-1 items-center">
-            Categories
+            Ангилалууд
             <ChevronDown size={16} color="blue" />
           </Link>
           <div className="flex flex-1 items-center bg-[#f0f1f5]">
             <HiMiniMagnifyingGlass className="bg-[#f0f1f5] h-6 m-1 ml-3" color="blue" size={24} />
-            <input placeholder="Search.." className="px-2 w-full p-3 bg-[#f0f1f5]" />
+            <input placeholder="Хайх.." className="px-2 w-full p-3 bg-[#f0f1f5]" />
           </div>
         </div>
         <div className="flex items-center gap-10 mx-6">
           <button onClick={sell} className="bg-white hover:border-b-[1px] hover:border-black">
-            Sell
+          Зарах
           </button>
           <Link href="/Help" className="bg-white hover:border-b-[1px] hover:border-black">
-            Help
+          Тусламж
           </Link>
 
           <FaRegHeart size={24} color="blue" onClick={save} />
@@ -135,7 +144,7 @@ export default function Header() {
             </div>
           ) : (
             <Button onClick={() => router.push(`/client/sign-in`)} className="bg-[#03f] rounded-none">
-              Sign In
+              Нэвтрэх
             </Button>
           )}
         </div>
