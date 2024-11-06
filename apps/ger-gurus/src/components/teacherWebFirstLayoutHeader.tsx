@@ -19,7 +19,7 @@ const TeacherWebFirstLayoutHeader: React.FC = () => {
       {/* Logo */}
       <div className="flex items-center w-60 h-12">
         {/* Make sure LOGO.png is placed inside the public folder */}
-        <Image src="/LOGO.png" width={99} height={29.3} alt="Logo" />
+        <Image src="/logo.png" width={99} height={29.3} alt="Logo" />
       </div>
 
       {/* Mobile Hamburger Icon */}
