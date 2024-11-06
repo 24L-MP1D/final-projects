@@ -1,7 +1,9 @@
 'use client';
 
 import { Checkbox } from '@/components/ui/Checkbox';
-import { FormikValues, useFormik } from 'formik';
+import { useFormik } from 'formik';
+import { X } from 'lucide-react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -33,44 +35,46 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
 
   const formik = useFormik({
     initialValues,
-    onSubmit: (values) => {
-      console.log(values);
-      Submit(values);
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/sign-in', {
+          method: 'POST',
+          body: JSON.stringify(values),
+          headers: {
+            'Content-type': 'application/json',
+          },
+        });
+
+        if (response.status === 201) {
+          console.log('success');
+
+          toast('Signed Up Successfully');
+
+          setLoading(false);
+        } else {
+          console.log('error');
+        }
+        setDialogOpen(false);
+      } catch (err) {
+        console.log('error in sign in');
+      }
     },
     validationSchema,
   });
-
   const [loading, setLoading] = useState(false);
-
-  async function Submit(values: FormikValues) {
-    setLoading(true);
-    try {
-      const response = await fetch('/api/signin', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
-      if (response.status === 201) {
-        console.log('success');
-
-        toast('Signed Up Successfully');
-
-        setLoading(false);
-      } else {
-        console.log('error');
-      }
-    } catch (err) {
-      console.log('error in sign up');
-    }
-  }
 
   return (
     <Dialog open={dialogOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={formik.handleSubmit}>
-          <DialogTitle className="font-thin text-center">Sign in or Create an account</DialogTitle>
+          <DialogTitle className="font-thin text-center flex justify-between">
+            <div>Sign in or Create an account</div>
+            <Link href="/client">
+              <X onClick={() => setDialogOpen(false)} className="h-4 w-4" />
+            </Link>
+          </DialogTitle>
+
           {/* <button onClick={() => setDialogOpen(false)} className="text-gray-500 hover:text-gray-700">
             ✕
           </button> */}
@@ -117,7 +121,7 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
           </div>
 
           <DialogFooter>
-            <Button className="bg-blue-700 flex w-full disabled:cursor-not-allowed" onClick={Submit} disabled={loading}>
+            <Button type="submit" className="bg-blue-700 flex w-full disabled:cursor-not-allowed" disabled={loading}>
               {loading && <Image src={'/images/spinner.svg'} alt="a" width={40} height={40} />}
               <div>Sign in</div>
             </Button>

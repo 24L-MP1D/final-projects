@@ -2,6 +2,7 @@ import { DB } from '@/lib/db';
 import { ObjectId } from 'mongodb';
 const collection = DB.collection('product');
 const notifCollection = DB.collection('notifications');
+
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   const _id = params.id;
   try {
@@ -23,6 +24,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 }
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   const { status, message, userId } = await request.json();
+
   try {
     await notifCollection.insertOne({ message, isSeen: false, productId: new ObjectId(params.id), userId });
     const data = await collection.updateOne({ _id: new ObjectId(params.id) }, { $set: { status: status } });
