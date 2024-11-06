@@ -36,9 +36,9 @@ export default function Page() {
   }
   async function createSchool(domain: string) {
     try {
-      await axios.post(`/api/schools`, { domain }); // Send domain in the request
+      await axios.post(`/api/schools`, { domain: `${domain}.verse.mn`}); // Send domain in the request
       toast.success('Your space has been created!'); // Optionally handle success
-      router.push('/schools');
+      router.push(`${domain}.verse.mn`);
     } catch (error) {
       toast.error('Something went wrong');
     }
