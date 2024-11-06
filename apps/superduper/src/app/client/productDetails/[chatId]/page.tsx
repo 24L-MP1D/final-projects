@@ -126,7 +126,7 @@ function Realtime({ chatId }: { chatId: string }) {
     loadProductDetail();
   }, []);
 
-  if (!oneProduct) return <div>loading</div>;
+  if (!oneProduct) return <div>Ачааллаж байна</div>;
   return (
     <form onSubmit={formik.handleSubmit} className={`max-w-[1240px] mx-auto w-full`}>
       <div className={`flex gap-24`}>

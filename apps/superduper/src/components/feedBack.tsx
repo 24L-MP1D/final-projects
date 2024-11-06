@@ -63,7 +63,7 @@ export const FeedBackInput = ({ setFeedBackInput, userId, loadProduct, productId
         <div className="sm:max-w-md flex flex-col gap-3">
           <div>
             <div className="flex justify-between">
-              <div>Feedback Message</div>
+              <div>Санал хүсэлтийн мессеж</div>
               <X className="hover:cursor-pointer" onClick={() => setFeedBackInput(false)} />
             </div>
           </div>
@@ -71,7 +71,7 @@ export const FeedBackInput = ({ setFeedBackInput, userId, loadProduct, productId
             <Input id="feedback" {...register('feedback', { required: true })} placeholder="send a feedback" />
             {touchedFields.feedback && errors.feedback && <p className="text-red-400">{errors.feedback.message}</p>}
           </div>
-          <Button type="submit">Send</Button>
+          <Button type="submit">Илгээх</Button>
         </div>
       </div>
     </form>
