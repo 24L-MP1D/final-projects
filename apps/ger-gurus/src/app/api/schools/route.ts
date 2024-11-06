@@ -17,9 +17,6 @@ async function getCurrentSchool(request: Request) {
 export async function GET(request: Request) {
   const currentSchool = await getCurrentSchool(request);
 
-  
-
-
   if (!currentSchool){
     return new Response('Not Found', { status: 404 });
   }
@@ -33,6 +30,15 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.json();
+  const authorization = request.headers.get('authorization');
+  console.log (authorization)
+  if (!authorization) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+  // const user = await verifyToken(authorization);
+  //   if (!user) {
+  //     return new Response('Unauthorized', { status: 401 });
+  //   }
   const { domain, description } = body;
   await db.collection('schools').insertOne({
     domain,
