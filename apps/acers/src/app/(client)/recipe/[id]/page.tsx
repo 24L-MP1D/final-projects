@@ -15,9 +15,9 @@ interface Recipe {
   description: string;
   prepTime: string;
   servings: string;
-  ingredients: string[];
-  instructions: string[];
-  nutritionFacts: string[];
+  ingredients: { name: string }[];
+  instructions: { name: string; step: string }[];
+  nutritionFacts: { name: string; value: string }[];
   category: string;
   difficulty: string;
   availability: string;
@@ -52,10 +52,10 @@ enum Role {
   ADMIN = 'admin',
 }
 
-export default function RecipeComponent({ params }: { params?: { id: string } }) {
+export default function RecipeComponent({ params }: { params?: { id: string } | any }) {
   const id = params?.id;
   const [loading, setLoading] = useState<boolean>(false);
-  const [recipe, setRecipe] = useState<Recipe>({});
+  const [recipe, setRecipe] = useState<Recipe>();
   const [user, setUser] = useState<Partial<User>>({ firstName: '' });
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>('');
@@ -153,7 +153,7 @@ export default function RecipeComponent({ params }: { params?: { id: string } })
               <Bookmark />
             </div>
           </div>
-          <p className="font-bold text-5xl">{recipe.title}</p>
+          <p className="font-bold text-5xl">{recipe?.title}</p>
           <div className="flex">
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-3">
@@ -162,7 +162,7 @@ export default function RecipeComponent({ params }: { params?: { id: string } })
               </div>
               <div className="flex gap-2">
                 <Calendar />
-                {dayjs(recipe.updatedAt).fromNow()}
+                {dayjs(recipe?.updatedAt).fromNow()}
               </div>
               <div className="flex gap-2">
                 <MessageSquare />
@@ -171,9 +171,9 @@ export default function RecipeComponent({ params }: { params?: { id: string } })
             </div>
           </div>
           <div className="h-[1px] w-[1110px] bg-gray-200"></div>
-          <p className="font-semibold text-xl">{recipe.description}</p>
+          <p className="font-semibold text-xl">{recipe?.description}</p>
           <div className="rounded">
-            {recipe.images ? (
+            {recipe?.images ? (
               recipe.images.map((image, index) => <img key={index} src={image} alt={`Recipe Image ${index + 1}`} className="w-[1110px] h-[624px] object-cover rounded" />)
             ) : (
               <p>No images available</p>
@@ -185,12 +185,12 @@ export default function RecipeComponent({ params }: { params?: { id: string } })
                 <div className="flex gap-5 ">
                   <div>
                     <p className="font-medium text-slate-600">PREP TIME</p>
-                    <p>{recipe.prepTime}</p>
+                    <p>{recipe?.prepTime}</p>
                   </div>
                   <div>
                     <p className="font-medium text-slate-600">SERVINGS</p>
                     <div className="flex">
-                      {recipe.servings} People
+                      {recipe?.servings} People
                       {/* <SquarePen /> */}
                     </div>
                     {/* <Printer /> */}
@@ -198,8 +198,8 @@ export default function RecipeComponent({ params }: { params?: { id: string } })
                 </div>
                 <div>
                   <h3 className="font-bold text-3xl py-5">Ingredients</h3>
-                  {recipe.ingredients && recipe.ingredients.length > 0 ? (
-                    recipe.ingredients.map((ingredient, index) => (
+                  {recipe?.ingredients && recipe.ingredients.length > 0 ? (
+                    recipe?.ingredients.map((ingredient, index) => (
                       <ul key={index} className="list-disc p-2 ml-3">
                         <li>{ingredient.name}</li>
                       </ul>
@@ -208,8 +208,8 @@ export default function RecipeComponent({ params }: { params?: { id: string } })
                     <p>No ingredients available.</p>
                   )}
                   <h4 className="font-bold text-3xl py-5">Instructions</h4>
-                  {recipe.instructions && recipe.instructions.length > 0 ? (
-                    recipe.instructions.map((instruction, index) => (
+                  {recipe?.instructions && recipe.instructions.length > 0 ? (
+                    recipe?.instructions.map((instruction, index) => (
                       <ol key={index} className="list-decimal p-2 ml-3">
                         <li className="flex items-start space-x-3">
                           <span className="w-6 h-6 bg-orange-400 text-white rounded-full flex items-center justify-center">{index + 1}</span>
@@ -232,8 +232,8 @@ export default function RecipeComponent({ params }: { params?: { id: string } })
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {recipe.nutritionFacts && recipe.nutritionFacts.length > 0 ? (
-                      recipe.nutritionFacts.map((fact, index) => (
+                    {recipe?.nutritionFacts && recipe.nutritionFacts.length > 0 ? (
+                      recipe?.nutritionFacts.map((fact, index) => (
                         <TableRow key={index}>
                           <TableCell className="w-[100px]">{fact.name}</TableCell>
                           <TableCell className="w-[100px]">{fact.value}</TableCell>

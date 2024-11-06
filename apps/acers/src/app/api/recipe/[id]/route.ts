@@ -60,7 +60,7 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET(request: Request, { params }: { params?: { id: string } }) {
+export async function GET(request: Request, { params }: { params: { id: string } | any }) {
   console.log('Fetching recipe with ID:', params?.id);
 
   try {
