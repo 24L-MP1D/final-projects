@@ -6,7 +6,7 @@ import { Bookmark, Calendar, Ellipsis, Heart, MessageSquare, Printer, SquarePen,
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ScrollArea } from '../../components/ui/scroll-area';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/Table';
 
 dayjs.extend(relativeTime);
 

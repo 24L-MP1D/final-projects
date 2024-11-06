@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { ObjectId } from 'mongodb';
+import { NextResponse } from 'next/server';
 import { DB } from '../../lib/db';
 
 const JWT_SECRET = process.env.JWT_SECRET || '';
@@ -17,7 +18,7 @@ function decodeToken(token: string): { userId: string } {
   }
 }
 
-export async function PUT(request: Request, { params }: { params: { recipeId: string } }) {
+export async function PUT(request: Request, { params }: { params: any }) {
   const token = request.headers.get('authtoken');
   const body = await request.json();
   const { comment, rating } = body;
@@ -44,21 +45,24 @@ export async function PUT(request: Request, { params }: { params: { recipeId: st
   }
 }
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: any }) {
   const recipeId = params.id;
 
   if (!recipeId) {
-    return new Response('Recipe ID is required', { status: 400 });
+    return new NextResponse('Recipe ID is required', { status: 400 });
   }
 
   try {
+    // Fetch comments based on the recipeId
     const comments = await DB.collection('comments')
       .find({ recipeId: new ObjectId(recipeId) })
       .toArray();
-    return new Response(JSON.stringify(comments), { status: 200 });
+
+    // Return comments in the response
+    return new NextResponse(JSON.stringify(comments), { status: 200 });
   } catch (error) {
     console.error(error);
-    return new Response('Internal server error', { status: 500 });
+    return new NextResponse('Internal server error', { status: 500 });
   }
 }
 
