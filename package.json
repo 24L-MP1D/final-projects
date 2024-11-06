@@ -57,6 +57,7 @@
     "i": "^0.3.7",
     "i18next": "^23.16.4",
     "input-otp": "^1.4.0",
+    "jose": "^5.9.6",
     "js-cookie": "^3.0.5",
     "json-web-token": "^3.2.0",
     "jsonwebtoken": "^9.0.2",
@@ -64,7 +65,12 @@
     "menubar": "^9.5.1",
     "mime": "^4.0.4",
     "mongodb": "^6.9.0",
+
     "next": "14.2.16",
+
+
+    "next-client-cookies": "^2.0.0",
+
     "next-themes": "^0.3.0",
     "nodemailer": "^6.9.16",
     "npm": "^10.9.0",

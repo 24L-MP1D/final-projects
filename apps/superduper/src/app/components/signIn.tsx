@@ -2,6 +2,8 @@
 
 import { Checkbox } from '@/components/ui/Checkbox';
 import { useFormik } from 'formik';
+import { X } from 'lucide-react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -69,7 +71,13 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
     <Dialog open={dialogOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={formik.handleSubmit}>
-          <DialogTitle className="font-thin text-center">Sign in or Create an account</DialogTitle>
+          <DialogTitle className="font-thin text-center flex justify-between">
+            <div>Sign in or Create an account</div>
+            <Link href="/client">
+              <X onClick={() => setDialogOpen(false)} className="h-4 w-4" />
+            </Link>
+          </DialogTitle>
+
           {/* <button onClick={() => setDialogOpen(false)} className="text-gray-500 hover:text-gray-700">
             ✕
           </button> */}
