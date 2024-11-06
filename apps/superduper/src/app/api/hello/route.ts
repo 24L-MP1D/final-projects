@@ -6,7 +6,7 @@ declare module 'jsonwebtoken' {
     userId: string;
   }
 }
-export async function Auth() {
+export async function POST() {
   const ADMIN_ACCESS_TOKEN_SECRET = process.env.ADMIN_ACCESS_TOKEN_SECRET || '';
   if (!ADMIN_ACCESS_TOKEN_SECRET) return new Response('internal server error:missing token secret', { status: 500 });
   const cookieStore = await cookies();

@@ -21,7 +21,7 @@ export default function Index() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch('/api/product');
+      const res = await fetch('/api/products');
       if (!res.ok) throw new Error('Network response was not ok');
       const data = await res.json();
       console.log(data);
@@ -79,7 +79,7 @@ export default function Index() {
             </div>
           </div>
           {/* Progress Bar */}
-          <div className="flex w-full mt-[100px] h-[40px] gap-2">
+          <div className="flex w-full mt-[100px] h-[40px] gap-2 items-center">
             {Array.from({ length: products.length })
               .slice(0, 6)
               .map((_, index) => (
@@ -88,7 +88,7 @@ export default function Index() {
                   <div className="absolute top-0 left-0 h-full w-full cursor-pointer" onClick={() => handleProgressClick(index)}></div>
                 </div>
               ))}
-            <Button className=" text-[#0033FF] ml-[5px] bg-white hover:bg-white" onClick={handleNextSlide}>
+            <Button className="items-center text-[#0033FF] bg-white hover:bg-white ml-[5px]" onClick={handleNextSlide}>
               <ChevronRight strokeWidth={1.75} />
             </Button>
           </div>
@@ -115,14 +115,14 @@ export default function Index() {
           >
             {products.slice(0, 6).map((product, index) => (
               <SwiperSlide key={index}>
-                <Image alt={`Slide ${index + 1}`} src={product.image_url} width={1200} height={600} className="w-full h-full object-cover hover:cursor-pointer" />
+                <Image alt={`Slide ${index + 1}`} src={product.frontImage} width={1200} height={600} className="w-full h-full object-cover hover:cursor-pointer" />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-2 w-full">
-        {products.slice(0, 6).map((product) => (
+      <div className="grid grid-cols-3 gap-10 w-full">
+        {products.slice(0, 20).map((product) => (
           <ProductItem product={product} key={product._id} onClickFavourite={() => handleFavourite(product._id)} isFavourite={!favourite.find((id) => id === product._id)} />
         ))}
       </div>

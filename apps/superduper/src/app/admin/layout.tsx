@@ -5,24 +5,23 @@ import { SignedIn } from '../components/auth/signedIn';
 import { SignedOut } from '../components/auth/signedOut';
 import Signin from '../components/auth/singin';
 
-interface RootLayoutProps {
-  children: ReactNode;
-}
-type adminLayoutContext = {
+type AdminLayoutContext = {
   layoutAside: string;
   setLayoutAside: (value: string) => void;
 };
-export const Context = createContext<adminLayoutContext | null>(null);
+export const Context = createContext<AdminLayoutContext | null>(null);
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export function RootLayout({ children }: { children: ReactNode }): any {
   const [layoutAside, setLayoutAside] = useState('');
 
   return (
     <>
       <SignedIn>
-        <Protection role="admin">
-          <Context.Provider value={{ layoutAside, setLayoutAside }}>{children}</Context.Provider>
-        </Protection>
+        <Context.Provider value={{ layoutAside, setLayoutAside }}>
+          <Protection role="admin">
+            <>{children}</>
+          </Protection>
+        </Context.Provider>
       </SignedIn>
       <SignedOut>
         <Signin />
