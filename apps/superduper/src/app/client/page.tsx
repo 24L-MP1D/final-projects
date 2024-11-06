@@ -11,9 +11,11 @@ import { Product, ProductItem } from '../components/productItem';
 
 export default function Index() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [isClick, setClick] = useState(false);
 
   const [progress, setProgress] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
+
 
   interface product {
     image: string;
@@ -58,8 +60,10 @@ export default function Index() {
     let result: string[] = [...favourite];
     if (result.find((id) => id === productId)) {
       result = result.filter((id) => id !== productId);
+      setClick(false)
     } else {
       result.push(productId);
+      setClick(true)
     }
 
     localStorage.setItem('favourites', JSON.stringify(result));
@@ -123,7 +127,7 @@ export default function Index() {
       </div>
       <div className="grid grid-cols-3 gap-10 w-full">
         {products.slice(0, 20).map((product) => (
-          <ProductItem product={product} key={product._id} onClickFavourite={() => handleFavourite(product._id)} isFavourite={!favourite.find((id) => id === product._id)} />
+          <ProductItem isClick={isClick} product={product} favourite={favourite} key={product._id} onClickFavourite={() => handleFavourite(product._id)} />
         ))}
       </div>
     </div>

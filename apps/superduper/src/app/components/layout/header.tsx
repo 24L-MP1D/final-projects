@@ -27,6 +27,7 @@ export default function Header() {
   const [showNotif, setShowNotif] = useState(false);
   const [notifications, setNotifications] = useState<notifications[]>([]);
   const currentUser = useAuthStore((state) => state.currentUser);
+  const [heart, isHeart] = useState(localStorage.length)
   console.log(currentUser);
 
   const loadNotif = async () => {
@@ -51,6 +52,7 @@ export default function Header() {
       setNotifications((prev) => [...prev, message.data]);
     });
   };
+
   useEffect(() => {
     const cookie = Cookies.get('token');
     if (cookie) {
@@ -58,6 +60,7 @@ export default function Header() {
       loadNotif();
     }
   }, [currentUser]);
+
   // useEffect(() => {
   //   const existingScript = document.getElementById('google-translate-script');
   //   if (!existingScript) {
@@ -77,16 +80,19 @@ export default function Header() {
   // }, []);
 
   const router = useRouter();
+
   const sell = () => {
     const cookie = Cookies.get('token');
     if (!cookie) return router.push('/client/sign-in');
     router.push('/client/addProducts');
   };
+
   const save = () => {
     const cookie = Cookies.get('token');
     if (!cookie) return router.push('/client/sign-in');
     router.push('/client/save');
   };
+
   const reload = () => {
     router.push('/client');
   };
@@ -118,8 +124,10 @@ export default function Header() {
           <Link href="/Help" className="bg-white hover:border-b-[1px] hover:border-black">
             Тусламж
           </Link>
-
-          <FaRegHeart size={24} color="blue" onClick={save} />
+          <div className='relative  '>
+            <FaRegHeart size={24} color="blue" onClick={save} />
+            <div className='absolute left-1.5 text-blue-700'>{localStorage.length}</div>
+          </div>
 
           {signin ? (
             <div className="flex relative p-1">
