@@ -1,6 +1,4 @@
 import { db } from "@/lib/db";
-import { ObjectId } from "mongodb";
-import { findSchoolId } from "./[id]/route";
 
 
 // export async function GET(request: Request) {
@@ -9,12 +7,18 @@ import { findSchoolId } from "./[id]/route";
 // }
 
 export async function GET(request: Request) {
-  const id=await  findSchoolId(request)
-  const oneSchool = await db.collection('schools').findOne({ _id: new ObjectId(id) });
-  if (!oneSchool) {
-    return new Response('Not Found', { status: 404 });
+  const host = new URL(request.url).hostname ;
+  const hostname = host === 'localhost' ? process.env.NAME : host;
+  const school = await db.collection('schools').findOne({domain: hostname});
+  if (!school){
+    throw new Error (`School not found for domain : ${hostname}`)
   }
-  return Response.json(oneSchool);
+  // const id=  school?._id
+  // const oneSchool = await db.collection('schools').findOne({ _id: new ObjectId(id) });
+  // if (!oneSchool) {
+  //   return new Response('Not Found', { status: 404 });
+  // }
+  return Response.json(school);
 }
 
 export async function POST(request: Request) {
