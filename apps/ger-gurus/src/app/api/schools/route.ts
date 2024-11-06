@@ -18,7 +18,7 @@ export async function GET(request: Request) {
   // if (!oneSchool) {
   //   return new Response('Not Found', { status: 404 });
   // }
-  return Response.json(school);
+  return Response.json(school[0]);
 }
 
 export async function POST(request: Request) {
