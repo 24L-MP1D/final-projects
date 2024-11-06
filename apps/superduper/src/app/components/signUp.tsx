@@ -2,17 +2,16 @@
 
 import { FormikValues, useFormik } from 'formik';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState } from 'react';
 import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { Toaster, toast } from 'sonner';
 import * as yup from 'yup';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from './ui/Dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from './ui/Dialog';
 import { Input } from './ui/Input';
 import { Button } from './ui/button';
 
-export const SignUp = () => {
+export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
   const initialValues = {
     firstName: '',
     lastName: '',
@@ -59,7 +58,6 @@ export const SignUp = () => {
 
         toast('Signed Up Successfully');
 
-
         setLoading(false);
       } else {
         console.log('error');
@@ -70,19 +68,16 @@ export const SignUp = () => {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Sign Up</Button>
-      </DialogTrigger>
+    <Dialog open>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={formik.handleSubmit}>
           <DialogTitle className="font-bold text-center">Sign in or Create an account</DialogTitle>
           <div className="h-[2px] bg-slate-300 my-3"></div>
           <div className="flex justify-between">
             <p className="font-bold">Welcome Back!</p>
-            <Link href="/sign in">
+            <span onClick={toggleForm}>
               <div className="text-blue-500">Sign in</div>
-            </Link>
+            </span>
           </div>
           <p className="text-slate-500 mb-3">Continue with</p>
           <div className="flex gap-4">

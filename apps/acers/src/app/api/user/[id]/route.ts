@@ -45,7 +45,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     await DB.collection('users').updateOne({ _id: userId }, { $set: updateData });
     return new Response(null, { status: 204 });
   } catch (error) {
-    console.error(error); // Log the error
+    console.error(error);
     return new Response('Invalid token or error processing request', { status: 403 });
   }
 }

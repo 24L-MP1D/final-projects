@@ -5,6 +5,7 @@ type filtType = {
   startDate?: { $gte: Date };
   endDate?: { $lt: Date };
 };
+
 const collection = DB.collection('product');
 
 export async function GET(request: Request) {
@@ -36,7 +37,8 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const newProduct = await request.json();
-    const { getFromLocal } = newProduct;
+    const { getFromLocal, userId } = newProduct;
+    getFromLocal.userId = new ObjectId(String(userId));
     getFromLocal.startDate = new Date(getFromLocal.startDate);
     getFromLocal.endDate = new Date(getFromLocal.endDate);
     getFromLocal.createdAt = new Date();
