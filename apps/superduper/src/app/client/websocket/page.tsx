@@ -44,7 +44,7 @@ const App = () => {
       <h2>WebSocket-ээр мессеж илгээх</h2>
 
       <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Мессежээ энд бичнэ үү" />
-      <button onClick={sendMessage}>Send</button>
+      <button onClick={sendMessage}>Илгээх</button>
 
       <div>
         {messages.map((msg, index) => (

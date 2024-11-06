@@ -37,14 +37,14 @@ export default function Page() {
   return (
     <div>
       <div className=" container mx-auto w-[500px] border-2 rounded-lg mt-[50px] flex flex-col gap-6">
-        <p className="text-[24px] font-bold mt-8">Reset your password</p>
-        <p>Enter your NEW password and press the SEND button.</p>
+        <p className="text-[24px] font-bold mt-8">Нууц үгээ шинэчилнэ үү</p>
+        <p>ШИНЭ нууц үгээ оруулаад ИЛГЭЭХ товчийг дарна уу.</p>
         <div>
           <input placeholder="New password" className="border-2 bg-slate-50 rounded-3xl w-full p-3" onChange={(e) => setNewPassword(e.target.value)} />
         </div>
         <Button onClick={Submit} className="bg-blue-500 mb-8" disabled={loading}>
           {loading && <Image src={'/image/spinner.svg'} alt="a" width={40} height={40} />}
-          <div>Send</div>
+          <div>Илгээх</div>
         </Button>
         <Toaster />
       </div>

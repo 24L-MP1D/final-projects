@@ -33,8 +33,8 @@ export default function CardWithForm() {
       <div className="container mx-auto flex justify-center p-6">
         <Card className="w-[350px] bg-slate-100">
           <CardHeader>
-            <CardTitle>Add category</CardTitle>
-            <CardDescription>Create your new category in one-click.</CardDescription>
+            <CardTitle>Ангилал нэмэх</CardTitle>
+            <CardDescription>Нэг товшилтоор шинэ ангиллаа үүсгээрэй.</CardDescription>
           </CardHeader>
           <CardContent>
             <form>
@@ -46,9 +46,9 @@ export default function CardWithForm() {
             </form>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button onClick={addCategory}>Add category</Button>
+            <Button onClick={addCategory}>Ангилал нэмэх</Button>
             <Button variant="outline" onClick={() => (window.location.href = 'http://localhost:3000/admin')}>
-              Cancel
+              Цуцлах
             </Button>
           </CardFooter>
         </Card>
