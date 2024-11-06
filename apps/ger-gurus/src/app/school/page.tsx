@@ -13,6 +13,8 @@ interface SchoolData{
 
 export default function Page() {
   const [schoolData, setSchoolData]= useState<SchoolData>({domain: ""})
+  console.log({schoolData})
+  console.log(schoolData.domain)
 
   const getSchool= async()=>{
     const response=await fetch('/api/schools')
