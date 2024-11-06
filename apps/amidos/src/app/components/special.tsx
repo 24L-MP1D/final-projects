@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from "react";
 
-export function Special() {
-  const [special, setspecialFoods] = useState();
-  useEffect(() => {
-    fetch('/api/special')
-      .then((res) => res.json())
-      .then((data) => {
-        setspecialFoods(data);
-      });
-  });
-}
+// export function Special() {
+// const [special,setSpecial]=useState();
+// useEffect(()=>
+
+//   const special = specialFoods();
+//   fetch('/api/special')
+//   .then((res) => res.json())
+//   .then((data) => {
+//     specialFoods(data);
+// )
+// }
+// }

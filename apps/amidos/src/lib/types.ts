@@ -6,5 +6,5 @@ export type Food = {
   key: number;
   id: string;
   photos: string;
-  special: string;
+  isSpecial: string;
 };

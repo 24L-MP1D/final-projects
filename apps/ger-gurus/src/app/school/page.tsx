@@ -1,45 +1,44 @@
-'use client'
+'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
-type Data = {
-  _id: string;
-  domain: string
-};
+// type Data = {
+//   _id: string;
+//   domain: string;
+// };
 
 export default function Page() {
-  const [data, setData] = useState<Data[]>([]);
+  // const [data, setData] = useState<Data[]>([]);
 
-  function loadUser() {
-    const token = localStorage.getItem('authtoken') || '';
+  // function loadUser() {
+  //   const token = localStorage.getItem('authtoken') || '';
 
-    fetch(`/api/courses`, {
-      headers: {
-        authtoken: token,
-      },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setData(data);
-        } else {
-          setData([data]);
-        }
-      })
-      .catch((error) => {
-        console.error('Error loading user:', error);
-      });
-  }
+  //   fetch(`/api/courses`, {
+  //     headers: {
+  //       authtoken: token,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw new Error(`HTTP error! status: ${res.status}`);
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       if (Array.isArray(data)) {
+  //         setData(data);
+  //       } else {
+  //         setData([data]);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error loading user:', error);
+  //     });
+  // }
 
-  useEffect(() => {
-    loadUser();
-  }, []);
+  // useEffect(() => {
+  //   loadUser();
+  // }, []);
 
   return (
     <main className="bg-gray-100 flex flex-col justify-between">
@@ -50,9 +49,10 @@ export default function Page() {
       {/* Main */}
       <div className="w-[1280px] flex flex-col gap-20 bg-white mx-auto py-24">
         <div className="flex flex-col gap-10 px-12">
-          <div className="text-center text-2xl">Танилцуулга {data.map((d) => (
+          <div className="text-center text-2xl">Танилцуулга </div>
+          {/* {data.map((d) => (
             <div key={d._id}>{d.domain}</div>
-          ))}</div>
+          ))} */}
           <div className="flex gap-40 justify-center">
             <div className="bg-gray-300 h-[480px] w-[380px] text-center content-center rounded-xl">Өөрийн зураг, бичлэг оруулах</div>
             <div className="w-[250px]">Introduce</div>

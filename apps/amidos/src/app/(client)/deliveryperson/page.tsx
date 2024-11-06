@@ -48,8 +48,7 @@ type Props = {
 };
 function Directions({ latitude, longitude }: Props) {
   const router = useRouter();
-  router.push('/deliverytracker/deliverychannel');
-  router.push('/deliveryperson/deliverychannel');
+  router.push('/deliverytracker?deliverychannel=id');
   const map = useMap();
   const routesLibrary = useMapsLibrary('routes');
   const [directionsService, setDirectionsservicce] = useState<google.maps.DirectionsService>();

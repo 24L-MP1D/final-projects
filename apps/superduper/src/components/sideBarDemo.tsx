@@ -5,11 +5,18 @@ import { Sidebar, SidebarBody, SidebarLink } from '@/components/ui/Sidebar';
 import { cn } from '@/lib/utils';
 import { IconArrowLeft, IconBrandPaypalFilled, IconBrandProducthunt, IconBrandTabler, IconMoodBitcoin, IconSettings, IconUserBolt } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
+import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContext } from 'react';
+import { Button } from './ui/button';
 
 export function SidebarDemo() {
+  function logout() {
+    console.log('cook');
+    Cookies.remove('token', { path: '/' });
+    window.location.href = '/admin/signin';
+  }
   const value = useContext(Context);
   const links = [
     {
@@ -42,11 +49,6 @@ export function SidebarDemo() {
       href: '/admin/settings',
       icon: <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
     },
-    {
-      label: 'Logout',
-      href: '/admin/logout',
-      icon: <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
-    },
   ];
 
   return (
@@ -61,12 +63,16 @@ export function SidebarDemo() {
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
             <Logo />
             <div className="mt-8 flex flex-col gap-2">
-              {links.map((link, idx) => (
-                <div className={`${link.label == value?.layoutAside && 'border-b-2 border-blue-600'}`}>
-                  <SidebarLink key={idx} link={link} />
+              {links.map((link) => (
+                <div key={link.label} className={`${link.label == value?.layoutAside && 'border-b-2 border-blue-600'}`}>
+                  <SidebarLink link={link} />
                 </div>
               ))}
             </div>
+            <Button onClick={logout} className="flex align-center gap-2 pt-2 hover:font-bold">
+              <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" color="white" />
+              Logout
+            </Button>
           </div>
           <div>
             <SidebarLink

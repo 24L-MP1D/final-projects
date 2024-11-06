@@ -25,7 +25,7 @@ export default function Menu() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    fetch('/api/hello/admin')
+    fetch('/api/addFood')
       .then((res) => res.json())
       .then(setFood)
       .catch((error) => console.error('Error fetching food:', error));
@@ -35,26 +35,20 @@ export default function Menu() {
     fetch('/api/special')
       .then((res) => res.json())
       .then((data) => {
-        setFood(data);
+        setSpecial(data);
       });
   }, []);
-
-  useEffect(() => {
-    if (selectedFood) {
-      setTotalPrice(selectedCount * selectedFood.price);
-    }
-  }, [selectedCount, selectedFood]);
 
   const handleQuantityChange = (increment: number) => {
     setSelectedCount((prevCount) => Math.max(prevCount + increment, 1));
   };
 
   const navs = [
+    { name: 'ЗАХИАЛГА', link: '/order' },
     { name: 'ЗАХИАЛГА', link: '/food' },
     { name: 'MЕНЮ', link: '/lunch' },
     { name: 'ХҮРГЭЛТ', link: '/delivery' },
   ];
-
   return (
     <div>
       <div className="flex justify-center gap-7 pt-10 z-10 mx-auto">
@@ -67,7 +61,9 @@ export default function Menu() {
       <Swipersnew />
       <div className="w-full mx-auto flex mt-20 md:mx-auto">
         <div className="relative mx-auto">
-          <h1 className="text-7xl italic text-center mb-10 mx-auto text-[#8B0000]">MЕНЮ</h1>
+          <h1 className="text-7xl italic text-center underline underline-1 mb-20">Онцлох Меню</h1>
+
+          <h1 className="text-7xl italic text-center mb-10 mx-auto underline underline-1 text-[#4A433E]">Lunch set</h1>
           <div className="mt-20 mx-auto lg:w-[1200px] flex flex-col lg:flex lg:flex-wrap lg:flex-row gap-16 mb-20">
             {food.map((foodItem: Food) => (
               <div key={foodItem._id} className="relative w-[320px] h-[380px] border-2 border-[#8B0000] rounded-sm p-10">
@@ -84,7 +80,6 @@ export default function Menu() {
                       setOpen(true);
                     }}
                   />
-
                   <DialogContent>
                     {selectedFood && (
                       <div className="bg-white w-[400px] relative mx-auto p-4">
