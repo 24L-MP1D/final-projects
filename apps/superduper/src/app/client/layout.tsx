@@ -1,4 +1,7 @@
-import Header from '../components/layout/header';
+import Footer from "@/components/layout/footer";
+import Header from "@/components/layout/header";
+
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -6,6 +9,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <div>
         <Header />
         {children}
+        <Footer />
       </div>
     </div>
   );

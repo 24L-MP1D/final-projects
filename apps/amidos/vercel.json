@@ -1,0 +1,10 @@
+{
+  "projectId": "prj_ROuuyZkHryGrq6tHlWAaoEf5W6mE",
+  "orgId": "team_ZHpG7FD7PojCFb7hz6HbZUAw",
+  "settings": {
+    "framework": "nextjs",
+    "installCommand": "npm i --force",
+    "buildCommand": "nx build --skip-nx-cache amidos",
+    "outputDirectory": "dist/apps/amidos/.next"
+  }
+}
