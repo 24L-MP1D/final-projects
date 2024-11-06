@@ -101,16 +101,18 @@ export default function Page() {
               <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
             </div>
           </div>
+
           <div className="flex gap-5 relative left-[-50px] items-center">
             <div>Category</div>
             <div>Дэлгэрэнгүй</div>
             <div className="text-[#f3f3f3]">Зураг</div>
             <div className="text-[#f3f3f3] ml-3">Логистик</div>
             <div className="text-[#f3f3f3] ml-5">Хянан үзэх</div>
+
           </div>
         </div>
-        <div className="mt-8 text-center text-[#333] text-[48px]">Tell us about your item</div>
-        <header className="text-[#333333] text-2xl mb-8">General</header>
+        <div className="mt-8 text-center text-[#333] text-[48px]">Барааныхаа талаар бидэнд хэлнэ үү</div>
+        <header className="text-[#333333] text-2xl mb-8">Ерөнхий</header>
         <AddProductGeneral
           showCountry={showCountry}
           setShowCountry={setShowCountry}
