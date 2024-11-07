@@ -1,5 +1,6 @@
 import { DB } from '@/lib/db';
 import { ObjectId } from 'mongodb';
+
 type filtType = {
   status?: string;
   startDate?: { $gte: Date };
@@ -9,11 +10,11 @@ type filtType = {
 const collection = DB.collection('product');
 
 export async function GET(request: Request) {
+  console.log('ajillaj bn');
   const { searchParams } = new URL(request.url);
   const stat = searchParams.get('status');
   const dateFrom = searchParams.get('startDate');
   const dateTo = searchParams.get('endDate');
-
   const filt: filtType = {};
 
   if (stat) {
@@ -27,12 +28,11 @@ export async function GET(request: Request) {
 
   try {
     const result = await collection.find({}).toArray();
-    console.log(result)
+    console.log(result);
     return Response.json(result);
   } catch (err) {
-    return new Response(null, { status: 404 })
+    return new Response(null, { status: 404 });
   }
-  return Response.json({ message: 'Heelo world!' });
 }
 
 export async function POST(request: Request) {
