@@ -102,12 +102,11 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
           <div className="flex justify-between">
             <p className="font-bold">Эргээд тавтай морил!</p>
             <span onClick={toggleForm}>
-              <div className="text-blue-500">Нэвтрэх</div>
+              <div className="text-blue-500 hover:cursor-pointer">Нэвтрэх</div>
             </span>
           </div>
           <p className="text-slate-500 mb-3">үргэлжлүүлнэ үү</p>
           <div className="flex gap-4">
-
             <Button className="w-full h-[30px] border-2 flex items-center gap-2 p-8 bg-blue-500 rounded-lg" onClick={SignInbyGithub}>
               <Github />
               <p className="text-white">Github</p>
@@ -124,18 +123,22 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
             <div className="h-[2px] flex-1 bg-slate-300"></div>
           </div>
           <div className="flex gap-2 mb-3">
-            <Input name="firstName" placeholder="First name" value={formik.errors.firstName} onChange={formik.handleChange} />
-            {<span className="text-red-600">{formik.errors.firstName}</span>}
-            <Input name="lastName" placeholder="Last name" value={formik.values.lastName} onChange={formik.handleChange} />
-            {<span className="text-red-600">{formik.errors.lastName}</span>}
+            <div>
+              <Input name="firstName" placeholder="First name" value={formik.errors.firstName} onChange={formik.handleChange} />
+              {formik.errors.firstName && formik.touched.firstName && <span className="text-red-600 ml-3">{formik.errors.firstName}</span>}
+            </div>
+            <div>
+              <Input name="lastName" placeholder="Last name" value={formik.values.lastName} onChange={formik.handleChange} />
+              {formik.errors.lastName && formik.touched.lastName && <span className="text-red-600 ml-3">{formik.errors.lastName}</span>}
+            </div>
           </div>
           <div>
             <Input name="email" placeholder="E-mail" value={formik.values.email} onChange={formik.handleChange} />
-            {<span className="text-red-600">{formik.errors.email}</span>}
+            {formik.errors.email && formik.touched.email && <span className="text-red-600 ml-3">{formik.errors.email}</span>}
           </div>
-          <div className="flex my-3">
+          <div className="my-3">
             <Input name="password" placeholder="Password" value={formik.values.password} onChange={formik.handleChange} />
-            {<span className="text-red-600">{formik.errors.password}</span>}
+            {formik.errors.password && formik.touched.password && <span className="text-red-600 ml-3">{formik.errors.password}</span>}
           </div>
           <DialogDescription>Хамгийн багадаа 8 тэмдэгт, нэг том үсэг, нэг жижиг үсэг, нэг тоо, нэг тусгай тэмдэгт.</DialogDescription>
           <DialogFooter>

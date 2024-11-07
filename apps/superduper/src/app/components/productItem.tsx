@@ -1,8 +1,7 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { Heart } from 'lucide-react';
+import { LikeButton } from '@/components/heartLike/heartLikeButton';
 import Image from 'next/image';
-import { useState } from "react";
+import { useEffect, useState } from 'react';
 import { CardBody, CardContainer, CardItem } from './ui/card';
 
 export interface Product {
@@ -15,17 +14,26 @@ export interface Product {
 
 }
 
-export function ProductItem({ product, isFavourite, onClickFavourite }: { product: Product; isFavourite: boolean; onClickFavourite: () => void }) {
-  const [isClick, setClick] = useState(false);
+export function ProductItem({ product, favourite, onClickFavourite }: { product: Product; isClick: boolean, favourite: string[], onClickFavourite: () => void }) {
+  const [isClick, setClick] = useState(false)
+
+  useEffect(() => {
+    if (favourite) {
+      setClick(favourite.includes(product._id))
+
+    } else {
+      setClick(false)
+    }
+  }, [favourite])
 
   return (
     <CardContainer containerClassName="p-0 !w-full h-auto " key={product.productName} className="hover:cursor-pointer">
       <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full rounded-xl p-6 border h-auto">
         <CardItem translateZ="50" className="text-xl font-bold text-neutral-600 dark:text-white flex justify-between w-[330px] items-center">
           <p className="overflow-hidden text-nowrap text-ellipsis w-[200px]">{product.productName}</p>
-          <Button onClick={onClickFavourite} className=" hover:bg-white rounded-full h-[40px] w-[40px] bg-white items-center flex justify-center text-[#0033FF]">
-            <Heart size={22} strokeWidth={2} fill={isFavourite ? '#0033FF' : 'transparent'} />
-          </Button>
+          <div onClick={onClickFavourite}>
+            <LikeButton isLiked={isClick} handleLike={() => ""} />
+          </div>
         </CardItem>
         <CardItem as="p" translateZ="60" className="text-neutral-500 text-sm mt-2 dark:text-neutral-300">
           {product.description}

@@ -3,17 +3,20 @@
 import { Button } from '@/components/ui/button';
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Swiper as SwiperType } from 'swiper';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Product, ProductItem } from '../components/productItem';
+import { RealtimeNotif } from './layout';
 
 export default function Index() {
   const [products, setProducts] = useState<Product[]>([]);
-
+  const [isClick, setClick] = useState(false);
+  const value = useContext(RealtimeNotif)
   const [progress, setProgress] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
+
 
   interface product {
     image: string;
@@ -46,24 +49,29 @@ export default function Index() {
   };
 
   // Favourite codes
-  const [favourite, setFavourite] = useState<string[]>([]);
+
 
   useEffect(() => {
     const storage = localStorage.getItem('favourites');
-    if (storage) setFavourite(JSON.parse(storage));
+    if (storage) value?.setFavourite(JSON.parse(storage));
     fetchProducts();
   }, []);
 
   const handleFavourite = (productId: string) => {
-    let result: string[] = [...favourite];
+
+    let result: string[] = [];
+    if (value?.favourite) result = [...value?.favourite];
     if (result.find((id) => id === productId)) {
       result = result.filter((id) => id !== productId);
+      setClick(false)
     } else {
       result.push(productId);
+      setClick(true)
     }
 
     localStorage.setItem('favourites', JSON.stringify(result));
-    setFavourite(result);
+
+    value?.setFavourite(result);
   };
 
   return (
@@ -123,7 +131,7 @@ export default function Index() {
       </div>
       <div className="grid grid-cols-3 gap-10 w-full">
         {products.slice(0, 20).map((product) => (
-          <ProductItem product={product} key={product._id} onClickFavourite={() => handleFavourite(product._id)} isFavourite={!favourite.find((id) => id === product._id)} />
+          <ProductItem isClick={isClick} product={product} favourite={value?.favourite || []} key={product._id} onClickFavourite={() => handleFavourite(product._id)} />
         ))}
       </div>
     </div>
