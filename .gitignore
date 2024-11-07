@@ -46,6 +46,7 @@ Thumbs.db
 out
 
 .env
+/.env
 
 /.vercel
 
