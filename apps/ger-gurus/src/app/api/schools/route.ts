@@ -13,11 +13,6 @@ export async function GET(request: Request) {
   if (!school){
     throw new Error (`School not found for domain : ${hostname}`)
   }
-  // const id=  school?._id
-  // const oneSchool = await db.collection('schools').findOne({ _id: new ObjectId(id) });
-  // if (!oneSchool) {
-  //   return new Response('Not Found', { status: 404 });
-  // }
   return Response.json(school);
 }
 
