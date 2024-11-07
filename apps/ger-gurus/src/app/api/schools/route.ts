@@ -35,10 +35,6 @@ export async function POST(request: Request) {
   if (!userId) {
     return new Response('Unauthorized', { status: 401 });
   }
-  // const user = await verifyToken(authorization);
-  //   if (!user) {
-  //     return new Response('Unauthorized', { status: 401 });
-  //   }
   const { domain, description } = body;
   await db.collection('schools').insertOne({
     domain,
