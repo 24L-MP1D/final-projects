@@ -78,17 +78,17 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
     <div className="max-w-[500px] w-full" ref={sticky}>
       {new Date().getTime() >= startDate ? (
         <div>
-          Closed in {showDate?.day}d {showDate?.dateHours}h {showDate?.dateMinuts}m {showDate?.dateSecunds}s
+          Хаагдсан {showDate?.day}d {showDate?.dateHours}h {showDate?.dateMinuts}m {showDate?.dateSecunds}s
         </div>
       ) : (
-        <div>start soon</div>
+        <div>удахгүй эхэлнэ</div>
       )}
       <div className="border-2 border-t-2 border-t-blue-600 border-b-2 border-slate-300">
         <div className="mt-3  py-8 px-6">
           <div className="flex flex-col gap-2">
-            <div className="text-sm">Current bid</div>
+            <div className="text-sm">Одоогийн үнийн санал</div>
             <div className="font-bold text-3xl"> {maximumBid} ₮</div>
-            <div className="text-sm">Reserve price not met</div>
+            <div className="text-sm">Нөөцийн үнэ хангагдаагүй</div>
           </div>
         </div>
         <div className="flex flex-col gap-2 pt-8 px-4">
@@ -117,18 +117,18 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
           {formikTouched.bid && formikErrors.bid && <p className="ml-8 text-red-500">{formikErrors.bid}</p>}
           <div className="flex gap-1 w-full">
             <Button type="submit" className="flex-1 border-[1px] py-2 px-4 bg-white text-blue-500 text-center">
-              Place bid
+            Үнийн санал оруулах
             </Button>
             <Button type="submit" className="flex-1 border-[1px] py-2 px-4 bg-blue-600 text-white text-center">
-              Set max bid
+            Хамгийн их үнийн саналыг тохируулах
             </Button>
           </div>
         </div>
-        <div className="mt-8 px-4">Buy confidently with our Buyer Protection</div>
+        <div className="mt-8 px-4">Манай Худалдан авагчийн хамгаалалтаар итгэлтэйгээр худалдаж аваарай</div>
         <div className="px-4 py-8 flex flex-col gap-2.5 border-b-2 border-slate-300">
-          <div>100$ from France, arrives in 3-22 days</div>
-          <div>Buyer Protection fee: 9% + ₮ 3</div>
-          <div>Closes: Saturday 18:01</div>
+          <div>Францаас 100 доллар, 3-22 хоногт ирнэ</div>
+          <div>Худалдан авагчийн хамгаалалтын хураамж: 9% + 3 доллар</div>
+          <div>Хаах: Бямба гарагт 18:01</div>
         </div>
         <div className="pt-8 px-4 flex flex-col gap-[40px]">
           <div className="overflow-y-scroll relative w-full max-h-80 flex flex-col gap-2">
@@ -143,7 +143,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
 
           {bids.length > 3 && (
             <label className="mb-2 hover:cursor-pointer flex justify-between">
-              <div> See all bids({bids.length - 3})</div>
+              <div> Бүх үнийн саналыг харах({bids.length - 3})</div>
               <div>{showAllBids == 0 ? <ChevronDown onClick={() => setShowAllBids(bids.length)} /> : <ChevronUp onClick={() => setShowAllBids(0)} />}</div>
             </label>
           )}

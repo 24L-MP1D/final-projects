@@ -42,7 +42,7 @@ export const AddProductGeneral = ({ formikValues, formikTouched, formikSetFieldV
     <div className="flex flex-col gap-8">
       <div>
         <div className="flex justify-between items-center">
-          <div className="text-[#23448d] text-sm mb-1.5">product name</div>
+          <div className="text-[#23448d] text-sm mb-1.5">бүтээгдэхүүний нэр</div>
         </div>
         <div className="flex relative border-b-[1px]">
           <Input id="productName" value={formikValues.productName} onChange={formikHandleChange} maxLength={32} type="text" className="flex-1 border-none" />
@@ -50,7 +50,7 @@ export const AddProductGeneral = ({ formikValues, formikTouched, formikSetFieldV
         </div>
       </div>
       <div>
-        <div className="text-[#23448d] text-sm mb-1.5">Item's Country of Origin *</div>
+        <div className="text-[#23448d] text-sm mb-1.5">Тухайн зүйлийн гарал үүслийн улс *</div>
         <div className="flex border-b-[1px] relative">
           <Input
             id="countryOfOrigin"
@@ -96,8 +96,8 @@ export const AddProductGeneral = ({ formikValues, formikTouched, formikSetFieldV
 
       <div>
         <div className="flex justify-between items-center">
-          <div className="text-[#23448d] text-sm mb-1.5">Additional information *</div>
-          <div>{formikValues.additionalInformation ? formikValues.additionalInformation.length : 0}/1000 characters</div>
+          <div className="text-[#23448d] text-sm mb-1.5">Нэмэлт мэдээлэл *</div>
+          <div>{formikValues.additionalInformation ? formikValues.additionalInformation.length : 0}/1000 тэмдэгт</div>
         </div>
         <div className="border-b-[1px] relative">
           <Input id="additionalInformation" value={formikValues.additionalInformation} onChange={formikHandleChange} maxLength={1000} type="text" className="flex-1 border-none" />

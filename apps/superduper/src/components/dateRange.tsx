@@ -30,7 +30,7 @@ export function DatePickerWithRange({ className, setDate, date }: DatePickerWith
                 format(date.from, 'LLL dd, y')
               )
             ) : (
-              <span>Pick a date</span>
+              <span>Огноо сонгоно уу</span>
             )}
           </Button>
         </PopoverTrigger>

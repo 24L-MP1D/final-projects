@@ -23,29 +23,28 @@ export const Safity = ({ oneProduct }: { oneProduct: ProductType }) => {
     <div className="py-8 px-6 flex flex-col gap-5 max-w-[392px] w-full border-green-500 border-2 border-solid">
       <div className={`transition-all w-full ${showPaymentSafety ? 'h-[120px]' : 'h-[20px]'} overflow-hidden`}>
         <div className={`${showPaymentSafety && 'text-green-400'} hover:cursor-pointer`} onClick={showTextFirst}>
-          Your payment is safe
+        Таны төлбөр аюулгүй
         </div>
-        <div>We ensure your money is kept safe. We only release payment to the seller up to 3 days after delivery so that you have had the time to inspect your object.</div>
+        <div>Бид таны мөнгийг найдвартай хадгалж байгаа болно. Бид барааг хүргэснээс хойш 3 хоногийн дотор худалдагчид төлбөрийг шилжүүлдэг тул та объектоо шалгаж үзэх боломжтой.</div>
       </div>
 
       <div className={`transition-all w-full ${showQualityChecked ? 'h-[120px]' : 'h-[20px]'} overflow-hidden`}>
         <div className={`${showQualityChecked && 'text-green-400'} hover:cursor-pointer`} onClick={showTextMiddle}>
-          All objects are quality checked
+        Бүх объектын чанарыг шалгасан
         </div>
-        <div>Catawiki’s in-house experts review and approve all objects in auction. This ensures only the most special objects are sold on Catawiki.</div>
+        <div>СуперДуперын дотоод мэргэжилтнүүд дуудлага худалдаанд оруулсан бүх объектыг хянаж, баталгаажуулдаг. Иймд зөвхөн хамгийн онцгой объектууд СуперДупер дээр зарагдаж байгаа болно.</div>
       </div>
 
       <div className={`transition-all w-full ${showSellerVerify ? 'h-[120px]' : 'h-[20px]'} overflow-hidden`}>
         <div className={`${showSellerVerify && 'text-green-400'} hover:cursor-pointer`} onClick={showTextLast}>
-          All sellers are verified
+        Бүх худалдагч нар баталгаажсан
         </div>
         <div>
-          We, along with our trusted partners, thoroughly verify our sellers. This helps ensure you are buying from only legitimate sellers who are committed to delivering high quality objects and
-          excellent service.
+        Бид итгэмжлэгдсэн түншүүдийнхээ хамт худалдагчдаа сайтар шалгадаг. Энэ нь таныг хууль ёсны худалдагчаас өндөр чанартай бүтээгдэхүүн худалдаж авах боломжоор хангаж буй үйлчилгээ юм.
         </div>
       </div>
 
-      <div>learn more</div>
+      <div>илүү ихийг мэдэх</div>
     </div>
   );
 };

@@ -10,6 +10,46 @@ import { useEffect, useState } from 'react';
 export default function Page() {
     const router = useRouter();
 
+    addProductObject.category = category;
+    localStorage.setItem('addProduct', JSON.stringify(addProductObject));
+    router.push('/client/addProducts/2');
+  };
+  useEffect(() => {
+    loadCategory();
+  }, []);
+  return (
+    <div className="max-w-[50%] mx-auto mt-10">
+      <div className="flex flex-col gap-1 max-w-[500px] mx-auto text-2xl">
+        <div className="flex gap-2 items-center justify-center w-full text-[#00253e]">
+          <div className="p-0.5 border-2 border-[#00253e] rounded-full">
+            <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
+          </div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="p-0.5 rounded-full">
+            <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
+          </div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="p-0.5 rounded-full">
+            <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
+          </div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="p-0.5 rounded-full">
+            <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
+          </div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="p-0.5 rounded-full">
+            <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
+          </div>
+        </div>
+        <div className="flex gap-10 justify-center items-center ">
+          <div>Ангилал</div>
+          <div className="text-[#f3f3f3]">Дэлгэрэнгүй</div>
+          <div className="text-[#f3f3f3]">Зураг</div>
+          <div className="text-[#f3f3f3]">Логистик</div>
+          <div className="text-[#f3f3f3]">Хянан үзэх</div>
+        </div>
+      </div>
+
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useState<Category>();
     const [categories, setCategories] = useState<Category[]>([]);
@@ -20,6 +60,7 @@ export default function Page() {
     };
     const saveCategory = (category: string) => {
         const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
+
 
         addProductObject.category = category;
         localStorage.setItem('addProduct', JSON.stringify(addProductObject));
