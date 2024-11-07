@@ -12,6 +12,12 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  env: {
+    GOOGLE_API: process.env.ABLY_KEY || '',
+  },
+  images: {
+    remotePatterns: [{hostname:'res.cloudinary.com'}],
+},
 };
 
 const plugins = [
@@ -20,3 +26,5 @@ const plugins = [
 ];
 
 module.exports = composePlugins(...plugins)(nextConfig);
+
+

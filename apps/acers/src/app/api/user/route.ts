@@ -1,22 +1,21 @@
 import jwt from 'jsonwebtoken';
+import { ObjectId } from 'mongodb';
 import { DB } from '../../lib/db';
-
 
 const JWT_SECRET = process.env.JWT_SECRET || '';
 
 export async function GET(request: Request) {
   const token = request.headers.get('authtoken');
 
-
   if (!token) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response('Unauthorized: No token provided', { status: 401 });
   }
 
   try {
     const decoded: any = jwt.verify(token, JWT_SECRET);
     const userId = decoded.userId;
 
-    const user = await DB.collection('users').findOne({ _id: userId });
+    const user = await DB.collection('users').findOne({ _id: new ObjectId(userId) });
 
     if (!user) {
       return new Response('User not found', { status: 404 });
@@ -36,6 +35,6 @@ export async function GET(request: Request) {
     );
   } catch (error) {
     console.error('Token verification error:', error);
-    return new Response('Invalid token', { status: 403 });
+    return new Response('Invalid token or server error', { status: 403 });
   }
 }

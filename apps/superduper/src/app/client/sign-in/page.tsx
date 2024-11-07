@@ -4,7 +4,7 @@ import { SignIn } from '@/app/components/signIn';
 import { SignUp } from '@/app/components/signUp';
 import { useState } from 'react';
 
-export const AuthForm = () => {
+const AuthForm = () => {
   const [isSignUp, setIsSignUp] = useState(false);
 
   return (

@@ -1,3 +1,4 @@
+import { AuthProvider } from '@/components/components/AuthProvider';
 import './global.css';
 
 import { ToastProvider } from '@/components/providers/toaster-provider';
@@ -14,12 +15,13 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  console.log("")
   return (
     <html lang="en">
       <body>
-        <ToastProvider />
-        {children}
+        <AuthProvider>
+          <ToastProvider />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
