@@ -3,31 +3,50 @@ import { AdminLayout } from '@/components/adminLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/Input';
-import { useContext, useEffect, useState } from 'react';
+import Image from 'next/image';
+import { FormEvent, useContext, useEffect, useState } from 'react';
 import { Context } from '../layout';
 
+const CLOUDINARYNAME = process.env.NEXT_PUBLIC_CLOUDINARYNAME;
+const CLOUDINARYPRESET = process.env.NEXT_PUBLIC_CLOUDINARYPRESET || '';
 export default function CardWithForm() {
   const [category, setCategory] = useState('');
+  const [image, setImage] = useState<File | null>(null);
   const value = useContext(Context);
   const addCategory = async () => {
-    const response = await fetch('/api/categories', {
+    const formData = new FormData();
+    if (!image) return;
+    formData.append('file', image);
+    formData.append('upload_preset', CLOUDINARYPRESET);
+
+    const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARYNAME}/upload`, {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await response.json();
+    console.log(data.secure_url);
+    await fetch('/api/categories', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(category),
+      body: JSON.stringify({
+        category,
+        image: data.secure_url,
+      }),
     });
-    if (response.ok) {
-      alert('Category added successfully');
-      setCategory('');
-    } else {
-      alert('Failed to add category');
-    }
+    setImage(null);
+    setCategory('');
   };
 
   useEffect(() => {
     value?.setLayoutAside('Dashboard');
   }, []);
+  const imageUploader = (event: FormEvent<HTMLInputElement>) => {
+    const file = event.currentTarget.files;
+    if (!file) return;
+    setImage(file[0]);
+  };
   return (
     <AdminLayout>
       <div className="container mx-auto flex justify-center p-6">
@@ -52,6 +71,10 @@ export default function CardWithForm() {
             </Button>
           </CardFooter>
         </Card>
+        <div>
+          <Input type="file" onChange={(e) => imageUploader(e)} value={''} />
+          {image && <Image src={URL.createObjectURL(image)} alt="a" width={500} height={500} className="w-[500px] h-[500px]" />}
+        </div>
       </div>
     </AdminLayout>
   );
