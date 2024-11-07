@@ -1,7 +1,7 @@
 'use client';
 
-import { useAuthStore } from '@/components/useAuthStore';
 import { ReactNode } from 'react';
+import { useAuthStore } from './useAuthStore';
 
 export function Protect({ children, role }: { children: ReactNode; role: string }) {
   const currentUser = useAuthStore((state) => state.currentUser);

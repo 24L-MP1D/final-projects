@@ -95,7 +95,7 @@ const TeacherWebSecondLayout: React.FC = () => {
           loop
           aria-label="Educational video"
         >
-          <source src="/video.mp4" type="video/mp4" />
+          <source src="/home-video.mp4" type="video/mp4" />
         </video>
 
         <div
@@ -131,7 +131,7 @@ const TeacherWebSecondLayout: React.FC = () => {
             other businesses we know!”
           </div>
           <div className="flex flex-col">
-            <Image src="/logo.png" width={99} height={29.3} alt="Logo" />
+            <Image src="/verse.png" width={99} height={29.3} alt="Logo" />
             <div className="flex gap-[300px]">
               <p>Michael Vachon, Founder at Citizens of Soil</p>
               <div className="flex gap-6 mt-[-20px]">

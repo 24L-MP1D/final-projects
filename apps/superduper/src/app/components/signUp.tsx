@@ -115,6 +115,7 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
               <FcGoogle />
               <p>Google</p>
             </Button>
+
           </div>
           <div className="flex items-center gap-2 py-3">
             <div className="h-[2px] flex-1 bg-slate-300"></div>
