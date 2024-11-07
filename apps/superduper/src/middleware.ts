@@ -2,17 +2,7 @@ import { jwtVerify } from 'jose';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const config = {
-  matcher: [
-    '/client/addProducts/:path*',
-    '/client/save/:path*',
-    '/api/bids/:path*',
-    '/api/chatbot/:path*',
-    '/api/favorites/:path*',
-    '/api/notifications/:path*',
-    '/api/product/:path*',
-    '/api/products',
-    '/api/sellerRequest/:path*',
-  ],
+  matcher: ['/client/addProducts/:path*', '/client/save/:path*'],
 };
 
 const ADMIN_ACCESS_TOKEN_SECRET = new TextEncoder().encode(process.env.ADMIN_ACCESS_TOKEN_SECRET || '');

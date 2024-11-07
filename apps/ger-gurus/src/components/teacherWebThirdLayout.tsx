@@ -31,7 +31,7 @@ const TeacherWebThirdLayout: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(true);
 
   const videos = [
-    { src: '/video.mp4', alt: 'Educational video 1' },
+    { src: '/home-video.mp4', alt: 'Educational video 1' },
     { src: '/video.mp4', alt: 'Educational video 2' },
     { src: '/video.mp4', alt: 'Educational video 3' },
     { src: '/video.mp4', alt: 'Educational video 4' },
