@@ -3,8 +3,9 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Bookmark, Calendar, Ellipsis, Heart, MessageSquare, TrendingUp, Upload } from 'lucide-react';
+import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Stars } from '../../components/itemComponents/stars';
 import { ScrollArea } from '../../components/ui/scroll-area';
 import { Table, TableBody, TableCaption, TableCell, TableHeader, TableRow } from '../../components/ui/Table';
 
@@ -16,9 +17,9 @@ interface Recipe {
   description: string;
   prepTime: string;
   servings: string;
-  ingredients: string[];
-  instructions: string[];
-  nutritionFacts: string[];
+  ingredients: { name: string }[];
+  instructions: { name: string; step: string }[];
+  nutritionFacts: { name: string; value: string }[];
   category: string;
   difficulty: string;
   availability: string;
@@ -55,8 +56,9 @@ enum Role {
 
 export default function RecipeComponent() {
   const params = useParams<{ id: string }>();
+
   // console.log('params', params?.id);
-  const id = params?.id;
+  const id = params.id;
   const [loading, setLoading] = useState<boolean>(false);
   const [recipe, setRecipe] = useState<Recipe>({});
   const [user, setUser] = useState<Partial<User>>({ firstName: '' });
@@ -139,7 +141,7 @@ export default function RecipeComponent() {
   }
 
   return (
-    <div className="w-[1110px] m-auto flex flex-col gap-6">
+    <div className="w-[1110px] m-auto flex flex-col gap-6 font-serif">
       {loading ? (
         <p>Loading recipe...</p>
       ) : errorMessage ? (
@@ -171,6 +173,11 @@ export default function RecipeComponent() {
                 <MessageSquare />
                 {comments.length}
               </div>
+              <Stars
+                size={15}
+                //  rating={rating} voteNum={ratingNum}
+                id={id}
+              />
             </div>
           </div>
           <div className="h-[1px] w-[1110px] bg-gray-200"></div>
@@ -231,7 +238,7 @@ export default function RecipeComponent() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableCaption className="w-[130px] font-semibold text-lg pb-3 pl-1">Nutrition Facts</TableCaption>
+                      <TableCaption className="w-[150px] font-semibold text-lg pb-3 pl-1">Nutrition Facts</TableCaption>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -251,17 +258,23 @@ export default function RecipeComponent() {
                 </Table>
               </div>
               <div>
-                <h4>Fresh Recipes</h4>
+                <h4 className="text-lg font-semibold p-3">Fresh Recipes</h4>
                 {[...Array(5)].map((_, index) => (
-                  <div key={index}>
-                    <div className="w-[130px] h-[100px]"></div>
+                  <div key={index} className="flex mb-5 gap-3">
+                    <div className="w-[150px] h-[100px] bg-gray-200"></div>
                     <div>
+                      <Stars
+                        size={15}
+                        //  rating={rating} voteNum={ratingNum}
+                        id={id}
+                      />
                       <div>Rating</div>
                       <p>Spinach and Cheese Pasta</p>
                     </div>
                   </div>
                 ))}
               </div>
+              <div className="bg-gray-300 w-full h-[200px]"></div>
             </div>
           </div>
           <p>Already made this?</p>
@@ -286,16 +299,19 @@ export default function RecipeComponent() {
                 <TableBody className="flex flex-col">
                   {comments.length > 0 ? (
                     comments.map((comment, index) => (
-                      <TableRow key={index} className="flex gap-5">
+                      <TableRow key={index} className="flex">
                         <TableCell>
-                          <div className="w-10 h-10 rounded-full bg-gray-300"></div>
+                          <div className="w-12 h-12 rounded-full bg-gray-300"></div>
                         </TableCell>
-                        <TableCell>
-                          <p>{comment.userId}</p>
-                          <p>{dayjs(comment.createdAt).fromNow()}</p>
-                          <p>{comment.comment}</p>
-                          <div className="flex items-center">
-                            <Heart /> 48
+                        <TableCell className="flex flex-col gap-1">
+                          <p className="pt-2">{comment.userId}</p>
+                          <p className="text-gray-400">{dayjs(comment.createdAt).fromNow()}</p>
+                          <p className="p-4">{comment.comment}</p>
+                          <div className="flex items-center text-gray-400 gap-4">
+                            <div className="flex gap-1">
+                              <Heart />
+                              <p>48</p>
+                            </div>
                             <button className="flex items-center">
                               <Ellipsis />
                               <p>More</p>

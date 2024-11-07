@@ -59,34 +59,22 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET(request: Request, { params }: { params?: { id: string } }) {
-  console.log('Fetching recipe with ID:', params?.id);
+export async function GET(request: Request, { params }: { params: { id: string } }) {
+  const { id } = await params;
 
-  try {
-    if (params && params?.id) {
-      const { id } = params;
-
-      const trimmedId = id.trim();
-      if (!ObjectId.isValid(trimmedId)) {
-        return new Response(JSON.stringify({ message: 'Invalid recipeId format' }), { status: 400 });
-      }
-
-      const recipe = await DB.collection('recipes').findOne({ _id: new ObjectId(trimmedId) });
-      if (!recipe) {
-        return new Response(JSON.stringify({ message: 'Recipe not found' }), { status: 404 });
-      }
-
-      const comments = await DB.collection('comments')
-        .find({ recipeId: new ObjectId(trimmedId) })
-        .toArray();
-
-      return new Response(JSON.stringify({ recipe, comments }), { status: 200, headers: { 'Content-Type': 'application/json' } });
-    } else {
-      const recipes = await DB.collection('recipes').find().toArray();
-      return new Response(JSON.stringify(recipes), { status: 200, headers: { 'Content-Type': 'application/json' } });
-    }
-  } catch (e) {
-    console.error('Error fetching recipe or comments:', e);
-    return new Response(JSON.stringify({ error: 'Internal server error' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+  const trimmedId = id.trim();
+  if (!ObjectId.isValid(trimmedId)) {
+    return new Response(JSON.stringify({ message: 'Invalid recipeId format' }), { status: 400 });
   }
+
+  const recipe = await DB.collection('recipes').findOne({ _id: new ObjectId(trimmedId) });
+  if (!recipe) {
+    return new Response(JSON.stringify({ message: 'Recipe not found' }), { status: 404 });
+  }
+
+  const comments = await DB.collection('comments')
+    .find({ recipeId: new ObjectId(trimmedId) })
+    .toArray();
+
+  return new Response(JSON.stringify({ recipe, comments }), { status: 200, headers: { 'Content-Type': 'application/json' } });
 }

@@ -124,7 +124,7 @@ export default function HeaderNavigationMenu() {
         </NavigationMenuList>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Ocassions</NavigationMenuTrigger>
+            <NavigationMenuTrigger>Occassions</NavigationMenuTrigger>
             <NavigationMenuContent>
               <NavigationMenuLink>
                 <div className="flex gap-x-20 py-8 px-[60px]">
