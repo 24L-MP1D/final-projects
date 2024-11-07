@@ -13,21 +13,15 @@ import { RealtimeNotif } from './layout';
 export default function Index() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isClick, setClick] = useState(false);
-  const value = useContext(RealtimeNotif)
+  const value = useContext(RealtimeNotif);
   const [progress, setProgress] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
-
-
-  interface product {
-    image: string;
-  }
 
   const fetchProducts = async () => {
     try {
       const res = await fetch('/api/products');
       if (!res.ok) throw new Error('Network response was not ok');
       const data = await res.json();
-      console.log(data);
       setProducts(data);
 
       // Extract image URLs from the products
@@ -50,7 +44,6 @@ export default function Index() {
 
   // Favourite codes
 
-
   useEffect(() => {
     const storage = localStorage.getItem('favourites');
     if (storage) value?.setFavourite(JSON.parse(storage));
@@ -58,15 +51,14 @@ export default function Index() {
   }, []);
 
   const handleFavourite = (productId: string) => {
-
     let result: string[] = [];
     if (value?.favourite) result = [...value?.favourite];
     if (result.find((id) => id === productId)) {
       result = result.filter((id) => id !== productId);
-      setClick(false)
+      setClick(false);
     } else {
       result.push(productId);
-      setClick(true)
+      setClick(true);
     }
 
     localStorage.setItem('favourites', JSON.stringify(result));
@@ -75,14 +67,14 @@ export default function Index() {
   };
 
   return (
-    <div className="max-w-[1220px] mx-auto w-full">
-      <div className="flex">
+    <div className="max-w-[1280px] mx-auto w-full">
+      <div className="grid grid-cols-2">
         <div className="gap-10 grid py-10">
           <div className="flex gap-20">
             <div className="grid gap-5">
               <div className="text-[#565B60] text-sm">2024 оны 10-р сарын 11-20</div>
-              <div className="text-[#0033FF] text-5xl font-semibold">Хамгийн их хүсдэг</div>
-              <div className="text-[#565B60] text-sm">Энэ жилийн хамгийн эрэлттэй тансаг зэрэглэлийн брэндүүдээс эхлээд чамин олдворуудыг өөрийн болгоорой.</div>
+              <div className="text-[#0033FF] text-5xl font-semibold">{products?.[progress]?.productName}</div>
+              <div className="text-[#565B60] text-sm">{products?.[progress]?.productName}</div>
               <div className="text-[#0033FF] text-sm">Яг одоо судлаарай</div>
             </div>
           </div>
@@ -102,7 +94,7 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="w-[60%] py-10 pl-10">
+        <div className="w-full">
           <Swiper
             direction={'vertical'}
             slidesPerView={1}
@@ -123,7 +115,7 @@ export default function Index() {
           >
             {products.slice(0, 6).map((product, index) => (
               <SwiperSlide key={index}>
-                <Image alt={`Slide ${index + 1}`} src={product.frontImage} width={1200} height={600} className="w-full h-full object-cover hover:cursor-pointer" />
+                <Image loading="lazy" alt={`Slide ${index + 1}`} src={product.frontImage} width={1200} height={600} className="w-full h-full object-cover hover:cursor-pointer" />
               </SwiperSlide>
             ))}
           </Swiper>
