@@ -31,6 +31,7 @@ export default async function Page({ params }: { params: Params }) {
     imageUrl: string;
     price: number;
     chapters: Chapter[];
+    attachments?: Attachment[];
   }
   interface Chapter {
     _id: string; // Converted to string
@@ -39,6 +40,13 @@ export default async function Page({ params }: { params: Params }) {
     isPublished?: boolean;
     isFree?: boolean;
     position: number;
+  }
+  interface Attachment {
+    _id: string;
+    createdAt?: Date;
+    courseId: string;
+    url?: string;
+    name?: string;
   }
 
   const course1 = (await db
@@ -74,6 +82,19 @@ export default async function Page({ params }: { params: Params }) {
           chapters: { $push: '$chapters' },
         },
       },
+      {
+        $lookup: {
+          from: 'attachments',
+          localField: '_id',
+          foreignField: 'courseId', // Assuming `courseId` in `attachments` links to `courses`
+          as: 'attachments',
+        },
+      },
+      {
+        $addFields: {
+          attachments: { $sortArray: { input: '$attachments', sortBy: { createdAt: -1 } } },
+        },
+      },
     ])
     .toArray()) as Course[];
 
@@ -85,12 +106,30 @@ export default async function Page({ params }: { params: Params }) {
   const courseWithPlainId = {
     ...course,
     _id: course._id.toString(),
-    chapters: course.chapters.map((chapter) => ({
-      ...chapter,
-      _id: chapter._id.toString(),
-      courseId: chapter.courseId.toString(),
+    chapters: course.chapters.map((chapter) => {
+      const chapterAttachments = (course.attachments || []).filter((attachment) => attachment.courseId.toString() === chapter.courseId.toString());
+      return {
+        ...chapter,
+        _id: chapter._id.toString(),
+        courseId: chapter.courseId.toString(),
+        attachments: chapterAttachments.map((attachment) => ({
+          _id: attachment._id.toString(),
+          url: attachment.url,
+          name: attachment.name,
+          courseId: attachment.courseId.toString(), // Ensure ObjectId is converted to string
+          createdAt: attachment.createdAt ? attachment.createdAt.toISOString() : null, // Ensure Date is converted to string
+        })),
+      };
+    }),
+    attachments: course.attachments?.map((attachment) => ({
+      _id: attachment._id.toString(),
+      url: attachment.url,
+      name: attachment.name,
+      courseId: attachment.courseId.toString(), // Ensure ObjectId is converted to string
+      createdAt: attachment.createdAt ? attachment.createdAt.toISOString() : null, // Ensure Date is converted to string
     })),
   };
+
   const requiredFields = [course.title, course.description, course.imageUrl, course.price, course.chapters];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;

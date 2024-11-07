@@ -13,15 +13,20 @@ declare global {
 export type state = {
   notif: notifications[];
   setNotif: (value: notifications[]) => void;
+  favourite: string[];
+  setFavourite: (value: string[]) => void
 };
+
 export const RealtimeNotif = createContext<state | null>(null);
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const [favourite, setFavourite] = useState<string[]>([]);
+
   const [notif, setNotif] = useState<notifications[]>([]);
   return (
     <Suspense>
       <div className="max-w-[1280px] mx-auto">
-        <Header />
-        <RealtimeNotif.Provider value={{ notif, setNotif }}>
+        <RealtimeNotif.Provider value={{ notif, favourite, setFavourite, setNotif }}>
+          <Header />
           <div>{children}</div>
         </RealtimeNotif.Provider>
 

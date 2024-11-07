@@ -97,15 +97,12 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
     <Dialog open={dialogOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={formik.handleSubmit}>
-
-         
           <DialogTitle className="font-thin text-center flex justify-between">
             <div>Нэвтрэх эсвэл бүртгэл үүсгэх</div>
             <Link href="/client">
               <X onClick={() => setDialogOpen(false)} className="h-4 w-4" />
             </Link>
           </DialogTitle>
-
 
           {/* <button onClick={() => setDialogOpen(false)} className="text-gray-500 hover:text-gray-700">
             ✕
@@ -114,12 +111,11 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
           <div className="flex justify-between">
             <p className="font-bold">Эргээд тавтай морил!</p>
             <span onClick={toggleForm}>
-              <div className="text-[#03f]">Бүртгэл үүсгэх</div>
+              <div className="text-[#03f] hover:cursor-pointer">Бүртгэл үүсгэх</div>
             </span>
           </div>
           <p className="text-slate-500 mb-3">үргэлжлүүлнэ үү</p>
           <div className="flex gap-4">
-
             <Button className="w-full h-[30px] border-2 flex items-center gap-2 p-8 bg-blue-500 rounded-lg" onClick={SignInbyGithub}>
               <Github />
               <p className="text-white">Github</p>
@@ -128,7 +124,6 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
               <FcGoogle />
               <p>Google</p>
             </Button>
-
           </div>
           <div className="flex items-center gap-2 py-3">
             <div className="h-[2px] flex-1 bg-slate-300"></div>
@@ -150,7 +145,7 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
               <p>Намайг санах</p>
             </div>
             <Link className="text-blue-500" href="/">
-            Нууц үгээ мартсан уу?
+              Нууц үгээ мартсан уу?
             </Link>
           </div>
 

@@ -157,6 +157,9 @@
     "typescript-eslint": "^8.0.0",
     "vercel": "^37.12.0"
   },
+  "overrides": {
+    "react-is": "^19.0.0-rc-69d4b800-20241021"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog",
