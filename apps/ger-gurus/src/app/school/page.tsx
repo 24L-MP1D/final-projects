@@ -36,15 +36,21 @@ const globalStyles = `
   }
 `;
 
-export default function Page() {
-  //     const [schoolData, setSchoolData]= useState<SchoolData>({})
-  //   console.log({schoolData})
-  //   console.log(schoolData.domain)
+interface SchoolData {
+  _id: string;
+  domain: string;
+}
 
-  //   const getSchool= async()=>{
-  //     const response=await fetch('/api/schools')
-  //     const data= await response.json()
-  //       setSchoolData(data)
+export default function Page() {
+  const [schoolData, setSchoolData] = useState<SchoolData>();
+  console.log({ schoolData });
+  console.log(schoolData?.domain);
+
+  const getSchool = async () => {
+    const response = await fetch('/api/schools');
+    const data = await response.json();
+    setSchoolData(data);
+  };
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   const toggleMenu = () => {
