@@ -7,7 +7,7 @@ import { Switch } from '@/components/ui/switch';
 import { Food } from '@/lib/types';
 import { Label } from '@radix-ui/react-label';
 import { Heart, Pencil, Trash } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 export default function Foods() {
@@ -95,7 +95,6 @@ export default function Foods() {
         await response.json();
         toast('Successfully added the product');
         loadlist();
-        console.log('Created');
       } else {
         toast.error('Failed to add food');
         console.log('Error:', response.statusText);
@@ -214,14 +213,14 @@ export default function Foods() {
   //       setOrder(data);
   //     });
   // }, []);
-  // useEffect(() => {
-  //   // fetch('/api/special')
-  //   //   .then((res) => res.json())
-  //   //   .then((data) => {
-  //   //     setSpecial(data);
-  //   //   });
-  //   loadlist();
-  // }, []);
+  useEffect(() => {
+    fetch('/api/special')
+      .then((res) => res.json())
+      .then((data) => {
+        setSpecial(data);
+      });
+    loadlist();
+  }, []);
 
   return (
     <div className="text-md mb-10 ">
@@ -357,7 +356,7 @@ export default function Foods() {
                             onClick={() => {
                               handleSpecialFood(order._id);
                             }}
-                            className={order.special ? 'fill-red-600' : 'fill-white'}
+                            className={order.isSpecial ? 'fill-red-600' : 'fill-white'}
                           />
                         </Button>
                       </TableCell>

@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/app/components/ui/button';
 import { Dialog, DialogContent } from '@/components/dialog';
-import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Swipersnew } from '@/components/swiperimage';
 import { Food } from '@/lib/types';
 import { X } from 'lucide-react';
 import Link from 'next/link';
@@ -68,43 +68,11 @@ export default function Menu() {
           </Link>
         ))}
       </div>
+      <Swipersnew />
       <div className="w-full mx-auto flex mt-20 md:mx-auto">
         <div className="relative mx-auto">
           <h1 className="text-7xl italic text-center underline underline-1 mb-20">Онцлох Меню</h1>
 
-          <Carousel className="w-full lg:max-w-md max-w-sm mb-20  md:basis-1/2 lg:basis-1/3 mx-auto">
-            <Carousel className="w-full lg:max-w-md max-w-sm mb-20 md:basis-1/2 lg:basis-1/3 mx-auto">
-              <CarouselContent>
-                {/* {special.map((specialDish: Food) => (
-                  <CarouselItem key={specialDish._id}>
-
-          // <Carousel className="w-full lg:max-w-md max-w-sm mb-20 md:basis-1/2 lg:basis-1/3 mx-auto">
-          //   <CarouselContent>
-          //     {Array.from({ length: 5 }).map((_, index) => (
-          //       <CarouselItem key={index}>
-          //         <div className="p-1">
-
-          //           <Card>
-          //             <CardContent className="flex aspect-square items-center justify-center p-6">
-          //               <span className="text-4xl font-semibold">{index + 1}</span>
-          //               <img src={specialDish.photos} alt={specialDish.name} className="w-full h-full object-cover" />
-          //               <h2 className="text-lg font-bold">{specialDish.name}</h2>
-          //               <p className="text-lg">{specialDish.price}₮</p>
-          //             </CardContent>
-          //           </Card>
-          //         </div>
-          //       </CarouselItem>
-          //     ))}
-          //   </CarouselContent>
-          //         </CarouselItem>
-          //       ))} */}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
           <h1 className="text-7xl italic text-center mb-10 mx-auto underline underline-1 text-[#4A433E]">Lunch set</h1>
           <div className="mt-20 mx-auto lg:w-[1200px] flex flex-col lg:flex lg:flex-wrap lg:flex-row gap-16 mb-20">
             {food.map((foodItem: Food) => (

@@ -97,16 +97,17 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
     <Dialog open>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={formik.handleSubmit}>
-          <DialogTitle className="font-bold text-center">Sign in or Create an account</DialogTitle>
+          <DialogTitle className="font-bold text-center">Нэвтрэх эсвэл бүртгэл үүсгэх</DialogTitle>
           <div className="h-[2px] bg-slate-300 my-3"></div>
           <div className="flex justify-between">
-            <p className="font-bold">Welcome Back!</p>
+            <p className="font-bold">Эргээд тавтай морил!</p>
             <span onClick={toggleForm}>
-              <div className="text-blue-500">Sign in</div>
+              <div className="text-blue-500">Нэвтрэх</div>
             </span>
           </div>
-          <p className="text-slate-500 mb-3">Continue with</p>
+          <p className="text-slate-500 mb-3">үргэлжлүүлнэ үү</p>
           <div className="flex gap-4">
+
             <Button className="w-full h-[30px] border-2 flex items-center gap-2 p-8 bg-blue-500 rounded-lg" onClick={SignInbyGithub}>
               <Github />
               <p className="text-white">Github</p>
@@ -115,10 +116,11 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
               <FcGoogle />
               <p>Google</p>
             </Button>
+
           </div>
           <div className="flex items-center gap-2 py-3">
             <div className="h-[2px] flex-1 bg-slate-300"></div>
-            <p>or</p>
+            <p>эсвэл</p>
             <div className="h-[2px] flex-1 bg-slate-300"></div>
           </div>
           <div className="flex gap-2 mb-3">
@@ -135,11 +137,11 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
             <Input name="password" placeholder="Password" value={formik.values.password} onChange={formik.handleChange} />
             {<span className="text-red-600">{formik.errors.password}</span>}
           </div>
-          <DialogDescription>At least 8 characters, one capital letter, one lower case letter, one number and one special character.</DialogDescription>
+          <DialogDescription>Хамгийн багадаа 8 тэмдэгт, нэг том үсэг, нэг жижиг үсэг, нэг тоо, нэг тусгай тэмдэгт.</DialogDescription>
           <DialogFooter>
             <Button className="bg-blue-700 flex-1 disabled:cursor-not-allowed" type="submit" disabled={loading}>
               {loading && <Image src={'/images/spinner.svg'} alt="a" width={40} height={40} color="white" />}
-              Agree and Continue
+              Зөвшөөрч, үргэлжлүүлнэ үү
             </Button>
           </DialogFooter>
         </form>

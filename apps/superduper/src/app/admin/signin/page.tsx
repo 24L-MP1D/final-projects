@@ -83,11 +83,11 @@ export default function LoginForm() {
 
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
-      <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200 ml-6">🤗 Welcome to Bidscape's admin 🤗</h2>
+      <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200 ml-6">🤗 Bidscape-ийн админд тавтай морилно уу 🤗</h2>
 
       <form className="my-8 form" onSubmit={handleSubmit(onSubmit)}>
         <LabelInputContainer className="mb-4">
-          <Label htmlFor="email">Email Address</Label>
+          <Label htmlFor="email">Имэйл хаяг</Label>
           <Input
             {...register('email', { required: true })}
             id="email"
@@ -100,7 +100,7 @@ export default function LoginForm() {
           {errors?.email && <p className="text-red-600 text-sm">{errors?.email?.message}</p>}
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">Нууц үг</Label>
           <Input
             {...register('password', { required: true })}
             id="password"
@@ -131,7 +131,7 @@ export default function LoginForm() {
             onClick={SignInbyGoogle}
           >
             <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-            <span className="text-neutral-700 dark:text-neutral-300 text-sm">Google</span>
+            <span className="text-neutral-700 dark:text-neutral-300 text-sm">Гүүгл</span>
             <BottomGradient />
           </button>
           <button
@@ -140,7 +140,7 @@ export default function LoginForm() {
             onClick={SignInbyGithub}
           >
             <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-            <span className="text-neutral-700 dark:text-neutral-300 text-sm">GitHub</span>
+            <span className="text-neutral-700 dark:text-neutral-300 text-sm">ГитХаб</span>
             <BottomGradient />
           </button>
           <button
@@ -148,7 +148,7 @@ export default function LoginForm() {
             type="button" // Change type to button to avoid form submission
           >
             <IconBrandOnlyfans className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-            <span className="text-neutral-700 dark:text-neutral-300 text-sm">facebook</span>
+            <span className="text-neutral-700 dark:text-neutral-300 text-sm">Фэйсбүүк</span>
             <BottomGradient />
           </button>
         </div>

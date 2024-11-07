@@ -86,50 +86,50 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
       <div className="mt-8 px-6 py-6">
         <div className="border-b-2 py-6 grid grid-cols-2 text-[#000000] gap-5 text-xl items-center justify-center">
           <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Product Name</div>
+            <div className="text-[#565B60] text-sm">Бүтээгдэхүүний нэр</div>
             <div>
               <TypewriterEffectSmooth words={words(oneProduct.productName)} />
             </div>
           </div>
           <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Item's Country of Origin</div>
+            <div className="text-[#565B60] text-sm">Тухайн зүйлийн гарал үүслийн улс</div>
             <div>
               <TextGenerateEffect words={oneProduct.Country} />
             </div>
           </div>
           <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Additional information</div>
+            <div className="text-[#565B60] text-sm">Нэмэлт мэдээлэл</div>
             <div>
               <TextGenerateEffect words={oneProduct?.additionalInformation} />
             </div>
           </div>
           <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Signatures</div>
+            <div className="text-[#565B60] text-sm">Гарын үсэг</div>
             <div>
               <TextGenerateEffect words={oneProduct?.signatures} />
             </div>
           </div>
           <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Areas of Damage</div>
+            <div className="text-[#565B60] text-sm">Гэмтэлтэй хэсэг</div>
             <div>
               <TextGenerateEffect words={oneProduct?.damage} />
             </div>
           </div>
           <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Has it been restored? If so, to what extent</div>
+            <div className="text-[#565B60] text-sm">Тухайн бараа сэргээгдсэн үү? Хэрэв тийм бол ямар хэмжээгээр?</div>
             <div>
               <TextGenerateEffect words={oneProduct?.restored} />
             </div>
           </div>
           <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Start Price</div>
+            <div className="text-[#565B60] text-sm">Эхлэх үнэ</div>
             <div>
               <TypewriterEffectSmooth words={words(String(oneProduct.startBid))} />
             </div>
           </div>
           {oneProduct.Currency && (
             <div className="flex gap-2 flex-col">
-              <div className="text-[#565B60] text-sm">Currency</div>
+              <div className="text-[#565B60] text-sm">Валют</div>
               <div>
                 <TextGenerateEffect words={oneProduct.Currency} />
               </div>

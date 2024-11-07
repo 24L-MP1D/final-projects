@@ -70,7 +70,7 @@ export const HomePageInfo = () => {
       </div>
       <div className="max-w-[900px] mx-auto shadow-2xl rounded-xl absolute mt-80">
         <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>
-          <source src={'/study.mp4'} type="video/mp4" />
+          <source src={'/home-video.mp4'} type="video/mp4" />
         </video>
       </div>
     </div>

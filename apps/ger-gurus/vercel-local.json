@@ -1,0 +1,10 @@
+{
+  "projectId": "prj_FBAWskLwKwLQJbX8USrttCzU3moA",
+  "orgId": "team_AICsPVuUenn3xpgnNNidosaz",
+  "settings": {
+    "framework": "nextjs",
+    "installCommand": "yarn --immutable",
+    "buildCommand": "nx build --skip-nx-cache ger-gurus",
+    "outputDirectory": "dist/apps/ger-gurus/.next"
+  }
+}

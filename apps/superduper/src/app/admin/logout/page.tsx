@@ -17,7 +17,7 @@ const Home = () => {
         <h1>
           <div className="container mx-auto flex flex-col padding-30">
             {' '}
-            Logout 👋, <br /> Welcome to the Admin Logout Page{' '}
+            Гарах 👋, <br /> Админ гарах хуудсанд тавтай морилно уу{' '}
           </div>
         </h1>
         {/* <button className="border-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" onClick={approveSell}>
