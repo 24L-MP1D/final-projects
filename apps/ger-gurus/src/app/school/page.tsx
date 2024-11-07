@@ -53,65 +53,6 @@ const toggleMenu = () => {
       }
     }
   }, []);
-=======
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-
-// type Data = {
-//   _id: string;
-//   domain: string;
-// };
-interface SchoolData{
-  domain?: string
-}
-
-export default function Page() {
-  const [schoolData, setSchoolData]= useState<SchoolData>({})
-  console.log({schoolData})
-  console.log(schoolData.domain)
-
-  const getSchool= async()=>{
-    const response=await fetch('/api/schools')
-    const data= await response.json()
-      setSchoolData(data)
-  }
-
-  useEffect(() => {
-    getSchool();
-  }, []);
-
-
-  // const [data, setData] = useState<Data[]>([]);
-
-  // function loadUser() {
-  //   const token = localStorage.getItem('authtoken') || '';
-
-  //   fetch(`/api/courses`, {
-  //     headers: {
-  //       authtoken: token,
-  //     },
-  //   })
-  //     .then((res) => {
-  //       if (!res.ok) {
-  //         throw new Error(`HTTP error! status: ${res.status}`);
-  //       }
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       if (Array.isArray(data)) {
-  //         setData(data);
-  //       } else {
-  //         setData([data]);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error loading user:', error);
-  //     });
-  // }
-
-  // useEffect(() => {
-  //   loadUser();
-  // }, []);
 
   const bubbleStyle = (duration: number = 5, delay: number = 0): React.CSSProperties => ({
     position: 'absolute',
@@ -196,19 +137,6 @@ export default function Page() {
           <motion.h1 className="text-9xl font-black text-green-600 hero_h1-green" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}>
             THE FUTURE
           </motion.h1>
-      {/* Main */}
-      <div className="w-[1280px] flex flex-col gap-20 bg-white mx-auto py-24">
-        <div className="flex flex-col gap-10 px-12">
-          <div className="text-center text-2xl">Танилцуулга 
-            {schoolData?.domain}
-          </div>
-          {/* {data.map((d) => (
-            <div key={d._id}>{d.domain}</div>
-          ))} */}
-          <div className="flex gap-40 justify-center">
-            <div className="bg-gray-300 h-[480px] w-[380px] text-center content-center rounded-xl">Өөрийн зураг, бичлэг оруулах</div>
-            <div className="w-[250px]">Introduce</div>
-          </div>
         </div>
 
         <div className="w-[471px] h-16 mx-auto text-center text-green-950 mt-8">
