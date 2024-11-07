@@ -137,90 +137,103 @@ export default function Index() {
   };
 
   return (
-    <div className="flex flex-col gap-6 items-center pt-[140px] h-[1000px]">
-      <div className="py-2 font-medium text-2xl">Бүртгүүлэх</div>
-      <div className="flex flex-col gap-12">
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1">
-            <input className="h-9 rounded-2xl border border-zinc-200 p-3 w-[334px] outline-none focus:border-black" placeholder="Нэр" value={name} onChange={(e) => setName(e.target.value)} />
-            {nameConfirm && (!name ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нэр оруулна уу</div> : null)}
-            {name && namelengthConfirm && (name.length < 2 ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нэр богино байна</div> : null)}
-          </div>
-          <div className="flex flex-col gap-1">
-            <input
-              className="h-9 rounded-2xl border border-zinc-200 p-3 w-[334px] outline-none focus:border-black"
-              type="email"
-              placeholder="Имэйл хаяг"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {emailConfirm && (!email ? <div className="px-3 text-[#E11D48] text-xs font-normal">Имэйл хаяг оруулна уу</div> : null)}
-            {emailValidConfirm && (!emailIsValid ? <div className="px-3 text-[#E11D48] text-xs font-normal">Зөв имэйл хаяг оруулна уу</div> : null)}
-          </div>
-          <div className="flex flex-col gap-1 relative">
-            <input
-              className="h-9 rounded-2xl border border-zinc-200 p-3 w-[334px] outline-none focus:border-black"
-              type={showPassword ? 'text' : 'password'}
-              placeholder="Нууц үг"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {password &&
-              (showPassword ? (
-                <Eye size={16} onClick={ShowPassword} className="absolute right-3 top-2.5 text-sm cursor-pointer" />
-              ) : (
-                <EyeOff size={16} onClick={ShowPassword} className="absolute right-3 top-2.5 text-sm cursor-pointer" />
-              ))}
-            {passwordEmpty && (!password ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нууц үг оруулна уу</div> : null)}
-            {password && passwordLengthConfrim && (password.length < 8 ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нууц үг богино байна</div> : null)}
-            {passwordValidConfirm && (!passwordValid ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нууц үг шаардлага хангахгүй байна</div> : null)}
-          </div>
-          <div className="flex flex-col gap-1 relative">
-            <input
-              className="h-9 rounded-2xl border border-zinc-200 p-3 w-[334px] outline-none focus:border-black"
-              type={showPasswordConfirm ? 'text' : 'password'}
-              placeholder="Нууц үг давтах"
-              value={passwordConfirm}
-              onChange={(e) => setPasswordConfirm(e.target.value)}
-            />
-            {passwordConfirm &&
-              (showPasswordConfirm ? (
-                <Eye onClick={ShowPasswordConfirm} className="absolute right-3 top-2.5 text-sm cursor-pointer" size={16} />
-              ) : (
-                <EyeOff onClick={ShowPasswordConfirm} className="absolute right-3 top-2.5 text-sm cursor-pointer" size={16} />
-              ))}
-            {passwordConfirm && (!passwordsAreSame ? <div className="px-3 text-[#E11D48] text-xs font-normal">Давтсан нууц үг буруу байна</div> : null)}
-            {passwordConfirmEmpty && (!passwordConfirm ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нууц үг давтаж оруулна уу</div> : null)}
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setRole('Teacher')}
-              className={`w-full border border-black rounded-xl ${role === 'Teacher' ? 'border-green-500 bg-green-500' : ''} ${role === 'empty' ? 'border-red-600' : ''}`}
+    <div
+      className="bg-cover h-screen w-full flex justify-center items-center "
+      style={{
+        backgroundImage: "url('b1.jpg')",
+      }}
+    >
+      <div className="flex flex-col gap-6 items-center pt-[140px] h-fit w-fit rounded-3xl shadow-xl backdrop-blur-[4px] backdrop-saturate-[139%] bg-[rgba(255,255,255,0.11)] p-20">
+        <div className="py-2 font-bold font-serif text-slate-700 text-2xl">Бүртгүүлэх</div>
+        <div className="flex flex-col gap-12 relative">
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <input className="h-9 rounded-3xl bg-transparent shadow p-3 w-[334px] outline-none" placeholder="Нэр" value={name} onChange={(e) => setName(e.target.value)} />
+              {nameConfirm && (!name ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нэр оруулна уу</div> : null)}
+              {name && namelengthConfirm && (name.length < 2 ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нэр богино байна</div> : null)}
+            </div>
+            <div className="flex flex-col gap-1">
+              <input className="h-9 rounded-3xl bg-transparent shadow p-3 w-[334px] outline-none" type="email" placeholder="Имэйл хаяг" value={email} onChange={(e) => setEmail(e.target.value)} />
+              {emailConfirm && (!email ? <div className="px-3 text-[#E11D48] text-xs font-normal">Имэйл хаяг оруулна уу</div> : null)}
+              {emailValidConfirm && (!emailIsValid ? <div className="px-3 text-[#E11D48] text-xs font-normal">Зөв имэйл хаяг оруулна уу</div> : null)}
+            </div>
+            <div className="flex flex-col gap-1 relative">
+              <input
+                className="h-9 rounded-3xl bg-transparent shadow p-3 w-[334px] outline-none"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Нууц үг"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {password &&
+                (showPassword ? (
+                  <Eye size={16} onClick={ShowPassword} className="absolute right-3 top-2.5 text-sm cursor-pointer" />
+                ) : (
+                  <EyeOff size={16} onClick={ShowPassword} className="absolute right-3 top-2.5 text-sm cursor-pointer" />
+                ))}
+              {passwordEmpty && (!password ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нууц үг оруулна уу</div> : null)}
+              {password && passwordLengthConfrim && (password.length < 8 ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нууц үг богино байна</div> : null)}
+              {passwordValidConfirm && (!passwordValid ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нууц үг шаардлага хангахгүй байна</div> : null)}
+            </div>
+            <div className="flex flex-col gap-1 relative">
+              <input
+                className="h-9 rounded-3xl bg-transparent shadow p-3 w-[334px] outline-none"
+                type={showPasswordConfirm ? 'text' : 'password'}
+                placeholder="Нууц үг давтах"
+                value={passwordConfirm}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+              />
+              {passwordConfirm &&
+                (showPasswordConfirm ? (
+                  <Eye onClick={ShowPasswordConfirm} className="absolute right-3 top-2.5 text-sm cursor-pointer" size={16} />
+                ) : (
+                  <EyeOff onClick={ShowPasswordConfirm} className="absolute right-3 top-2.5 text-sm cursor-pointer" size={16} />
+                ))}
+              {passwordConfirm && (!passwordsAreSame ? <div className="px-3 text-[#E11D48] text-xs font-normal">Давтсан нууц үг буруу байна</div> : null)}
+              {passwordConfirmEmpty && (!passwordConfirm ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нууц үг давтаж оруулна уу</div> : null)}
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setRole('Teacher')}
+                className={`w-full shadow rounded-xl font-bold ${
+                  role === 'Teacher' ? 'backdrop-blur-[4px] backdrop-saturate-[139%] border-gray-500 bg-[rgba(255,255,255,0.35)] text-slate-700 ' : ''
+                } ${role === 'empty' ? 'border-red-600' : ''}`}
+              >
+                Багш
+              </button>
+              <button
+                onClick={() => setRole('Student')}
+                className={`w-full shadow rounded-xl font-bold ${role === 'Student' ? 'backdrop-blur-[4px] backdrop-saturate-[139%] border-gray-500 bg-[rgba(255,255,255,0.35)] text-slate-700' : ''} ${
+                  role === 'empty' ? 'border-red-600' : ''
+                }`}
+              >
+                Сурагч
+              </button>
+            </div>
+            <ul className="flex flex-col gap-1 list-disc font-normal text-xs leading-4 pl-3">
+              <li className={`${!password ? '!text-[#71717A]' : ''} ${hasUppercase ? 'text-green-600' : 'text-red-600'}`}>Том үсэг орсон байх</li>
+              <li className={`${!password ? '!text-[#71717A]' : ''} ${hasLowercase ? 'text-green-600' : 'text-red-600'}`}>Жижиг үсэг орсон байх</li>
+              <li className={`${!password ? '!text-[#71717A]' : ''} ${hasNumber ? 'text-green-600' : 'text-red-600'}`}>Тоо орсон байх</li>
+              <li className={`${!password ? '!text-[#71717A]' : ''} ${hasSpecialChar ? 'text-green-600' : 'text-red-600'}`}>Тэмдэгт орсон байх</li>
+            </ul>
+            <Button
+              disabled={loading}
+              onClick={final}
+              className="w-[334px] font-serif rounded-3xl backdrop-blur-[4px] backdrop-saturate-[139%] border-gray-500 bg-[rgba(255,255,255,0.35)] text-slate-700 hover:bg-transparent hover:shadow font-bold text-base"
+              type="submit"
             >
-              Багш
-            </button>
-            <button
-              onClick={() => setRole('Student')}
-              className={`w-full border border-black rounded-xl ${role === 'Student' ? 'border-green-500 bg-green-500' : ''} ${role === 'empty' ? 'border-red-600' : ''}`}
-            >
-              Сурагч
-            </button>
+              {loading ? 'Loading' : 'Үүсгэх'}
+            </Button>
           </div>
-          <ul className="flex flex-col gap-1 list-disc font-normal text-xs leading-4 pl-3">
-            <li className={`${!password ? '!text-[#71717A]' : ''} ${hasUppercase ? 'text-green-600' : 'text-red-600'}`}>Том үсэг орсон байх</li>
-            <li className={`${!password ? '!text-[#71717A]' : ''} ${hasLowercase ? 'text-green-600' : 'text-red-600'}`}>Жижиг үсэг орсон байх</li>
-            <li className={`${!password ? '!text-[#71717A]' : ''} ${hasNumber ? 'text-green-600' : 'text-red-600'}`}>Тоо орсон байх</li>
-            <li className={`${!password ? '!text-[#71717A]' : ''} ${hasSpecialChar ? 'text-green-600' : 'text-red-600'}`}>Тэмдэгт орсон байх</li>
-          </ul>
-          <Button disabled={loading} onClick={final} className="w-[334px]" type="submit">
-            {loading ? 'Loading' : 'Үүсгэх'}
-          </Button>
+          <Link href={'/login'}>
+            <Button className="w-[334px] font-serif rounded-3xl backdrop-blur-[4px] backdrop-saturate-[139%] border-gray-500 bg-[rgba(255,255,255,0.35)] text-slate-700 hover:bg-transparent hover:shadow font-bold text-base">
+              Нэвтрэх
+            </Button>
+          </Link>
+          <img src="char-1.png" alt="character" className="absolute ml-[300px] drop-shadow-lg h-fit" />
         </div>
-        <Link href={'/login'}>
-          <Button className="w-[334px] bg-white border !border-[#2563EB] text-[#2563EB]">Нэвтрэх</Button>
-        </Link>
+        <Toaster />
       </div>
-      <Toaster />
     </div>
   );
 }
