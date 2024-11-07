@@ -2,13 +2,13 @@
 
 import { Checkbox } from '@/components/ui/Checkbox';
 import { useFormik } from 'formik';
-import { X } from 'lucide-react';
+import { Github, X } from 'lucide-react';
 
+import { oauth_github_client, oauth_google_client } from 'config';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { FaFacebook } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { Toaster, toast } from 'sonner';
 import * as yup from 'yup';
@@ -18,6 +18,7 @@ import { Button } from './ui/button';
 
 export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(true);
   const initialValues = {
     email: '',
@@ -65,43 +66,73 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
     },
     validationSchema,
   });
-  const [loading, setLoading] = useState(false);
+
+  function SignInbyGoogle() {
+    const query = {
+      client_id: oauth_google_client.client_id || '',
+      redirect_uri: oauth_google_client.redirect_uri,
+      response_type: 'code',
+      scope: oauth_google_client.scopes,
+      prompt: 'consent',
+    };
+
+    const url = new URL(oauth_google_client.endpoint);
+    url.search = new URLSearchParams(query).toString();
+
+    window.location.href = url.toString();
+  }
+  function SignInbyGithub() {
+    const query = {
+      client_id: oauth_github_client.client_id || '',
+      redirect_uri: oauth_github_client.redirect_uri,
+      scope: oauth_github_client.scopes,
+      prompt: 'consent',
+    };
+    const url = new URL(oauth_github_client.endpoint);
+    url.search = new URLSearchParams(query).toString();
+    window.location.href = url.toString();
+  }
 
   return (
     <Dialog open={dialogOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={formik.handleSubmit}>
+
+         
           <DialogTitle className="font-thin text-center flex justify-between">
-            <div>Sign in or Create an account</div>
+            <div>Нэвтрэх эсвэл бүртгэл үүсгэх</div>
             <Link href="/client">
               <X onClick={() => setDialogOpen(false)} className="h-4 w-4" />
             </Link>
           </DialogTitle>
+
 
           {/* <button onClick={() => setDialogOpen(false)} className="text-gray-500 hover:text-gray-700">
             ✕
           </button> */}
           <div className="h-[2px] bg-slate-300 my-3"></div>
           <div className="flex justify-between">
-            <p className="font-bold">Welcome Back!</p>
+            <p className="font-bold">Эргээд тавтай морил!</p>
             <span onClick={toggleForm}>
-              <div className="text-[#03f]">Create account</div>
+              <div className="text-[#03f]">Бүртгэл үүсгэх</div>
             </span>
           </div>
-          <p className="text-slate-500 mb-3">Continue with</p>
+          <p className="text-slate-500 mb-3">үргэлжлүүлнэ үү</p>
           <div className="flex gap-4">
-            <div className="w-full h-[30px] border-2 flex items-center gap-2 p-8 bg-blue-500 rounded-lg">
-              <FaFacebook className="bg-blue-500 text-white" />
-              <p className="text-white">Facebook</p>
-            </div>
-            <div className="w-full h-[30px] border-2 flex items-center gap-2 p-8 rounded-lg">
+
+            <Button className="w-full h-[30px] border-2 flex items-center gap-2 p-8 bg-blue-500 rounded-lg" onClick={SignInbyGithub}>
+              <Github />
+              <p className="text-white">Github</p>
+            </Button>
+            <Button className="w-full h-[30px] border-2 flex items-center gap-2 p-8 rounded-lg" onClick={SignInbyGoogle}>
               <FcGoogle />
               <p>Google</p>
-            </div>
+            </Button>
+
           </div>
           <div className="flex items-center gap-2 py-3">
             <div className="h-[2px] flex-1 bg-slate-300"></div>
-            <p>or</p>
+            <p>эсвэл</p>
             <div className="h-[2px] flex-1 bg-slate-300"></div>
           </div>
 
@@ -116,17 +147,17 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
           <div className="flex justify-between m-3">
             <div className="flex items-center gap-3">
               <Checkbox />
-              <p>Remember me</p>
+              <p>Намайг санах</p>
             </div>
             <Link className="text-blue-500" href="/">
-              Forgotten your password?
+            Нууц үгээ мартсан уу?
             </Link>
           </div>
 
           <DialogFooter>
             <Button type="submit" className="bg-blue-700 flex w-full disabled:cursor-not-allowed" disabled={loading}>
               {loading && <Image src={'/images/spinner.svg'} alt="a" width={40} height={40} />}
-              <div>Sign in</div>
+              <div>Нэвтрэх</div>
             </Button>
             <Toaster />
           </DialogFooter>

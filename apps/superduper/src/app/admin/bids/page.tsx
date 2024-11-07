@@ -6,8 +6,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import dayjs from 'dayjs';
 import { Search } from 'lucide-react';
 import Image from 'next/image';
-import { useContext, useEffect, useState } from 'react';
-import { Context } from '../layout';
+import { useEffect, useState } from 'react';
+// import { Context } from '../layout';
 const Home = () => {
   const [productId, setProductId] = useState('');
   const [bids, setBids] = useState<BidType[]>([]);
@@ -26,7 +26,7 @@ const Home = () => {
 
     setBids(data);
   };
-  const value = useContext(Context);
+  // const value = useContext(Context);
   const approveSell = () => {
     console.log('Successfully approved the Sell request');
   };
@@ -42,10 +42,10 @@ const Home = () => {
   };
 
   useEffect(() => {
-    value?.setLayoutAside('Bids');
+    // value?.setLayoutAside('Bids');
     loadBids();
   }, [searchValue]);
-  if (!bids) return <AdminLayout>Loading</AdminLayout>;
+  if (!bids) return <AdminLayout>Ачааллаж байна</AdminLayout>;
   return (
     <AdminLayout>
       <div>
@@ -57,10 +57,10 @@ const Home = () => {
           <TableHeader>
             <TableRow className="flex w-full  text-xl text-wrap py-3 bg-slate-200">
               <TableHead className=""></TableHead>
-              <TableHead className="flex-1">Product</TableHead>
-              <TableHead className="flex-1">User</TableHead>
-              <TableHead className="flex-1">Bid</TableHead>
-              <TableHead className="flex-1">Created Date</TableHead>
+              <TableHead className="flex-1">Бүтээгдэхүүн</TableHead>
+              <TableHead className="flex-1">Хэрэглэгч</TableHead>
+              <TableHead className="flex-1">Үнэ хэлэх</TableHead>
+              <TableHead className="flex-1">Үүсгэсэн огноо</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

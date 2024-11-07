@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { fetcher } from '@/lib/fetcher';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { Search } from 'lucide-react';
@@ -36,9 +37,9 @@ export default function Page() {
   }
   async function createSchool(domain: string) {
     try {
-      await axios.post(`/api/schools`, { domain }); // Send domain in the request
+      await fetcher().post(`/api/schools`, { domain: `${domain}.verse.mn`}); // Send domain in the request
       toast.success('Your space has been created!'); // Optionally handle success
-      router.push('/schools');
+      router.push(`/`);
     } catch (error) {
       toast.error('Something went wrong');
     }
