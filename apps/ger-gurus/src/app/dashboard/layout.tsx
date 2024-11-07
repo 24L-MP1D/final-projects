@@ -23,16 +23,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   }
 
   return (
-    <html>
+    <html lang="en">
       <body>
-        hi
         <SignedIn>
-          <div>Nevtersens</div>
           <ToastProvider />
           {children}
         </SignedIn>
         <SignedOut>
-          <div>Guests</div>
           <Login />
         </SignedOut>
       </body>

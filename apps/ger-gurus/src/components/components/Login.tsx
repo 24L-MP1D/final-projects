@@ -17,6 +17,7 @@ export function Login() {
         if (status === 200) {
           alert('Success');
           localStorage.setItem('authtoken', data.token);
+          localStorage.setItem('userId', data.userId);
           window.location.reload();
         } else {
           alert(statusText);
