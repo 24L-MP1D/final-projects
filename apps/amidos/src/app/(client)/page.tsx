@@ -1,18 +1,17 @@
-import Aboutlower from '../components/aboutlower';
-import Aboutupper from '../components/aboutupper';
-import Comments from '../components/comments';
-import { Googlemap } from '../components/googlemap';
-import Hero from '../components/hero';
-import Specialdishes from '../components/specialdishes';
+import { Swipercomments } from '@/components/swipercomments';
+import { Swipersnew } from '@/components/swiperimage';
+import Aboutlower from '../../components/aboutlower';
+import Aboutupper from '../../components/aboutupper';
+import { Googlemap } from '../../components/googlemap';
+import Hero from '../../components/hero';
 
 export default function Home() {
   return (
     <div>
       <Hero />
-      <Specialdishes />
+      <Swipersnew />
       <Aboutupper />
-      <Aboutlower />
-      <Comments />
+      <Swipercomments />
       <Googlemap />
     </div>
   );

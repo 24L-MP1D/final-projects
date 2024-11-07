@@ -46,10 +46,12 @@ Thumbs.db
 out
 
 .env
+/.env
 
 /.vercel
 
 yarn.lock
+package-lock.json
 
 .yarn/*
 !.yarn/cache

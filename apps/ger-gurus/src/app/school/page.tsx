@@ -12,14 +12,14 @@ interface SchoolData{
 }
 
 export default function Page() {
-  const [schoolData, setSchoolData]= useState<SchoolData>({domain: ""})
+  const [schoolData, setSchoolData]= useState<SchoolData>({})
   console.log({schoolData})
   console.log(schoolData.domain)
 
   const getSchool= async()=>{
     const response=await fetch('/api/schools')
     const data= await response.json()
-      setSchoolData(data?.[0])
+      setSchoolData(data)
   }
 
   useEffect(() => {
