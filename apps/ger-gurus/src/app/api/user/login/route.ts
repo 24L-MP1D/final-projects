@@ -23,7 +23,9 @@ export async function POST(request: Request) {
         ACCESS_TOKEN_SECRET,
         { expiresIn: "24h" }
       );
-      return new Response(authtoken)
+      return new Response(JSON.stringify({ token: authtoken, userId: user._id }), {
+        status: 200,
+      });
     }
     return new Response("Password is incorrect!", { status: 403 })
   } catch (error) {

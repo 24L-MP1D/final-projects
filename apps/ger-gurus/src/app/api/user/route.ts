@@ -30,7 +30,8 @@ export async function GET(request: Request) {
     return Response.json(currentUser);
   } catch (error) {
     console.error('Error fetching users:', error);
-    return new Response("Invalid token");
+    return new Response('Invalid token', { status: 401 });
+
   }
 }
 

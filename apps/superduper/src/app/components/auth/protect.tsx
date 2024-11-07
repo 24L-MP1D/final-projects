@@ -7,7 +7,7 @@ export function Protection({ children, role }: { children: ReactNode; role: stri
     return null;
   }
   if (currentUser.role !== role) {
-    return <div>❌ Forbidden</div>;
+    return <div>❌ Хориотой</div>;
   }
   return <>{children}</>;
 }

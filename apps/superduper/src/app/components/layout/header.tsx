@@ -5,10 +5,11 @@ import Cookies from 'js-cookie';
 import { ChevronDown, UserRoundPen } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
 
+import { RealtimeNotif } from '@/app/client/layout';
 import { useAuthStore } from '../auth/useAuthStore';
 
 const ably = new Ably.Realtime(process.env.NEXT_PUBLIC_ABLYKEY || '');
@@ -22,13 +23,14 @@ export type notifications = {
 };
 
 export default function Header() {
+  const [favlength, setFavlength] = useState(0)
+
   const [signin, setSignin] = useState(false);
   const [isSeenNotif, setIsSeenNotif] = useState<notifications[]>([]);
   const [showNotif, setShowNotif] = useState(false);
   const [notifications, setNotifications] = useState<notifications[]>([]);
   const currentUser = useAuthStore((state) => state.currentUser);
-  console.log(currentUser);
-
+  const value = useContext(RealtimeNotif)
   const loadNotif = async () => {
     const response = await fetch('/api/notifications', {
       method: 'PUT',
@@ -51,13 +53,17 @@ export default function Header() {
       setNotifications((prev) => [...prev, message.data]);
     });
   };
+
   useEffect(() => {
     const cookie = Cookies.get('token');
     if (cookie) {
       setSignin(true);
       loadNotif();
     }
+
+
   }, [currentUser]);
+
   // useEffect(() => {
   //   const existingScript = document.getElementById('google-translate-script');
   //   if (!existingScript) {
@@ -77,20 +83,32 @@ export default function Header() {
   // }, []);
 
   const router = useRouter();
+  console.log(favlength)
   const sell = () => {
     const cookie = Cookies.get('token');
     if (!cookie) return router.push('/client/sign-in');
     router.push('/client/addProducts');
   };
+
   const save = () => {
     const cookie = Cookies.get('token');
     if (!cookie) return router.push('/client/sign-in');
     router.push('/client/save');
   };
+
   const reload = () => {
     router.push('/client');
   };
 
+  const showHeart = () => {
+    const favourities = value?.favourite.length
+
+    if (favourities) return favourities
+    return 0
+  };
+  useEffect(() => {
+    setFavlength(showHeart())
+  }, [value?.favourite])
   return (
     <div onClick={() => showNotif && setShowNotif(false)} className=" h-28 flex items-center max-w-[1280px]">
       <div id="google_translate_element"></div>
@@ -118,8 +136,10 @@ export default function Header() {
           <Link href="/Help" className="bg-white hover:border-b-[1px] hover:border-black">
             Тусламж
           </Link>
-
-          <FaRegHeart size={24} color="blue" onClick={save} />
+          <div className='relative'>
+            <FaRegHeart size={24} color="blue" onClick={save} />
+            <div className='absolute left-5 bottom-4  bg-blue-700 text-white rounded-full w-5 h-5 text-center text-sm'>{favlength}</div>
+          </div>
 
           {signin ? (
             <div className="flex relative p-1">

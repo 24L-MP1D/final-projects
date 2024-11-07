@@ -25,16 +25,16 @@ const Home = () => {
         <h1>
           <div className="container mx-auto flex flex-col padding-30">
             {' '}
-            Hello there 👋, <br /> Welcome to the client accepting dashboard{' '}
+            Сайн уу 👋, <br /> үйлчлүүлэгчид хүлээн авах хяналтын самбарыг тавтай морилно уу{' '}
           </div>
         </h1>
         <button className="border-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" onClick={approveSell}>
-          Approve the seller's request
+        Худалдагчийн хүсэлтийг зөвшөөрөх
         </button>
 
         <br />
         <button className="border-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg" onClick={rejectSell}>
-          Reject the seller's request
+        Худалдагчийн хүсэлтийг татгалзах
         </button>
       </div>
     </AdminLayout>

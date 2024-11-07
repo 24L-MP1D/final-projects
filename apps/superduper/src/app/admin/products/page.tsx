@@ -100,10 +100,10 @@ const Home = () => {
     <AdminLayout>
       <div onClick={() => show && setShow(false)}>
         <div className="flex gap-2 items-center mt-6 mb-2">
-          {CheckBoxArray.length > 0 && <Button>Delete Many</Button>}
+          {CheckBoxArray.length > 0 && <Button>Олонг устгах</Button>}
           <div className="flex justify-center max-w-[140px] w-full relative gap-3 items-center ">
             <div onClick={() => setShow(true)} className="flex gap-2 hover:cursor-pointer border-2 w-full p-2 items-center justify-center rounded-lg cursor-pointer">
-              <div>Status</div>
+              <div>Төлөв</div>
               <div>
                 <ChevronDown />
               </div>
@@ -112,13 +112,13 @@ const Home = () => {
             {show && (
               <div className="flex hover:cursor-pointer flex-col border rounded-lg gap-2 absolute top-10 w-full left-0 bg-white z-50">
                 <div onClick={() => filtbyStatus('Pending')} className=" py-2 border-b w-full text-center">
-                  Pending
+                Хүлээгдэж байна
                 </div>
                 <div onClick={() => filtbyStatus('Accept')} className="py-2 border-b w-full text-center">
-                  Accept
+                Зөвшөөрөх
                 </div>
                 <div onClick={() => filtbyStatus('Deny')} className="py-2 border-b w-full text-center">
-                  Deny
+                Үгүйсгэх
                 </div>
               </div>
             )}
@@ -129,7 +129,7 @@ const Home = () => {
           </div>
           <div className="max-w-[300px] relative items-center flex gap-2 w-full px-4 py-2 rounded-lg bg-slate-100">
             <Search width={20} height={20} />
-            <input className="flex-1 bg-slate-100 outline-none border-0" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} type="search" placeholder="Product Name..." />
+            <input className="flex-1 bg-slate-100 outline-none border-0" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} type="хайх" placeholder="Бүтээгдэхүүний нэр..." />
             {searchValue && (
               <div className="absolute top-10 z-50 left-0 w-full">
                 {products.map((product) => {
@@ -154,7 +154,7 @@ const Home = () => {
             )}
           </div>
           <Button className="active:bg-slate-600" onClick={loadProduct}>
-            All Product
+            Бүх бүтээгдэхүүн
           </Button>
         </div>
 
@@ -162,13 +162,13 @@ const Home = () => {
           <TableHeader>
             <TableRow className="flex w-full  text-xl text-wrap py-3 bg-slate-200">
               <TableHead></TableHead>
-              <TableHead className="flex-1">Product Name</TableHead>
-              <TableHead className="flex-1">Product Image</TableHead>
-              <TableHead className="flex-1">Status</TableHead>
+              <TableHead className="flex-1">Бүтээгдэхүүний нэр</TableHead>
+              <TableHead className="flex-1">Бүтээгдэхүүний зураг</TableHead>
+              <TableHead className="flex-1">Төлөв</TableHead>
               <TableHead className="flex-1">Qpay</TableHead>
-              <TableHead className="flex-1">Start Date</TableHead>
-              <TableHead className="flex-1">End Date</TableHead>
-              <TableHead className="flex-1">start bid</TableHead>
+              <TableHead className="flex-1">Эхлэх огноо</TableHead>
+              <TableHead className="flex-1">Дуусах огноо</TableHead>
+              <TableHead className="flex-1">Үнийн санал эхлүүлэх</TableHead>
               <TableHead className="flex-1"></TableHead>
             </TableRow>
           </TableHeader>

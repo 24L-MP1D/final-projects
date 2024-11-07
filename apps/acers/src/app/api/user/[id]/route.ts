@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { DB } from '../../../lib/db';
-import { auth, generateSalt } from '../../auth/route';
+import { auth, generateSalt } from '../../auth/authFunctions';
 
 const JWT_SECRET = process.env.JWT_SECRET || '';
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, { params }: { params: any }) {
   const authResult = await auth(request, params.id);
 
   if (authResult.status !== 200) {

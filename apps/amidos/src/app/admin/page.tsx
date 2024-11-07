@@ -1,6 +1,6 @@
 'use client';
 
-export const Card2 = () => {
+export default function Card2() {
   return (
     <>
       <div className="flex">
@@ -23,9 +23,7 @@ export const Card2 = () => {
       </div>
     </>
   );
-};
-
-export default Card2;
+}
 
 const SingleCard = ({ image, Button, CardDescription, CardTitle, titleHref, btnHref }: any) => {
   return (
