@@ -73,55 +73,66 @@ export default function Index() {
   };
 
   return (
-    <div className=" flex flex-col items-center h-[800px] gap-6 pt-[100px]">
-      <div className="py-2 font-medium text-2xl">Нэвтрэх</div>
-      <div className="flex">
-        <div className="flex flex-col gap-12">
-          <div className="flex flex-col gap-4 items-center">
-            <div className="flex flex-col gap-1">
-              <input
-                type="email"
-                id="email"
-                className={`h-9 rounded-2xl border border-zinc-200 p-3 w-[334px] outline-none focus:border-black ${emailConfirm && (!email ? '!border-[#E11D48]' : null)} ${
-                  emailExist && '!border-[#E11D48]'
-                }`}
-                placeholder="Имэйл хаяг"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {emailConfirm && (!email ? <div className="px-3 text-[#E11D48] text-xs font-normal">Имэйл хаяг оруулна уу</div> : null)}
+    <div
+      className="bg-cover h-screen w-full flex justify-center items-center "
+      style={{
+        backgroundImage: "url('b1.jpg')",
+      }}
+    >
+      <div className=" flex flex-col items-center h-[800px] gap-6 pt-[100px] p-20 w-fit rounded-3xl shadow-xl backdrop-blur-[4px] backdrop-saturate-[139%] bg-[rgba(255,255,255,0.11)]">
+        <div className="py-2 font-bold font-serif text-slate-700 text-2xl">Нэвтрэх</div>
+        <div className="flex">
+          <div className="flex flex-col gap-12 relative">
+            <div className="flex flex-col gap-4 items-center">
+              <div className="flex flex-col gap-1">
+                <input
+                  type="email"
+                  id="email"
+                  className={`h-9 rounded-3xl bg-transparent shadow p-3 w-[334px] outline-none ${emailConfirm && (!email ? '!border-[#E11D48]' : null)} ${emailExist && '!border-[#E11D48]'}`}
+                  placeholder="Имэйл хаяг"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {emailConfirm && (!email ? <div className="px-3 text-[#E11D48] text-xs font-normal">Имэйл хаяг оруулна уу</div> : null)}
+              </div>
+              <div className="flex flex-col gap-1 relative">
+                <input
+                  className={`h-9 rounded-3xl bg-transparent shadow p-3 w-[334px] outline-none ${passwordConfirm && (!password ? '!border-[#E11D48]' : null)} ${
+                    PasswordIncorrect && '!border-[#E11D48]'
+                  }`}
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Нууц үг"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {password &&
+                  (showPassword ? (
+                    <Eye size={16} onClick={ShowPassword} className="absolute right-3 top-2.5 text-sm cursor-pointer" />
+                  ) : (
+                    <EyeOff size={16} onClick={ShowPassword} className="absolute right-3 top-2.5 text-sm cursor-pointer" />
+                  ))}
+                {passwordConfirm && (!password ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нууц үг оруулна уу</div> : null)}
+              </div>
+              <Button
+                onClick={confirm}
+                className="w-[334px] font-serif rounded-3xl backdrop-blur-[4px] backdrop-saturate-[139%] border-gray-500 bg-[rgba(255,255,255,0.35)] text-slate-700 hover:bg-transparent hover:shadow font-bold text-base"
+              >
+                Нэвтрэх
+              </Button>
+              <Link className="text-sm text-gray-500 border-b-2 w-fit" href={'#'}>
+                Нууц үг мартсан
+              </Link>
             </div>
-            <div className="flex flex-col gap-1 relative">
-              <input
-                className={`h-9 rounded-2xl border border-zinc-200 p-3 w-[334px] outline-none focus:border-black ${passwordConfirm && (!password ? '!border-[#E11D48]' : null)} ${
-                  PasswordIncorrect && '!border-[#E11D48]'
-                }`}
-                type={showPassword ? 'text' : 'password'}
-                placeholder="Нууц үг"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {password &&
-                (showPassword ? (
-                  <Eye size={16} onClick={ShowPassword} className="absolute right-3 top-2.5 text-sm cursor-pointer" />
-                ) : (
-                  <EyeOff size={16} onClick={ShowPassword} className="absolute right-3 top-2.5 text-sm cursor-pointer" />
-                ))}
-              {passwordConfirm && (!password ? <div className="px-3 text-[#E11D48] text-xs font-normal">Нууц үг оруулна уу</div> : null)}
-            </div>
-            <Button onClick={confirm} className="w-[334px]">
-              Нэвтрэх
-            </Button>
-            <Link className="text-sm text-gray-500 border-b-2 w-fit" href={'#'}>
-              Нууц үг мартсан
+            <Link href={'/signup'}>
+              <Button className="w-[334px] font-serif rounded-3xl backdrop-blur-[4px] backdrop-saturate-[139%] border-gray-500 bg-[rgba(255,255,255,0.35)] text-slate-700 hover:bg-transparent hover:shadow font-bold text-base">
+                Бүртгүүлэх
+              </Button>
             </Link>
+            <img src="char-1.png" alt="character" className="absolute ml-[300px] drop-shadow-lg h-fit" />
           </div>
-          <Link href={'/signup'}>
-            <Button className="w-[334px] bg-white border !border-[#2563EB] text-[#2563EB]">Бүртгүүлэх</Button>
-          </Link>
         </div>
+        <Toaster />
       </div>
-      <Toaster />
     </div>
   );
 }

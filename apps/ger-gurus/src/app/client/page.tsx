@@ -1,18 +1,13 @@
 'use client';
 
-import Style from '@/components/style';
+import { HomePageInfo } from '@/components/HomePageInfo';
+import { SchoolPageHeader } from '@/components/SchoolPageHeader';
 
 export default function Page() {
   return (
-    <div className="bg-black ">
-      hello
-      {/* <SchoolPageHeader />
+    <div>
+      <SchoolPageHeader />
       <HomePageInfo />
-      <div className="relative">
-        <Test />
-      </div> */}
-      <Style />
-      <div className="h-[2000px] w-[1000px]"></div>
     </div>
   );
 }
