@@ -12,10 +12,13 @@ export default function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const search = useSearchParams();
   const queryValue = search.get('seller') || '';
+
   const loadProduct = async () => {
     try {
       const response = await fetch('/api/products');
+
       const data = await response.json();
+
       setProducts(data);
     } catch (err) {
       console.log(err);
