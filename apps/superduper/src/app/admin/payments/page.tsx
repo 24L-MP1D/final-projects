@@ -30,14 +30,14 @@ export default function TableDemo() {
     <AdminLayout>
       <div className="container w-[550px] peer-has-[]: mx-auto flex justify-center p-6 bg-slate-100 rounded-sm">
         <Table>
-          <TableCaption>A list of your recent approved seller requests.</TableCaption>
+          <TableCaption>Таны саяхан зөвшөөрсөн худалдагчийн хүсэлтийн жагсаалт.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>ID</TableHead>
-              <TableHead>Category name</TableHead>
-              <TableHead className="text-center">Approval status</TableHead>
-              <TableHead className="text-center">Payment received</TableHead>
-              <TableHead className="text-center">Payment via</TableHead>
+              <TableHead>Ангиллын нэр</TableHead>
+              <TableHead className="text-center">Зөвшөөрлийн байдал</TableHead>
+              <TableHead className="text-center">Төлбөрийг хүлээн авсан</TableHead>
+              <TableHead className="text-center">Төлбөрийг дамжуулсан</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -46,8 +46,8 @@ export default function TableDemo() {
                 <TableRow key={approved.ObjectId}>
                   <TableCell>{approved.ObjectId}</TableCell>
                   <TableCell className="font-medium">{approved.category}</TableCell>
-                  <TableCell className="text-center">Approved</TableCell>
-                  <TableCell className="text-center">Yes</TableCell>
+                  <TableCell className="text-center">Зөвшөөрсөн</TableCell>
+                  <TableCell className="text-center">Тийм</TableCell>
                   <TableCell className="text-center">
                     <IconBrandVisa />
                   </TableCell>
@@ -62,7 +62,7 @@ export default function TableDemo() {
             <div className="container mx-auto flex">
               <div>
                 <Button variant="outline" onClick={() => (window.location.href = 'http://localhost:3000/admin')}>
-                  Close
+                Хаах
                 </Button>
               </div>
             </div>

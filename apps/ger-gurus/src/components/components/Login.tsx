@@ -16,7 +16,7 @@ export function Login() {
       .then(({ data, status, statusText }) => {
         if (status === 200) {
           alert('Success');
-          localStorage.setItem('authToken', data.token);
+          localStorage.setItem('authtoken', data.token);
           window.location.reload();
         } else {
           alert(statusText);

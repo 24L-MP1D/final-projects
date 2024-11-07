@@ -1,7 +1,7 @@
 'use client';
 
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../(client)/components/ui/Table';
 import { DashboardAside } from '../components/DashboardAside';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
 
 export default function Home() {
   interface user {

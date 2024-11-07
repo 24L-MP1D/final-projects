@@ -12,7 +12,7 @@ export function PlacedBidDialog({ secondDialog, setSecondDialog, bid }: Props) {
         <DialogHeader className="flex items-end">
           <X className="flex-1 hover:cursor-pointer " onClick={() => setSecondDialog(false)} />
         </DialogHeader>
-        <div className="text-2xl">Successfully placed your bid</div>
+        <div className="text-2xl">Та үнийн саналаа амжилттай байршууллаа</div>
         <div className="text-center text-3xl mb-2">€ {bid}</div>
       </DialogContent>
     </Dialog>

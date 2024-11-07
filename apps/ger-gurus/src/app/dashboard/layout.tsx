@@ -18,22 +18,24 @@ import { ToastProvider } from '@/components/providers/toaster-provider';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   function logout() {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('authtoken');
     window.location.reload();
   }
 
   return (
-    <>
-      hi
-      <SignedIn>
-        <div>Nevtersens</div>
-        <ToastProvider />
-        {children}
-      </SignedIn>
-      <SignedOut>
-        <div>Guests</div>
-        <Login />
-      </SignedOut>
-    </>
+    <html>
+      <body>
+        hi
+        <SignedIn>
+          <div>Nevtersens</div>
+          <ToastProvider />
+          {children}
+        </SignedIn>
+        <SignedOut>
+          <div>Guests</div>
+          <Login />
+        </SignedOut>
+      </body>
+    </html>
   );
 }

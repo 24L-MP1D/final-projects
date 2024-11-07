@@ -19,11 +19,11 @@ type Props = {
 export const ProductCondition = ({ formikErrors, formikValues, formikHandleChange, formikTouched }: Props) => {
   return (
     <section className="">
-      <header className="mt-16 mb-8 text-[#333333] text-2xl">Condition</header>
+      <header className="mt-16 mb-8 text-[#333333] text-2xl">Нөхцөл</header>
       <div className="flex flex-col gap-8">
         <div>
           <div className="flex justify-between items-center">
-            <div className="text-[#23448d] text-sm mb-1.5">Signatures, Labels or Markings *</div>
+            <div className="text-[#23448d] text-sm mb-1.5">Гарын үсэг, шошго эсвэл тэмдэглэгээ *</div>
           </div>
           <div className="flex border-b-[1px] relative">
             <Input id="signatures" value={formikValues.signatures} onChange={formikHandleChange} maxLength={200} type="text" className="flex-1 border-none" />
@@ -32,7 +32,7 @@ export const ProductCondition = ({ formikErrors, formikValues, formikHandleChang
         </div>
         <div>
           <div className="flex justify-between items-center">
-            <div className="text-[#23448d] text-sm mb-1.5">Areas of Damage *</div>
+            <div className="text-[#23448d] text-sm mb-1.5">Гэмтэлтэй хэсэг *</div>
           </div>
           <div className="flex relative border-b-[1px]">
             <Input id="damage" value={formikValues.damage} onChange={formikHandleChange} maxLength={200} type="text" className="flex-1 border-none" />
@@ -41,7 +41,7 @@ export const ProductCondition = ({ formikErrors, formikValues, formikHandleChang
         </div>
         <div>
           <div className="flex justify-between items-center">
-            <div className="text-[#23448d] text-sm mb-1.5">Has it been restored? If so, to what extent?</div>
+            <div className="text-[#23448d] text-sm mb-1.5">Тухайн бараа сэргээгдсэн үү? Хэрэв тийм бол ямар хэмжээгээр?</div>
           </div>
           <div className="flex border-b-[1px] relative">
             <Input id="restored" value={formikValues.restored} onChange={formikHandleChange} maxLength={200} type="text" className="flex-1 border-none" />

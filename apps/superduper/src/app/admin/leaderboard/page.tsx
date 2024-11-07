@@ -61,7 +61,7 @@ export default function CarouselSize() {
                 <Button onClick={approveButton ? approvedSellRequest : cancelSellRequest}>{approveRequest ? "Approve the seller's request" : 'Cancel'}</Button>
                 <div className="flex-auto">
                   <Button variant="outline" onClick={() => (window.location.href = 'http://localhost:3000/admin')}>
-                    Cancel
+                    Цуцлах
                   </Button>
                 </div>
               </CardFooter>
