@@ -25,6 +25,7 @@ export function ProductItem({ product, favourite, onClickFavourite }: { product:
       setClick(false)
     }
   }, [favourite])
+
   return (
     <CardContainer containerClassName="p-0 !w-full h-auto " key={product.productName} className="hover:cursor-pointer">
       <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full rounded-xl p-6 border h-auto">
