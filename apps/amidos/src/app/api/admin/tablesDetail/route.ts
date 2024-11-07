@@ -9,10 +9,10 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { tableId, cordinate } = body;
+  const { tableId, coordinate } = body;
   await db.collection('tablesDetail').insertOne({
     _id: tableId,
-    cordinate,
+    coordinate,
   });
   return new Response(null, { status: 204 });
 }

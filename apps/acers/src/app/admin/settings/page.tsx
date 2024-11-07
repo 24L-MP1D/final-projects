@@ -1,5 +1,6 @@
 'use client';
 
+<<<<<<< HEAD
 import { useState } from 'react';
 import { DashboardAside } from '../components/DashboardAside';
 
@@ -46,3 +47,8 @@ const Settings = () => {
 };
 
 export default Settings;
+=======
+export default function Home() {
+  return <div className="flex">settings</div>;
+}
+>>>>>>> main

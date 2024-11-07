@@ -1,7 +1,5 @@
 'use client';
 
-import { DashboardAside } from '../components/DashboardAside';
-
 const userStats = [
   { id: 1, title: 'Gold users', description: 'Хэрэглэгчийн тоо', details: ['Хамаарах хоолны жорны тоо', 'Орлого'], numberOfRecipes: 190 },
   { id: 2, title: 'Silver users', description: 'Хэрэглэгчийн тоо', details: ['Хамаарах хоолны жорны тоо', 'Орлого'], numberOfRecipes: 340 },
@@ -21,7 +19,6 @@ const additionalStats = [
 export default function Home() {
   return (
     <div className="flex">
-      <DashboardAside />
       <div className="flex flex-col bg-slate-100 rounded-xl mx-auto mt-2 p-5">
         <div className="text-center font-bold"> БИЗНЕСИЙН ҮЗҮҮЛЭЛТ</div>
         <div className="bg-slate-100 rounded-xl mx-auto mt-2 p-5">

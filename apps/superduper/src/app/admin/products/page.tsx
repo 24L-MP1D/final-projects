@@ -33,6 +33,8 @@ const Home = () => {
 
   const [searchValue, setSearchValue] = useState('');
 
+  const [userId, setUserId] = useState('');
+
   const loadProduct = async () => {
     try {
       const response = await fetch('/api/products');
@@ -93,6 +95,7 @@ const Home = () => {
     }
     value?.setLayoutAside('Products');
   }, [date]);
+  console.log(feedBackInput);
   return (
     <AdminLayout>
       <div onClick={() => show && setShow(false)}>
@@ -191,11 +194,11 @@ const Home = () => {
                         deleteProduct(product._id);
                       }}
                     />
-
                     <Send
                       onClick={() => {
                         setOpen(true);
                         setProductId(product._id);
+                        setUserId(product.userId);
                       }}
                     />
                   </TableCell>
@@ -206,7 +209,7 @@ const Home = () => {
         </Table>
         {open && <AdminMessageSendDialog setFeedBackInput={setFeedBackInput} productId={productId} open={open} loadProduct={loadProduct} setOpen={setOpen} />}
         {feedBackInput && <div className="absolute inset-0 opacity-50 bg-slate-500"></div>}
-        {feedBackInput && <FeedBackInput productId={productId} loadProduct={loadProduct} setFeedBackInput={setFeedBackInput} />}
+        {feedBackInput && <FeedBackInput productId={productId} userId={userId} loadProduct={loadProduct} setFeedBackInput={setFeedBackInput} />}
       </div>
       <Toaster />
     </AdminLayout>
