@@ -7,3 +7,6 @@ export default function App() {
       <div>Admin</div>
     </AdminLayout>
   );
+
+}
+
