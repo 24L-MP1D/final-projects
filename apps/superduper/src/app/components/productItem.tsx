@@ -6,7 +6,33 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { CardBody, CardContainer, CardItem } from './ui/card';
 
+
+export interface Product {
+  Country: string;
+  additionalInformation: string;
+  backImage: string;
+  category: string;
+  city: string;
+  countryOfOrigin: string;
+  createdAt: string;
+  damage: string;
+  detailImage: string;
+  email: string;
+  endDate: string;
+  firstName: string;
+  frontImage: string;
+  lastName: string;
+  productName: string;
+  restored: string;
+  signatures: string;
+  startBid: number;
+  startDate: string;
+  status: string;
+  _id: string;
+}
+
 export function ProductItem({ product, favourite, onClickFavourite }: { product: ProductType; isClick: boolean; favourite: string[]; onClickFavourite: () => void }) {
+
   const [isClick, setClick] = useState(false);
 
   useEffect(() => {
@@ -37,7 +63,7 @@ export function ProductItem({ product, favourite, onClickFavourite }: { product:
             {product.category}
           </CardItem>
           <CardItem translateZ="50" className="text-lg font-bold text-neutral-600 dark:text-white">
-            {product.startBid}$
+            {product.startBid}₮
           </CardItem>
           <div className="flex justify-between items-center">
             <CardItem translateZ={20} href="https://twitter.com/mannupaaji" target="__blank" className="py-2 rounded-xl text-sm font-normal dark:text-white">

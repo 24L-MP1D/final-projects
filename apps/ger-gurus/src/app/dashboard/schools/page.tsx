@@ -1,5 +1,5 @@
 'use client';
 
 export default function Page() {
-  return <main> Schools that you own</main>;
+  return <div> Schools that you own</div>;
 }
