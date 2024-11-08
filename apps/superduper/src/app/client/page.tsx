@@ -2,6 +2,7 @@
 
 import { ProductType } from '@/components/productType';
 import { Button } from '@/components/ui/button';
+import dayjs from 'dayjs';
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { useContext, useEffect, useRef, useState } from 'react';
@@ -84,7 +85,11 @@ export default function Index() {
         <div className="gap-10 flex flex-col">
           <div className="flex gap-20 flex-1">
             <div className="grid gap-5">
-              <div className="text-[#565B60] text-sm">{products?.[progress]?.startDate}-{products?.[progress]?.endDate}</div>
+              <div className="text-[#565B60] flex gap-1 text-sm">
+                <div>{dayjs(products?.[progress]?.startDate).format("YYYY-MM-DD")}</div>
+                <div>-</div>
+                <div>{dayjs(products?.[progress]?.endDate).format("YYYY-MM-DD")}</div>
+              </div>
               <div className="text-[#0033FF] text-5xl font-semibold">{products?.[progress]?.productName}</div>
               <div className="text-[#565B60] text-sm">{products?.[progress]?.additionalInformation}</div>
               <div className="text-[#0033FF] text-sm">{products?.[progress]?.category}</div>

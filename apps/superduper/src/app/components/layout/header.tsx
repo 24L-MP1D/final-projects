@@ -139,7 +139,7 @@ export default function Header() {
 
             {favlength === 0 ? null : <div className="absolute left-5 bottom-4  bg-blue-700 text-white rounded-full w-5 h-5 text-center text-sm">{favlength}</div>}
 
-            <div className="absolute left-5 bottom-4  bg-blue-700 text-white rounded-full w-5 h-5 text-center text-sm">{favlength}</div>
+
 
           </div>
 
