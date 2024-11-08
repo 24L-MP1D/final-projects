@@ -46,7 +46,7 @@ export default function Page() {
   }
 
   return (
-    <div className="flex justify-center h-screen items-center p-6">
+    <main className="flex justify-center h-screen items-center p-6">
       <div>
         <h1 className="text-2xl font-bold mb-4 text-center text-sky-600">Контент Бүтээх Адал Явдалд Тавтай Морилно Уу!</h1>
         <p className="mb-6 text-center text-gray-700">Дэлхийтэй хуваалцах чадвар болон мэдлэгээ оруулан өөрийн өвөрмөц орон зайг бий болгох гэж байгаа танд баяр хүргэе!</p>
@@ -106,6 +106,6 @@ export default function Page() {
           </Button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

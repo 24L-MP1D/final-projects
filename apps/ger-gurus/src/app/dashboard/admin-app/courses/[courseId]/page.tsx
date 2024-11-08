@@ -136,7 +136,7 @@ export default async function Page({ params }: { params: Params }) {
   const completionText = `(${completedFields}/${totalFields})`;
 
   return (
-    <div className="p-6">
+    <main className="p-6">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-2">
           <h1 className="text-2xl font-medium">Курс тохиргоо</h1>
@@ -179,6 +179,6 @@ export default async function Page({ params }: { params: Params }) {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
