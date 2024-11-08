@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { CircleUser } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const globalStyles = `
   @keyframes floatBubbles {
@@ -43,6 +43,13 @@ export default function Page() {
   const currentUser = useAuthStore((state) => state.currentUser);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
+  const [url, setUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setUrl(window.location.origin);
+    }
+  }, []);
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
 
   const toggleMenu = () => {
@@ -51,7 +58,9 @@ export default function Page() {
 
   function deleteCookie() {
     document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax';
+    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax';
+    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     window.location.reload();
   }
 
@@ -106,7 +115,7 @@ export default function Page() {
               )}
             </div>
           ) : (
-            <Link href={'https://dash.verse.mn/login'}>
+            <Link href={`https://dash.verse.mn/login?url=${url}`}>
               <Button variant="teacherButton" className="cursor-pointer bg-white text-black border border-black hover:border-slate-500 hover:text-slate-500 transition duration-200">
                 НЭВТРЭХ
               </Button>
