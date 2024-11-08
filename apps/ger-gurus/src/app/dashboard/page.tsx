@@ -19,6 +19,11 @@ const formSchema = z.object({
 });
 
 export default function Page() {
+  function deleteCookie() {
+    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax;';
+    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax';
+    window.location.reload();
+  }
   const router = useRouter();
   const [isExisting, setIsExisting] = useState<boolean | null>(null);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -47,6 +52,9 @@ export default function Page() {
 
   return (
     <main className="flex justify-center h-screen items-center p-6">
+      <div onClick={deleteCookie} className="absolute top-4 right-8 cursor-pointer">
+        Log out
+      </div>
       <div>
         <h1 className="text-2xl font-bold mb-4 text-center text-sky-600">Welcome to Your Content Creating Adventure!</h1>
         <p className="mb-6 text-center text-gray-700">We're excited to have you here! Start by creating your unique space where you can share your skills and knowledge with the world.</p>

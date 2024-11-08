@@ -7,7 +7,7 @@ export type BidType = {
   createdAt: Date;
   userInfo: {
     email: string;
-    firstname: string;
+    firstName: string;
   }[];
 
   productInfo: ProductType[];

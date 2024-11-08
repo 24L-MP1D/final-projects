@@ -1,7 +1,8 @@
 'use client';
 import dayjs from 'dayjs';
 import { FormikErrors, FormikTouched } from 'formik';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Clock, ShieldCheck, Truck } from 'lucide-react';
+import Link from 'next/link';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { BidType } from './bidType';
 import { ProductType } from './productType';
@@ -64,7 +65,7 @@ export const BidSticky = ({ bids, maximumBid, formikValues, isSticky, open, setO
   }, [showDate]);
 
   return (
-    <div className="max-w-[500px] sticky right-0 top-0 w-full">
+    <div className="max-w-[400px] w-full sticky right-0 top-0">
       {new Date().getTime() <= endDate && new Date().getTime() >= startDate ? (
         <div>
           Дуусах хугацаа{showDate?.day}d {showDate?.dateHours}h {showDate?.dateMinuts}m {showDate?.dateSecunds}s
@@ -99,31 +100,43 @@ export const BidSticky = ({ bids, maximumBid, formikValues, isSticky, open, setO
               onChange={formikHandleChange}
               value={formikValues.bid > 0 ? formikValues.bid : ''}
               className="w-full p-2 bg-[#f8f7f8]"
-              placeholder={`${maximumBid ? maximumBid + 50 : oneProduct.startBid + 50} or up`}
+              placeholder={`${maximumBid ? maximumBid + 5000 : oneProduct.startBid + 5000} or up`}
               type="number"
             />
           </label>
           {formikTouched.bid && formikErrors.bid && <p className="ml-8 text-red-500">{formikErrors.bid}</p>}
           <div className="flex gap-1 w-full">
-            <Button type="submit" className="flex-1 border-[1px] py-2 px-4 bg-white text-blue-500 text-center">
+            <Button type="submit" className="flex-1 hover:bg-blue-500 active:bg-blue-400 hover:text-white border-[1px] py-2 px-4 bg-white text-blue-500 text-center">
               Үнийн санал оруулах
-            </Button>
-            <Button type="submit" className="flex-1 border-[1px] py-2 px-4 bg-blue-600 text-white text-center">
-              Хамгийн их үнийн саналыг тохируулах
             </Button>
           </div>
         </div>
-        <div className="mt-8 px-4">Манай Худалдан авагчийн хамгаалалтаар итгэлтэйгээр худалдаж аваарай</div>
-        <div className="px-4 py-8 flex flex-col gap-2.5 border-b-2 border-slate-300">
-          <div>Францаас 100 доллар, 3-22 хоногт ирнэ</div>
-          <div>Худалдан авагчийн хамгаалалтын хураамж: 9% + 3 доллар</div>
-          <div>Хаах: Бямба гарагт 18:01</div>
+        <div className="mt-8 flex flex-col gap-2.5 border-b-2 border-slate-300">
+          <Link href={'#satisfy'} className="px-4 flex items-center gap-2 text-green-400">
+            <div>
+              <ShieldCheck />
+            </div>
+            <div>Хэрэглэгчийн аюулгүй байдал</div>
+          </Link>
+          <div className="px-4 flex items-center gap-2 text-[#919397]">
+            <div>
+              <Truck />
+            </div>
+            <div>Дэлхийн хаана ч хүргэнэ</div>
+          </div>
+          <div className="px-4 flex items-center gap-2 mb-6 text-[#919397]">
+            <div>
+              <Clock />
+            </div>
+            <div> Closes: {dayjs(oneProduct.endDate).format(' YYYY-MM-DD  hh-mm')}</div>
+          </div>
         </div>
+
         <div className="pt-8 px-4 flex flex-col gap-[40px]">
           <div className="overflow-y-scroll relative w-full max-h-80 flex flex-col gap-2">
             {bids.slice(0, 3).map((bid, index) => (
-              <div key={bid._id} className="flex justify-between items-center">
-                <div>{bid.userInfo[0].email}</div>
+              <div key={bid._id} className="flex justify-between items-center border-b border-solid border-slate-200">
+                <div>{bid.userInfo[0].firstName}</div>
                 <div className="p-2">{bid.bid} ₮</div>
                 <div>{dayjs(bid.createdAt).format('YYYY-MM-DD')}</div>
               </div>
@@ -138,8 +151,8 @@ export const BidSticky = ({ bids, maximumBid, formikValues, isSticky, open, setO
           )}
           <div className="overflow-y-scroll relative w-full max-h-80 flex flex-col gap-2">
             {bids.slice(3, showAllBids).map((bid, index) => (
-              <div key={bid._id} className="flex justify-between items-center">
-                <div>{bid.userInfo[0].email}</div>
+              <div key={bid._id} className="flex justify-between items-center border-b border-solid border-slate-200">
+                <div>{bid.userInfo[0].firstName}</div>
                 <div className="p-2">{bid.bid}</div>
                 <div>{dayjs(bid.createdAt).format('YYYY-MM-DD')}</div>
               </div>
