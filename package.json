@@ -99,6 +99,7 @@
     "react-scroll-parallax": "^3.4.5",
     "react-time-picker": "^7.0.0",
     "react-use": "^17.5.1",
+    "recharts": "^2.13.3",
     "shadcn": "^2.1.4",
     "sonner": "^1.5.0",
     "swiper": "^11.1.14",

@@ -56,7 +56,7 @@ enum Role {
 export default function RecipeComponent() {
   const params = useParams<{ id: string }>();
 
-  const id = params?.id;
+  const id = params.id;
   const [loading, setLoading] = useState<boolean>(false);
   const [recipe, setRecipe] = useState<Recipe>();
   const [user, setUser] = useState<Partial<User>>({ firstName: '' });
@@ -64,6 +64,8 @@ export default function RecipeComponent() {
   const [newComment, setNewComment] = useState<string>('');
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  console.log('id:       ', params);
 
   // useEffect(() => {
   //   const checkLoginStatus = async () => {
