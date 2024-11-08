@@ -3,9 +3,9 @@
 import dayjs from 'dayjs';
 import { X } from 'lucide-react';
 import { ChangeEvent, useEffect, useState } from 'react';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../(client)/components/ui/Table';
 import { DashboardAside } from '../components/DashboardAside';
 import { Input } from '../components/ui/Input';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
 
 export default function Home() {
   interface User {
@@ -125,12 +125,12 @@ export default function Home() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex p-3 rounded-xl bg-slate-50">
       <DashboardAside />
-      <div>
+      <div className="bg-slate-100 rounded-xl mx-auto  mt-2 p-5 ">
         <div className="text-center font-bold">Хэрэглэгчийн мэдээлэл хянах хэсэг</div>
         <div className="justify-center">
-          <Input value={searchValue} onChange={searchFilt} placeholder="search" type="text" className="w-100 ml-5" />
+          <Input value={searchValue} onChange={searchFilt} placeholder="хэрэглэгч хайх" type="text" className="w-100 ml-5" />
         </div>
         <Table className="border-[1px] border-[#d1d5db] ml-5 mt-5 w-[800px] rounded-xl bg-white">
           <TableCaption>Хэрэглэгчийн бүртгэлийн жагсаалт</TableCaption>

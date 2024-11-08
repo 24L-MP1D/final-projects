@@ -83,24 +83,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), addVariablesForColors],
+  plugins: [require('tailwindcss-animate')],
 };
-
-// Custom plugin to add CSS variables for colors
-function addVariablesForColors({ addBase, theme }) {
-  const colors = theme('colors');
-  const newVars = Object.keys(colors).reduce((vars, color) => {
-    if (typeof colors[color] === 'object') {
-      Object.entries(colors[color]).forEach(([shade, value]) => {
-        vars[`--${color}-${shade}`] = value;
-      });
-    } else {
-      vars[`--${color}`] = colors[color];
-    }
-    return vars;
-  }, {});
-
-  addBase({
-    ':root': newVars,
-  });
-}

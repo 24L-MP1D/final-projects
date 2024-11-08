@@ -1,8 +1,8 @@
 'use client';
 
-import Image from "next/image";
-import { useState } from "react";
-import { Button } from "./ui/button"; // Assuming the Button component is located here
+import Image from 'next/image';
+import { useState } from 'react';
+import { Button } from './ui/button'; // Assuming the Button component is located here
 
 const TeacherWebFirstLayoutHeader: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -12,14 +12,11 @@ const TeacherWebFirstLayoutHeader: React.FC = () => {
   };
 
   return (
-    <div
-      className="flex justify-between items-center py-5 px-10"
-      style={{ fontFamily: 'Roboto, sans-serif' }}
-    >
+    <div className="flex justify-between items-center py-5 px-10" style={{ fontFamily: 'Roboto, sans-serif' }}>
       {/* Logo */}
       <div className="flex items-center w-60 h-12">
         {/* Make sure LOGO.png is placed inside the public folder */}
-        <Image src="/logo.png" width={99} height={29.3} alt="Logo" />
+        <Image priority={true} src="/logo.png" width={99} height={29.3} alt="Logo" />
       </div>
 
       {/* Mobile Hamburger Icon */}
@@ -42,16 +39,10 @@ const TeacherWebFirstLayoutHeader: React.FC = () => {
       {/* Buttons */}
       <div className="flex gap-3">
         {/* Button with cursor-pointer and hover effect */}
-        <Button
-          variant="teacherButton"
-          className="cursor-pointer bg-white text-black border border-black hover:border-slate-500 hover:text-slate-500 transition duration-200"
-        >
+        <Button variant="teacherButton" className="cursor-pointer bg-white text-black border border-black hover:border-slate-500 hover:text-slate-500 transition duration-200">
           LOG IN
         </Button>
-        <Button
-          variant="teacherButton"
-          className="cursor-pointer bg-green-600 hover:bg-green-700 transition duration-200"
-        >
+        <Button variant="teacherButton" className="cursor-pointer bg-green-600 hover:bg-green-700 transition duration-200">
           GET FUNDING
         </Button>
       </div>

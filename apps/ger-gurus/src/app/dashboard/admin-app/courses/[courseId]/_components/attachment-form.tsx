@@ -2,19 +2,23 @@
 import { FileUpload } from '@/components/file-upload';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
-import { ImageIcon, PlusCircle } from 'lucide-react';
-import Image from 'next/image';
+import { PlusCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
 
 const formSchema = z.object({
-  imageUrl: z.string().min(1, {
-    message: 'Image is required',
-  }),
+  url: z.string().min(1),
 });
 
+interface Attachment {
+  _id: string;
+  createdAt?: string | null;
+  url?: string;
+  name?: string;
+  courseId?: string;
+}
 interface AttachmentFormProps {
   initialData: {
     _id: string;
@@ -23,7 +27,7 @@ interface AttachmentFormProps {
     imageUrl?: string;
     price?: number;
     categoryId?: string;
-    attachments?: [];
+    attachments?: Attachment[];
   };
 }
 export const AttachmentForm: React.FC<AttachmentFormProps> = ({ initialData }) => {
@@ -33,7 +37,7 @@ export const AttachmentForm: React.FC<AttachmentFormProps> = ({ initialData }) =
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await axios.patch(`/api/courses/${initialData._id}`, values);
+      await axios.post(`/api/courses/${initialData._id}/attachments`, values);
       toast.success('Course description updated');
       toggleEdit();
       router.refresh();
@@ -55,25 +59,19 @@ export const AttachmentForm: React.FC<AttachmentFormProps> = ({ initialData }) =
           )}
         </Button>
       </div>
-      {!isEditing &&
-        (!initialData.imageUrl ? (
-          <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
-            <ImageIcon className="h-10 w-10 text-slate-500" />
-          </div>
-        ) : (
-          <div className="relative aspect-video mt-2">
-            <Image src={initialData.imageUrl} alt="thumbnail" fill className="object-cover rounded-md" />
-          </div>
-        ))}
+      {!isEditing && <>{(initialData.attachments ?? []).length === 0 && <p className="text-sm mt-2 text-slate-500 italic">No attachments yet</p>}</>}
       {isEditing && (
-        <FileUpload
-          endpoint="courseImage"
-          onChange={(url) => {
-            if (url) {
-              onSubmit({ imageUrl: url });
-            }
-          }}
-        />
+        <div>
+          <FileUpload
+            endpoint="courseAttachments"
+            onChange={(url) => {
+              if (url) {
+                onSubmit({ url: url });
+              }
+            }}
+          />
+          <div className="test-xs text-muted-foreground mt-4">Add anything your students might need to complete the course</div>
+        </div>
       )}
     </div>
   );

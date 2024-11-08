@@ -4,6 +4,7 @@ const GOOGLE_SECRET = process.env.GOOGLE_SECRET || '';
 interface User {
   _id: string;
   otp: number;
+  expiresAt: Date;
 }
 
 export async function PUT(request: Request) {
@@ -13,7 +14,13 @@ export async function PUT(request: Request) {
     const user = await collection.findOne({ email });
     if (!user) return new Response(null, { status: 404 });
 
-    if (Number(otp) == user.otp) return new Response(null, { status: 200 });
+    if (user.expiresAt < new Date()) {
+      return new Response('OTP expired', {
+        status: 410,
+      });
+    }
+
+    if (otp == user.otp) return new Response(null, { status: 200 });
     return new Response(null, { status: 404 });
   } catch (err) {
     return new Response(null, { status: 404 });

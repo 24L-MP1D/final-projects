@@ -4,7 +4,7 @@ import { AdminLayout } from '@/components/adminLayout';
 import { useContext, useEffect } from 'react';
 import { Context } from '../layout';
 
-const Home = () => {
+export default function Home() {
   const value = useContext(Context);
   const approveSell = () => {
     console.log('Successfully approved the Sell request');
@@ -36,5 +36,4 @@ const Home = () => {
       </div>
     </AdminLayout>
   );
-};
-export default Home;
+}

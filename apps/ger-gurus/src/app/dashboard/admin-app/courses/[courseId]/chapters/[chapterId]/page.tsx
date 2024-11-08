@@ -46,7 +46,7 @@ export default async function Page({ params }: { params: Params }) {
   const completionText = `(${completedFields}/${totalFields})`;
 
   return (
-    <div className="p-6">
+    <main className="p-6">
       <div className="flex items-center justify-between">
         <Link href={`/admin-app/courses/${courseId}`} className="flex items-center text-sm hover:opacity-75 transition mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
@@ -83,6 +83,6 @@ export default async function Page({ params }: { params: Params }) {
           {/* <PriceForm initialData={courseWithPlainId} /> */}
         </div>
       </div>
-    </div>
+    </main>
   );
 }

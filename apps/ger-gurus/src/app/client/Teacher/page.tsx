@@ -1,18 +1,16 @@
 'use client';
 
-import TeacherWebFirstLayout from "@/components/teacherWebFirstLayout";
-import TeacherWebSecondLayout from "@/components/teacherWebSecondLayout";
-import TeacherWebThirdLayout from "@/components/teacherWebThirdLayout";
-
-
+import TeacherWebFirstLayout from '@/components/teacherWebFirstLayout';
+import TeacherWebSecondLayout from '@/components/teacherWebSecondLayout';
+import TeacherWebThirdLayout from '@/components/teacherWebThirdLayout';
 
 const Teacher = () => {
   return (
-    <div>
+    <main>
       <TeacherWebFirstLayout />
       <TeacherWebSecondLayout />
       <TeacherWebThirdLayout />
-    </div>
+    </main>
   );
 };
 
