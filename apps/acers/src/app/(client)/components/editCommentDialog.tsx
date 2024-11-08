@@ -38,7 +38,7 @@ import { useState } from 'react';
 // import { editComment } from '../../api/comment/route';
 import StarRating from '../recipe/[id]/StarRating';
 import { Button } from './ui/Button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/Dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog';
 
 export default function EditComment({ open, setOpen, reset, slug }: { open: boolean; setOpen: any; reset: any; slug: string }) {
   const [rating, setRating] = useState(0);

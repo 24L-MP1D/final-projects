@@ -33,7 +33,7 @@ export default function Page() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await axios.post(`/api/check-domain`, values);
+      const response = await axios.post(`/api/check-domain`, { domain: `${values.domain}.verse.mn` });
       setIsExisting(response.data); // instant
       toast.success('Checked if domain is available');
     } catch {
@@ -56,11 +56,13 @@ export default function Page() {
         Log out
       </div>
       <div>
-        <h1 className="text-2xl font-bold mb-4 text-center text-sky-600">Welcome to Your Content Creating Adventure!</h1>
-        <p className="mb-6 text-center text-gray-700">We're excited to have you here! Start by creating your unique space where you can share your skills and knowledge with the world.</p>
+        <h1 className="text-2xl font-bold mb-4 text-center text-sky-600">Контент Бүтээх Адал Явдалд Тавтай Морилно Уу!</h1>
+        <p className="mb-6 text-center text-gray-700">Дэлхийтэй хуваалцах чадвар болон мэдлэгээ оруулан өөрийн өвөрмөц орон зайг бий болгох гэж байгаа танд баяр хүргэе!</p>
+        <p className="mb-6 text-center text-gray-700">Та давтагдашгүй домайн нэр оруулна уу.</p>
+
         <div className="flex flex-col items-center">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4 flex gap-4 items-start justify-center">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex gap-4 items-start justify-center">
               <FormField
                 control={form.control}
                 name="domain"
@@ -71,36 +73,44 @@ export default function Page() {
                         <Input
                           {...field}
                           type="text"
-                          placeholder="Enter your unique name"
-                          className="w-full max-w-xs text-base"
+                          placeholder="Энд нэрээ оруулна уу"
+                          className="w-full max-w-xs text-base text-right"
                           onChange={(e) => {
                             field.onChange(e);
                             setIsExisting(null);
                           }}
                         />
-                        <p className="ml-2">.verse.mn</p>
+                        <div className="ml-2">.verse.mn</div>
                       </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <div className="flex items-start gap-2">
+              <div className="flex gap-2 !mt-0">
                 <Button type="submit" disabled={!form.formState.isValid || form.formState.isSubmitting}>
-                  Check if available
+                  Давтагдсан эсэхийг шалгах
                   <Search />
                 </Button>
               </div>
             </form>
           </Form>
 
-          <div className="h-10">
-            {isExisting === true && form.formState.isValid && <div> Domain is not available</div>}
-            {isExisting === false && form.formState.isValid && <div> Domain is available </div>}
+          <div className="h-10 mt-4">
+            {isExisting === true && form.formState.isValid && (
+              <div>
+                Домен ашиглах боломжгүй! <p className="text-2xl text-center">😬</p>
+              </div>
+            )}
+            {isExisting === false && form.formState.isValid && (
+              <div>
+                Домайн ашиглах боломжтой! <p className="text-2xl text-center">😀</p>
+              </div>
+            )}
           </div>
 
           <Button className="w-full max-w-xs mt-10" disabled={isExisting === null || isExisting === true} onClick={() => createSchool(form.getValues().domain)}>
-            Create My Space
+            Миний орон зайг үүсгэх
           </Button>
         </div>
       </div>

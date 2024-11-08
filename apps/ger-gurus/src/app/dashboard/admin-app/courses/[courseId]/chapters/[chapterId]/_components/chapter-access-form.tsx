@@ -54,13 +54,13 @@ export const ChapterAccessForm: React.FC<ChapterAccessFormProps> = ({ initialDat
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Chapter access
+        Бүлгийн хандалт
         <Button variant="ghost" onClick={toggleEdit}>
-          {isEditing && <>Cancel</>}
+          {isEditing && <>Болих</>}
           {!isEditing && (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit access
+              Хандалтыг засах
             </>
           )}
         </Button>
@@ -68,7 +68,7 @@ export const ChapterAccessForm: React.FC<ChapterAccessFormProps> = ({ initialDat
 
       {!isEditing && (
         <div className={cn('text-sm mt-2 text-red-500', !initialData.isFree && 'text-slate-500 italic')}>
-          {initialData.isFree ? <>This chapter is free for preview</> : <>This chapter is not free</>}
+          {initialData.isFree ? <>Энэ бүлэг урьдчилан харахыг үнэгүй болгов</> : <>Энэ бүлэг үнэгүй биш</>}
         </div>
       )}
 
@@ -84,14 +84,14 @@ export const ChapterAccessForm: React.FC<ChapterAccessFormProps> = ({ initialDat
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormDescription>Check this box if you want to make this chapter free for preview.</FormDescription>
+                    <FormDescription>Хэрэв та энэ бүлгийг урьдчилан харахыг үнэгүй болгохыг хүсвэл энэ хайрцгийг тэмдэглэнэ үү.</FormDescription>
                   </div>
                 </FormItem>
               )}
             />
             <div className="flex items-center gap-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
+                Хадгалах
               </Button>
             </div>
           </form>

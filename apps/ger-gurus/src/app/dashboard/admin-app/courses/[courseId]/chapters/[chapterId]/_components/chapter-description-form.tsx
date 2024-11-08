@@ -49,20 +49,20 @@ export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Chapter description
+        Бүлгийн тайлбар
         <Button variant="ghost" onClick={toggleEdit}>
-          {isEditing && <>Cancel</>}
+          {isEditing && <>Болих</>}
           {!isEditing && (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit Description
+              Тайлбар засах
             </>
           )}
         </Button>
       </div>
       {!isEditing && (
         <div className={cn('text-sm mt-2', !initialData.description && 'text-slate-500 italic')}>
-          {!initialData.description && 'No description'}
+          {!initialData.description && 'Тайлбар байхгүй'}
           {initialData.description && <Preview value={initialData.description} />}
         </div>
       )}
@@ -81,7 +81,7 @@ export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ 
             />
             <div className="flex items-center gap-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
+                Хадгалах
               </Button>
             </div>
           </form>
