@@ -17,18 +17,17 @@ interface ChapterVideoFormProps {
     _id: string;
     videoUrl?: string;
     muxData?: any;
+    courseId: string;
   };
-  courseId: string;
-  chapterId: string;
 }
-export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData, courseId, chapterId }) => {
+export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData }) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => setIsEditing((x) => !x);
   const router = useRouter();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await fetcher().patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
+      await fetcher().patch(`/api/courses/${initialData.courseId}/chapters/${initialData._id}`, values);
       toast.success('Chapter updated');
       toggleEdit();
       router.refresh();
@@ -40,21 +39,21 @@ export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData,
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Chapter Video
+        Бүлгийн видео
         <Button variant="ghost" onClick={toggleEdit}>
-          {isEditing && <>Cancel</>}
+          {isEditing && <>Болих</>}
 
           {!isEditing && !initialData.videoUrl && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add a video
+              Видео нэмэх
             </>
           )}
 
           {!isEditing && initialData.videoUrl && (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit video
+              Видеог засах
             </>
           )}
         </Button>
@@ -65,7 +64,7 @@ export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData,
             <Video className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="relative aspect-video mt-2">Video uploaded!</div>
+          <div className="relative aspect-video mt-2">Видео бүртгэгдсэн!</div>
         ))}
 
       {isEditing && (
@@ -78,11 +77,13 @@ export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData,
               }
             }}
           />
-          <div className="test-xs text-muted-foreground mt-4">Upload this chapter's video</div>
+          <div className="test-xs text-muted-foreground mt-4">Энэ бүлгийн видеог ачаалж оруулна уу</div>
         </div>
       )}
 
-      {initialData.videoUrl && !isEditing && <div className="text-xs text-muted-foreground mt-2">Videos can take a few minutes to process. Refresh the page if video does not appear.</div>}
+      {initialData.videoUrl && !isEditing && (
+        <div className="text-xs text-muted-foreground mt-2">Видеог боловсруулахад хэдэн минут шаардлагатай байж болно. Видео харагдахгүй бол хуудас дахин ачаална уу.</div>
+      )}
     </div>
   );
 };

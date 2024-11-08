@@ -63,24 +63,24 @@ export const AttachmentForm: React.FC<AttachmentFormProps> = ({ initialData }) =
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course Attachments
+        Курсын хавсралтууд
         <Button variant="ghost" onClick={toggleEdit}>
-          {isEditing && <>Cancel</>}
+          {isEditing && <>Болих</>}
           {!isEditing && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add a file
+              Файл нэмэх
             </>
           )}
         </Button>
       </div>
       {!isEditing && (
         <>
-          {(initialData.attachments ?? []).length === 0 && <p className="text-sm mt-2 text-slate-500 italic">No attachments yet</p>}
+          {(initialData.attachments ?? []).length === 0 && <p className="text-sm mt-2 text-slate-500 italic">Хавсралт одоогоор алга байна</p>}
           {(initialData.attachments ?? []).length > 0 && (
             <div className="space-y-2">
               {(initialData.attachments ?? []).map((attachment) => (
-                <div key={attachment._id} className="flex items-center p-3 w-full bg-sky-200 border-sky-200 border tesxt-sky-700 rounded-md">
+                <div key={attachment._id} className="flex items-center p-3 w-full bg-sky-200 border-sky-200 border text-sky-700 rounded-md">
                   <File className="h-4 w-4 mr-2 flex-shrink-0" />
                   <p className="text-xs line-clamp-1">{attachment.name}</p>
                   {deletingId === attachment._id && (
@@ -110,7 +110,7 @@ export const AttachmentForm: React.FC<AttachmentFormProps> = ({ initialData }) =
               }
             }}
           />
-          <div className="test-xs text-muted-foreground mt-4">Add anything your students might need to complete the course</div>
+          <div className="text-xs text-muted-foreground mt-4">Курсээ гүйцээхийн тулд оюутнуудад хэрэгтэй бүхнийг нэмээрэй</div>
         </div>
       )}
     </div>

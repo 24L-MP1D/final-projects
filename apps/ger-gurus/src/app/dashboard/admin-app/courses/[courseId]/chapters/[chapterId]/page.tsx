@@ -8,8 +8,12 @@ import { ChapterAccessForm } from './_components/chapter-access-form';
 import { ChapterDescriptionForm } from './_components/chapter-description-form';
 import { ChapterTitleForm } from './_components/chapter-title-form';
 import { ChapterVideoForm } from './_components/chapter-video-form';
+type Params = {
+  courseId: string;
+  chapterId: string;
+};
 
-export default async function Page({ params }: { params: { courseId: string; chapterId: string } }) {
+export default async function Page({ params }: { params: Params }) {
   // const {userId}=auth()
   // if (!userId){return redirect("/")}
   const { courseId, chapterId } = await params;
@@ -50,20 +54,20 @@ export default async function Page({ params }: { params: { courseId: string; cha
       <div className="flex items-center justify-between">
         <Link href={`/admin-app/courses/${courseId}`} className="flex items-center text-sm hover:opacity-75 transition mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to course setup
+          Курсын тохиргоонд буцах
         </Link>
       </div>
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-medium">Chapter Creation</h1>
-          <span className="text-sm text-slate-700">Complete all fields {completionText}</span>
+          <h1 className="text-2xl font-medium">Бүлэг үүсгэх</h1>
+          <span className="text-sm text-slate-700">Бүх талбарыг бөглөнө үү {completionText}</span>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
         <div>
           <div className="flex items-center gap-x-2">
             <IconBadge icon={LayoutDashboard} />
-            <h2 className="text-xl">Customize your chapter</h2>
+            <h2 className="text-xl">Бүлгээ тохируулах</h2>
           </div>
           <ChapterTitleForm initialData={chapterWithPlainId} />
           <ChapterDescriptionForm initialData={chapterWithPlainId} />
@@ -71,16 +75,16 @@ export default async function Page({ params }: { params: { courseId: string; cha
         <div>
           <div className="flex items-center gap-x-2">
             <IconBadge icon={Eye} />
-            <h2 className="text-xl">Access settings</h2>
+            <h2 className="text-xl">Хандалтын тохиргоо</h2>
           </div>
           <ChapterAccessForm initialData={chapterWithPlainId} />
         </div>
         <div>
           <div className="flex items-center gap-x-2">
             <IconBadge icon={Video} />
-            <h2 className="text-xl">Add a video</h2>
+            <h2 className="text-xl">Видео нэмэх</h2>
           </div>
-          <ChapterVideoForm initialData={chapterWithPlainId} courseId={params.courseId} chapterId={params.chapterId} />
+          <ChapterVideoForm initialData={chapterWithPlainId} />
         </div>
       </div>
     </div>

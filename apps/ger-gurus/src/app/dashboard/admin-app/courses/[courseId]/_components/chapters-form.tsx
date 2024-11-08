@@ -84,20 +84,20 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course chapters
+        Курсын бүлгүүд
         <Button variant="ghost" onClick={toggleCreating}>
-          {isCreating && <>Cancel</>}
+          {isCreating && <>Болих</>}
           {!isCreating && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add a chapter
+              Бүлэг нэмэх
             </>
           )}
         </Button>
       </div>
       {/* {!isCreating && ( */}
       <div className={cn('text-sm mt-2', !initialData.chapters?.length && 'text-slate-500 italic')}>
-        {!initialData.chapters.length && 'No chapters'}
+        {!initialData.chapters.length && 'Бүлэг байхгүй'}
         <ChapterList onEdit={onEdit} onReorder={onReorder} chapters={chapters || []} />
       </div>
       {/* )} */}
@@ -110,7 +110,7 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="e.g Introduction to the course" disabled={isSubmitting} {...field} />
+                    <Input placeholder="Жишээ нь: Курсын танилцуулга" disabled={isSubmitting} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -118,13 +118,13 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
             />
 
             <Button disabled={!isValid || isSubmitting} type="submit">
-              Create
+              Үүсгэх
             </Button>
           </form>
         </Form>
       )}
 
-      {!isCreating && <p className="text-sm text-muted-foreground mt-4">Drag and drop to reorder the chapters</p>}
+      {!isCreating && <p className="text-sm text-muted-foreground mt-4">Бүлгүүдийг чирж, байрлалыг өөрчилнө үү</p>}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Trash } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -34,26 +35,26 @@ export default function Page() {
   return (
     <div className="w-[1000px] mx-auto p-10">
       <Link href="/admin-app/courses/create">
-        <Button className="p-6">Add new course</Button>
+        <Button className="p-6 mb-8">Шинэ курс нэмэх</Button>
       </Link>
       <Table className="">
-        <TableCaption>Create and manage courses in your school.</TableCaption>
+        <TableCaption>Та сургуулийнхаа курсүүдийг үүсгэж, удирдаарай.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Thumbnail</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Author</TableHead>
-            <TableHead>Creation date</TableHead>
-            <TableHead>Sales</TableHead>
-            <TableHead>Enrollments</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead className="w-[100px]">Нүүр зураг</TableHead>
+            <TableHead>Нэр</TableHead>
+            <TableHead>Зохиогч</TableHead>
+            <TableHead>Үүсгэсэн огноо</TableHead>
+            <TableHead>Худалдаа</TableHead>
+            <TableHead>Бүртгэлүүд</TableHead>
+            <TableHead>Төлөв</TableHead>
+            <TableHead className="text-right">Үйлдлүүд</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {courses.map((course) => (
             <TableRow key={course._id}>
-              <TableCell className="font-medium"> {course.imageUrl && <Image src={course.imageUrl} height={40} width={40} alt="thumbnail" />}</TableCell>
+              <TableCell className="font-medium"> {course.imageUrl && <Image src={course.imageUrl} height={200} width={200} alt="thumbnail" />}</TableCell>
               <TableCell>{course.title}</TableCell>
               <TableCell>{course.author}</TableCell>
               <TableCell></TableCell>
@@ -61,7 +62,9 @@ export default function Page() {
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell className="text-right">
-                <Button onClick={() => deleteCourse(course._id)}>delete</Button>
+                <Button onClick={() => deleteCourse(course._id)}>
+                  <Trash />
+                </Button>
               </TableCell>
             </TableRow>
           ))}

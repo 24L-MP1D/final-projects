@@ -1,44 +1,35 @@
-import { Home, Laptop, LibraryBig, Search, Settings } from "lucide-react"
+import { DollarSign, Home, Laptop, LibraryBig, Settings } from 'lucide-react';
 
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar"
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "#",
+    title: 'Нүүр хуудас',
+    url: '#',
     icon: Home,
   },
   {
-    title: "Courses",
-    url: "/admin-app/courses",
+    title: 'Курсууд',
+    url: '/admin-app/courses',
     icon: LibraryBig,
   },
   {
-    title: "Site",
-    url: "#",
+    title: 'Вебсайт тохиргоо',
+    url: '#',
     icon: Laptop,
   },
   {
-    title: "Sales",
-    url: "#",
-    icon: Search,
+    title: 'Орлого',
+    url: '#',
+    icon: DollarSign,
   },
   {
-    title: "Settings",
-    url: "#",
+    title: 'Ерөнхий тохиргоо',
+    url: '#',
     icon: Settings,
   },
-]
+];
 
 export function AppSidebar() {
   return (
@@ -63,7 +54,5 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }
-
-  
