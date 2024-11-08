@@ -15,7 +15,7 @@ const formSchema = z.object({
 interface ChapterVideoFormProps {
   initialData: {
     _id: string;
-    videoUrl: string;
+    videoUrl?: string;
     muxData?: any;
   };
   courseId: string;
