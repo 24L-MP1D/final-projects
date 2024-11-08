@@ -50,6 +50,35 @@ export async function POST(request: Request) {
   }
 }
 
+export async function PUT(request: Request) {
+  try {
+    const product: any = {};
+    const body = await request.json();
+    const { searchValue } = body;
+    if (searchValue) {
+      product.$or = [
+        { category: { $regex: searchValue, $options: 'i' } },
+        { countryOfOrigin: { $regex: searchValue, $options: 'i' } },
+        { productName: { $regex: searchValue, $options: 'i' } },
+        { additionalInformation: { $regex: searchValue, $options: 'i' } },
+        {
+          $expr: {
+            $regexMatch: {
+              input: { $toString: '$startBid' },
+              regex: searchValue,
+            },
+          },
+        },
+        { startBid: { $regex: searchValue, $options: 'i' } },
+      ];
+    }
+    const products = await collection.find(product).toArray();
+    return Response.json(products);
+  } catch (error) {
+    return Response.json({ message: 'Failed to create product!' }, { status: 404 });
+  }
+}
+
 export async function DELETE(request: Request) {
   const { ids } = await request.json();
   try {

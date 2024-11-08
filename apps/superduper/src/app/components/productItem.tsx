@@ -1,20 +1,12 @@
 'use client';
 import { LikeButton } from '@/components/heartLike/heartLikeButton';
+import { ProductType } from '@/components/productType';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { CardBody, CardContainer, CardItem } from './ui/card';
 
-export interface Product {
-  _id: string;
-  productName: string;
-  description: string;
-  category: string;
-  startBid: number;
-  frontImage: string;
-}
-
-export function ProductItem({ product, favourite, onClickFavourite }: { product: Product; isClick: boolean; favourite: string[]; onClickFavourite: () => void }) {
+export function ProductItem({ product, favourite, onClickFavourite }: { product: ProductType; isClick: boolean; favourite: string[]; onClickFavourite: () => void }) {
   const [isClick, setClick] = useState(false);
 
   useEffect(() => {

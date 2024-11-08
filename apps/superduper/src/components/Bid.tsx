@@ -40,7 +40,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
   const sticky = useRef<HTMLDivElement | null>(null);
   const startDate = new Date(oneProduct.startDate).getTime();
   let betweenDate = endDate - new Date().getTime();
-
+  console.log(bids[0]);
   useEffect(() => {
     const handleScroll = () => {
       if (sticky.current) {
@@ -139,7 +139,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
             <div>
               <Clock />
             </div>
-            <div> Closes: {dayjs(oneProduct.endDate).format('hh-mm')}</div>
+            <div> Closes: {dayjs(oneProduct.endDate).format(' YYYY-MM-DD  hh-mm')}</div>
           </div>
         </div>
 
@@ -147,7 +147,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
           <div className="overflow-y-scroll relative w-full max-h-80 flex flex-col gap-2">
             {bids.slice(0, 3).map((bid, index) => (
               <div key={bid._id} className="flex justify-between items-center border-b border-solid border-slate-200">
-                <div>{bid.userInfo[0].firstname}</div>
+                <div>{bid.userInfo[0].firstName}</div>
                 <div className="p-2">{bid.bid} ₮</div>
                 <div>{dayjs(bid.createdAt).format('YYYY-MM-DD')}</div>
               </div>
@@ -163,7 +163,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
           <div className="overflow-y-scroll relative w-full max-h-80 flex flex-col gap-2">
             {bids.slice(3, showAllBids).map((bid, index) => (
               <div key={bid._id} className="flex justify-between items-center border-b border-solid border-slate-200">
-                <div>{bid.userInfo[0].firstname}</div>
+                <div>{bid.userInfo[0].firstName}</div>
                 <div className="p-2">{bid.bid}</div>
                 <div>{dayjs(bid.createdAt).format('YYYY-MM-DD')}</div>
               </div>
