@@ -99,7 +99,7 @@ export async function PUT(request: Request) {
   const collection = DB.collection('bids');
 
   const body = await request.json();
-  const { searchValue } = body;
+  const { searchValue, productId } = body;
 
   const pipeline = [];
   try {
@@ -140,6 +140,13 @@ export async function PUT(request: Request) {
               productInfo: { $elemMatch: { productName: { $regex: searchValue, $options: 'i' } } },
             },
           ],
+        },
+      });
+    }
+    if (productId) {
+      pipeline.push({
+        $match: {
+          productId: new ObjectId(String(productId)),
         },
       });
     }
