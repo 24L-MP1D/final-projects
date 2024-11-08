@@ -50,19 +50,19 @@ export const PriceForm: React.FC<PriceFormProps> = ({ initialData }) => {
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course price
+        Курсын үнэ
         <Button variant="ghost" onClick={toggleEdit}>
-          {isEditing && <>Cancel</>}
+          {isEditing && <>Болих</>}
           {!isEditing && (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit course
+              Үнэ засах
             </>
           )}
         </Button>
       </div>
       {!isEditing ? (
-        <p className={cn('text-sm mt-2', !initialData.price && 'text-slate-500 italic')}>{initialData.price ? initialData.price : 'No price'}</p>
+        <p className={cn('text-sm mt-2', !initialData.price && 'text-slate-500 italic')}>{initialData.price ? initialData.price : 'Үнэ байхгүй'}</p>
       ) : (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
@@ -72,7 +72,7 @@ export const PriceForm: React.FC<PriceFormProps> = ({ initialData }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="e.g set a price for your course" type="number" disabled={isSubmitting} {...field} />
+                    <Input placeholder="Жишээ нь: Курсын үнээ оруулна уу" type="number" disabled={isSubmitting} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -80,7 +80,7 @@ export const PriceForm: React.FC<PriceFormProps> = ({ initialData }) => {
             />
             <div className="flex items-center gap-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
+                Хадгалах
               </Button>
             </div>
           </form>

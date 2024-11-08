@@ -2,6 +2,7 @@
 
 import '@/components/styles.css';
 import { Button } from '@/components/ui/button';
+import axios from 'axios';
 import { CircleAlert, Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -25,48 +26,49 @@ export default function Index() {
   }
 
   const submit = async () => {
-    try {
-      const res = await fetch(`/api/user/login`, {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-        headers: { 'Content-Type': 'application/json' },
+    axios
+      .post('/api/user/login', { email, password })
+      .then(({ data, status, statusText }) => {
+        if (status === 200) {
+          toast.success('Амжилттай нэвтэрлээ.', { className: 'custom-toast success' });
+          localStorage.setItem('authtoken', data.token);
+          localStorage.setItem('userId', data.userId);
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 1000);
+        } else if (status === 401) {
+          toast.error('Хэрэглэгч бүртгэлгүй байна.', { className: 'custom-toast error' });
+          return setEmailExist(true);
+        } else if (status === 403) {
+          toast.error('Нууц үг буруу байна.', { className: 'custom-toast error' });
+          return setEmailExist(false), setPasswordIncorrect(true);
+        } else {
+          alert(statusText);
+        }
+      })
+      .catch(() => {
+        toast.error(
+          <div className="text-[#EF4444] flex gap-3">
+            <div className="pt-1">
+              <CircleAlert size={16} />
+            </div>
+            <div className="flex flex-col gap-1">
+              <div className="text-base font-medium">Холболт салсан байна.</div>
+              <div className="text-sm font-normal">Түр хүлээгээд дахин оролдоно уу.</div>
+            </div>
+          </div>
+        ),
+          { className: 'custom-toast error' };
       });
-      const authtoken = await res.text();
-      localStorage.setItem('authtoken', authtoken);
-      if (res.ok) {
-        toast.success('Амжилттай нэвтэрлээ.', { className: 'custom-toast success' });
-        setTimeout(() => {
-          window.location.href = '/';
-        }, 1000);
-      } else if (res.status === 401) {
-        toast.error('Хэрэглэгч бүртгэлгүй байна.', { className: 'custom-toast error' });
-        return setEmailExist(true);
-      } else if (res.status === 403) {
-        toast.error('Нууц үг буруу байна.', { className: 'custom-toast error' });
-        return setEmailExist(false), setPasswordIncorrect(true);
-      }
-    } catch (error) {
-      toast.error(
-        <div className="text-[#EF4444] flex gap-3">
-          <div className="pt-1">
-            <CircleAlert size={16} />
-          </div>
-          <div className="flex flex-col gap-1">
-            <div className="text-base font-medium">Холболт салсан байна.</div>
-            <div className="text-sm font-normal">Түр хүлээгээд дахин оролдоно уу.</div>
-          </div>
-        </div>
-      ),
-        { className: 'custom-toast error' };
-    }
   };
+
   const customToast = {
     success: 'custom-toast success',
     error: 'custom-toast error',
   };
 
   return (
-    <div className=" flex flex-col items-center h-[800px] gap-6 pt-[100px]">
+    <main className="flex flex-col items-center h-[800px] gap-6 pt-[100px]">
       <div className="py-2 font-medium text-2xl">Нэвтрэх</div>
       <div className="flex">
         <div className="flex flex-col gap-12">
@@ -115,6 +117,6 @@ export default function Index() {
         </div>
       </div>
       <Toaster />
-    </div>
+    </main>
   );
 }

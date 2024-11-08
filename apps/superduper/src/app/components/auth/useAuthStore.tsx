@@ -5,7 +5,7 @@ export type User = {
   _id: string;
   email: string;
   role: string;
-  firstName: string;
+  firstname: string;
 };
 type AuthState = {
   currentUser: User | null | undefined;

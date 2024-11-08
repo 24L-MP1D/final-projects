@@ -11,29 +11,29 @@ const TeacherWebThirdLayout: React.FC = () => {
 
   // Videos data for each section
   const freeVideos = [
-    { src: '/home-video.mp4', alt: 'Үнэгүй хичээл 1' },
-    { src: '/home-video.mp4', alt: 'Үнэгүй хичээл 2' },
-    { src: '/home-video.mp4', alt: 'Үнэгүй хичээл 3' },
-    { src: '/home-video.mp4', alt: 'Үнэгүй хичээл 4' },
-    { src: '/home-video.mp4', alt: 'Үнэгүй хичээл 5' },
-    { src: '/home-video.mp4', alt: 'Үнэгүй хичээл 6' },
-    { src: '/home-video.mp4', alt: 'Үнэгүй хичээл 7' },
-    { src: '/home-video.mp4', alt: 'Үнэгүй хичээл 8' },
-    { src: '/home-video.mp4', alt: 'Үнэгүй хичээл 9' },
-    { src: '/home-video.mp4', alt: 'Үнэгүй хичээл 10' },
+    { id: 1, src: '/home-video.mp4', alt: 'Үнэгүй хичээл 1' },
+    { id: 2, src: '/home-video.mp4', alt: 'Үнэгүй хичээл 2' },
+    { id: 3, src: '/home-video.mp4', alt: 'Үнэгүй хичээл 3' },
+    { id: 4, src: '/home-video.mp4', alt: 'Үнэгүй хичээл 4' },
+    { id: 5, src: '/home-video.mp4', alt: 'Үнэгүй хичээл 5' },
+    { id: 6, src: '/home-video.mp4', alt: 'Үнэгүй хичээл 6' },
+    { id: 7, src: '/home-video.mp4', alt: 'Үнэгүй хичээл 7' },
+    { id: 8, src: '/home-video.mp4', alt: 'Үнэгүй хичээл 8' },
+    { id: 9, src: '/home-video.mp4', alt: 'Үнэгүй хичээл 9' },
+    { id: 10, src: '/home-video.mp4', alt: 'Үнэгүй хичээл 10' },
   ];
 
   const newVideos = [
-    { src: '/home-video.mp4', alt: 'Шинэ хичээл 1' },
-    { src: '/home-video.mp4', alt: 'Шинэ хичээл 2' },
-    { src: '/home-video.mp4', alt: 'Шинэ хичээл 3' },
-    { src: '/home-video.mp4', alt: 'Шинэ хичээл 4' },
-    { src: '/home-video.mp4', alt: 'Шинэ хичээл 5' },
-    { src: '/home-video.mp4', alt: 'Шинэ хичээл 6' },
-    { src: '/home-video.mp4', alt: 'Шинэ хичээл 7' },
-    { src: '/home-video.mp4', alt: 'Шинэ хичээл 8' },
-    { src: '/home-video.mp4', alt: 'Шинэ хичээл 9' },
-    { src: '/home-video.mp4', alt: 'Шинэ хичээл 10' },
+    { id: 1, src: '/home-video.mp4', alt: 'Шинэ хичээл 1' },
+    { id: 2, src: '/home-video.mp4', alt: 'Шинэ хичээл 2' },
+    { id: 3, src: '/home-video.mp4', alt: 'Шинэ хичээл 3' },
+    { id: 4, src: '/home-video.mp4', alt: 'Шинэ хичээл 4' },
+    { id: 5, src: '/home-video.mp4', alt: 'Шинэ хичээл 5' },
+    { id: 6, src: '/home-video.mp4', alt: 'Шинэ хичээл 6' },
+    { id: 7, src: '/home-video.mp4', alt: 'Шинэ хичээл 7' },
+    { id: 8, src: '/home-video.mp4', alt: 'Шинэ хичээл 8' },
+    { id: 9, src: '/home-video.mp4', alt: 'Шинэ хичээл 9' },
+    { id: 10, src: '/home-video.mp4', alt: 'Шинэ хичээл 10' },
   ];
 
   // Titles for each video section (for free lessons)
@@ -102,20 +102,10 @@ const TeacherWebThirdLayout: React.FC = () => {
         {/* Free Lessons Section */}
         <div className="relative w-full flex justify-center flex-col gap-3">
           <div className="font-black flex gap-3">
-            <motion.h1
-              className="myclass text-4xl font-black text-white hero_h1-white"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
-            >
-              ШИНЭ 
+            <motion.h1 className="myclass text-4xl font-black text-white hero_h1-white" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+              ШИНЭ
             </motion.h1>
-            <motion.h1
-              className="text-4xl font-black text-green-600 hero_h1-green"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.3 }}
-            >
+            <motion.h1 className="text-4xl font-black text-green-600 hero_h1-green" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}>
               ХИЧЭЭЛҮҮД
             </motion.h1>
           </div>
@@ -127,14 +117,8 @@ const TeacherWebThirdLayout: React.FC = () => {
             const arrow = isLeft ? '←' : '→';
             const positionClass = isLeft ? 'left-[-30px]' : 'right-[-30px]';
             return (
-              <div
-                key={direction}
-                className={`absolute top-1/2 ${positionClass} transform -translate-y-1/2 z-10`}
-              >
-                <div
-                  onClick={handleClick}
-                  className="bg-green-500 bg-opacity-70 hover:bg-opacity-100 rounded-full w-16 h-16 flex items-center justify-center cursor-pointer"
-                >
+              <div key={direction} className={`absolute top-1/2 ${positionClass} transform -translate-y-1/2 z-10`}>
+                <div onClick={handleClick} className="bg-green-500 bg-opacity-70 hover:bg-opacity-100 rounded-full w-16 h-16 flex items-center justify-center cursor-pointer">
                   <div className="border rounded-full w-16 h-16 border-green-500 text-xl flex justify-center items-center">
                     <p className="pt-1 text-black">{arrow}</p>
                   </div>
@@ -142,7 +126,6 @@ const TeacherWebThirdLayout: React.FC = () => {
               </div>
             );
           })}
-
 
           {/* Free Lessons Video Slider */}
           <div className="relative w-full overflow-hidden">
@@ -153,19 +136,9 @@ const TeacherWebThirdLayout: React.FC = () => {
               }}
             >
               {freeVideos.map((video, index) => (
-                <div
-                  key={video.src}
-                  className="relative w-[25%] min-w-[25%] h-[65%] rounded-3xl overflow-hidden"
-                >
+                <div key={video.id} className="relative w-[25%] min-w-[25%] h-[65%] rounded-3xl overflow-hidden">
                   <div className="relative w-full h-full flex flex-col gap-3">
-                    <video
-                      id={`video-${index}`}
-                      className="rounded-3xl object-cover w-full h-full transition-opacity duration-500"
-                      autoPlay
-                      muted
-                      loop
-                      aria-label={video.alt}
-                    >
+                    <video id={`video-${index}`} className="rounded-3xl object-cover w-full h-full transition-opacity duration-500" autoPlay muted loop aria-label={video.alt}>
                       <source src={video.src} type="video/mp4" />
                     </video>
 
@@ -192,11 +165,7 @@ const TeacherWebThirdLayout: React.FC = () => {
                       onClick={() => handlePlayPause(index)}
                       className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-400 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center cursor-pointer"
                     >
-                      {isPlaying[index] ? (
-                        <Pause className="text-white w-8 h-8" />
-                      ) : (
-                        <PlayIcon className="text-white w-8 h-8" />
-                      )}
+                      {isPlaying[index] ? <Pause className="text-white w-8 h-8" /> : <PlayIcon className="text-white w-8 h-8" />}
                     </div>
                   </div>
                 </div>
@@ -208,20 +177,10 @@ const TeacherWebThirdLayout: React.FC = () => {
         {/* New Lessons Section */}
         <div className="relative w-full flex justify-center flex-col gap-3">
           <div className="font-black flex gap-3">
-            <motion.h1
-              className="myclass text-4xl font-black text-white hero_h1-white"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
-            >
-              ҮНЭГҮЙ 
+            <motion.h1 className="myclass text-4xl font-black text-white hero_h1-white" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+              ҮНЭГҮЙ
             </motion.h1>
-            <motion.h1
-              className="text-4xl font-black text-green-600 hero_h1-green"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.3 }}
-            >
+            <motion.h1 className="text-4xl font-black text-green-600 hero_h1-green" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}>
               ХИЧЭЭЛҮҮД
             </motion.h1>
           </div>
@@ -233,14 +192,8 @@ const TeacherWebThirdLayout: React.FC = () => {
             const arrow = isLeft ? '←' : '→';
             const positionClass = isLeft ? 'left-[-30px]' : 'right-[-30px]';
             return (
-              <div
-                key={direction}
-                className={`absolute top-1/2 ${positionClass} transform -translate-y-1/2 z-10`}
-              >
-                <div
-                  onClick={handleClick}
-                  className="bg-green-500 bg-opacity-70 hover:bg-opacity-100 rounded-full w-16 h-16 flex items-center justify-center cursor-pointer"
-                >
+              <div key={direction} className={`absolute top-1/2 ${positionClass} transform -translate-y-1/2 z-10`}>
+                <div onClick={handleClick} className="bg-green-500 bg-opacity-70 hover:bg-opacity-100 rounded-full w-16 h-16 flex items-center justify-center cursor-pointer">
                   <div className="border rounded-full w-16 h-16 border-green-500 text-xl flex justify-center items-center">
                     <p className="pt-1 text-black">{arrow}</p>
                   </div>
@@ -258,19 +211,9 @@ const TeacherWebThirdLayout: React.FC = () => {
               }}
             >
               {newVideos.map((video, index) => (
-                <div
-                  key={video.src}
-                  className="relative w-[25%] min-w-[25%] h-[65%] rounded-3xl overflow-hidden"
-                >
+                <div key={video.id} className="relative w-[25%] min-w-[25%] h-[65%] rounded-3xl overflow-hidden">
                   <div className="relative w-full h-full flex flex-col gap-3">
-                    <video
-                      id={`video-${index + 5}`}
-                      className="rounded-3xl object-cover w-full h-full transition-opacity duration-500"
-                      autoPlay
-                      muted
-                      loop
-                      aria-label={video.alt}
-                    >
+                    <video id={`video-${index + 5}`} className="rounded-3xl object-cover w-full h-full transition-opacity duration-500" autoPlay muted loop aria-label={video.alt}>
                       <source src={video.src} type="video/mp4" />
                     </video>
 
@@ -297,11 +240,7 @@ const TeacherWebThirdLayout: React.FC = () => {
                       onClick={() => handlePlayPause(index + 5)}
                       className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-400 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center cursor-pointer"
                     >
-                      {isPlaying[index + 5] ? (
-                        <Pause className="text-white w-8 h-8" />
-                      ) : (
-                        <PlayIcon className="text-white w-8 h-8" />
-                      )}
+                      {isPlaying[index + 5] ? <Pause className="text-white w-8 h-8" /> : <PlayIcon className="text-white w-8 h-8" />}
                     </div>
                   </div>
                 </div>

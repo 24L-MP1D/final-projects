@@ -10,8 +10,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     fetcher()
       .get('/api/user')
-      .then(({ data }) => {
-        setCurrentUser(data);
+      .then(({ data, status }) => {
+        if (status === 200) {
+          setCurrentUser(data);
+        } else {
+          setCurrentUser(null);
+        }
       })
       .catch(() => {
         setCurrentUser(null);

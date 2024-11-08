@@ -25,4 +25,5 @@ export type ProductType = {
   endDate: Date;
   status: string;
   createdAt: Date;
+  description: string;
 };

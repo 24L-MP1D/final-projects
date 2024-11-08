@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Page() {
   return (
     <main className="bg-gray-100 flex flex-col justify-between">
@@ -16,6 +18,7 @@ export default function Page() {
             <div>#Холбогдолтой хичээлүүд</div>
             <div className="pl-3">
               <div className="w-[180px] h-[120px] bg-slate-400 rounded-lg"></div>
+              <Link href={'https://dash.verse.mn/login'}>asd</Link>
               <div>Хичээлийн нэр</div>
             </div>
           </div>

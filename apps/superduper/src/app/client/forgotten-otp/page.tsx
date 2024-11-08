@@ -1,5 +1,6 @@
 'use client';
 
+import { Input } from '@/components/input';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
 import Image from 'next/image';
@@ -38,7 +39,7 @@ export default function Page() {
         <p className="text-[24px] font-bold mt-8">ОТП дугаараа оруулна уу</p>
         <p>ОТП дугаараа оруулаад ИЛГЭЭХ товчийг дарна уу.</p>
         <div>
-          <input placeholder="Insert OTP" className="border-2 bg-slate-50 rounded-3xl w-full p-3" onChange={(e) => setOtpCode(e.target.value)} />
+          <Input placeholder="Insert OTP" className="border-2 bg-slate-50 rounded-3xl w-full p-3" onChange={(e) => setOtpCode(e.target.value)} />
         </div>
         <Button onClick={Submit} className="bg-blue-500 mb-8" disabled={loading}>
           {loading && <Image src={'/image/spinner.svg'} alt="a" width={40} height={40} />}
