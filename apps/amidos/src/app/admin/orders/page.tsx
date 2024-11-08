@@ -5,7 +5,7 @@ import { TableHeader } from '@/components/ui/table';
 
 export default function Order() {
   return (
-    <div className="ml-6 my-6 ">
+    <div className="ml-6 my-6 felx ">
       <h1 className="text-2xl p-2">Хүргэлтийн захиалга</h1>
       <Table className="bg-white border-b-[1px] w-[1218px] rounded-none">
         <TableHeader>
