@@ -70,19 +70,19 @@ export const ImageForm: React.FC<ImageFormProps> = ({ initialData }) => {
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course thumbnail
+        Курсын зураг
         <Button variant="ghost" onClick={toggleEdit}>
-          {isEditing && <>Cancel</>}
+          {isEditing && <>Цуцлах</>}
           {!isEditing && !initialData.imageUrl && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add an image
+              Зураг нэмэх
             </>
           )}
           {!isEditing && initialData.imageUrl && (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit thumbnail
+              Зураг засах
             </>
           )}
         </Button>
@@ -94,17 +94,17 @@ export const ImageForm: React.FC<ImageFormProps> = ({ initialData }) => {
           </div>
         ) : (
           <div className="relative aspect-video mt-2">
-            <Image src={initialData.imageUrl} alt="thumbnail" fill className="object-cover rounded-md" />
+            <Image src={initialData.imageUrl} alt="зураг" fill className="object-cover rounded-md" />
           </div>
         ))}
       {isEditing && (
         <div>
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Input id="picture" disabled={loading} type="file" onChange={handleUpload} />
-            <div className="text-sm italic"> 16:9 aspect ratio is recommended</div>
+            <div className="text-sm italic">16:9 харьцаа зөвлөмж болгож байна</div>
           </div>
           <Button type="submit" disabled={loading} onClick={() => onSubmit({ imageUrl: imageUrl })}>
-            {loading ? 'Saving...' : 'Save'}
+            {loading ? 'Хадгалж байна...' : 'Хадгалах'}
           </Button>
         </div>
       )}

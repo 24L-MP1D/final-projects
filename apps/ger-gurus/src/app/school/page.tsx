@@ -1,11 +1,13 @@
 'use client';
 
-import TeacherWebSecondLayout from '@/components/teacherWebSecondLayout';
+import { useAuthStore } from '@/components/components/useAuthStore';
 import TeacherWebThirdLayout from '@/components/teacherWebThirdLayout';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { CircleUser } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useState } from 'react';
 
 const globalStyles = `
   @keyframes floatBubbles {
@@ -36,37 +38,22 @@ const globalStyles = `
   }
 `;
 
-interface SchoolData {
-  _id: string;
-  domain: string;
-}
-
 export default function Page() {
-  const [schoolData, setSchoolData] = useState<SchoolData>();
-  console.log({ schoolData });
-  console.log(schoolData?.domain);
-
-  const getSchool = async () => {
-    const response = await fetch('/api/schools');
-    const data = await response.json();
-    setSchoolData(data);
-  };
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const currentUser = useAuthStore((state) => state.currentUser);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      const authtoken = urlParams.get('authtoken');
-      if (authtoken) {
-        localStorage.setItem('authtoken', authtoken);
-        window.history.replaceState({}, document.title, '/');
-      }
-    }
-  }, []);
+  function deleteCookie() {
+    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax';
+    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax';
+    window.location.reload();
+  }
 
   const bubbleStyle = (duration: number = 5, delay: number = 0): React.CSSProperties => ({
     position: 'absolute',
@@ -84,12 +71,12 @@ export default function Page() {
       <div className="flex justify-between items-center py-5 px-10" style={{ fontFamily: 'Roboto, sans-serif' }}>
         {/* Logo */}
         <div className="flex items-center w-60 h-12">
-          <Image src="/verse.png" width={99} height={29.3} alt="Logo" />
+          <Image priority={true} src="/verse.png" width={99} height={29.3} alt="Logo" />
         </div>
 
         {/* Mobile Hamburger Icon */}
         <div className="md:hidden flex items-center">
-          <button onClick={toggleMenu} className="text-green-950">
+          <button onClick={toggleMenu} className="text-green-950" aria-expanded={isMenuOpen ? 'true' : 'false'} aria-label="Toggle navigation menu">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 12h18M3 6h18M3 18h18"></path>
             </svg>
@@ -97,29 +84,45 @@ export default function Page() {
         </div>
 
         {/* Navigation Menu */}
-        <ul className={`md:flex gap-6 text-sm text-green-950 items-center font-bold ${isMenuOpen ? 'flex' : 'hidden'} md:flex`}>
-          <li className="hover:text-green-600 cursor-pointer transition-all duration-200">HOW IT WORKS</li>
-          <li className="hover:text-green-600 cursor-pointer transition-all duration-200">PRICING</li>
-          <li className="hover:text-green-600 cursor-pointer transition-all duration-200">FAQS</li>
-          <li className="hover:text-green-600 cursor-pointer transition-all duration-200">BLOG</li>
+        <ul className={`md:flex gap-6 text-base text-green-950 items-center font-bold ${isMenuOpen ? 'flex' : 'hidden'} md:flex`}>
+          <li className="hover:text-green-600 cursor-pointer transition-all duration-200">ХИЧЭЭЛ</li>
+          <li className="hover:text-green-600 cursor-pointer transition-all duration-200">БАГШИЙН ТАНИЛЦУУЛГА</li>
         </ul>
 
         {/* Buttons */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 relative">
           {/* Button with cursor-pointer and hover effect */}
-          <Button variant="teacherButton" className="cursor-pointer bg-white text-black border border-black hover:border-slate-500 hover:text-slate-500 transition duration-200">
-            LOG IN
-          </Button>
+          {currentUser ? (
+            <div className="flex items-center">
+              <CircleUser size={30} onClick={toggleDropdown} className="cursor-pointer" />
+              {isDropdownOpen && (
+                <div className="absolute top-full mt-2 right-0 w-48 bg-white border border-gray-300 rounded shadow-lg">
+                  <ul className="flex flex-col">
+                    <li onClick={deleteCookie} className="p-2 hover:bg-gray-100 cursor-pointer">
+                      Logout
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link href={'https://dash.verse.mn/login'}>
+              <Button variant="teacherButton" className="cursor-pointer bg-white text-black border border-black hover:border-slate-500 hover:text-slate-500 transition duration-200">
+                НЭВТРЭХ
+              </Button>
+            </Link>
+          )}
           <Button variant="teacherButton" className="cursor-pointer bg-green-600 hover:bg-green-700 transition duration-200">
-            GET FUNDING
+            ЗАХИАЛАХ
           </Button>
         </div>
       </div>
+
       <div className="relative">
         <style>{globalStyles}</style>
 
         {/* Floating Bubbles */}
-        <div className="absolute top-0 left-0 w-full h-[500px] mt-[-145px] overflow-hidden">
+        <div className="absolute top-24 left-0 w-full h-[500px] mt-[-145px] overflow-hidden">
           <div style={{ ...bubbleStyle(3, 0), width: '120px', height: '120px', top: '10%', left: '15%' }}></div>
           <div style={{ ...bubbleStyle(4, 1), width: '100px', height: '100px', top: '25%', left: '60%' }}></div>
           <div style={{ ...bubbleStyle(5, 2), width: '90px', height: '90px', top: '80%', left: '30%' }}></div>
@@ -135,37 +138,35 @@ export default function Page() {
         {/* Main Content */}
         <div className="flex flex-col items-center mx-auto mt-20" style={{ fontFamily: 'Roboto, sans-serif' }}>
           <div className="text-9xl font-black text-green-600">
-            <motion.h1 className="myclass text-9xl font-black text-white hero_h1-white ml-14" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-              FINANCING
+            <motion.h1 className="myclass text-9xl font-black text-white hero_h1-white text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+              ИРЭЭДҮЙДЭЭ
             </motion.h1>
 
-            <motion.h1 className="text-9xl font-black text-green-600 hero_h1-green" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}>
-              THE FUTURE
+            <motion.h1 className="text-9xl font-black text-green-600 hero_h1-green text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}>
+              ХӨРӨНГӨ ОРУУЛ
             </motion.h1>
           </div>
 
-          <div className="w-[471px] h-16 mx-auto text-center text-green-950 mt-8">
+          <div className="w-[671px] h-16 mx-auto text-center text-green-950 mt-6">
             <motion.p
               className="text-base mt-6"
               initial={{ opacity: 0, scale: 0.8, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 4, ease: 'easeInOut', delay: 0.6, type: 'spring', stiffness: 250, damping: 20 }}
             >
-              Pay suppliers faster, manage invoices, and extend cash for longer. Get access to funding without giving up equity, so that you can focus on growing your company.
+              Манай вебсайт нь боловсролын салбарт шилдэг туршлагуудыг танилцуулж, суралцагчдад чанартай мэдлэгийг хялбархан, хүртээмжтэйгээр хүргэх зорилготой. Бид сургалтын хөтөлбөрүүд, онлайн
+              сургалтууд болон боловсролын нөөцүүдийг олон нийтэд хүргэж, сурах процессыг илүү сонирхолтой, үр дүнтэй болгохын тулд инноваци, боловсруулалтыг эрэлхийлж байна.
             </motion.p>
 
             <div className="mt-6">
               <Button variant="teacherButton" className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-all duration-300 ease-in-out cursor-pointer mb-40">
-                GET FUNDING
+                ЗАХИАЛАХ
               </Button>
             </div>
           </div>
         </div>
-
-        {/* Horizontal Rule */}
-        <div className="mt-40 border-green-950" />
+        <div className="mt-40 border-green-300 border" />
       </div>
-      <TeacherWebSecondLayout />
       <TeacherWebThirdLayout />
     </main>
   );

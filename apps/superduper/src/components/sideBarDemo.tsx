@@ -20,32 +20,32 @@ export function SidebarDemo() {
   const value = useContext(Context);
   const links = [
     {
-      label: 'Dashboard',
-      href: '/admin/addCategory',
+      label: 'Хяналтын самбар',
+      href: '/admin',
       icon: <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
     },
     {
-      label: 'Leaderboard',
-      href: '/admin/leaderboard',
+      label: 'Ангилал нэмэх',
+      href: '/admin/addCategory',
       icon: <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
     },
     {
-      label: 'Products',
+      label: 'Бүтээгдэхүүн нэмэх хүсэлт',
       href: '/admin/products',
       icon: <IconBrandProducthunt className={`text-neutral-700  dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700`} />,
     },
     {
-      label: 'Bids',
+      label: 'Үнийг санал',
       href: '/admin/bids',
       icon: <IconMoodBitcoin className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
     },
     {
-      label: 'Payment',
+      label: 'Төлбөрийн мэдээлэл',
       href: '/admin/payments',
       icon: <IconBrandPaypalFilled className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
     },
     {
-      label: 'Settings',
+      label: 'Тохиргоо',
       href: '/admin/settings',
       icon: <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0 hover:text-blue-700" />,
     },

@@ -6,7 +6,10 @@ export default function Header() {
   return (
     <div>
       <div className="bg-[#d4d4d4] flex justify-between p-3 px-8">
-        <Link href={'./dashboard?select=Хяналтын самбар'} className="">
+        {/* <Link href={'./dashboard?select=Хяналтын самбар'} className="">
+          <div>ACERS Dashboard | Admin</div>
+        </Link> */}
+        <Link href="/admin/dashboard" className="">
           <div>ACERS Dashboard | Admin</div>
         </Link>
         <div>

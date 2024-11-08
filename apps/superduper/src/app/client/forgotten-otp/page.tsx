@@ -1,5 +1,6 @@
 'use client';
 
+import { Input } from '@/components/input';
 import { Button } from '@/components/ui/button';
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/components/ui/Input OTP';
 import axios from 'axios';
@@ -40,6 +41,7 @@ export default function Page() {
       <div className=" container mx-auto w-[500px] border-2 rounded-lg mt-[50px] flex flex-col gap-6">
         <p className="text-[24px] font-bold mt-8 text-center">ОТП дугаараа оруулна уу</p>
         <p>ОТП дугаараа оруулаад ИЛГЭЭХ товчийг дарна уу.</p>
+
         <div className="flex justify-center">
           <InputOTP onChange={setOtpCode} maxLength={6}>
             <InputOTPGroup>
@@ -54,6 +56,7 @@ export default function Page() {
               <InputOTPSlot index={5} />
             </InputOTPGroup>
           </InputOTP>
+
         </div>
         <Button onClick={Submit} className="bg-blue-500 mb-8" disabled={loading}>
           {loading && <Image src={'/image/spinner.svg'} alt="a" width={40} height={40} />}

@@ -1,5 +1,6 @@
 'use client';
 
+import { ProductType } from '@/components/productType';
 import { Button } from '@/components/ui/button';
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
@@ -7,32 +8,35 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { Swiper as SwiperType } from 'swiper';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Product, ProductItem } from '../components/productItem';
+import { ProductItem } from '../components/productItem';
 import { RealtimeNotif } from './layout';
 
 export default function Index() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductType[]>([]);
   const [isClick, setClick] = useState(false);
-  const value = useContext(RealtimeNotif)
+  const value = useContext(RealtimeNotif);
   const [progress, setProgress] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
-
 
   interface product {
     image: string;
   }
 
-  const fetchProducts = async () => {
+  const loadProducts = async () => {
     try {
-      const res = await fetch('/api/products');
-      if (!res.ok) throw new Error('Network response was not ok');
-      const data = await res.json();
-      console.log(data);
+      const response = await fetch('/api/products', {
+        method: 'PUT',
+        body: JSON.stringify({
+          searchValue: value?.searchValue,
+        }),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
+      const data = await response.json();
       setProducts(data);
-
-      // Extract image URLs from the products
-    } catch (error) {
-      console.error('Error fetching products:', error);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -50,23 +54,21 @@ export default function Index() {
 
   // Favourite codes
 
-
   useEffect(() => {
     const storage = localStorage.getItem('favourites');
     if (storage) value?.setFavourite(JSON.parse(storage));
-    fetchProducts();
-  }, []);
+    loadProducts();
+  }, [value?.searchValue]);
 
   const handleFavourite = (productId: string) => {
-
     let result: string[] = [];
     if (value?.favourite) result = [...value?.favourite];
     if (result.find((id) => id === productId)) {
       result = result.filter((id) => id !== productId);
-      setClick(false)
+      setClick(false);
     } else {
       result.push(productId);
-      setClick(true)
+      setClick(true);
     }
 
     localStorage.setItem('favourites', JSON.stringify(result));

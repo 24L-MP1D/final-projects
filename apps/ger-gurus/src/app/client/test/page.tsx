@@ -135,7 +135,7 @@ export default function Index() {
     setUpdateEmail('');
   }
   return (
-    <div>
+    <main>
       <div className="flex flex-col gap-3 ml-10 mt-10">
         test
         {data.map((data) => (
@@ -196,6 +196,6 @@ export default function Index() {
         )}
       </div>
       \{' '}
-    </div>
+    </main>
   );
 }
