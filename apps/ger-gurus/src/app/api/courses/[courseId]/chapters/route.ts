@@ -14,7 +14,7 @@ export async function POST(request: Request, { params }: { params: Params }) {
   try {
         const {courseId}=await params
         // const {userId}=auth()
-        const {title}= await request.json();
+        const {title, videoUrl}= await request.json();
         // if (!userId){
         //   return new NextResponse("Unauthorized", {status:401})
         // }
@@ -29,7 +29,7 @@ export async function POST(request: Request, { params }: { params: Params }) {
         .toArray();
     
         const newPosition= lastChapter[0] ? lastChapter[0].position+1 : 0
-        const chapter = await db.collection('chapters').insertOne({title, courseId: new ObjectId(courseId), position : newPosition});
+        const chapter = await db.collection('chapters').insertOne({title, videoUrl, courseId: new ObjectId(courseId), position : newPosition});
         return NextResponse.json(chapter , {status:200})
     
   } catch (error) {

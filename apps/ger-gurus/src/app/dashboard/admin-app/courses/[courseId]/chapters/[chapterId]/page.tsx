@@ -1,12 +1,13 @@
 import { IconBadge } from '@/components/icon-badge';
 import { db } from '@/lib/db';
-import { ArrowLeft, CircleDollarSign, Eye, LayoutDashboard } from 'lucide-react';
+import { ArrowLeft, Eye, LayoutDashboard, Video } from 'lucide-react';
 import { ObjectId } from 'mongodb';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { ChapterAccessForm } from './_components/chapter-access-form';
 import { ChapterDescriptionForm } from './_components/chapter-description-form';
 import { ChapterTitleForm } from './_components/chapter-title-form';
+import { ChapterVideoForm } from './_components/chapter-video-form';
 
 type Params = Promise<{ courseId: string; chapterId: string }>;
 
@@ -33,6 +34,7 @@ export default async function Page({ params }: { params: Params }) {
     isPublished?: boolean;
     isFree?: boolean;
     position: number;
+    muxData?: any;
   }
 
   const chapterWithPlainId = {
@@ -77,10 +79,10 @@ export default async function Page({ params }: { params: Params }) {
         </div>
         <div>
           <div className="flex items-center gap-x-2">
-            <IconBadge icon={CircleDollarSign} />
-            <h2 className="text-xl">Sell your course</h2>
+            <IconBadge icon={Video} />
+            <h2 className="text-xl">Add a video</h2>
           </div>
-          {/* <PriceForm initialData={courseWithPlainId} /> */}
+          <ChapterVideoForm initialData={chapterWithPlainId} />
         </div>
       </div>
     </div>

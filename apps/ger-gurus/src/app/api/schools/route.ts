@@ -31,7 +31,6 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const body = await request.json();
   const userId = request.headers.get('userId');
-  console.log(userId)
   if (!userId) {
     return new Response('Unauthorized', { status: 401 });
   }

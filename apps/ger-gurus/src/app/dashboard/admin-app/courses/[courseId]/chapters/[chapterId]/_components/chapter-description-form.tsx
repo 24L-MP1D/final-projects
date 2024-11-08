@@ -1,4 +1,5 @@
 'use client';
+import { Editor } from '@/components/editor';
 import { Preview } from '@/components/preview';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
@@ -74,7 +75,9 @@ export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ 
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormControl>{/* <Editor {...field} /> */}</FormControl>
+                  <FormControl>
+                    <Editor {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
