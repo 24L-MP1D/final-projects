@@ -9,7 +9,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     fetcher()
-      .get('/api/users/me')
+      .get('/api/user')
       .then(({ data }) => {
         setCurrentUser(data);
       })

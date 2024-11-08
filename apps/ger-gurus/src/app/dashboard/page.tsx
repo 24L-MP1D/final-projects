@@ -37,16 +37,16 @@ export default function Page() {
   }
   async function createSchool(domain: string) {
     try {
-      await fetcher().post(`/api/schools`, { domain: `${domain}.verse.mn`}); // Send domain in the request
+      await fetcher().post(`/api/schools`, { domain: `${domain}.verse.mn` }); // Send domain in the request
       toast.success('Your space has been created!'); // Optionally handle success
-      router.push(`/`);
+      router.push(`/schools`);
     } catch (error) {
       toast.error('Something went wrong');
     }
   }
 
   return (
-    <div className="flex justify-center h-screen items-center p-6">
+    <main className="flex justify-center h-screen items-center p-6">
       <div>
         <h1 className="text-2xl font-bold mb-4 text-center text-sky-600">Welcome to Your Content Creating Adventure!</h1>
         <p className="mb-6 text-center text-gray-700">We're excited to have you here! Start by creating your unique space where you can share your skills and knowledge with the world.</p>
@@ -96,6 +96,6 @@ export default function Page() {
           </Button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
