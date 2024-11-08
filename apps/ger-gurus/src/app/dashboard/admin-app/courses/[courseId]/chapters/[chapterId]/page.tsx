@@ -82,7 +82,7 @@ export default async function Page({ params }: { params: Params }) {
             <IconBadge icon={Video} />
             <h2 className="text-xl">Add a video</h2>
           </div>
-          <ChapterVideoForm initialData={chapterWithPlainId} />
+          <ChapterVideoForm initialData={chapterWithPlainId} courseId={params.courseId} chapterId={params.chapterId} />
         </div>
       </div>
     </div>

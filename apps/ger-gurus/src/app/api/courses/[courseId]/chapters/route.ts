@@ -2,19 +2,18 @@ import { db } from "@/lib/db";
 import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 
-type Params = Promise<{ courseId: string }>
-
-export async function GET(request: Request, { params }: { params: Params }) {
-  const {courseId}=await params
+export async function GET(request: Request, { params }: { params: {courseId: string}}) {
+  const {courseId}=params
   const chapters = await db.collection('chapters').find({courseId: new ObjectId(courseId)}).sort({ position: 1 }).limit(20).toArray();
   return NextResponse.json(chapters);
 }
 
-export async function POST(request: Request, { params }: { params: Params }) {
+export async function POST(request: Request, { params }: { params: {courseId: string}}) {
   try {
-        const {courseId}=await params
+        const {courseId}=params
         // const {userId}=auth()
-        const {title, videoUrl}= await request.json();
+        const {title}= await request.json();
+        
         // if (!userId){
         //   return new NextResponse("Unauthorized", {status:401})
         // }
@@ -29,7 +28,7 @@ export async function POST(request: Request, { params }: { params: Params }) {
         .toArray();
     
         const newPosition= lastChapter[0] ? lastChapter[0].position+1 : 0
-        const chapter = await db.collection('chapters').insertOne({title, videoUrl, courseId: new ObjectId(courseId), position : newPosition});
+        const chapter = await db.collection('chapters').insertOne({title, courseId: new ObjectId(courseId), position : newPosition});
         return NextResponse.json(chapter , {status:200})
     
   } catch (error) {

@@ -1,7 +1,7 @@
 'use client';
 import { FileUpload } from '@/components/file-upload';
 import { Button } from '@/components/ui/button';
-import axios from 'axios';
+import { fetcher } from '@/lib/fetcher';
 import { Pencil, PlusCircle, Video } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -18,19 +18,17 @@ interface ChapterVideoFormProps {
     videoUrl: string;
     muxData?: any;
   };
-  params: {
-    courseId: string;
-    chapterId: string;
-  };
+  courseId: string;
+  chapterId: string;
 }
-export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData, params }) => {
+export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData, courseId, chapterId }) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => setIsEditing((x) => !x);
   const router = useRouter();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await axios.post(`/api/courses/${params.courseId}/chapters/${params.chapterId}`, values);
+      await fetcher().patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
       toast.success('Chapter updated');
       toggleEdit();
       router.refresh();
