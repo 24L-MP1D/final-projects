@@ -114,7 +114,7 @@ export default function Header() {
         <div className="flex items-center gap-4 w-full">
           <div className="w-[55px] h-[55px] bg-[#03f] text-white flex items-center justify-center font-extrabold text-[24px]">СД</div>
           <button className="text-[#03f]" onClick={reload}>
-            <p className="font-extrabold">СуперДупер</p>
+            <p className="font-extrabold text-left">СуперДупер</p>
             <div className="bg-slate-200 h-0.5 w-full"></div>
             <p className="font-extrabold">Дуудлага худалдаа</p>
           </button>
@@ -127,7 +127,7 @@ export default function Header() {
             <input placeholder="Хайх.." className="px-2 w-full p-3 bg-[#f0f1f5]" />
           </div>
         </div>
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-10 ml-6">
           <button onClick={sell} className="bg-white hover:border-b-[1px] hover:border-black">
             Зарах
           </button>

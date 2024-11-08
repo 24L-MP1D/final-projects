@@ -68,18 +68,18 @@ export default function Index() {
 
   return (
     <div className="max-w-[1280px] mx-auto w-full">
-      <div className="grid grid-cols-2">
-        <div className="gap-10 grid py-10">
+      <div className="grid grid-cols-2 mt-5">
+        <div className="gap-10 grid ">
           <div className="flex gap-20">
             <div className="grid gap-5">
-              <div className="text-[#565B60] text-sm">2024 оны 10-р сарын 11-20</div>
+              <div className="text-[#565B60] text-sm">{products?.[progress]?.startDate}-{products?.[progress]?.endDate}</div>
               <div className="text-[#0033FF] text-5xl font-semibold">{products?.[progress]?.productName}</div>
-              <div className="text-[#565B60] text-sm">{products?.[progress]?.productName}</div>
-              <div className="text-[#0033FF] text-sm">Яг одоо судлаарай</div>
+              <div className="text-[#565B60] text-sm">{products?.[progress]?.additionalInformation}</div>
+              <div className="text-[#0033FF] text-sm">{products?.[progress]?.category}</div>
             </div>
           </div>
           {/* Progress Bar */}
-          <div className="flex w-full mt-[100px] h-[40px] gap-2 items-center">
+          <div className="flex w-full mt-[120px] h-[40px] gap-2 items-center">
             {Array.from({ length: products.length })
               .slice(0, 6)
               .map((_, index) => (
@@ -96,6 +96,7 @@ export default function Index() {
 
         <div className="w-full">
           <Swiper
+            className='rounded-xl'
             direction={'vertical'}
             slidesPerView={1}
             spaceBetween={30}
@@ -115,13 +116,13 @@ export default function Index() {
           >
             {products.slice(0, 6).map((product, index) => (
               <SwiperSlide key={index}>
-                <Image loading="lazy" alt={`Slide ${index + 1}`} src={product.frontImage} width={1200} height={600} className="w-full h-full object-cover hover:cursor-pointer" />
+                <Image loading="lazy" alt={`Slide ${index + 1}`} src={product.frontImage} width={1200} height={600} className="w-full h-full object-cover hover:cursor-pointer rounded-xl" />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-10 w-full">
+      <div className="grid grid-cols-3 gap-10 mt-[30px] w-full">
         {products.slice(0, 20).map((product) => (
           <ProductItem isClick={isClick} product={product} favourite={value?.favourite || []} key={product._id} onClickFavourite={() => handleFavourite(product._id)} />
         ))}

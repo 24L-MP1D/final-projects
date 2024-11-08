@@ -48,9 +48,6 @@ export function ProductItem({ product, favourite, onClickFavourite }: { product:
             <LikeButton isLiked={isClick} handleLike={() => ''} />
           </div>
         </CardItem>
-        <CardItem as="p" translateZ="60" className="text-neutral-500 text-sm mt-2 dark:text-neutral-300">
-          {product.description}
-        </CardItem>
         <CardItem translateZ="100" className="w-full mt-4">
           <Image loading="lazy" alt={product.frontImage} src={product.frontImage} width={100} height={100} className="!w-full !h-[200px] !object-cover rounded-md" />
         </CardItem>
@@ -58,13 +55,12 @@ export function ProductItem({ product, favourite, onClickFavourite }: { product:
           {product.category}
         </CardItem>
         <CardItem translateZ="50" className="text-lg font-bold text-neutral-600 dark:text-white">
-          {product.startBid}$
+          {product.startBid}₮
         </CardItem>
         <div className="flex justify-between items-center">
-          <CardItem translateZ={20} href="https://twitter.com/mannupaaji" target="__blank" className="py-2 rounded-xl text-sm font-normal dark:text-white">
-            Bid now →
+          <CardItem translateZ={20} href="https://twitter.com/mannupaaji" target="__blank" className="text-sm bg-slate-200 text-blue-700 h-[25px] rounded-xl  mt-3 text-nowrap px-5 font-semibold">
+            Дуудлага худалдаанд оролцох
           </CardItem>
-          <button className="text-sm bg-slate-200 text-blue-700 w-[70px] h-[30px] rounded-xl">Дуудах</button>
         </div>
       </CardBody>
     </CardContainer>
