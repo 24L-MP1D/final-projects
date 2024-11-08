@@ -7,7 +7,6 @@ import { Github, X } from 'lucide-react';
 import { oauth_github_client, oauth_google_client } from 'config';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { Toaster, toast } from 'sonner';
@@ -15,9 +14,12 @@ import * as yup from 'yup';
 import { Dialog, DialogContent, DialogFooter, DialogTitle } from './ui/Dialog';
 import { Input } from './ui/Input';
 import { Button } from './ui/button';
+interface FormikValues {
+  email: string;
+  password: string;
+}
 
 export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(true);
   const initialValues = {
@@ -53,13 +55,14 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
           console.log('success');
 
           toast('Signed Up Successfully');
-
           setLoading(false);
+          window.location.href = '/client';
         } else {
           console.log('error');
+          toast('unsuccessful');
+          setDialogOpen(false);
         }
         setDialogOpen(false);
-        router.push('/client');
       } catch (err) {
         console.log('error in sign in');
       }
@@ -91,6 +94,31 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
     const url = new URL(oauth_github_client.endpoint);
     url.search = new URLSearchParams(query).toString();
     window.location.href = url.toString();
+  }
+
+  async function Submit(values: FormikValues) {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/signin', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+      if (response.status === 201) {
+        console.log('success');
+        setLoading(false);
+
+        toast('Signed Up Successfully');
+        window.location.href = '/client';
+      } else {
+        console.log('error');
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log('error in sign in');
+    }
   }
 
   return (
@@ -144,17 +172,17 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
               <Checkbox />
               <p>Намайг санах</p>
             </div>
+
             <Link className="text-blue-500" href="/">
               Нууц үгээ мартсан уу?
             </Link>
           </div>
 
           <DialogFooter>
-            <Button type="submit" className="bg-blue-700 flex w-full disabled:cursor-not-allowed" disabled={loading}>
+            <Button className="bg-blue-700 flex w-full disabled:cursor-not-allowed" type="submit" disabled={loading}>
               {loading && <Image src={'/images/spinner.svg'} alt="a" width={40} height={40} />}
               <div>Нэвтрэх</div>
             </Button>
-            <Toaster />
           </DialogFooter>
         </form>
       </DialogContent>
