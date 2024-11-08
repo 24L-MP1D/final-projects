@@ -31,8 +31,8 @@ export function Login() {
       .then(({ data, status, statusText }) => {
         if (status === 200) {
           toast.success('Амжилттай нэвтэрлээ.', { className: 'custom-toast success' });
-          localStorage.setItem('authtoken', data.token);
-          localStorage.setItem('userId', data.userId);
+          document.cookie = `authtoken=${data.token}; path=/; domain=.verse.mn; Secure; SameSite=Lax`;
+          document.cookie = `userId=${data.userId}; path=/; domain=.verse.mn; Secure; SameSite=Lax`;
           setTimeout(() => {
             window.location.href = '/';
           }, 1000);
