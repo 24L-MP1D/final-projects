@@ -1,10 +1,13 @@
 'use client';
 
+import { useAuthStore } from '@/components/components/useAuthStore';
 import TeacherWebThirdLayout from '@/components/teacherWebThirdLayout';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { CircleUser } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useState } from 'react';
 
 const globalStyles = `
   @keyframes floatBubbles {
@@ -37,21 +40,19 @@ const globalStyles = `
 
 export default function Page() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const currentUser = useAuthStore((state) => state.currentUser);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      const authtoken = urlParams.get('authtoken');
-      if (authtoken) {
-        localStorage.setItem('authtoken', authtoken);
-        window.history.replaceState({}, document.title, '/');
-      }
-    }
-  }, []);
+  function deleteCookie() {
+    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    window.location.reload();
+  }
 
   const bubbleStyle = (duration: number = 5, delay: number = 0): React.CSSProperties => ({
     position: 'absolute',
@@ -88,11 +89,28 @@ export default function Page() {
         </ul>
 
         {/* Buttons */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 relative">
           {/* Button with cursor-pointer and hover effect */}
-          <Button variant="teacherButton" className="cursor-pointer bg-white text-black border border-black hover:border-slate-500 hover:text-slate-500 transition duration-200">
-            НЭВТРЭХ
-          </Button>
+          {currentUser ? (
+            <div className="flex items-center">
+              <CircleUser size={30} onClick={toggleDropdown} className="cursor-pointer" />
+              {isDropdownOpen && (
+                <div className="absolute top-full mt-2 right-0 w-48 bg-white border border-gray-300 rounded shadow-lg">
+                  <ul className="flex flex-col">
+                    <li onClick={deleteCookie} className="p-2 hover:bg-gray-100 cursor-pointer">
+                      Logout
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link href={'https://dash.verse.mn/login'}>
+              <Button variant="teacherButton" className="cursor-pointer bg-white text-black border border-black hover:border-slate-500 hover:text-slate-500 transition duration-200">
+                НЭВТРЭХ
+              </Button>
+            </Link>
+          )}
           <Button variant="teacherButton" className="cursor-pointer bg-green-600 hover:bg-green-700 transition duration-200">
             ЗАХИАЛАХ
           </Button>
@@ -103,7 +121,7 @@ export default function Page() {
         <style>{globalStyles}</style>
 
         {/* Floating Bubbles */}
-        <div className="absolute top-0 left-0 w-full h-[500px] mt-[-145px] overflow-hidden">
+        <div className="absolute top-24 left-0 w-full h-[500px] mt-[-145px] overflow-hidden">
           <div style={{ ...bubbleStyle(3, 0), width: '120px', height: '120px', top: '10%', left: '15%' }}></div>
           <div style={{ ...bubbleStyle(4, 1), width: '100px', height: '100px', top: '25%', left: '60%' }}></div>
           <div style={{ ...bubbleStyle(5, 2), width: '90px', height: '90px', top: '80%', left: '30%' }}></div>

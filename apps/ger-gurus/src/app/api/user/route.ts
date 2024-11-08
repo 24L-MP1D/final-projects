@@ -27,10 +27,10 @@ export async function GET(request: Request) {
     if (!currentUser) {
       return new Response('User not found', { status: 401 });
     }
-    return Response.json(currentUser);
+    return Response.json(currentUser, { status: 200 });
   } catch (error) {
     console.error('Error fetching users:', error);
-    return new Response("Invalid token");
+    return new Response("Invalid token", { status: 500 });
   }
 }
 
