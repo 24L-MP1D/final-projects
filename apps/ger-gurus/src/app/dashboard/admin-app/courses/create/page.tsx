@@ -38,7 +38,7 @@ export default function Page() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto ">
+    <main className="max-w-5xl mx-auto ">
       <div>
         <h1 className="text-2xl">Та хичээлдээ нэр өгнө үү</h1>
         <p>Хичээлийн нэрийг дараа сольж болно</p>
@@ -72,6 +72,6 @@ export default function Page() {
           </form>
         </Form>
       </div>
-    </div>
+    </main>
   );
 }

@@ -83,14 +83,14 @@ export default function Page() {
           <div className="border-b-[1px] items-center py-3 flex justify-between">
             <div className="text-2xl ">Ангилал</div>
             <Link className="text-2xl py-2 px-4 bg-slate-100 active:bg-red-200 border-[1px] hover:bg-red-500 rounded-lg" href={'/client/addProducts'}>
-            засварлах
+              засварлах
             </Link>
           </div>
           <div className="text-center my-10 text-xl">Ангилал: {getFromLocal?.category}</div>
           <div className="border-b-[1px] mb-8 items-center py-3 flex justify-between">
             <div className="text-2xl">Дэлгэрэнгүй</div>
             <Link className="text-2xl py-2 px-4 bg-slate-100 active:bg-red-200 border-[1px] hover:bg-red-500 rounded-lg" href={'/client/addProducts/2'}>
-            засварлах
+              засварлах
             </Link>
           </div>
           <div className="flex flex-col gap-2 text-xl items-center justify-center">

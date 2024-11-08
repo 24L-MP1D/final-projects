@@ -135,7 +135,7 @@ export default async function Page({ params }: { params: Params }) {
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `(${completedFields}/${totalFields})`;
   return (
-    <div className="p-6">
+    <main className="p-6">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-2">
           <h1 className="text-2xl font-medium">Course setup</h1>
@@ -178,6 +178,6 @@ export default async function Page({ params }: { params: Params }) {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
