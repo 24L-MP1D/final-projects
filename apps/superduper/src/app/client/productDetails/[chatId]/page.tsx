@@ -1,5 +1,6 @@
 'use client';
 
+import { useAuthStore } from '@/app/components/auth/useAuthStore';
 import { Bid } from '@/components/Bid';
 import { BidDialog } from '@/components/bidDialog';
 import { BidType } from '@/components/bidType';
@@ -28,8 +29,9 @@ export default function App({ params }: { params: { chatId: string } }) {
 }
 
 function Realtime({ chatId }: { chatId: string }) {
-  const id = '67263c85ae49a33f210e9e89';
-
+  const currentUser = useAuthStore((state) => state.currentUser);
+  console.log(currentUser);
+  const [isBid, setIsBid] = useState(false);
   const [bids, setBids] = useState<BidType[]>([]);
 
   const [dialogsBid, setDialogsBid] = useState(0);
@@ -48,7 +50,7 @@ function Realtime({ chatId }: { chatId: string }) {
     bid: yup
       .number()
       .required('Please insert a valid bid amount')
-      .min(maximumBid + 50, `minumum bid is ${maximumBid + 50}`),
+      .min(maximumBid + 500, `minumum bid is ${maximumBid + 500} ₮`),
   });
 
   const formik = useFormik({
@@ -66,7 +68,7 @@ function Realtime({ chatId }: { chatId: string }) {
         console.log('safas');
         fetch('/api/bids', {
           method: 'POST',
-          body: JSON.stringify({ bid: values.bid, productId: id, userId: '6724b8b3b9394b611d0b1871', createdAt: new Date() }),
+          body: JSON.stringify({ bid: values.bid, productId: chatId, userId: currentUser?._id, email: currentUser?.email, createdAt: new Date() }),
           headers: {
             'Content-Type': 'application/json',
           },
@@ -92,14 +94,19 @@ function Realtime({ chatId }: { chatId: string }) {
   });
 
   const { channel } = useChannel(chatId, 'auction-bids', (message) => {
-    const maxBid = Number(message.data.bid);
-    console.log(message.data);
-    setBids((previousBids) => [message.data, ...previousBids]);
-    setMaximumBid((previousMaxBid) => (previousMaxBid < maxBid ? maxBid : previousMaxBid));
+    setIsBid(message.data.bid);
   });
 
   const loadBids = async () => {
-    const response = await fetch('/api/bids');
+    const response = await fetch('/api/bids', {
+      method: 'PUT',
+      body: JSON.stringify({
+        productId: chatId,
+      }),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    });
     const data = await response.json();
     setBids(data);
     if (!data.length) return;
@@ -113,18 +120,18 @@ function Realtime({ chatId }: { chatId: string }) {
   };
 
   const sendBid = () => {
-    channel.publish('auction-bids', { bid: formik.values.bid, productId: id, userId: '6724b8b3b9394b611d0b1871', createdAt: new Date() });
+    channel.publish('auction-bids', { bid: !isBid });
   };
 
   const loadProductDetail = async () => {
-    const response = await fetch(`/api/products/${id}`);
+    const response = await fetch(`/api/products/${chatId}`);
     const data = await response.json();
     setOneProduct(data);
   };
   useEffect(() => {
     loadBids();
     loadProductDetail();
-  }, []);
+  }, [isBid]);
 
   if (!oneProduct) return <div>Ачааллаж байна</div>;
   return (
