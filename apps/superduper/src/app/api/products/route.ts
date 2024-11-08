@@ -10,7 +10,6 @@ type filtType = {
 const collection = DB.collection('product');
 
 export async function GET(request: Request) {
-  console.log('ajillaj bn');
   const { searchParams } = new URL(request.url);
   const stat = searchParams.get('status');
   const dateFrom = searchParams.get('startDate');
@@ -28,7 +27,7 @@ export async function GET(request: Request) {
 
   try {
     const result = await collection.find({}).toArray();
-    console.log(result);
+
     return Response.json(result);
   } catch (err) {
     return new Response(null, { status: 404 });
