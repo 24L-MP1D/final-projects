@@ -1,10 +1,10 @@
 'use client';
-import { Preview } from '@/components/preview';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Form, FormControl, FormDescription, FormField, FormItem } from '@/components/ui/form';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Checkbox } from '@radix-ui/react-checkbox';
+
 import axios from 'axios';
 import { Pencil } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -54,23 +54,24 @@ export const ChapterAccessForm: React.FC<ChapterAccessFormProps> = ({ initialDat
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Chapter description
+        Chapter access
         <Button variant="ghost" onClick={toggleEdit}>
           {isEditing && <>Cancel</>}
           {!isEditing && (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit Description
+              Edit access
             </>
           )}
         </Button>
       </div>
+
       {!isEditing && (
-        <div className={cn('text-sm mt-2', !initialData.description && 'text-slate-500 italic')}>
-          {!initialData.description && 'No description'}
-          {initialData.description && <Preview value={initialData.description} />}
+        <div className={cn('text-sm mt-2 text-red-500', !initialData.isFree && 'text-slate-500 italic')}>
+          {initialData.isFree ? <>This chapter is free for preview</> : <>This chapter is not free</>}
         </div>
       )}
+
       {isEditing && (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
@@ -80,8 +81,11 @@ export const ChapterAccessForm: React.FC<ChapterAccessFormProps> = ({ initialDat
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                   <FormControl>
-                    <Checkbox />
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormDescription>Check this box if you want to make this chapter free for preview.</FormDescription>
+                  </div>
                 </FormItem>
               )}
             />

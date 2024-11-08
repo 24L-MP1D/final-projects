@@ -59,15 +59,15 @@ export default function SubmissionPage() {
                 transition={{ duration: 0.5 }}
                 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#28a745', marginTop: '20px' }}
               >
-                🎉 Congrats! Your submission was successful! 🎉
+                🎉 Баяр хүргэе! Таны илгээлт амжилттай боллоо! 🎉
               </motion.div>
             </>
           )}
         </AnimatePresence>
         {!showAnimate && (
           <div className="flex max-w-[500px] mt-5 mx-auto flex-col justify-center items-center gap-4">
-            <div className="text-2xl">Great to have you on board!</div>
-            <div className="text-xl">You will receive a confirmation email and next steps shortly. We will contact you if there is any update to your submission.</div>
+            <div className="text-2xl">Таныг хүлээн авч байгаадаа баяртай байна!</div>
+            <div className="text-xl">Та удахгүй баталгаажуулах имэйл болон дараагийн хийх алхмуудыг хүлээн авах болно. Таны илгээсэн мэдээлэлд ямар нэгэн шинэчлэлт орох тохиолдолд бид тантай холбогдох болно.</div>
             <div className="h-[2px] w-full bg-slate-200"></div>
             <div className="flex gap-2 items-center justify-center">
               <Image className="w-20 object-cover" src={product?.frontImage || '/'} alt="productimage" width={500} height={500} />
@@ -81,9 +81,9 @@ export default function SubmissionPage() {
             "
             >
               <Button className="active:bg-black" onClick={routerChange}>
-                SUBMIT NEW ITEM
+              ШИНЭ ЗҮЙЛ ИЛГЭЭХ
               </Button>
-              <Button>GO TO PORTAL</Button>
+              <Button>ПОРТАЛ РУУ ОРОХ</Button>
             </div>
           </div>
         )}

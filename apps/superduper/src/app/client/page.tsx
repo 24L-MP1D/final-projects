@@ -3,17 +3,20 @@
 import { Button } from '@/components/ui/button';
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Swiper as SwiperType } from 'swiper';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Product, ProductItem } from '../components/productItem';
+import { RealtimeNotif } from './layout';
 
 export default function Index() {
   const [products, setProducts] = useState<Product[]>([]);
-
+  const [isClick, setClick] = useState(false);
+  const value = useContext(RealtimeNotif)
   const [progress, setProgress] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
+
 
   interface product {
     image: string;
@@ -21,7 +24,7 @@ export default function Index() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch('/api/product');
+      const res = await fetch('/api/products');
       if (!res.ok) throw new Error('Network response was not ok');
       const data = await res.json();
       console.log(data);
@@ -46,24 +49,29 @@ export default function Index() {
   };
 
   // Favourite codes
-  const [favourite, setFavourite] = useState<string[]>([]);
+
 
   useEffect(() => {
     const storage = localStorage.getItem('favourites');
-    if (storage) setFavourite(JSON.parse(storage));
+    if (storage) value?.setFavourite(JSON.parse(storage));
     fetchProducts();
   }, []);
 
   const handleFavourite = (productId: string) => {
-    let result: string[] = [...favourite];
+
+    let result: string[] = [];
+    if (value?.favourite) result = [...value?.favourite];
     if (result.find((id) => id === productId)) {
       result = result.filter((id) => id !== productId);
+      setClick(false)
     } else {
       result.push(productId);
+      setClick(true)
     }
 
     localStorage.setItem('favourites', JSON.stringify(result));
-    setFavourite(result);
+
+    value?.setFavourite(result);
   };
 
   return (
@@ -72,14 +80,14 @@ export default function Index() {
         <div className="gap-10 grid py-10">
           <div className="flex gap-20">
             <div className="grid gap-5">
-              <div className="text-[#565B60] text-sm">11 - 20 OCTOBER 2024</div>
-              <div className="text-[#0033FF] text-5xl font-semibold">Most Wanted</div>
-              <div className="text-[#565B60] text-sm">Get your hands on this years most sought-after objects, from top luxury brands to niche finds.</div>
-              <div className="text-[#0033FF] text-sm">Explore now</div>
+              <div className="text-[#565B60] text-sm">2024 оны 10-р сарын 11-20</div>
+              <div className="text-[#0033FF] text-5xl font-semibold">Хамгийн их хүсдэг</div>
+              <div className="text-[#565B60] text-sm">Энэ жилийн хамгийн эрэлттэй тансаг зэрэглэлийн брэндүүдээс эхлээд чамин олдворуудыг өөрийн болгоорой.</div>
+              <div className="text-[#0033FF] text-sm">Яг одоо судлаарай</div>
             </div>
           </div>
           {/* Progress Bar */}
-          <div className="flex w-full mt-[100px] h-[40px] gap-2">
+          <div className="flex w-full mt-[100px] h-[40px] gap-2 items-center">
             {Array.from({ length: products.length })
               .slice(0, 6)
               .map((_, index) => (
@@ -88,7 +96,7 @@ export default function Index() {
                   <div className="absolute top-0 left-0 h-full w-full cursor-pointer" onClick={() => handleProgressClick(index)}></div>
                 </div>
               ))}
-            <Button className=" text-[#0033FF] ml-[5px] bg-white hover:bg-white" onClick={handleNextSlide}>
+            <Button className="items-center text-[#0033FF] bg-white hover:bg-white ml-[5px]" onClick={handleNextSlide}>
               <ChevronRight strokeWidth={1.75} />
             </Button>
           </div>
@@ -115,15 +123,15 @@ export default function Index() {
           >
             {products.slice(0, 6).map((product, index) => (
               <SwiperSlide key={index}>
-                <Image alt={`Slide ${index + 1}`} src={product.image_url} width={1200} height={600} className="w-full h-full object-cover hover:cursor-pointer" />
+                <Image alt={`Slide ${index + 1}`} src={product.frontImage} width={1200} height={600} className="w-full h-full object-cover hover:cursor-pointer" />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-2 w-full">
-        {products.slice(0, 6).map((product) => (
-          <ProductItem product={product} key={product._id} onClickFavourite={() => handleFavourite(product._id)} isFavourite={!favourite.find((id) => id === product._id)} />
+      <div className="grid grid-cols-3 gap-10 w-full">
+        {products.slice(0, 20).map((product) => (
+          <ProductItem isClick={isClick} product={product} favourite={value?.favourite || []} key={product._id} onClickFavourite={() => handleFavourite(product._id)} />
         ))}
       </div>
     </div>

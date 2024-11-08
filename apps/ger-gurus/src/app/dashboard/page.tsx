@@ -1,7 +1,8 @@
-"use client"
+'use client';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { fetcher } from '@/lib/fetcher';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { Search } from 'lucide-react';
@@ -18,8 +19,8 @@ const formSchema = z.object({
 });
 
 export default function Page() {
-  const router=useRouter()
-  const [isExisting, setIsExisting]=useState<boolean| null>(null)
+  const router = useRouter();
+  const [isExisting, setIsExisting] = useState<boolean | null>(null);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { domain: '' },
@@ -27,9 +28,8 @@ export default function Page() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      
       const response = await axios.post(`/api/check-domain`, values);
-      setIsExisting(response.data) // instant
+      setIsExisting(response.data); // instant
       toast.success('Checked if domain is available');
     } catch {
       toast.error('Something went wrong');
@@ -37,9 +37,9 @@ export default function Page() {
   }
   async function createSchool(domain: string) {
     try {
-      await axios.post(`/api/schools`, { domain }); // Send domain in the request
+      await fetcher().post(`/api/schools`, { domain: `${domain}.verse.mn` }); // Send domain in the request
       toast.success('Your space has been created!'); // Optionally handle success
-      router.push('/schools')
+      router.push(`/schools`);
     } catch (error) {
       toast.error('Something went wrong');
     }
@@ -60,11 +60,16 @@ export default function Page() {
                   <FormItem>
                     <FormControl>
                       <div className="flex items-center">
-                        <Input {...field} type="text" placeholder="Enter your unique name" className="w-full max-w-xs text-base" 
-                                                  onChange={(e) => {
-                                                    field.onChange(e); 
-                                                    setIsExisting(null)
-                                                  }}/>
+                        <Input
+                          {...field}
+                          type="text"
+                          placeholder="Enter your unique name"
+                          className="w-full max-w-xs text-base"
+                          onChange={(e) => {
+                            field.onChange(e);
+                            setIsExisting(null);
+                          }}
+                        />
                         <p className="ml-2">.verse.mn</p>
                       </div>
                     </FormControl>
@@ -73,29 +78,21 @@ export default function Page() {
                 )}
               />
               <div className="flex items-start gap-2">
-                <Button type="submit" disabled={!form.formState.isValid || form.formState.isSubmitting }>
-                Check if available
-                <Search />
+                <Button type="submit" disabled={!form.formState.isValid || form.formState.isSubmitting}>
+                  Check if available
+                  <Search />
                 </Button>
               </div>
             </form>
           </Form>
 
-          <div className='h-10'>
-
-          {
-            isExisting===true && form.formState.isValid && 
-            <div> Domain is not available</div>
-          }
-          {
-            isExisting===false && form.formState.isValid && 
-            <div> Domain is available </div>
-          }
+          <div className="h-10">
+            {isExisting === true && form.formState.isValid && <div> Domain is not available</div>}
+            {isExisting === false && form.formState.isValid && <div> Domain is available </div>}
           </div>
 
-          <Button className="w-full max-w-xs mt-10" disabled={isExisting === null || isExisting===true }  onClick={() => createSchool(form.getValues().domain)}>
+          <Button className="w-full max-w-xs mt-10" disabled={isExisting === null || isExisting === true} onClick={() => createSchool(form.getValues().domain)}>
             Create My Space
-           
           </Button>
         </div>
       </div>

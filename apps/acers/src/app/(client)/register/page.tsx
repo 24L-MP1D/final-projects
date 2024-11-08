@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
-import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from '../components/ui/Toast';
-
+import { ToastProvider, ToastViewport } from '../components/ui/Toast';
 
 export default function Register() {
   interface IFormInputs {
@@ -15,7 +14,6 @@ export default function Register() {
     password: string;
     repassword: string;
   }
-
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) => Submit();
 
@@ -39,9 +37,7 @@ export default function Register() {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then((res) => {
-      
-    });
+    }).then((res) => {});
   }
   const firstName = watch('firstName', '');
   const lastName = watch('lastName', '');
@@ -110,26 +106,25 @@ export default function Register() {
         {errors.repassword && <span className="text-red-400 text-[12px] ml-2">Нууц үг адилхан байх</span>}
         <Button
           type="submit"
-          className="bg-blue-200"
+          className="bg-blue-200 hover:bg-blue-300"
           onClick={() => {
             firstName;
             lastName;
             password;
           }}
-          disabled={!isValid}
+          // disabled={!isValid}
         >
-          Sign Up
+          Бүртгүүлэх
         </Button>
         <div className="text-sm text-slate-500 text-center">
           <p className="">Бүртгэлтэй хэрэглэгч бол </p>
-          <Link href="/login" className="text-blue-400 ">
+          <Link href="/login" className="text-blue-400 hover:text-blue-600 ">
             {' '}
-            Sign In
+            Нэвтрэх
           </Link>
         </div>
       </form>
       <ToastProvider>
-          
         <ToastViewport />
       </ToastProvider>
     </div>
