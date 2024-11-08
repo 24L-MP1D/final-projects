@@ -2,8 +2,9 @@
 
 import { oauth_github_client_signUp, oauth_google_client_signUp } from 'config';
 import { FormikValues, useFormik } from 'formik';
-import { Github } from 'lucide-react';
+import { Github, X } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { Toaster, toast } from 'sonner';
@@ -13,6 +14,7 @@ import { Input } from './ui/Input';
 import { Button } from './ui/button';
 
 export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
+  const [dialogOpen, setDialogOpen] = useState(true);
   const initialValues = {
     firstName: '',
     lastName: '',
@@ -58,10 +60,12 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
         console.log('success');
 
         toast('Signed Up Successfully');
-
         setLoading(false);
+        window.location.href = '/client/sign-in';
       } else {
         console.log('error');
+        toast('Unsuccessful');
+        setDialogOpen(false);
       }
     } catch (err) {
       console.log('error in sign up');
@@ -97,10 +101,14 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
     <Dialog open>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={formik.handleSubmit}>
-          <DialogTitle className="font-bold text-center">Нэвтрэх эсвэл бүртгэл үүсгэх</DialogTitle>
-          <div className="h-[2px] bg-slate-300 my-3"></div>
+          <DialogTitle className="font-thin text-center flex justify-between border-b-2 border-slate-200s pb-4">
+            <div>Нэвтрэх эсвэл бүртгэл үүсгэх</div>
+            <Link href="/client">
+              <X onClick={() => setDialogOpen(false)} className="h-4 w-4" />
+            </Link>
+          </DialogTitle>
           <div className="flex justify-between">
-            <p className="font-bold">Эргээд тавтай морил!</p>
+            <p className="font-bold"></p>
             <span onClick={toggleForm}>
               <div className="text-blue-500 hover:cursor-pointer">Нэвтрэх</div>
             </span>
@@ -115,7 +123,6 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
               <FcGoogle />
               <p>Google</p>
             </Button>
-
           </div>
           <div className="flex items-center gap-2 py-3">
             <div className="h-[2px] flex-1 bg-slate-300"></div>

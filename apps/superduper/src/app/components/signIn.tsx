@@ -7,7 +7,6 @@ import { Github, X } from 'lucide-react';
 import { oauth_github_client, oauth_google_client } from 'config';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { Toaster, toast } from 'sonner';
@@ -17,7 +16,6 @@ import { Input } from './ui/Input';
 import { Button } from './ui/button';
 
 export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(true);
   const initialValues = {
@@ -53,13 +51,14 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
           console.log('success');
 
           toast('Signed Up Successfully');
-
           setLoading(false);
+          window.location.href = '/client';
         } else {
           console.log('error');
+          toast('unsuccessful');
+          setDialogOpen(false);
         }
         setDialogOpen(false);
-        router.push('/client');
       } catch (err) {
         console.log('error in sign in');
       }

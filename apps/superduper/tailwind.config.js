@@ -2,7 +2,6 @@ const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
 const { join } = require('path');
 const { fontFamily } = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
-const { default: flattenColorPalette } = require('tailwindcss/lib/utils/flattenColorPalette');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

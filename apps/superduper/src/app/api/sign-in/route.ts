@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const collection = await DB.collection('users');
     const body = await request.json();
     const { email, password } = body;
-    const newUser = await collection.findOne({ email });
+    const newUser = await collection.findOne({ email, role: 'user' });
 
     if (!newUser) return new Response('Unauthorized', { status: 404 });
     const Authenticated = await bcrypt.compare(password, newUser.password);

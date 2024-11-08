@@ -16,6 +16,7 @@ export async function GET(request: Request) {
     const cookieStore = await cookies();
     const cookie = await cookieStore.get('token');
     const userToken = cookie?.value;
+    console.log(userToken);
 
     if (!userToken) return new Response('unauthenticated', { status: 400 });
 
