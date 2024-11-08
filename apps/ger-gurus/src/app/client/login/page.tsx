@@ -73,7 +73,7 @@ export default function Index() {
   };
 
   return (
-    <div
+    <main
       className="bg-cover h-screen w-full flex justify-center items-center "
       style={{
         backgroundImage: "url('b1.jpg')",
@@ -133,6 +133,6 @@ export default function Index() {
         </div>
         <Toaster />
       </div>
-    </div>
+    </main>
   );
 }

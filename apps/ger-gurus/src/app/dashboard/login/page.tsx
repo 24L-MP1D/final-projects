@@ -66,7 +66,7 @@ export default function Index() {
   };
 
   return (
-    <div className=" flex flex-col items-center h-[800px] gap-6 pt-[100px]">
+    <main className=" flex flex-col items-center h-[800px] gap-6 pt-[100px]">
       <div className="py-2 font-medium text-2xl">Нэвтрэх</div>
       <div className="flex">
         <div className="flex flex-col gap-12">
@@ -115,6 +115,6 @@ export default function Index() {
         </div>
       </div>
       <Toaster />
-    </div>
+    </main>
   );
 }

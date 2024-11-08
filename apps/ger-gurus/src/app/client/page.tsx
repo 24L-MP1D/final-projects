@@ -5,9 +5,9 @@ import { SchoolPageHeader } from '@/components/SchoolPageHeader';
 
 export default function Page() {
   return (
-    <div>
+    <main>
       <SchoolPageHeader />
       <HomePageInfo />
-    </div>
+    </main>
   );
 }

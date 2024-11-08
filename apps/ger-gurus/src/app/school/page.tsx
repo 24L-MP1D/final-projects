@@ -1,10 +1,10 @@
 'use client';
 
-import TeacherWebThirdLayout from "@/components/teacherWebThirdLayout";
-import { Button } from "@/components/ui/button";
+import TeacherWebThirdLayout from '@/components/teacherWebThirdLayout';
+import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 const globalStyles = `
   @keyframes floatBubbles {
@@ -60,29 +60,21 @@ export default function Page() {
     opacity: 0.5,
     zIndex: -1,
     pointerEvents: 'none',
-    animation: `floatBubbles ${duration}s ease-in-out infinite ${delay}s`,  
+    animation: `floatBubbles ${duration}s ease-in-out infinite ${delay}s`,
     boxShadow: '0 0 15px 10px rgba(52, 211, 153, 0.5)',
   });
-  
+
   return (
     <main>
-      <div
-        className="flex justify-between items-center py-5 px-10"
-        style={{ fontFamily: 'Roboto, sans-serif' }}
-      >
+      <div className="flex justify-between items-center py-5 px-10" style={{ fontFamily: 'Roboto, sans-serif' }}>
         {/* Logo */}
         <div className="flex items-center w-60 h-12">
-          <Image src="/verse.png" width={99} height={29.3} alt="Logo" />
+          <Image priority={true} src="/verse.png" width={99} height={29.3} alt="Logo" />
         </div>
 
         {/* Mobile Hamburger Icon */}
         <div className="md:hidden flex items-center">
-          <button
-            onClick={toggleMenu}
-            className="text-green-950"
-            aria-expanded={isMenuOpen ? "true" : "false"}
-            aria-label="Toggle navigation menu"
-          >
+          <button onClick={toggleMenu} className="text-green-950" aria-expanded={isMenuOpen ? 'true' : 'false'} aria-label="Toggle navigation menu">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 12h18M3 6h18M3 18h18"></path>
             </svg>
@@ -98,16 +90,10 @@ export default function Page() {
         {/* Buttons */}
         <div className="flex gap-3">
           {/* Button with cursor-pointer and hover effect */}
-          <Button
-            variant="teacherButton"
-            className="cursor-pointer bg-white text-black border border-black hover:border-slate-500 hover:text-slate-500 transition duration-200"
-          >
+          <Button variant="teacherButton" className="cursor-pointer bg-white text-black border border-black hover:border-slate-500 hover:text-slate-500 transition duration-200">
             НЭВТРЭХ
           </Button>
-          <Button
-            variant="teacherButton"
-            className="cursor-pointer bg-green-600 hover:bg-green-700 transition duration-200"
-          >
+          <Button variant="teacherButton" className="cursor-pointer bg-green-600 hover:bg-green-700 transition duration-200">
             ЗАХИАЛАХ
           </Button>
         </div>
@@ -143,8 +129,14 @@ export default function Page() {
           </div>
 
           <div className="w-[671px] h-16 mx-auto text-center text-green-950 mt-6">
-            <motion.p className="text-base mt-6" initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 4, ease: "easeInOut", delay: 0.6, type: "spring", stiffness: 250, damping: 20 }}>
-              Манай вебсайт нь боловсролын салбарт шилдэг туршлагуудыг танилцуулж, суралцагчдад чанартай мэдлэгийг хялбархан, хүртээмжтэйгээр хүргэх зорилготой. Бид сургалтын хөтөлбөрүүд, онлайн сургалтууд болон боловсролын нөөцүүдийг олон нийтэд хүргэж, сурах процессыг илүү сонирхолтой, үр дүнтэй болгохын тулд инноваци, боловсруулалтыг эрэлхийлж байна.
+            <motion.p
+              className="text-base mt-6"
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 4, ease: 'easeInOut', delay: 0.6, type: 'spring', stiffness: 250, damping: 20 }}
+            >
+              Манай вебсайт нь боловсролын салбарт шилдэг туршлагуудыг танилцуулж, суралцагчдад чанартай мэдлэгийг хялбархан, хүртээмжтэйгээр хүргэх зорилготой. Бид сургалтын хөтөлбөрүүд, онлайн
+              сургалтууд болон боловсролын нөөцүүдийг олон нийтэд хүргэж, сурах процессыг илүү сонирхолтой, үр дүнтэй болгохын тулд инноваци, боловсруулалтыг эрэлхийлж байна.
             </motion.p>
 
             <div className="mt-6">
@@ -154,7 +146,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className='mt-40 border-green-300 border' />
+        <div className="mt-40 border-green-300 border" />
       </div>
       <TeacherWebThirdLayout />
     </main>

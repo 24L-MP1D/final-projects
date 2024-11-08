@@ -65,7 +65,7 @@ export default function Header() {
           <Component />
           <SearchBar />
         </span>
-        <Image width={50} height={45} alt="logo" src={'/Logo.png'} onClick={() => router.push(`/`)} />
+        <Image priority={true} width={50} height={45} alt="logo" src={'/Logo.png'} onClick={() => router.push(`/`)} />
         <div className=" lg:hidden  items-center gap-2 flex ">
           <button className="border bg-slate-400 text-white rounded-full leading-3 px-[19px]  py-[11px] hidden md:block" onClick={() => router.push(`/subscribe`)}>
             Subscribe
@@ -74,7 +74,7 @@ export default function Header() {
         </div>
       </div>
       <div className="hidden lg:flex justify-between w-full">
-        <Image width={70} height={65} alt="logo" src={'/Logo.png'} onClick={() => router.push(`/`)} />
+        <Image priority={true} width={70} height={65} alt="logo" src={'/Logo.png'} onClick={() => router.push(`/`)} />
         <div className="flex h-full rounded-lg items-center border group focus-within:border-slate-700 pl-3 mt-4 p-1 gap-3 w-7/12">
           <Search width={22} height={22} />
           <Input className="border-none focus-visible:ring-0" placeholder="What's you gonna eat?" />
