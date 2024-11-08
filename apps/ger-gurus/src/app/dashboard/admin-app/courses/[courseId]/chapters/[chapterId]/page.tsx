@@ -8,10 +8,7 @@ import { ChapterAccessForm } from './_components/chapter-access-form';
 import { ChapterDescriptionForm } from './_components/chapter-description-form';
 import { ChapterTitleForm } from './_components/chapter-title-form';
 import { ChapterVideoForm } from './_components/chapter-video-form';
-type Params = {
-  courseId: string;
-  chapterId: string;
-};
+type Params = Promise<{ courseId: string; chapterId: string }>;
 
 export default async function Page({ params }: { params: Params }) {
   // const {userId}=auth()

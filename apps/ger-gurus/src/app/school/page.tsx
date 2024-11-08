@@ -4,7 +4,9 @@ import { useAuthStore } from '@/components/components/useAuthStore';
 import TeacherWebThirdLayout from '@/components/teacherWebThirdLayout';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { CircleUser } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 const globalStyles = `

@@ -1,4 +1,4 @@
-import { AppSidebar } from '@/components/app-sidebar';
+import AppSidebar, { SidebarItem } from '@/components/app-sidebar';
 import { Home, Laptop, LibraryBig, Search, Settings } from 'lucide-react';
 
 const items = [
