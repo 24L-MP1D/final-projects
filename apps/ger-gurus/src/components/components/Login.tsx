@@ -25,6 +25,9 @@ export function Login() {
     return submit();
   }
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const url = urlParams.get('url');
+
   const submit = async () => {
     axios
       .post('/api/user/login', { email, password })
@@ -32,10 +35,19 @@ export function Login() {
         if (status === 200) {
           toast.success('Амжилттай нэвтэрлээ.', { className: 'custom-toast success' });
           document.cookie = `authtoken=${data.token}; path=/; domain=.verse.mn; Secure; SameSite=Lax`;
+          document.cookie = `authtoken=${data.token}; path=/;`;
           document.cookie = `userId=${data.userId}; path=/; domain=.verse.mn; Secure; SameSite=Lax`;
-          setTimeout(() => {
-            window.location.href = '/';
-          }, 1000);
+          document.cookie = `userId=${data.userId}; path=/;`;
+
+          if (url) {
+            setTimeout(() => {
+              window.location.href = `${url}`;
+            }, 1000);
+          } else {
+            setTimeout(() => {
+              window.location.href = `/`;
+            }, 1000);
+          }
         } else if (status === 401) {
           toast.error('Хэрэглэгч бүртгэлгүй байна.', { className: 'custom-toast error' });
           return setEmailExist(true);
