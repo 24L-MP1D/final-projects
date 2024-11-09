@@ -19,10 +19,11 @@ export default async function Page({ params }: { params: Params }) {
     _id: new ObjectId(chapterId),
     courseId: new ObjectId(courseId),
   });
-  // include: {muxData: true}
   if (!chapter) {
     return redirect('/');
   }
+
+  const muxData = await db.collection('muxData').findOne({ chapterId });
 
   interface Chapter {
     _id: string; // Converted to string
@@ -41,15 +42,15 @@ export default async function Page({ params }: { params: Params }) {
     _id: chapter._id.toString(),
     courseId: chapter.courseId.toString(),
   };
-  const requiredFields = [chapter.title, chapter.description, chapter.videoUrl];
+  const requiredFields = [chapter.title, chapter.description, chapter.videoUrl, chapter.isFree];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `(${completedFields}/${totalFields})`;
 
   return (
     <main className="p-6">
-      <div className="flex items-center justify-between">
-        <Link href={`/admin-app/courses/${courseId}`} className="flex items-center text-sm hover:opacity-75 transition mb-6">
+      <div className="flex items-center justify-between max-w-2xl">
+        <Link href={`/admin-app/courses/${courseId}`} className="flex items-center text-sm hover:opacity-75 transition mb-6 link link-secondary">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Курсын тохиргоонд буцах
         </Link>
@@ -71,17 +72,17 @@ export default async function Page({ params }: { params: Params }) {
         </div>
         <div>
           <div className="flex items-center gap-x-2">
+            <IconBadge icon={Video} />
+            <h2 className="text-xl">Видео нэмэх</h2>
+          </div>
+          <ChapterVideoForm initialData={chapterWithPlainId} playbackId={muxData?.playbackId} />
+        </div>
+        <div>
+          <div className="flex items-center gap-x-2">
             <IconBadge icon={Eye} />
             <h2 className="text-xl">Хандалтын тохиргоо</h2>
           </div>
           <ChapterAccessForm initialData={chapterWithPlainId} />
-        </div>
-        <div>
-          <div className="flex items-center gap-x-2">
-            <IconBadge icon={Video} />
-            <h2 className="text-xl">Видео нэмэх</h2>
-          </div>
-          <ChapterVideoForm initialData={chapterWithPlainId} />
         </div>
       </div>
     </main>

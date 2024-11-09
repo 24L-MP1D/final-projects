@@ -1,7 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { fetcher } from '@/lib/fetcher';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
@@ -58,9 +56,9 @@ export default function Page() {
         Log out
       </div>
       <div>
-        <h1 className="text-2xl font-bold mb-4 text-center text-sky-600">Контент Бүтээх Адал Явдалд Тавтай Морилно Уу!</h1>
+        <h1 className="text-2xl font-bold mb-4 text-center text-primary">Контент Бүтээх Адал Явдалд Тавтай Морилно Уу!</h1>
         <p className="mb-6 text-center text-gray-700">Дэлхийтэй хуваалцах чадвар болон мэдлэгээ оруулан өөрийн өвөрмөц орон зайг бий болгох гэж байгаа танд баяр хүргэе!</p>
-        <p className="mb-6 text-center text-gray-700">Та давтагдашгүй домайн нэр оруулна уу.</p>
+        <p className="mb-6 text-center text-base-content">Та давтагдашгүй домайн нэр оруулна уу.</p>
 
         <div className="flex flex-col items-center">
           <Form {...form}>
@@ -72,11 +70,11 @@ export default function Page() {
                   <FormItem>
                     <FormControl>
                       <div className="flex items-center">
-                        <Input
+                        <input
                           {...field}
                           type="text"
                           placeholder="Энд нэрээ оруулна уу"
-                          className="w-full max-w-xs text-base text-right"
+                          className="w-full max-w-xs text-base-content text-right input input-bordered input-primary"
                           onChange={(e) => {
                             field.onChange(e);
                             setIsExisting(null);
@@ -90,30 +88,30 @@ export default function Page() {
                 )}
               />
               <div className="flex gap-2 !mt-0">
-                <Button type="submit" disabled={!form.formState.isValid || form.formState.isSubmitting}>
-                  Давтагдсан эсэхийг шалгах
+                <button type="submit" disabled={!form.formState.isValid || form.formState.isSubmitting} className="btn btn-primary">
+                  <p className="text-base-content">Давтагдсан эсэхийг шалгах</p>
                   <Search />
-                </Button>
+                </button>
               </div>
             </form>
           </Form>
 
           <div className="h-10 mt-4">
             {isExisting === true && form.formState.isValid && (
-              <div>
+              <div role="alert" className="alert alert-error">
                 Домен ашиглах боломжгүй! <p className="text-2xl text-center">😬</p>
               </div>
             )}
             {isExisting === false && form.formState.isValid && (
-              <div>
+              <div role="success" className="alert alert-success">
                 Домайн ашиглах боломжтой! <p className="text-2xl text-center">😀</p>
               </div>
             )}
           </div>
 
-          <Button className="w-full max-w-xs mt-10" disabled={isExisting === null || isExisting === true} onClick={() => createSchool(form.getValues().domain)}>
-            Миний орон зайг үүсгэх
-          </Button>
+          <button className="w-full max-w-xs mt-10 btn btn-primary" disabled={isExisting === null || isExisting === true} onClick={() => createSchool(form.getValues().domain)}>
+            <p className="text-base-content">Миний орон зайг үүсгэх</p>
+          </button>
         </div>
       </div>
     </main>

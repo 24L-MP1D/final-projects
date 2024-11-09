@@ -130,7 +130,7 @@ export default async function Page({ params }: { params: Params }) {
     })),
   };
 
-  const requiredFields = [course.title, course.description, course.imageUrl, course.price, course.chapters];
+  const requiredFields = [course.title, course.description, course.imageUrl, course.price, course.chapters?.[0], course.attachments?.[0]];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `(${completedFields}/${totalFields})`;
@@ -163,13 +163,7 @@ export default async function Page({ params }: { params: Params }) {
               <ChaptersForm initialData={courseWithPlainId} />
             </div>
           </div>
-          <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={CircleDollarSign} />
-              <h2 className="text-xl">Курсаа худалдах</h2>
-            </div>
-            <PriceForm initialData={courseWithPlainId} />
-          </div>
+
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={File} />
@@ -177,6 +171,13 @@ export default async function Page({ params }: { params: Params }) {
             </div>
             <AttachmentForm initialData={courseWithPlainId} />
           </div>
+        </div>
+        <div>
+          <div className="flex items-center gap-x-2">
+            <IconBadge icon={CircleDollarSign} />
+            <h2 className="text-xl">Курсаа худалдах</h2>
+          </div>
+          <PriceForm initialData={courseWithPlainId} />
         </div>
       </div>
     </main>

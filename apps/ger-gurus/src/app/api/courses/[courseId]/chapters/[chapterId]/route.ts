@@ -1,12 +1,15 @@
 import { db } from '@/lib/db';
+import Mux from '@mux/mux-node';
 import { ObjectId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
-// import Mux from / mux - node;
 
-// const {Video}= new Mux(
-//   process.env.MUX_TOKEN_ID,
-//   process.env.MUX_TOKEN_SECRET
-// )
+
+
+const mux = new Mux({
+  tokenId: process.env.MUX_TOKEN_ID, 
+  tokenSecret: process.env.MUX_TOKEN_SECRET
+});
+console.log({mux})
 
 type Params = Promise<{ courseId: string, chapterId: string}>
 
@@ -61,7 +64,28 @@ export async function PATCH(request: Request, { params }: { params: Params}) {
           $set: values
       }
     )
-    
+
+    if (values.videoUrl){
+      const existingMuxData= await db.collection("muxData").findOne({chapterId: chapterId})
+      if (existingMuxData){
+        await mux.video.assets.delete(existingMuxData.assetId)
+        await db.collection("muxData").deleteOne({_id: existingMuxData._id})
+      }
+      const asset = await  mux.video.assets.create({
+        input: values.videoUrl,
+        playback_policy: ["public"],
+        test: false
+      })
+      console.log(asset)
+      
+      await db.collection("muxData").insertOne({
+        chapterId, 
+        assetId: asset.id,
+        playbackId: asset.playback_ids?.[0]?.id,
+  
+      })
+    }
+
       return new NextResponse(null, { status: 204 });
       
   } catch (error: any) {
