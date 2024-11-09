@@ -37,6 +37,7 @@ export default function DataTableDemo() {
   const [rowSelection, setRowSelection] = React.useState({});
   const [ordersData, setOrdersdata] = React.useState<Orders[]>([]);
   const [deliveryperson, setDeliveryperson] = React.useState('');
+  const [email, setEmail] = React.useState('');
   console.log(typeof ordersData);
   function renderorders() {
     axios
@@ -48,14 +49,15 @@ export default function DataTableDemo() {
   }
   React.useEffect(() => {
     renderorders();
-  }, [ordersData]);
+  }, []);
 
-  const adddeliveryperson = (id: string) => {
+  const adddeliveryperson = (order: Orders) => {
     axios
-      .put('/api/admin/successfullorder', { id, deliveryperson })
+      .put('/api/admin/successfullorder', { id: order.id, otp: order.otp, address: order.address, orderdetail: order.order, deliveryperson, email })
       .then((res) => {
         if (res.status === 200) {
           toast.success('Хүргэлтийн ажилтанд амжилттай хувиарлагдлаа');
+          renderorders();
         }
       })
       .catch(function (error) {
@@ -133,7 +135,7 @@ export default function DataTableDemo() {
                     </Select>
                   </TableCell>
                   <TableCell>{order.deliveryperson}</TableCell>
-                  <Button onClick={() => adddeliveryperson(order.id)}>Хувиарлах</Button>
+                  <Button onClick={() => adddeliveryperson(order)}>Хувиарлах</Button>
                 </TableRow>
               ))}
             </TableBody>

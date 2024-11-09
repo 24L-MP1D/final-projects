@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { FormikErrors, useFormik } from 'formik';
 import { nanoid } from 'nanoid';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -31,6 +32,7 @@ const otp = Math.floor(Math.random() * 899999) + 100000;
 const id = nanoid();
 export default function BuyStepone() {
   const [orderedItem, setOrderedItem] = useState<Foodlocal[] | null>([]);
+  const router = useRouter();
   console.log(orderedItem);
   useEffect(() => {
     const order = localStorage.getItem('order');
@@ -56,7 +58,7 @@ export default function BuyStepone() {
   });
 
   function successfullorder() {
-    fetch(`/api/successfullorder`, {
+    fetch(`/api/admin/successfullorder`, {
       method: 'POST',
       body: JSON.stringify({
         address: formik.values.homeAddress,
@@ -71,8 +73,9 @@ export default function BuyStepone() {
       },
     }).then((res) => {
       if (res.ok) {
+        localStorage.setItem('successotp', JSON.stringify(otp));
         toast.success('Захиалга амжилттай батлагдлаа');
-        window.location.href = '/successfullorder';
+        router.push(`/successfullorder/${id}`);
       } else {
         toast.success('Захиалга баталгаажихад алдаа гарлаа');
       }

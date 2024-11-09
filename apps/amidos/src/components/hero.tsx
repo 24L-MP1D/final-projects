@@ -42,7 +42,6 @@ export default function Hero() {
           <Image src={hit.photos} alt={hit.name} width={50} height={50} className="rounded-md w-12 h-12" />
           <div>
             <p className="text-[#8B0000] text-xl">{hit.name}</p>
-            <h1 className="text-[#52071B] text-base">{hit.ingredients}</h1>
           </div>
         </button>
       </article>
