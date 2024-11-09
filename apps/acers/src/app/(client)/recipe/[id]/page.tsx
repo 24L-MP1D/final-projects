@@ -56,7 +56,7 @@ enum Role {
 export default function RecipeComponent() {
   const params = useParams<{ id: string }>();
 
-  const id = params.id;
+  const id = params?.id;
   const [loading, setLoading] = useState<boolean>(false);
   const [recipe, setRecipe] = useState<Recipe>();
   const [user, setUser] = useState<Partial<User>>({ firstName: '' });
