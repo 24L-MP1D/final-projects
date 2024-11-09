@@ -29,7 +29,7 @@ export default function Hero() {
 
   function pushtoRouter(id?: string) {
     if (id && id.length > 1) {
-      return router.push(`/lunch?searchvalue=${id}`);
+      return router.push(`/lunch?id=${id}`);
     } else {
       router.push(`/lunch?searchvalue=${searchValue}`);
     }

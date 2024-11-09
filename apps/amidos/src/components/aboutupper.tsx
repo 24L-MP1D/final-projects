@@ -8,7 +8,7 @@ export default function Aboutupper() {
   ];
   return (
     <>
-      <Parallax blur={{ min: -10, max: 10 }} bgImage={'/test1.png'} bgImageAlt="food" strength={-1000} className="hidden md:block">
+      <Parallax blur={{ min: -5, max: 5 }} bgImage={'/pexels.jpeg'} bgImageAlt="food" strength={-500} className="hidden md:block">
         <div className="sticky top-0 left-1/2 bg-white h-[100vh] w-[50%] flex flex-col gap-8 text-center justify-center items-center">
           <div className="flex flex-col gap-4">
             <div className="text-[#8B0000] text-4xl">МАНАЙ РЕСТОРАН</div>

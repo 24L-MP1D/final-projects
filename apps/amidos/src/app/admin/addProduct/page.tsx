@@ -53,55 +53,25 @@ export default function Foods() {
     }
   };
 
-  // const addFood = (data: any) => {
-  //   const newFood = {
-  //     name,
-  //     ingredients,
-  //     price,
-  //     photos: imageUrl,
-  //   };
-  //   try {
-  //     const response = fetch('/api/addFood', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(newFood),
-  //     });
-  //     toast('Хоол амжилттай нэмэгдлээ');
-  //     console.log('created');
-  //   } catch (error) {
-  //     console.log('error');
-  //   }
-  // };
-  const addFood = async () => {
+  const addFood = (data: any) => {
     const newFood = {
       name,
       ingredients,
       price,
       photos: imageUrl,
     };
-
     try {
-      const response = await fetch('/api/addFood', {
+      const response = fetch('/api/addFood', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newFood),
       });
-
-      if (response.ok) {
-        await response.json();
-        toast('Successfully added the product');
-        loadlist();
-      } else {
-        toast.error('Failed to add food');
-        console.log('Error:', response.statusText);
-      }
+      toast('Хоол амжилттай нэмэгдлээ');
+      console.log('created');
     } catch (error) {
-      console.error('Error adding food:', error);
-      toast.error('An error occurred while adding food');
+      console.log('error');
     }
   };
 
@@ -206,13 +176,13 @@ export default function Foods() {
   const toggleButtonColor = () => {
     setButtonColor((prevColor) => (prevColor === 'bg-slate-600' ? 'bg-red-600' : 'bg-slate-600'));
   };
-  // useEffect(() => {
-  //   fetch('/api/addFood')
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setOrder(data);
-  //     });
-  // }, []);
+  useEffect(() => {
+    fetch('/api/addFood')
+      .then((res) => res.json())
+      .then((data) => {
+        setOrder(data);
+      });
+  }, []);
   useEffect(() => {
     fetch('/api/special')
       .then((res) => res.json())
