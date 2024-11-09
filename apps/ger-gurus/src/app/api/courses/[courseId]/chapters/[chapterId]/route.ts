@@ -1,6 +1,12 @@
 import { db } from '@/lib/db';
 import { ObjectId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
+// import Mux from / mux - node;
+
+// const {Video}= new Mux(
+//   process.env.MUX_TOKEN_ID,
+//   process.env.MUX_TOKEN_SECRET
+// )
 
 type Params = Promise<{ courseId: string, chapterId: string}>
 
