@@ -13,11 +13,11 @@ interface ChapterActionProps {
 export const ChapterActions = ({ disabled, courseId, chapterId, isPublished }: ChapterActionProps) => {
   return (
     <div className="flex items-center gap-x-2">
-      <button onClick={() => {}} disabled={disabled} className="btn btn-primary btn-sm btn-outline">
+      <button onClick={() => {}} disabled={disabled} className="btn btn-primary btn-sm btn-outline shadow-xl">
         {isPublished ? 'Нийтлэхгүй' : 'Нийтлэх'}
       </button>
       <ConfirmModal onConfirm={() => {}}>
-        <button className="btn btn-neutral btn-sm hover:scale-105 transition">
+        <button className="btn btn-neutral btn-sm hover:scale-105 transition shadow-xl">
           <Trash className="h-4 w-4" />
         </button>
       </ConfirmModal>

@@ -1,4 +1,3 @@
-import { IconBadge } from '@/components/icon-badge';
 import { db } from '@/lib/db';
 import { CircleDollarSign, File, LayoutDashboard, ListCheck } from 'lucide-react';
 import { ObjectId } from 'mongodb';
@@ -136,46 +135,56 @@ export default async function Page({ params }: { params: Params }) {
   const completionText = `(${completedFields}/${totalFields})`;
 
   return (
-    <main className="p-6">
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-medium">Курс тохиргоо</h1>
-          <span className="text-sm text-slate-700">Бүх талбарыг бөглөнө үү {completionText}</span>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-        <div>
-          <div className="flex items-center gap-x-2">
-            <IconBadge icon={LayoutDashboard} />
-            <h2 className="text-xl">Курсээ тохируулах</h2>
+    <main>
+      <div className=" md:container md:mx-auto shadow-xl p-[10%] max-h-full">
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-2 prose">
+            <h1 className="">Курс тохиргоо</h1>
+            <p className="text-error">Бүх талбарыг бөглөнө үү {completionText}</p>
           </div>
-          <TitleForm initialData={courseWithPlainId} />
-          <ImageForm initialData={courseWithPlainId} />
-          <DescriptionForm initialData={courseWithPlainId} />
         </div>
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-6 mt-8">
           <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={ListCheck} />
-              <h2 className="text-xl">Курсын бүлгүүд</h2>
+            <div className="prose">
+              <h2 className="flex items-center gap-x-2">
+                <LayoutDashboard />
+                Курсээ тохируулах
+              </h2>
             </div>
+            <TitleForm initialData={courseWithPlainId} />
+            <ImageForm initialData={courseWithPlainId} />
+            <DescriptionForm initialData={courseWithPlainId} />
+          </div>
+          <div className="space-y-6">
             <div>
-              <ChaptersForm initialData={courseWithPlainId} />
+              <div className="prose">
+                <h2 className="flex items-center gap-x-2">
+                  <ListCheck />
+                  Курсын бүлгүүд
+                </h2>
+              </div>
+              <div>
+                <ChaptersForm initialData={courseWithPlainId} />
+              </div>
             </div>
           </div>
-        </div>
-        <div>
-          <div className="flex items-center gap-x-2">
-            <IconBadge icon={CircleDollarSign} />
-            <h2 className="text-xl">Курсаа худалдах</h2>
-          </div>
-          <PriceForm initialData={courseWithPlainId} />
-          <div className="mt-6">
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={File} />
-              <h2 className="text-xl">Нөөц материал ба хавсралтууд</h2>
+          <div>
+            <div className="prose">
+              <h2 className="flex items-center gap-x-2">
+                <CircleDollarSign />
+                Курсаа худалдах
+              </h2>
             </div>
-            <AttachmentForm initialData={courseWithPlainId} />
+            <PriceForm initialData={courseWithPlainId} />
+            <div className="mt-6">
+              <div className="prose">
+                <h2 className="flex items-center gap-x-2">
+                  <File />
+                  Нөөц материал ба хавсралтууд
+                </h2>
+              </div>
+              <AttachmentForm initialData={courseWithPlainId} />
+            </div>
           </div>
         </div>
       </div>

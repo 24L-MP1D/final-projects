@@ -38,8 +38,8 @@ export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData,
 
   return (
     <div className="mt-6 border rounded-md p-4 shadow-xl">
-      <div className="font-medium flex items-center justify-between">
-        Бүлгийн видео
+      <div className="prose flex items-center justify-between">
+        <h4>Бүлгийн видео</h4>
         <button className="btn btn-ghost" onClick={toggleEdit}>
           {isEditing && <>Болих</>}
 

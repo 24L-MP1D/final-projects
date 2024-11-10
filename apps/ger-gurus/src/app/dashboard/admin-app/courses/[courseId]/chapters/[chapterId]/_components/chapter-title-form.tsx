@@ -50,9 +50,9 @@ export const ChapterTitleForm: React.FC<ChapterTitleFormProps> = ({ initialData 
     }
   }
   return (
-    <div className="mt-6 border rounded-md p-4 shadow-xl">
-      <div className="font-medium flex items-center justify-between">
-        Бүлгийн нэр
+    <div className="mt-6 border rounded-md p-4 shadow-xl prose">
+      <div className="flex items-center justify-between prose">
+        <h4>Бүлгийн нэр</h4>
         <button className="btn btn-ghost hover:text-primary" onClick={toggleEdit}>
           {isEditing && <>Болих</>}
           {!isEditing && (
@@ -63,7 +63,7 @@ export const ChapterTitleForm: React.FC<ChapterTitleFormProps> = ({ initialData 
           )}
         </button>
       </div>
-      {!isEditing && <p className="text-sm mt-2">{initialData.title}</p>}
+      {!isEditing && <h4 className="mt-2">{initialData.title}</h4>}
       {isEditing && (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">

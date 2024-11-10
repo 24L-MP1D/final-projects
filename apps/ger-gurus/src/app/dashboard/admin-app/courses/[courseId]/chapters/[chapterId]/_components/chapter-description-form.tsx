@@ -47,8 +47,8 @@ export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ 
   }
   return (
     <div className="mt-6 border rounded-md p-4 shadow-xl">
-      <div className="font-medium flex items-center justify-between">
-        Бүлгийн тайлбар
+      <div className="prose flex items-center justify-between">
+        <h4>Бүлгийн тайлбар</h4>
         <button className="btn btn-ghost hover:scale-105 transition" onClick={toggleEdit}>
           {isEditing && <>Болих</>}
           {!isEditing && (
