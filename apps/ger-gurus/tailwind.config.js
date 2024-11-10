@@ -91,7 +91,8 @@ module.exports = withUt({
     },
   },
   plugins: [
-    require('daisyui')
+    require('daisyui'),
+    require('@tailwindcss/typography')
   ],
   daisyui: {
     themes: ["light", 
