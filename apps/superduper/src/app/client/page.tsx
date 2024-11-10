@@ -126,7 +126,7 @@ export default function Index() {
                           .map((_, index) => (
                             <div key={index} className="relative h-[7px] w-full bg-gray-300 rounded-full">
                               <div
-                                className={`absolute top-0 left-0 h-full bg-blue-500 rounded-full`}
+                                className={`absolute top-0 left-0 h-full bg-[#5ba3f5] rounded-full`}
                                 style={{ width: progress === index ? '100%' : '0%', transition: 'width 0.8s ease-in-out' }}
                               ></div>
                               <div className="absolute top-0 left-0 h-full w-full cursor-pointer" onClick={() => handleProgressClick(index)}></div>
@@ -142,15 +142,43 @@ export default function Index() {
                 <div className="absolute top-0 right-0 w-1/2  rounded-xl h-full flex flex-col justify-center items-center  text-white p-5">
                   <div className="p-3 rounded-3xl h-fit bg-white/10 backdrop-blur-xl w-[450px]  mt-12 md:mt-0">
                     <div className="py-3 px-3">
-                      <Button className="rounded-2xl border-8 w-[400px] h-[50px] border-[#f8f3f8] bg-[#1F1F1FF2] ">Хялбар үйлчилгээ</Button>
-                      <div className="bg-[#f8f3f8] rounded-2xl mt-3 p-4 ">
-                        <div className="gird grid-cols-2">
-                          <div className=" h-32 w-1/2  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#FEF2F2]">
-                            <div className=" flex justify-center  hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse  transition-all duration-300 bg-[#FEF2F2] shadow-[inset_0_0_4px_0_rgba(248,113,113,1)] group-hover/item:shadow-[0_0_8px_0_rgba(248,113,113,1)]">
+                      <Button className="rounded-2xl border-8 w-[400px] h-[50px] border-[#f8f3f8] bg-[#79b3f4] ">Хялбар үйлчилгээ</Button>
+                      <div className="bg-[#f4f5fa] rounded-2xl mt-3 p-4 ">
+                        <div className="grid grid-cols-2">
+                          <div className="h-32 w-1/2 cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group">
+                            <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
                               <Image src="/bid.png" alt="bid" width={36} height={36} className="" />
                             </div>
-                            <div className="mt-3 font-semibold flex items-center transition-all duration-300 text-xs md:text-sm text-neutral group-hover/item:-translate-x-2 text-textHigh text-black text-center">
+                            <div className="mt-3 font-semibold flex items-center transition-all duration-300 text-xs md:text-sm text-neutral group-hover/item:-translate-x-2 text-textHigh text-black text-center transform group-hover:-translate-x-1">
                               Дуудлага худалдаанд оролцох
+                              <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-1" />
+                            </div>
+                          </div>
+                          <div className="h-32 w-1/2 cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group">
+                            <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
+                              <Image src="/chat.png" alt="bid" width={36} height={36} className="" />
+                            </div>
+                            <div className="mt-3 font-semibold flex items-center transition-all duration-300 text-xs md:text-sm text-neutral group-hover/item:-translate-x-2 text-textHigh text-black text-center transform group-hover:-translate-x-1">
+                              Чат бот-оос асуух
+                              <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-0.5" size={18} />
+                            </div>
+                          </div>
+                          <div className="h-32 w-1/2 cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group">
+                            <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
+                              <Image src="/add.png" alt="bid" width={36} height={36} className="" />
+                            </div>
+                            <div className="mt-3 font-semibold flex items-center transition-all duration-300 text-xs md:text-sm text-neutral group-hover/item:-translate-x-2 text-textHigh text-black text-center transform group-hover:-translate-x-1">
+                              Дуудлага худалдаа явуулах
+                              <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-1" />
+                            </div>
+                          </div>
+                          <div className="h-32 w-1/2 cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group">
+                            <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
+                              <Image src="/add.png" alt="bid" width={36} height={36} className="" />
+                            </div>
+                            <div className="mt-3 font-semibold flex items-center transition-all duration-300 text-xs md:text-sm text-neutral group-hover/item:-translate-x-2 text-textHigh text-black text-center transform group-hover:-translate-x-1">
+                              Дуудлага худалдаа явуулах
+                              <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-1" />
                             </div>
                           </div>
                         </div>

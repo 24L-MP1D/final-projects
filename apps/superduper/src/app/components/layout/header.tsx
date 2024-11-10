@@ -113,9 +113,11 @@ export default function Header() {
       <div className="bg-[#1F1F1FF2] py-4 px-6  max-w-[1280px] rounded-2xl flex-1">
         <div className="flex  justify-between">
           <div className="flex items-center gap-16 w-[200px]">
-            <Image src="/logo3.png" width={60} height={30} alt="logo" className="rounded-full w-[30px] h-[40px] " />
-
-            <div className="flex flex-1 items-center bg-[#333333] rounded-3xl">
+            <div className="flex gpa-1 items-center gap-3">
+              <Image src="/logo.png" width={60} height={60} alt="logo" className="rounded-full w-[50px] h-[50px] " />
+              <div className="text-white font-bold">Bidscape</div>
+            </div>
+            <div className="flex flex-1 items-center bg-[#333333] rounded-3xl ml-8">
               <HiMiniMagnifyingGlass className="bg-[#333333] h-8 m-1 ml-3" color="gray" size={24} />
               <input placeholder="Хайх" value={value?.searchValue} onChange={(e) => value?.setSearchValue(e.target.value)} className="px-2 w-[200px] p-2 rounded-3xl bg-[#333333]" />
             </div>
