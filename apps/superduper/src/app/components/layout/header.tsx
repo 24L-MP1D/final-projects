@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import * as Ably from 'ably';
 import Cookies from 'js-cookie';
-import { ChevronDown, UserRoundPen } from 'lucide-react';
+import { Bell, ChevronDown, UserRoundPen } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
@@ -124,44 +124,47 @@ export default function Header() {
           </Link>
           <div className="flex flex-1 items-center bg-[#f0f1f5]">
             <HiMiniMagnifyingGlass className="bg-[#f0f1f5] h-6 m-1 ml-3" color="blue" size={24} />
-            <input placeholder="Хайх.." value={value?.searchValue} onChange={(e) => value?.setSearchValue(e.target.value)} className="px-2 w-full p-3 bg-[#f0f1f5]" />
+            <input placeholder="Хайх.." value={value?.searchValue} onChange={(e) => value?.setSearchValue(e.target.value)} className="px-2 w-full p-3 bg-[#f0f1f5] outline-none " />
           </div>
         </div>
         <div className="flex items-center gap-10 ml-6">
           <button onClick={sell} className="bg-white hover:border-b-[1px] hover:border-black">
             Зарах
           </button>
-          <Link href="/Help" className="bg-white hover:border-b-[1px] hover:border-black">
+          <Link href="/chatbot" className="bg-white hover:border-b-[1px] hover:border-black">
             Тусламж
           </Link>
           <div className="relative">
             <FaRegHeart size={24} color="blue" onClick={save} />
 
             {favlength === 0 ? null : <div className="absolute left-5 bottom-4  bg-blue-700 text-white rounded-full w-5 h-5 text-center text-sm">{favlength}</div>}
-
-
-
           </div>
 
           {signin ? (
-            <div className="flex relative p-1">
-              <div onClick={() => setShowNotif(true)} className="flex flex-col items-center hover:bg-slate-50 hover:cursor-pointer">
-                <div className="flex relative">
-                  <UserRoundPen />
-
+            <div className="flex p-1 gap-10">
+              <div className="relative">
+                <div onClick={() => setShowNotif(true)} className="relative">
+                  <Bell color="blue" />
                   {isSeenNotif.length > 0 && <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm left-4 text-white">{isSeenNotif.length}</div>}
                 </div>
-                <div>{currentUser?.firstname}</div>
+
+                {showNotif && (
+                  <div className="absolute top-12 left-0 z-50">
+                    {notifications.map((notification) => (
+                      <div key={notification._id} onClick={() => setShowNotif(false)} className={`p-2 hover:cursor-pointer shadow border ${notification.isSeen ? 'bg-slate-100' : 'bg-red-200'}`}>
+                        {notification.message}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-              {showNotif && (
-                <div className="absolute top-12 left-0 z-50">
-                  {notifications.map((notification) => (
-                    <div key={notification._id} onClick={() => setShowNotif(false)} className={`p-2 hover:cursor-pointer shadow border ${notification.isSeen ? 'bg-slate-100' : 'bg-red-200'}`}>
-                      {notification.message}
-                    </div>
-                  ))}
+              <div className="flex flex-col items-center hover:bg-slate-50 hover:cursor-pointer">
+                <div className="flex items-center gap-2 hover:bg-slate-50">
+                  <UserRoundPen color="blue" />
+                  <div>{currentUser?.firstName}</div>
+                  <ChevronDown color="blue" width={15} height={15} />
                 </div>
-              )}
+              </div>
             </div>
           ) : (
             <Button onClick={() => router.push(`/client/sign-in`)} className="bg-[#03f] rounded-none">

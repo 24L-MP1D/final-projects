@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import dayjs from 'dayjs';
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Swiper as SwiperType } from 'swiper';
 import { Autoplay, Pagination } from 'swiper/modules';
@@ -18,7 +19,6 @@ export default function Index() {
   const value = useContext(RealtimeNotif);
   const [progress, setProgress] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
-
 
   interface product {
     image: string;
@@ -86,9 +86,9 @@ export default function Index() {
           <div className="flex gap-20 flex-1">
             <div className="grid gap-5">
               <div className="text-[#565B60] flex gap-1 text-sm">
-                <div>{dayjs(products?.[progress]?.startDate).format("YYYY-MM-DD")}</div>
+                <div>{dayjs(products?.[progress]?.startDate).format('YYYY-MM-DD')}</div>
                 <div>-</div>
-                <div>{dayjs(products?.[progress]?.endDate).format("YYYY-MM-DD")}</div>
+                <div>{dayjs(products?.[progress]?.endDate).format('YYYY-MM-DD')}</div>
               </div>
               <div className="text-[#0033FF] text-5xl font-semibold">{products?.[progress]?.productName}</div>
               <div className="text-[#565B60] text-sm">{products?.[progress]?.additionalInformation}</div>
@@ -113,7 +113,7 @@ export default function Index() {
 
         <div className="w-full h-full">
           <Swiper
-            className='rounded-xl'
+            className="rounded-xl"
             direction={'vertical'}
             slidesPerView={1}
             spaceBetween={30}
@@ -133,7 +133,9 @@ export default function Index() {
           >
             {products.slice(0, 6).map((product, index) => (
               <SwiperSlide key={index}>
-                <Image loading="lazy" alt={`Slide ${index + 1}`} src={product.frontImage} width={1200} height={600} className="w-full h-full object-cover hover:cursor-pointer rounded-xl" />
+                <Link href={`/client/productDetails/${product._id}`}>
+                  <Image loading="lazy" alt={`Slide ${index + 1}`} src={product.frontImage} width={1200} height={600} className="w-full h-full object-cover hover:cursor-pointer rounded-xl" />
+                </Link>
               </SwiperSlide>
             ))}
           </Swiper>
