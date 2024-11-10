@@ -14,6 +14,10 @@ import * as yup from 'yup';
 import { Dialog, DialogContent, DialogFooter, DialogTitle } from './ui/Dialog';
 import { Input } from './ui/Input';
 import { Button } from './ui/button';
+interface FormikValues {
+  email: string;
+  password: string;
+}
 
 export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
   const [loading, setLoading] = useState(false);
@@ -92,6 +96,31 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
     window.location.href = url.toString();
   }
 
+  async function Submit(values: FormikValues) {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/signin', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+      if (response.status === 201) {
+        console.log('success');
+        setLoading(false);
+
+        toast('Signed Up Successfully');
+        window.location.href = '/client';
+      } else {
+        console.log('error');
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log('error in sign in');
+    }
+  }
+
   return (
     <Dialog open={dialogOpen}>
       <DialogContent className="sm:max-w-[425px]">
@@ -143,17 +172,17 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
               <Checkbox />
               <p>Намайг санах</p>
             </div>
+
             <Link className="text-blue-500" href="/">
               Нууц үгээ мартсан уу?
             </Link>
           </div>
 
           <DialogFooter>
-            <Button type="submit" className="bg-blue-700 flex w-full disabled:cursor-not-allowed" disabled={loading}>
+            <Button className="bg-blue-700 flex w-full disabled:cursor-not-allowed" type="submit" disabled={loading}>
               {loading && <Image src={'/images/spinner.svg'} alt="a" width={40} height={40} />}
               <div>Нэвтрэх</div>
             </Button>
-            <Toaster />
           </DialogFooter>
         </form>
       </DialogContent>

@@ -53,18 +53,18 @@ export const DescriptionForm: React.FC<DescriptionFormProps> = ({ initialData })
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course description
+        Курсын тайлбар
         <Button variant="ghost" onClick={toggleEdit}>
-          {isEditing && <>Cancel</>}
+          {isEditing && <>Цуцлах</>}
           {!isEditing && (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit Description
+              Тайлбар засах
             </>
           )}
         </Button>
       </div>
-      {!isEditing && <p className={cn('text-sm mt-2', !initialData.description && 'text-slate-500 italic')}>{initialData.description || 'No description'}</p>}
+      {!isEditing && <p className={cn('text-sm mt-2', !initialData.description && 'text-slate-500 italic')}>{initialData.description || 'Тайлбар байхгүй'}</p>}
       {isEditing && (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
@@ -74,7 +74,7 @@ export const DescriptionForm: React.FC<DescriptionFormProps> = ({ initialData })
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Textarea placeholder="e.g This course is about..." disabled={isSubmitting} {...field} />
+                    <Textarea placeholder="Жишээ нь: Энэ курс нь ... тухай" disabled={isSubmitting} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -82,7 +82,7 @@ export const DescriptionForm: React.FC<DescriptionFormProps> = ({ initialData })
             />
             <div className="flex items-center gap-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
+                Хадгалах
               </Button>
             </div>
           </form>

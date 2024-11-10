@@ -59,7 +59,12 @@ export default function CardWithForm() {
             <form>
               <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
-                  <Input placeholder="Name of your new category i.e Art, Jewellery" value={category} onChange={(e) => setCategory(e.target.value)} />
+                  <Input placeholder="Урлаг, үнэт эдлэл гэх мэт шинэ ангиллын нэр" value={category} onChange={(e) => setCategory(e.target.value)} />
+                </div>
+  
+                <div>
+                  <Input type="file" onChange={(e) => imageUploader(e)} value={''} />
+                  {image && <Image src={URL.createObjectURL(image)} alt="a" width={500} height={500} className="w-[500px] h-[500px]" />}
                 </div>
               </div>
             </form>
@@ -70,12 +75,10 @@ export default function CardWithForm() {
               Цуцлах
             </Button>
           </CardFooter>
+      
         </Card>
-        <div>
-          <Input type="file" onChange={(e) => imageUploader(e)} value={''} />
-          {image && <Image src={URL.createObjectURL(image)} alt="a" width={500} height={500} className="w-[500px] h-[500px]" />}
-        </div>
       </div>
+
     </AdminLayout>
   );
 }

@@ -10,7 +10,6 @@ type filtType = {
 const collection = DB.collection('product');
 
 export async function GET(request: Request) {
-  console.log('ajillaj bn');
   const { searchParams } = new URL(request.url);
   const stat = searchParams.get('status');
   const dateFrom = searchParams.get('startDate');
@@ -28,7 +27,7 @@ export async function GET(request: Request) {
 
   try {
     const result = await collection.find({}).toArray();
-    console.log(result);
+
     return Response.json(result);
   } catch (err) {
     return new Response(null, { status: 404 });
@@ -45,6 +44,35 @@ export async function POST(request: Request) {
     getFromLocal.createdAt = new Date();
     const result = await collection.insertOne(getFromLocal);
     return Response.json(result, { status: 200 });
+  } catch (error) {
+    return Response.json({ message: 'Failed to create product!' }, { status: 404 });
+  }
+}
+
+export async function PUT(request: Request) {
+  try {
+    const product: any = {};
+    const body = await request.json();
+    const { searchValue } = body;
+    if (searchValue) {
+      product.$or = [
+        { category: { $regex: searchValue, $options: 'i' } },
+        { countryOfOrigin: { $regex: searchValue, $options: 'i' } },
+        { productName: { $regex: searchValue, $options: 'i' } },
+        { additionalInformation: { $regex: searchValue, $options: 'i' } },
+        {
+          $expr: {
+            $regexMatch: {
+              input: { $toString: '$startBid' },
+              regex: searchValue,
+            },
+          },
+        },
+        { startBid: { $regex: searchValue, $options: 'i' } },
+      ];
+    }
+    const products = await collection.find(product).toArray();
+    return Response.json(products);
   } catch (error) {
     return Response.json({ message: 'Failed to create product!' }, { status: 404 });
   }

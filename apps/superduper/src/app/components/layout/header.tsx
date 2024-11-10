@@ -23,14 +23,14 @@ export type notifications = {
 };
 
 export default function Header() {
-  const [favlength, setFavlength] = useState(0)
+  const [favlength, setFavlength] = useState(0);
 
   const [signin, setSignin] = useState(false);
   const [isSeenNotif, setIsSeenNotif] = useState<notifications[]>([]);
   const [showNotif, setShowNotif] = useState(false);
   const [notifications, setNotifications] = useState<notifications[]>([]);
   const currentUser = useAuthStore((state) => state.currentUser);
-  const value = useContext(RealtimeNotif)
+  const value = useContext(RealtimeNotif);
   const loadNotif = async () => {
     const response = await fetch('/api/notifications', {
       method: 'PUT',
@@ -60,8 +60,6 @@ export default function Header() {
       setSignin(true);
       loadNotif();
     }
-
-
   }, [currentUser]);
 
   // useEffect(() => {
@@ -83,7 +81,7 @@ export default function Header() {
   // }, []);
 
   const router = useRouter();
-  console.log(favlength)
+  console.log(favlength);
   const sell = () => {
     const cookie = Cookies.get('token');
     if (!cookie) return router.push('/client/sign-in');
@@ -101,14 +99,14 @@ export default function Header() {
   };
 
   const showHeart = () => {
-    const favourities = value?.favourite.length
+    const favourities = value?.favourite.length;
 
-    if (favourities) return favourities
-    return 0
+    if (favourities) return favourities;
+    return 0;
   };
   useEffect(() => {
-    setFavlength(showHeart())
-  }, [value?.favourite])
+    setFavlength(showHeart());
+  }, [value?.favourite]);
   return (
     <div onClick={() => showNotif && setShowNotif(false)} className=" h-28 flex items-center max-w-[1280px]">
       <div id="google_translate_element"></div>
@@ -116,7 +114,7 @@ export default function Header() {
         <div className="flex items-center gap-4 w-full">
           <div className="w-[55px] h-[55px] bg-[#03f] text-white flex items-center justify-center font-extrabold text-[24px]">СД</div>
           <button className="text-[#03f]" onClick={reload}>
-            <p className="font-extrabold">СуперДупер</p>
+            <p className="font-extrabold text-left">СуперДупер</p>
             <div className="bg-slate-200 h-0.5 w-full"></div>
             <p className="font-extrabold">Дуудлага худалдаа</p>
           </button>
@@ -126,19 +124,23 @@ export default function Header() {
           </Link>
           <div className="flex flex-1 items-center bg-[#f0f1f5]">
             <HiMiniMagnifyingGlass className="bg-[#f0f1f5] h-6 m-1 ml-3" color="blue" size={24} />
-            <input placeholder="Хайх.." className="px-2 w-full p-3 bg-[#f0f1f5]" />
+            <input placeholder="Хайх.." value={value?.searchValue} onChange={(e) => value?.setSearchValue(e.target.value)} className="px-2 w-full p-3 bg-[#f0f1f5]" />
           </div>
         </div>
-        <div className="flex items-center gap-10 mx-6">
+        <div className="flex items-center gap-10 ml-6">
           <button onClick={sell} className="bg-white hover:border-b-[1px] hover:border-black">
             Зарах
           </button>
           <Link href="/Help" className="bg-white hover:border-b-[1px] hover:border-black">
             Тусламж
           </Link>
-          <div className='relative'>
+          <div className="relative">
             <FaRegHeart size={24} color="blue" onClick={save} />
-            <div className='absolute left-5 bottom-4  bg-blue-700 text-white rounded-full w-5 h-5 text-center text-sm'>{favlength}</div>
+
+            {favlength === 0 ? null : <div className="absolute left-5 bottom-4  bg-blue-700 text-white rounded-full w-5 h-5 text-center text-sm">{favlength}</div>}
+
+
+
           </div>
 
           {signin ? (
@@ -149,7 +151,7 @@ export default function Header() {
 
                   {isSeenNotif.length > 0 && <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm left-4 text-white">{isSeenNotif.length}</div>}
                 </div>
-                <div>{currentUser?.firstName}</div>
+                <div>{currentUser?.firstname}</div>
               </div>
               {showNotif && (
                 <div className="absolute top-12 left-0 z-50">

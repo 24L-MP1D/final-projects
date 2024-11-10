@@ -12,8 +12,8 @@ export async function PUT(request: Request) {
     const collection = DB.collection('users');
     const { otp, email } = await request.json();
     const user = await collection.findOne({ email });
+    if (!user) return new Response(null, { status: 404 });
 
-    if (!user) return new Response(null, { status: 400 });
     if (user.expiresAt < new Date()) {
       return new Response('OTP expired', {
         status: 410,

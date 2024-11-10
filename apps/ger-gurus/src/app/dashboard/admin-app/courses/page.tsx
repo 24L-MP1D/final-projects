@@ -42,7 +42,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="bg-cover pr-24 h-screen flex justify-start gap-10 items-center" style={{ backgroundImage: "url('/b1.jpg')" }}>
+    <main className="bg-cover pr-24 h-screen flex justify-start gap-10 items-center" style={{ backgroundImage: "url('/b1.jpg')" }}>
       <AppSidebar>
         {items.map((item, index) => (
           <SidebarItem key={index} icon={<item.icon />} text={item.title} url={item.url} />
@@ -94,6 +94,6 @@ export default function Page() {
           </Table>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

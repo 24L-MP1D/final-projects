@@ -53,13 +53,13 @@ export const ChapterTitleForm: React.FC<ChapterTitleFormProps> = ({ initialData 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Chapter title
+        Бүлгийн нэр
         <Button variant="ghost" onClick={toggleEdit}>
-          {isEditing && <>Cancel</>}
+          {isEditing && <>Болих</>}
           {!isEditing && (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit Title
+              Нэр засах
             </>
           )}
         </Button>
@@ -74,7 +74,7 @@ export const ChapterTitleForm: React.FC<ChapterTitleFormProps> = ({ initialData 
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Introduction to the course" disabled={isSubmitting} {...field} />
+                    <Input placeholder="Курсын танилцуулга" disabled={isSubmitting} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -82,7 +82,7 @@ export const ChapterTitleForm: React.FC<ChapterTitleFormProps> = ({ initialData 
             />
             <div className="flex items-center gap-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
+                Хадгалах
               </Button>
             </div>
           </form>

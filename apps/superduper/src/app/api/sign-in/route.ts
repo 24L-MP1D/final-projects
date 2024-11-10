@@ -14,8 +14,8 @@ export async function POST(request: Request) {
     console.log(Authenticated);
 
     if (Authenticated) {
-      const accessToken = jwt.sign({ email: newUser.email, userId: newUser._id }, ADMIN_ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
-      //   console.log(accessToken);
+      const accessToken = jwt.sign({ email: newUser.email, userId: newUser._id }, ADMIN_ACCESS_TOKEN_SECRET, { expiresIn: '12h' });
+      console.log(accessToken);
       const response = new Response(null, { status: 201 });
       response.headers.append('Set-cookie', `token=${accessToken}; Path=/; Max-Age=43200; SameSite=Lax`);
       return response;
