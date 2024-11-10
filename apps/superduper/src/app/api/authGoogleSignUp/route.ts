@@ -11,7 +11,8 @@ export async function GET(request: NextRequest) {
   const client = new OAuth2Client(process.env.OAUTH_GOOGLE_CLIENT_ID);
   interface payload {
     email: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     picture: string;
     sub: string;
   }
@@ -48,7 +49,7 @@ export async function GET(request: NextRequest) {
     }
 
     const collection = await DB.collection('users');
-    const check = await collection.insertOne({ email: payload.email, name: payload.name, role: 'user' });
+    const check = await collection.insertOne({ email: payload.email, firstName: payload.given_name, lastName: payload.family_name, role: 'user' });
     if (!check) return new Response(JSON.stringify({ message: '404' }), { status: 404 });
 
     const accessToken = jwt.sign({ email: payload.email, userId: check?.insertedId }, ADMIN_ACCESS_TOKEN_SECRET, {

@@ -150,7 +150,7 @@ export default function Header() {
 
                     {isSeenNotif.length > 0 && <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm left-4 text-white">{isSeenNotif.length}</div>}
                   </div>
-                  <div>{currentUser?.firstname}</div>
+                  <div>{currentUser?.firstName}</div>
                 </div>
                 {showNotif && (
                   <div className="absolute top-12 left-0 z-50">

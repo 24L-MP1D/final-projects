@@ -145,7 +145,7 @@ export default function Index() {
                       <Button className="rounded-2xl border-8 w-[400px] h-[50px] border-[#f8f3f8] bg-[#79b3f4] ">Хялбар үйлчилгээ</Button>
                       <div className="bg-[#f4f5fa] rounded-2xl mt-3 p-4 ">
                         <div className="grid grid-cols-2">
-                          <div className="h-32 w-1/2 cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group">
+                          <div className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full">
                             <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
                               <Image src="/bid.png" alt="bid" width={36} height={36} className="" />
                             </div>
@@ -154,7 +154,7 @@ export default function Index() {
                               <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-1" />
                             </div>
                           </div>
-                          <div className="h-32 w-1/2 cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group">
+                          <div className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full">
                             <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
                               <Image src="/chat.png" alt="bid" width={36} height={36} className="" />
                             </div>
@@ -163,7 +163,7 @@ export default function Index() {
                               <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-0.5" size={18} />
                             </div>
                           </div>
-                          <div className="h-32 w-1/2 cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group">
+                          <div className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full">
                             <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
                               <Image src="/add.png" alt="bid" width={36} height={36} className="" />
                             </div>
@@ -172,7 +172,7 @@ export default function Index() {
                               <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-1" />
                             </div>
                           </div>
-                          <div className="h-32 w-1/2 cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group">
+                          <div className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full">
                             <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
                               <Image src="/add.png" alt="bid" width={36} height={36} className="" />
                             </div>
