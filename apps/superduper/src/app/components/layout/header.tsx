@@ -10,6 +10,7 @@ import { FaRegHeart } from 'react-icons/fa';
 import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
 
 import { RealtimeNotif } from '@/app/client/layout';
+import Image from 'next/image';
 import { useAuthStore } from '../auth/useAuthStore';
 
 const ably = new Ably.Realtime(process.env.NEXT_PUBLIC_ABLYKEY || '');
@@ -108,66 +109,63 @@ export default function Header() {
     setFavlength(showHeart());
   }, [value?.favourite]);
   return (
-    <div onClick={() => showNotif && setShowNotif(false)} className=" h-28 flex items-center max-w-[1280px]">
-      <div id="google_translate_element"></div>
-      <div className="flex flex-1 justify-between">
-        <div className="flex items-center gap-4 w-full">
-          <div className="w-[55px] h-[55px] bg-[#03f] text-white flex items-center justify-center font-extrabold text-[24px]">СД</div>
-          <button className="text-[#03f]" onClick={reload}>
-            <p className="font-extrabold text-left">СуперДупер</p>
-            <div className="bg-slate-200 h-0.5 w-full"></div>
-            <p className="font-extrabold">Дуудлага худалдаа</p>
-          </button>
-          <Link href="/client/category" className="ml-10 mr-8 flex gap-1 items-center">
-            Ангилалууд
-            <ChevronDown size={16} color="blue" />
-          </Link>
-          <div className="flex flex-1 items-center bg-[#f0f1f5]">
-            <HiMiniMagnifyingGlass className="bg-[#f0f1f5] h-6 m-1 ml-3" color="blue" size={24} />
-            <input placeholder="Хайх.." value={value?.searchValue} onChange={(e) => value?.setSearchValue(e.target.value)} className="px-2 w-full p-3 bg-[#f0f1f5]" />
-          </div>
-        </div>
-        <div className="flex items-center gap-10 ml-6">
-          <button onClick={sell} className="bg-white hover:border-b-[1px] hover:border-black">
-            Зарах
-          </button>
-          <Link href="/Help" className="bg-white hover:border-b-[1px] hover:border-black">
-            Тусламж
-          </Link>
-          <div className="relative">
-            <FaRegHeart size={24} color="blue" onClick={save} />
+    <div onClick={() => showNotif && setShowNotif(false)} className=" pt-5 flex items-center max-w-[1280px] ">
+      <div className="bg-[#1F1F1FF2] py-4 px-6  max-w-[1280px] rounded-2xl flex-1">
+        <div className="flex  justify-between">
+          <div className="flex items-center gap-16 w-[200px]">
+            <Image src="/logo3.png" width={60} height={30} alt="logo" className="rounded-full w-[30px] h-[40px] " />
 
-            {favlength === 0 ? null : <div className="absolute left-5 bottom-4  bg-blue-700 text-white rounded-full w-5 h-5 text-center text-sm">{favlength}</div>}
-
-
-
-          </div>
-
-          {signin ? (
-            <div className="flex relative p-1">
-              <div onClick={() => setShowNotif(true)} className="flex flex-col items-center hover:bg-slate-50 hover:cursor-pointer">
-                <div className="flex relative">
-                  <UserRoundPen />
-
-                  {isSeenNotif.length > 0 && <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm left-4 text-white">{isSeenNotif.length}</div>}
-                </div>
-                <div>{currentUser?.firstname}</div>
-              </div>
-              {showNotif && (
-                <div className="absolute top-12 left-0 z-50">
-                  {notifications.map((notification) => (
-                    <div key={notification._id} onClick={() => setShowNotif(false)} className={`p-2 hover:cursor-pointer shadow border ${notification.isSeen ? 'bg-slate-100' : 'bg-red-200'}`}>
-                      {notification.message}
-                    </div>
-                  ))}
-                </div>
-              )}
+            <div className="flex flex-1 items-center bg-[#333333] rounded-3xl">
+              <HiMiniMagnifyingGlass className="bg-[#333333] h-8 m-1 ml-3" color="gray" size={24} />
+              <input placeholder="Хайх" value={value?.searchValue} onChange={(e) => value?.setSearchValue(e.target.value)} className="px-2 w-[200px] p-2 rounded-3xl bg-[#333333]" />
             </div>
-          ) : (
-            <Button onClick={() => router.push(`/client/sign-in`)} className="bg-[#03f] rounded-none">
-              Нэвтрэх
-            </Button>
-          )}
+          </div>
+
+          <div className="flex gap-5 items-center">
+            <Link href="/client/category" className="flex gap-1 items-center text-white">
+              Ангилалууд
+              <ChevronDown size={16} color="white" />
+            </Link>
+            <button onClick={sell} className="bg-[#333333] hover:border-b-[1px] hover:border-black text-white">
+              Зарах
+            </button>
+            <Link href="/Help" className="bg-[#333333] hover:border-b-[1px] hover:border-black text-white">
+              Тусламж
+            </Link>
+          </div>
+          <div className="flex gap-4 items-center w-[150px] ">
+            <div className="relative">
+              <FaRegHeart size={24} color="white" onClick={save} />
+
+              {favlength === 0 ? null : <div className="absolute left-5 bottom-4  bg-red-500 text-white rounded-full w-5 h-5 text-center text-sm">{favlength}</div>}
+            </div>
+
+            {signin ? (
+              <div className="flex relative p-1">
+                <div onClick={() => setShowNotif(true)} className="flex flex-col items-center hover:bg-slate-50 hover:cursor-pointer">
+                  <div className="flex relative">
+                    <UserRoundPen />
+
+                    {isSeenNotif.length > 0 && <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm left-4 text-white">{isSeenNotif.length}</div>}
+                  </div>
+                  <div>{currentUser?.firstname}</div>
+                </div>
+                {showNotif && (
+                  <div className="absolute top-12 left-0 z-50">
+                    {notifications.map((notification) => (
+                      <div key={notification._id} onClick={() => setShowNotif(false)} className={`p-2 hover:cursor-pointer shadow border ${notification.isSeen ? 'bg-slate-100' : 'bg-red-200'}`}>
+                        {notification.message}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Button onClick={() => router.push(`/client/sign-in`)} className="bg-[#333333] rounded-none">
+                Нэвтрэх
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </div>
