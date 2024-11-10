@@ -85,6 +85,7 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
 
     window.location.href = url.toString();
   }
+
   function SignInbyGithub() {
     const query = {
       client_id: oauth_github_client_signUp.client_id || '',
