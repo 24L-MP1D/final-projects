@@ -5,7 +5,7 @@ import Head from 'next/head';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="cupcake">
+    <html lang="en" data-theme="fantasy">
       <Head>
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Pangolin&display=swap" rel="stylesheet" />
       </Head>
