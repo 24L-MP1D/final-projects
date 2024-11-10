@@ -6,9 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Food } from '@/lib/types';
 import { Label } from '@radix-ui/react-label';
+import { algoliasearch } from 'algoliasearch';
 import { Heart, Pencil, Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import LeftBar from '../components/leftbar';
+const client = algoliasearch('MLKXEEH303', '8afc4b223bd36c4137f45360abf5dfb0');
 
 export default function Foods() {
   const [order, setOrder] = useState<Food[]>([]);
@@ -53,57 +56,58 @@ export default function Foods() {
     }
   };
 
-  // const addFood = (data: any) => {
-  //   const newFood = {
-  //     name,
-  //     ingredients,
-  //     price,
-  //     photos: imageUrl,
-  //   };
-  //   try {
-  //     const response = fetch('/api/addFood', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(newFood),
-  //     });
-  //     toast('Хоол амжилттай нэмэгдлээ');
-  //     console.log('created');
-  //   } catch (error) {
-  //     console.log('error');
-  //   }
-  // };
-  const addFood = async () => {
+  const addFood = (data: any) => {
     const newFood = {
       name,
       ingredients,
       price,
       photos: imageUrl,
     };
-
     try {
-      const response = await fetch('/api/addFood', {
+      const response = fetch('/api/addFood', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newFood),
       });
-
-      if (response.ok) {
-        await response.json();
-        toast('Successfully added the product');
-        loadlist();
-      } else {
-        toast.error('Failed to add food');
-        console.log('Error:', response.statusText);
-      }
+      client.saveObject({ indexName: 'amidos', body: { name: name, ingredients: ingredients, price: price, photos: imageUrl } });
+      toast('Хоол амжилттай нэмэгдлээ');
+      console.log('created');
     } catch (error) {
-      console.error('Error adding food:', error);
-      toast.error('An error occurred while adding food');
+      console.log('error');
     }
   };
+  // const addFood = async () => {
+  //   const newFood = {
+  //     name,
+  //     ingredients,
+  //     price,
+  //     photos: imageUrl,
+  //   };
+
+  //   try {
+  //     const response = await fetch('/api/addFood', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(newFood),
+  //     });
+
+  //     if (response.ok) {
+  //       await response.json();
+  //       toast('Successfully added the product');
+  //       loadlist();
+  //     } else {
+  //       toast.error('Failed to add food');
+  //       console.log('Error:', response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error adding food:', error);
+  //     toast.error('An error occurred while adding food');
+  //   }
+  // };
 
   const handleEditFood = (selectedItem: Food) => {
     if (selectedItem) {
@@ -174,7 +178,7 @@ export default function Foods() {
       toast.success('Food added to special items!');
     } catch (error) {
       console.error('Error adding special food:', error);
-      toast.error('Error a  dding to special items');
+      toast.error('Error a  adding to special items');
     }
   };
   const handleRemoveSpecial = async (foodId: string) => {
@@ -206,13 +210,13 @@ export default function Foods() {
   const toggleButtonColor = () => {
     setButtonColor((prevColor) => (prevColor === 'bg-slate-600' ? 'bg-red-600' : 'bg-slate-600'));
   };
-  // useEffect(() => {
-  //   fetch('/api/addFood')
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setOrder(data);
-  //     });
-  // }, []);
+  useEffect(() => {
+    fetch('/api/addFood')
+      .then((res) => res.json())
+      .then((data) => {
+        setOrder(data);
+      });
+  }, []);
   useEffect(() => {
     fetch('/api/special')
       .then((res) => res.json())
@@ -223,8 +227,9 @@ export default function Foods() {
   }, []);
 
   return (
-    <div className="text-md mb-10 ">
-      <div className="bg-slate-100">
+    <div className="text-md mb-10 flex">
+      <LeftBar />
+      <div className="bg-slate-100 p-8">
         <div className="flex ">
           <div className="bg-white  p-10 mt-6 ml-10 text-md rounded-lg mx-auto">
             <Dialog>
@@ -351,13 +356,8 @@ export default function Foods() {
                         </Button>
                       </TableCell>
                       <TableCell className="text-center align-middle flex-col ">
-                        <Button>
-                          <Heart
-                            onClick={() => {
-                              handleSpecialFood(order._id);
-                            }}
-                            className={order.isSpecial ? 'fill-red-600' : 'fill-white'}
-                          />
+                        <Button onClick={() => handleSpecialToggle(order._id, order.isSpecial)}>
+                          <Heart className={order.isSpecial ? 'fill-red-600' : 'fill-white'} />
                         </Button>
                       </TableCell>
                     </TableRow>

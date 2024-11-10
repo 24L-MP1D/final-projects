@@ -12,7 +12,7 @@ export default function LeftBar() {
 }
 function Component1() {
   return (
-    <div className="dropdown bg-white text-black pl-6 ml-6 my-6 w-[400px]">
+    <div className="dropdown bg-white text-black pl-6 ml-6 my-6 w-[400px] p-8">
       <Sidebar className="dropdown">
         <div className="text-3xl">AMIDO'S</div>
         <Sidebar.Items className="">
