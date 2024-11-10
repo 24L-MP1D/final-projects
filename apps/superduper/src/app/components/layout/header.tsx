@@ -138,16 +138,13 @@ export default function Header() {
           <div className="flex gap-4 items-center w-[150px] ">
             <div className="relative">
               <FaRegHeart size={24} color="white" onClick={save} />
-
               {favlength === 0 ? null : <div className="absolute left-5 bottom-4  bg-red-500 text-white rounded-full w-5 h-5 text-center text-sm">{favlength}</div>}
             </div>
-
             {signin ? (
               <div className="flex relative p-1">
                 <div onClick={() => setShowNotif(true)} className="flex flex-col items-center hover:bg-slate-50 hover:cursor-pointer">
                   <div className="flex relative">
                     <UserRoundPen />
-
                     {isSeenNotif.length > 0 && <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm left-4 text-white">{isSeenNotif.length}</div>}
                   </div>
                   <div>{currentUser?.firstName}</div>

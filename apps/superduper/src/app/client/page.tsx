@@ -19,10 +19,6 @@ export default function Index() {
   const [progress, setProgress] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
 
-  interface product {
-    image: string;
-  }
-
   const loadProducts = async () => {
     try {
       const response = await fetch('/api/products', {
