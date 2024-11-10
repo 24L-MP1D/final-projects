@@ -2,12 +2,22 @@ import { AuthProvider } from '@/components/components/AuthProvider';
 import './global.css';
 
 import { ToastProvider } from '@/components/providers/toaster-provider';
-import { Open_Sans } from 'next/font/google';
 
-const openSans = Open_Sans({
-  subsets: ['latin', 'cyrillic-ext'],
-  weight: ['400', '500', '600', '700'],
-});
+// const myFont = localFont({
+//   src: [
+//     {
+//       path: '/fonts/Pangolin-Regular.ttf',
+//       weight: '400',
+//       style: 'normal',
+//     },
+//     {
+//       path: '/fonts/Inter-VariableFont_opsz,wght.ttf',
+//       weight: '700',
+//       style: 'normal',
+//     },
+//   ],
+//   variable: '--my-font',
+// });
 
 export const metadata = {
   title: 'verse.mn',

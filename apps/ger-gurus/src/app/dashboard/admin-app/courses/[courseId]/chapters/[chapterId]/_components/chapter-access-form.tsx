@@ -1,5 +1,4 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormDescription, FormField, FormItem } from '@/components/ui/form';
 import { cn } from '@/lib/utils';
@@ -52,10 +51,10 @@ export const ChapterAccessForm: React.FC<ChapterAccessFormProps> = ({ initialDat
     }
   }
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="mt-6 border shadow-xl rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Бүлгийн хандалт
-        <Button variant="ghost" onClick={toggleEdit}>
+        <button className="btn btn-ghost" onClick={toggleEdit}>
           {isEditing && <>Болих</>}
           {!isEditing && (
             <>
@@ -63,7 +62,7 @@ export const ChapterAccessForm: React.FC<ChapterAccessFormProps> = ({ initialDat
               Хандалтыг засах
             </>
           )}
-        </Button>
+        </button>
       </div>
 
       {!isEditing && (
@@ -81,7 +80,7 @@ export const ChapterAccessForm: React.FC<ChapterAccessFormProps> = ({ initialDat
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                   <FormControl>
-                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} className="checkbox checkbox-primary" />
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormDescription>Хэрэв та энэ бүлгийг урьдчилан харахыг үнэгүй болгохыг хүсвэл энэ хайрцгийг тэмдэглэнэ үү.</FormDescription>
@@ -90,9 +89,9 @@ export const ChapterAccessForm: React.FC<ChapterAccessFormProps> = ({ initialDat
               )}
             />
             <div className="flex items-center gap-2">
-              <Button disabled={!isValid || isSubmitting} type="submit">
+              <button disabled={!isValid || isSubmitting} type="submit" className="btn btn-primary btn-outline">
                 Хадгалах
-              </Button>
+              </button>
             </div>
           </form>
         </Form>

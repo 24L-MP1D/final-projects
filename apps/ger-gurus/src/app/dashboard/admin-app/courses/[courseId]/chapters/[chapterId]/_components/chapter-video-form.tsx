@@ -1,7 +1,7 @@
 'use client';
 import { FileUpload } from '@/components/file-upload';
-import { Button } from '@/components/ui/button';
 import { fetcher } from '@/lib/fetcher';
+import MuxPlayer from '@mux/mux-player-react';
 import { Pencil, PlusCircle, Video } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -16,11 +16,11 @@ interface ChapterVideoFormProps {
   initialData: {
     _id: string;
     videoUrl?: string;
-    muxData?: any;
     courseId: string;
   };
+  playbackId: string;
 }
-export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData }) => {
+export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData, playbackId }) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => setIsEditing((x) => !x);
   const router = useRouter();
@@ -37,10 +37,10 @@ export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData 
   }
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="mt-6 border rounded-md p-4 shadow-xl">
       <div className="font-medium flex items-center justify-between">
         Бүлгийн видео
-        <Button variant="ghost" onClick={toggleEdit}>
+        <button className="btn btn-ghost" onClick={toggleEdit}>
           {isEditing && <>Болих</>}
 
           {!isEditing && !initialData.videoUrl && (
@@ -56,7 +56,7 @@ export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData 
               Видеог засах
             </>
           )}
-        </Button>
+        </button>
       </div>
       {!isEditing &&
         (!initialData.videoUrl ? (
@@ -64,7 +64,9 @@ export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData 
             <Video className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="relative aspect-video mt-2">Видео бүртгэгдсэн!</div>
+          <div className="relative !aspect-video mt-2">
+            <MuxPlayer playbackId={playbackId || ''} />
+          </div>
         ))}
 
       {isEditing && (

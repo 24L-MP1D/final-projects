@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { ChapterAccessForm } from './_components/chapter-access-form';
+import { ChapterActions } from './_components/chapter-actions';
 import { ChapterDescriptionForm } from './_components/chapter-description-form';
 import { ChapterTitleForm } from './_components/chapter-title-form';
 import { ChapterVideoForm } from './_components/chapter-video-form';
@@ -19,10 +20,11 @@ export default async function Page({ params }: { params: Params }) {
     _id: new ObjectId(chapterId),
     courseId: new ObjectId(courseId),
   });
-  // include: {muxData: true}
   if (!chapter) {
     return redirect('/');
   }
+
+  const muxData = await db.collection('muxData').findOne({ chapterId });
 
   interface Chapter {
     _id: string; // Converted to string
@@ -45,45 +47,63 @@ export default async function Page({ params }: { params: Params }) {
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `(${completedFields}/${totalFields})`;
+  const isComplete = requiredFields.every(Boolean);
 
   return (
-    <main className="p-6">
-      <div className="flex items-center justify-between">
-        <Link href={`/admin-app/courses/${courseId}`} className="flex items-center text-sm hover:opacity-75 transition mb-6">
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Курсын тохиргоонд буцах
-        </Link>
-      </div>
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-medium">Бүлэг үүсгэх</h1>
-          <span className="text-sm text-slate-700">Бүх талбарыг бөглөнө үү {completionText}</span>
+    <>
+      {!chapter.isPublished && (
+        <div role="alert" className="alert alert-warning flex">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+            />
+          </svg>
+          <span className="text-sm">Энэхүү нэгж хичээл нь нийтлэгдээгүй байна. Вебсайтын хичээл хэсэгт харагдахгүй байх болно.</span>
         </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-        <div>
-          <div className="flex items-center gap-x-2">
-            <IconBadge icon={LayoutDashboard} />
-            <h2 className="text-xl">Бүлгээ тохируулах</h2>
+      )}
+
+      <main className="p-6">
+        <div className="flex items-center justify-between max-w-2xl">
+          <Link href={`/admin-app/courses/${courseId}`} className="flex items-center text-sm  transition mb-6 link link-primary hover:scale-125">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Курсын тохиргоонд буцах
+          </Link>
+        </div>
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-2xl font-medium">Бүлэг үүсгэх</h1>
+            <span className="text-sm text-slate-700">Бүх талбарыг бөглөнө үү {completionText}</span>
           </div>
-          <ChapterTitleForm initialData={chapterWithPlainId} />
-          <ChapterDescriptionForm initialData={chapterWithPlainId} />
+          <ChapterActions disabled={!isComplete} courseId={courseId} chapterId={chapterId} isPublished={chapter.isPublished} />
         </div>
-        <div>
-          <div className="flex items-center gap-x-2">
-            <IconBadge icon={Eye} />
-            <h2 className="text-xl">Хандалтын тохиргоо</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={LayoutDashboard} />
+              <h2 className="text-xl">Бүлгээ тохируулах</h2>
+            </div>
+            <ChapterTitleForm initialData={chapterWithPlainId} />
+            <ChapterDescriptionForm initialData={chapterWithPlainId} />
           </div>
-          <ChapterAccessForm initialData={chapterWithPlainId} />
-        </div>
-        <div>
-          <div className="flex items-center gap-x-2">
-            <IconBadge icon={Video} />
-            <h2 className="text-xl">Видео нэмэх</h2>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={Video} />
+              <h2 className="text-xl">Видео нэмэх</h2>
+            </div>
+            <ChapterVideoForm initialData={chapterWithPlainId} playbackId={muxData?.playbackId} />
           </div>
-          <ChapterVideoForm initialData={chapterWithPlainId} />
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={Eye} />
+              <h2 className="text-xl">Хандалтын тохиргоо</h2>
+            </div>
+            <ChapterAccessForm initialData={chapterWithPlainId} />
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }

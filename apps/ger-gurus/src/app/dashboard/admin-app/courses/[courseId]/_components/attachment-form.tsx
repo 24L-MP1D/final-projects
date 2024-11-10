@@ -1,6 +1,5 @@
 'use client';
 import { FileUpload } from '@/components/file-upload';
-import { Button } from '@/components/ui/button';
 import { fetcher } from '@/lib/fetcher';
 import axios from 'axios';
 import { File, Loader2, PlusCircle, X } from 'lucide-react';
@@ -64,7 +63,7 @@ export const AttachmentForm: React.FC<AttachmentFormProps> = ({ initialData }) =
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Курсын хавсралтууд
-        <Button variant="ghost" onClick={toggleEdit}>
+        <button className="btn btn-ghost hover:scale-105 transition" onClick={toggleEdit}>
           {isEditing && <>Болих</>}
           {!isEditing && (
             <>
@@ -72,7 +71,7 @@ export const AttachmentForm: React.FC<AttachmentFormProps> = ({ initialData }) =
               Файл нэмэх
             </>
           )}
-        </Button>
+        </button>
       </div>
       {!isEditing && (
         <>

@@ -130,7 +130,7 @@ export default async function Page({ params }: { params: Params }) {
     })),
   };
 
-  const requiredFields = [course.title, course.description, course.imageUrl, course.price, course.chapters];
+  const requiredFields = [course.title, course.description, course.imageUrl, course.price, course.chapters?.[0], course.attachments?.[0]];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `(${completedFields}/${totalFields})`;
@@ -143,15 +143,15 @@ export default async function Page({ params }: { params: Params }) {
           <span className="text-sm text-slate-700">Бүх талбарыг бөглөнө үү {completionText}</span>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
         <div>
           <div className="flex items-center gap-x-2">
             <IconBadge icon={LayoutDashboard} />
             <h2 className="text-xl">Курсээ тохируулах</h2>
           </div>
           <TitleForm initialData={courseWithPlainId} />
-          <DescriptionForm initialData={courseWithPlainId} />
           <ImageForm initialData={courseWithPlainId} />
+          <DescriptionForm initialData={courseWithPlainId} />
         </div>
         <div className="space-y-6">
           <div>
@@ -163,14 +163,14 @@ export default async function Page({ params }: { params: Params }) {
               <ChaptersForm initialData={courseWithPlainId} />
             </div>
           </div>
-          <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={CircleDollarSign} />
-              <h2 className="text-xl">Курсаа худалдах</h2>
-            </div>
-            <PriceForm initialData={courseWithPlainId} />
+        </div>
+        <div>
+          <div className="flex items-center gap-x-2">
+            <IconBadge icon={CircleDollarSign} />
+            <h2 className="text-xl">Курсаа худалдах</h2>
           </div>
-          <div>
+          <PriceForm initialData={courseWithPlainId} />
+          <div className="mt-6">
             <div className="flex items-center gap-x-2">
               <IconBadge icon={File} />
               <h2 className="text-xl">Нөөц материал ба хавсралтууд</h2>
