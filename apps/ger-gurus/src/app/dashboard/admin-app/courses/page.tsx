@@ -40,10 +40,11 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="max-w-[1000px] rounded-3xl p-10 backdrop-blur-[4px] bg-[rgba(255,255,255,0.11)] shadow-2xl">
+    <div className="max-w-[1000px] ">
       <Link href="/admin-app/courses/create">
-        <button className="btn btn-primary hover:bg-transparent mb-8 text-base">Шинэ хичээл нэмэх</button>
+        <button className="btn btn-primary hover:bg-transparent my-8 text-base">Шинэ хичээл нэмэх</button>
       </Link>
+
       <Table className="">
         <TableCaption>Та сургуулийн сургалтуудыг үүсгэж, удирдаарай.</TableCaption>
         <TableHeader>
@@ -61,9 +62,17 @@ export default function Page() {
         <TableBody>
           {courses.map((course) => (
             <TableRow key={course._id}>
-              <TableCell className="font-medium"> {course.imageUrl && <Image src={course.imageUrl} height={80} width={80} alt="thumbnail" />}</TableCell>
+              <TableCell className="font-medium">
+                <Link href={`/admin-app/courses/${course._id}`}>
+                  {course.imageUrl && (
+                    <div className="aspect-auto rounded-md overflow-hidden">
+                      <Image src={course.imageUrl} height={80} width={80} alt="thumbnail" className="object-cover hover:scale-125 transition" />
+                    </div>
+                  )}{' '}
+                </Link>
+              </TableCell>
               <TableCell>
-                <a className="link link-primary" href={`/admin-app/courses/${course._id}`}>
+                <a className="link link-primary hover:text-lg transition" href={`/admin-app/courses/${course._id}`}>
                   {course.title}
                 </a>
               </TableCell>

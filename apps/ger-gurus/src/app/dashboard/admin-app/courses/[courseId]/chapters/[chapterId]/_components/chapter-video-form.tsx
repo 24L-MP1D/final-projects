@@ -1,6 +1,5 @@
 'use client';
 import { FileUpload } from '@/components/file-upload';
-import { Button } from '@/components/ui/button';
 import { fetcher } from '@/lib/fetcher';
 import MuxPlayer from '@mux/mux-player-react';
 import { Pencil, PlusCircle, Video } from 'lucide-react';
@@ -38,10 +37,10 @@ export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData,
   }
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="mt-6 border rounded-md p-4 shadow-xl">
       <div className="font-medium flex items-center justify-between">
         Бүлгийн видео
-        <Button variant="ghost" onClick={toggleEdit}>
+        <button className="btn btn-ghost" onClick={toggleEdit}>
           {isEditing && <>Болих</>}
 
           {!isEditing && !initialData.videoUrl && (
@@ -57,7 +56,7 @@ export const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({ initialData,
               Видеог засах
             </>
           )}
-        </Button>
+        </button>
       </div>
       {!isEditing &&
         (!initialData.videoUrl ? (
