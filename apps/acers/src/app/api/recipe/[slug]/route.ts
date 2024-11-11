@@ -1,0 +1,90 @@
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { DB } from '../../../lib/db';
+
+const JWT_SECRET = process.env.JWT_SECRET || '';
+
+async function verifyToken(request: Request) {
+  const token = request.headers.get('authtoken');
+  if (!token) {
+    throw new Error('Unauthorized');
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
+    if (typeof decoded === 'string' || !decoded.userId) {
+      throw new Error('Invalid token');
+    }
+    return decoded.userId;
+  } catch (error) {
+    throw new Error('Invalid token');
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+
+    const body = await request.json();
+    const date = new Date();
+    const { title, description, prepTime, servings, ingredients, instructions, nutritionFacts, category, difficulty, availability, images, video, tags } = body;
+
+    const res = await DB.collection('recipes').insertOne({
+      title,
+      description,
+      prepTime,
+      servings,
+      ingredients,
+      instructions,
+      nutritionFacts,
+      category,
+      difficulty,
+      availability,
+      images,
+      video,
+      tags,
+      visits: 0,
+      createdAt: date.toDateString(),
+      updatedAt: date.toDateString(),
+<<<<<<< HEAD:apps/acers/src/app/api/recipe/[slug]/route.ts
+=======
+      comment,
+>>>>>>> main:apps/acers/src/app/api/recipe/[id]/route.ts
+    });
+
+    return new Response(JSON.stringify({ res: 'Succeed' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+  } catch (e) {
+    console.error(e);
+    return new Response(JSON.stringify({}), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+<<<<<<< HEAD:apps/acers/src/app/api/recipe/[slug]/route.ts
+export async function GET(req: Request, { params }: { params: { slug: string } }) {
+  const { slug } = await params;
+
+  console.log('Received slug:', slug);
+=======
+export async function GET(request: Request, { params }: { params: { id: string } | any }) {
+  console.log('Fetching recipe with ID:', params?.id);
+
+  try {
+    if (params && params?.id) {
+      const { id } = params;
+>>>>>>> main:apps/acers/src/app/api/recipe/[id]/route.ts
+
+  const recipe = await DB.collection('recipes').findOne({ title: slug });
+
+  if (!recipe) {
+    console.log('Recipe not found for title:', slug);
+    return new Response(JSON.stringify({ message: 'Recipe not found' }), { status: 404 });
+  }
+
+  const comments = await DB.collection('comments').find({ recipeId: recipe._id }).toArray();
+
+  return new Response(JSON.stringify({ recipe, comments }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}

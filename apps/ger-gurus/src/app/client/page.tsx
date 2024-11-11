@@ -1,13 +1,12 @@
 'use client';
 
-import { HomePageInfo } from '@/components/HomePageInfo';
-import { SchoolPageHeader } from '@/components/SchoolPageHeader';
+import ClientHeader from '@/components/ClientHeader';
 
 export default function Page() {
   return (
     <main>
-      <SchoolPageHeader />
-      <HomePageInfo />
+      <ClientHeader />
+      <div className="h-[2000px] w-auto"></div>
     </main>
   );
 }

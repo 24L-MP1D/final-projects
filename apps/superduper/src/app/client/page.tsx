@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import dayjs from 'dayjs';
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Swiper as SwiperType } from 'swiper';
 import { Autoplay, Pagination } from 'swiper/modules';
@@ -13,18 +14,29 @@ import { ProductItem } from '../components/productItem';
 import { RealtimeNotif } from './layout';
 
 export default function Index() {
-  const [products, setProducts] = useState<ProductType[]>([]);
   const [isClick, setClick] = useState(false);
   const value = useContext(RealtimeNotif);
+  const [swiperProducts, setSwiperProducts] = useState<ProductType[]>([]);
   const [progress, setProgress] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
 
+  const [count, setCount] = useState(15);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  interface product {
+    image: string;
+  }
+
+
+
   const loadProducts = async () => {
     try {
+      setLoading(true);
       const response = await fetch('/api/products', {
         method: 'PUT',
         body: JSON.stringify({
           searchValue: value?.searchValue,
+          limit: count,
         }),
         headers: {
           'Content-type': 'application/json',
@@ -32,7 +44,8 @@ export default function Index() {
       });
       const data = await response.json();
 
-      setProducts(data);
+      value?.setProducts(data);
+      setLoading(false);
     } catch (err) {
       console.error(err);
     }
@@ -51,12 +64,17 @@ export default function Index() {
   };
 
   // Favourite codes
-
+  const loadSwiperProducts = async () => {
+    const response = await fetch('/api/products');
+    const data = await response.json();
+    setSwiperProducts(data);
+  };
   useEffect(() => {
     const storage = localStorage.getItem('favourites');
     if (storage) value?.setFavourite(JSON.parse(storage));
+    loadSwiperProducts();
     loadProducts();
-  }, [value?.searchValue]);
+  }, [value?.searchValue, page]);
 
   const handleFavourite = (productId: string) => {
     let result: string[] = [];
@@ -73,7 +91,15 @@ export default function Index() {
 
     value?.setFavourite(result);
   };
-
+  if (!value?.products.length)
+    return (
+      <div className="min-h-screen">
+        <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
+          <Image src={'/images/spinner.svg'} alt="loading" width={100} height={100} />
+          <div className="font-bold text-3xl">Loading...</div>
+        </div>
+      </div>
+    );
   return (
     <div className="max-w-[1280px] mx-auto w-full">
       <div className="grid grid-cols-2 mt-0.5">
@@ -97,7 +123,7 @@ export default function Index() {
               height: '700px',
             }}
           >
-            {products.slice(0, 6).map((product, index) => (
+            {swiperProducts.slice(0, 6).map((product, index) => (
               <SwiperSlide key={index} className="relative ">
                 <Image loading="lazy" alt={`Slide ${index + 1}`} src={product.frontImage} width={1280} height={900} className="w-full h-full object-cover rounded-xl" />
                 <div className="absolute top-0 left-0 w-1/2  rounded-xl h-full flex flex-col justify-center items-center bg-black bg-opacity-50 text-white p-5">
@@ -106,18 +132,18 @@ export default function Index() {
                       <div className="flex gap-20 flex-1">
                         <div className="grid gap-5">
                           <div className="text-[#565B60] flex gap-1 text-sm">
-                            <div className="text-white">{dayjs(products?.[progress]?.startDate).format('YYYY-MM-DD')}</div>
+                            <div className="text-white">{dayjs(value?.products?.[progress]?.startDate).format('YYYY-MM-DD')}</div>
                             <div>-</div>
-                            <div className="text-white">{dayjs(products?.[progress]?.endDate).format('YYYY-MM-DD')}</div>
+                            <div className="text-white">{dayjs(value?.products?.[progress]?.endDate).format('YYYY-MM-DD')}</div>
                           </div>
-                          <div className="text-white text-5xl font-semibold">{products?.[progress]?.productName}</div>
-                          <div className="text-white text-sm">{products?.[progress]?.additionalInformation}</div>
-                          <div className="text-white text-sm">{products?.[progress]?.category}</div>
+                          <div className="text-white text-5xl font-semibold">{value?.products?.[progress]?.productName}</div>
+                          <div className="text-white text-sm">{value?.products?.[progress]?.additionalInformation}</div>
+                          <div className="text-white text-sm">{value?.products?.[progress]?.category}</div>
                         </div>
                       </div>
 
                       <div className="flex w-[300px] gap-2 items-center">
-                        {Array.from({ length: products.length })
+                        {Array.from({ length: swiperProducts.length })
                           .slice(0, 6)
                           .map((_, index) => (
                             <div key={index} className="relative h-[7px] w-full bg-gray-300 rounded-full">
@@ -138,10 +164,13 @@ export default function Index() {
                 <div className="absolute top-0 right-0 w-1/2  rounded-xl h-full flex flex-col justify-center items-center  text-white p-5">
                   <div className="p-3 rounded-3xl h-fit bg-white/10 backdrop-blur-xl w-[450px]  mt-12 md:mt-0">
                     <div className="py-3 px-3">
-                      <Button className="rounded-2xl border-8 w-[400px] h-[50px] border-[#f8f3f8] bg-[#79b3f4] ">Хялбар үйлчилгээ</Button>
+                      <Button className="rounded-2xl border-8 w-[400px] h-[50px] border-[#f8f3f8] bg-[#79b3f4] hover:bg-[#79b3f4] hover:cursor-auto">Хялбар үйлчилгээ</Button>
                       <div className="bg-[#f4f5fa] rounded-2xl mt-3 p-4 ">
                         <div className="grid grid-cols-2">
-                          <div className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full">
+                          <Link
+                            href={`/client/productDetails/${product._id}`}
+                            className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full"
+                          >
                             <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
                               <Image src="/bid.png" alt="bid" width={36} height={36} className="" />
                             </div>
@@ -149,8 +178,11 @@ export default function Index() {
                               Дуудлага худалдаанд оролцох
                               <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-1" />
                             </div>
-                          </div>
-                          <div className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full">
+                          </Link>
+                          <Link
+                            href={'/chatbot'}
+                            className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full"
+                          >
                             <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
                               <Image src="/chat.png" alt="bid" width={36} height={36} className="" />
                             </div>
@@ -158,8 +190,11 @@ export default function Index() {
                               Чат бот-оос асуух
                               <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-0.5" size={18} />
                             </div>
-                          </div>
-                          <div className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full">
+                          </Link>
+                          <Link
+                            href={`/client/addProducts`}
+                            className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full"
+                          >
                             <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
                               <Image src="/add.png" alt="bid" width={36} height={36} className="" />
                             </div>
@@ -167,8 +202,11 @@ export default function Index() {
                               Дуудлага худалдаа явуулах
                               <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-1" />
                             </div>
-                          </div>
-                          <div className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full">
+                          </Link>
+                          <Link
+                            href={`/client/addProducts`}
+                            className="h-32 cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full"
+                          >
                             <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
                               <Image src="/add.png" alt="bid" width={36} height={36} className="" />
                             </div>
@@ -176,7 +214,7 @@ export default function Index() {
                               Дуудлага худалдаа явуулах
                               <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-1" />
                             </div>
-                          </div>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -188,10 +226,24 @@ export default function Index() {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-10 mt-[30px] w-full">
-        {products.slice(0, 20).map((product) => (
+        {value?.products.slice(0, 20).map((product) => (
           <ProductItem isClick={isClick} product={product} favourite={value?.favourite || []} key={product._id} onClickFavourite={() => handleFavourite(product._id)} />
         ))}
       </div>
+      {value.products.length >= count * page && (
+        <div className="flex justify-center mt-10">
+          <Button
+            disabled={loading}
+            onClick={() => {
+              setPage(page + 1);
+            }}
+            className="flex items-center gap-1"
+          >
+            {loading && <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
+            <div> Load more</div>
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
