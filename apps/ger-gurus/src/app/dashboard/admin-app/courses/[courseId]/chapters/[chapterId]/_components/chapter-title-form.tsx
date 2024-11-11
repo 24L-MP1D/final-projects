@@ -1,5 +1,4 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -51,10 +50,10 @@ export const ChapterTitleForm: React.FC<ChapterTitleFormProps> = ({ initialData 
     }
   }
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="mt-6 border rounded-md p-4 shadow-xl">
       <div className="font-medium flex items-center justify-between">
         Бүлгийн нэр
-        <Button variant="ghost" onClick={toggleEdit}>
+        <button className="btn btn-ghost hover:text-primary" onClick={toggleEdit}>
           {isEditing && <>Болих</>}
           {!isEditing && (
             <>
@@ -62,7 +61,7 @@ export const ChapterTitleForm: React.FC<ChapterTitleFormProps> = ({ initialData 
               Нэр засах
             </>
           )}
-        </Button>
+        </button>
       </div>
       {!isEditing && <p className="text-sm mt-2">{initialData.title}</p>}
       {isEditing && (
@@ -74,16 +73,16 @@ export const ChapterTitleForm: React.FC<ChapterTitleFormProps> = ({ initialData 
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Курсын танилцуулга" disabled={isSubmitting} {...field} />
+                    <Input placeholder="Курсын танилцуулга" disabled={isSubmitting} {...field} className="input input-primary input-bordered" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <div className="flex items-center gap-2">
-              <Button disabled={!isValid || isSubmitting} type="submit">
+              <button disabled={!isValid || isSubmitting} type="submit" className="btn btn-primary btn-outline">
                 Хадгалах
-              </Button>
+              </button>
             </div>
           </form>
         </Form>

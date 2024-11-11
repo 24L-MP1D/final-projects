@@ -1,7 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import Link from 'next/link';
@@ -38,7 +37,7 @@ export default function Page() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto ml-20 flex items-center justify-center h-full w-full">
+    <div className="max-w-5xl mx-auto flex items-center justify-center h-full w-full">
       <div>
         <h1 className="text-2xl">Та хичээлдээ нэр өгнө үү</h1>
         <p>Хичээлийн нэрийг дараа сольж болно</p>
@@ -50,9 +49,9 @@ export default function Page() {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Хичээлийн нэр</FormLabel>
+                  <FormLabel className="mr-4">Хичээлийн нэр :</FormLabel>
                   <FormControl>
-                    <Input placeholder="Жишээ: Вэб хөгжүүлэлт" disabled={isSubmitting} {...field} />
+                    <input placeholder="Жишээ: Вэб хөгжүүлэлт" disabled={isSubmitting} {...field} className="input input-primary input-bordered input-sm" />
                   </FormControl>
                   <FormDescription>Та энэ хичээлд юуны талаар заах вэ?</FormDescription>
                   <FormMessage />
@@ -65,9 +64,9 @@ export default function Page() {
                   Cancel
                 </Button>
               </Link>
-              <Button type="submit" disabled={!isValid || isSubmitting}>
+              <button type="submit" disabled={!isValid || isSubmitting} className="btn btn-primary">
                 Continue
-              </Button>
+              </button>
             </div>
           </form>
         </Form>

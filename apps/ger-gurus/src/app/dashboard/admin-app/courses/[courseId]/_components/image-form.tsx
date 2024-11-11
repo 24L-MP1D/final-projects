@@ -1,5 +1,4 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import axios from 'axios';
 import { ImageIcon, Pencil, PlusCircle } from 'lucide-react';
@@ -71,7 +70,7 @@ export const ImageForm: React.FC<ImageFormProps> = ({ initialData }) => {
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Курсын зураг
-        <Button variant="ghost" onClick={toggleEdit}>
+        <button className="btn btn-ghost hover:scale-105 transition" onClick={toggleEdit}>
           {isEditing && <>Цуцлах</>}
           {!isEditing && !initialData.imageUrl && (
             <>
@@ -85,7 +84,7 @@ export const ImageForm: React.FC<ImageFormProps> = ({ initialData }) => {
               Зураг засах
             </>
           )}
-        </Button>
+        </button>
       </div>
       {!isEditing &&
         (!initialData.imageUrl ? (
@@ -100,12 +99,13 @@ export const ImageForm: React.FC<ImageFormProps> = ({ initialData }) => {
       {isEditing && (
         <div>
           <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Input id="picture" disabled={loading} type="file" onChange={handleUpload} />
+            <Input id="picture" disabled={loading} type="file" onChange={handleUpload} className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
+
             <div className="text-sm italic">16:9 харьцаа зөвлөмж болгож байна</div>
           </div>
-          <Button type="submit" disabled={loading} onClick={() => onSubmit({ imageUrl: imageUrl })}>
-            {loading ? 'Хадгалж байна...' : 'Хадгалах'}
-          </Button>
+          <button type="submit" disabled={loading} onClick={() => onSubmit({ imageUrl: imageUrl })} className="btn btn-primary btn-outline">
+            {loading ? 'Ачаалж байна...' : 'Хадгалах'}
+          </button>
         </div>
       )}
     </div>
