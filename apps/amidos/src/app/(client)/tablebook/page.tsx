@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
@@ -135,6 +136,8 @@ function TableBook() {
         <div>Loading tables...</div>
       ) : (
         <div className="relative h-[800px] w-[800px]">
+          <Image src={"/BackroundImage.jpg"} width={1600} height={800} alt="Zaalnii plan zurag"
+            className="max-w-screen-2xl h-[850px]" />
           {tables.map((table) => (
             <div style={{ top: table.coordinate.y, left: table.coordinate.x }}
               className={`absolute w-20 h-20 rounded-full ${selectedTable === table._id ? "bg-[#52071B] text-white" : "bg-yellow-400 hover:bg-yellow-600"}`}
