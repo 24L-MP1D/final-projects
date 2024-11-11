@@ -1,91 +1,107 @@
 'use client';
 
+import { useAuthStore } from '@/app/components/auth/useAuthStore';
 import { ProductType } from '@/components/productType';
 import { ProfileAside } from '@/components/profileAside';
-import { BackgroundGradient } from '@/components/ui/background-gradiant';
 import { Button } from '@/components/ui/button';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/Table';
+import dayjs from 'dayjs';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function App() {
+  const [page, setPage] = useState(1);
   const [products, setProducts] = useState<ProductType[]>([]);
+  const [loading, setLoading] = useState(false);
   const search = useSearchParams();
   const queryValue = search.get('seller') || '';
-
+  const currentUser = useAuthStore((state) => state.currentUser);
+  const [count, setCount] = useState(8);
   const loadProduct = async () => {
     try {
-      const response = await fetch('/api/products');
+      setLoading(true);
+      const response = await fetch('/api/products', {
+        method: 'PUT',
+        body: JSON.stringify({ userId: currentUser?._id, limit: count }),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
 
       const data = await response.json();
 
       setProducts(data);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
+
   useEffect(() => {
-    loadProduct();
-  }, []);
+    if (currentUser) loadProduct();
+  }, [currentUser, page]);
+  if (!products.length)
+    return (
+      <div className="min-h-screen">
+        <ProfileAside queryValue={queryValue} />
+
+        <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
+          <div className="text-3xl">Одоогоор бүтээгдэхүүн байхгүй байна.</div>
+        </div>
+      </div>
+    );
+
   return (
     <div className="min-h-screen bg-slate-200 flex gap-5">
       <ProfileAside queryValue={queryValue} />
-      <div className="flex-1 bg-white px-4 py-8">
-        <div className="flex mb-6">
-          <div className="flex-1">Барааны тодорхойлолт</div>
-          <div className="flex-1 flex justify-center">Төлөв</div>
-          <div className="flex-1 text-center">Үйлдэл</div>
-        </div>
-        <div className="flex flex-col">
-          {products.map((product) => (
-            <div key={product._id} className="flex-1 py-4 border-t flex items-center">
-              <div className="flex gap-2 items-center flex-1">
-                <div>
-                  <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900">
-                    <Image src={product.frontImage} alt="jordans" height={400} width={400} className="object-cover w-[150px] h-[150px]" />
-                    <div className="flex flex-col gap-2">
-                      <div>Улс: {product.Country}</div>
-                      <div>Бүтээгдэхүүний нэр: {product.productName}</div>
-                      <div>Ангилал: {product.category}</div>
-                    </div>
-                  </BackgroundGradient>
+      <div className="flex-1 bg-white">
+        <Table>
+          <TableHeader>
+            <TableRow className="flex w-full whitespace-nowrap py-3 bg-slate-200">
+              <TableHead className="flex-1">Бүтээгдэхүүний нэр</TableHead>
+              <TableHead className="flex-1">Бүтээгдэхүүний зураг</TableHead>
+              <TableHead className="flex-1">Төлөв</TableHead>
+              <TableHead className="flex-1">Төлбөр</TableHead>
+              <TableHead className="flex-1">Эхлэх огноо</TableHead>
+              <TableHead className="flex-1">Дуусах огноо</TableHead>
+              <TableHead className="flex-1">Үнийн санал</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {products.map((product) => {
+              return (
+                <div className="border">
+                  <TableRow className="flex items-center text-lg hover:cursor-pointer whitespace-nowrap border-b-2 border-solid">
+                    <TableCell className="font-medium flex-1 text-wrap">{product.productName}</TableCell>
+                    <TableCell className="font-medium flex-1 flex items-center justify-center">
+                      <Image src={product.frontImage || '/'} width={500} height={500} className="w-28 h-28 object-cover rounded-full" alt="zurag" />
+                    </TableCell>
+                    <TableCell className="flex-1 text-center">{product.status}</TableCell>
+                    <TableCell className="flex-1 text-center">Qpay</TableCell>
+                    <TableCell className="flex-1 text-center">{dayjs(product.startDate).format('YYYY-MM-DD')}</TableCell>
+                    <TableCell className="flex-1 text-center">{dayjs(product.endDate).format('YYYY-MM-DD')}</TableCell>
+                    <TableCell className="flex-1 text-center">{product.startBid} ₮</TableCell>
+                  </TableRow>
                 </div>
-              </div>
-              <div className="flex-1">
-                <div className="flex flex-col gap-1 max-w-[500px] mx-auto text-2xl">
-                  <div className="flex gap-2 items-center justify-center w-full text-[#00253e]">
-                    <div className="p-0.5 border-2 border-[#00253e] rounded-full">
-                      <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
-                    </div>
-                    <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
-                    <div className={`p-0.5 rounded-full ${product.status == 'denied' && 'border-2'}`}>
-                      <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
-                    </div>
-                    <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
-                    <div className="p-0.5 rounded-full">
-                      <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
-                    </div>
-                    <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
-                    <div className="p-0.5 rounded-full">
-                      <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
-                    </div>
-                  </div>
-                  <div className="flex gap-8 ml-4 items-center ">
-                    <div>Хүлээн авсан</div>
-                    {product.status == 'denied' && <div className="text-[#f3f3f3]">Хаагдсан</div>}
-                    {product.status !== 'denied' && <div className="text-[#f3f3f3]">Хүлээн зөвшөөрсөн</div>}
-                    {product.status !== 'denied' && <div className="text-[#f3f3f3]">Жагсаалтад орсон</div>}
-                    {product.status !== 'denied' && <div className="text-[#f3f3f3]">Худалдсан</div>}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex-1 flex justify-center">
-                <Button>Дэлгэрэнгүй</Button>
-              </div>
-            </div>
-          ))}
-        </div>
+              );
+            })}
+          </TableBody>
+        </Table>
+        {products.length >= count * page && (
+          <div className="flex justify-center mt-10">
+            <Button
+              disabled={loading}
+              onClick={() => {
+                setPage(page + 1);
+              }}
+              className="flex items-center gap-1"
+            >
+              {loading && <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
+              <div> Load more</div>
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
