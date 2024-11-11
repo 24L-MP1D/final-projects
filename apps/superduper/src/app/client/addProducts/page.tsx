@@ -65,7 +65,7 @@ export default function Page() {
 
         <div className="flex gap-5 relative left-[-50px] items-center">
           <div>Category</div>
-          <div>Дэлгэрэнгүй</div>
+          <div className="text-[#f3f3f3]">Дэлгэрэнгүй</div>
           <div className="text-[#f3f3f3]">Зураг</div>
           <div className="text-[#f3f3f3] ml-3">Логистик</div>
           <div className="text-[#f3f3f3] ml-5">Хянан үзэх</div>

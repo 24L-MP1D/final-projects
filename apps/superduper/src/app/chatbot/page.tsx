@@ -20,6 +20,7 @@ export default function App() {
     if (question == mockQuestions[1]) return setWords(mockAnswers[1]);
     if (question == mockQuestions[2]) return setWords(mockAnswers[2]);
   };
+
   return (
     <div className="p-2 text-[#f2f2f2] min-h-screen bg-[#f2f2f2]">
       <div className="w-full bg-[#333] rounded-xl flex items-center justify-center py-4">
