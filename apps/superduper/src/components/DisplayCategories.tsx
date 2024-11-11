@@ -1,25 +1,25 @@
 import {
-    Menubar,
-    MenubarContent,
-    MenubarItem,
-    MenubarMenu,
-    MenubarSeparator,
-    MenubarShortcut,
-    MenubarTrigger,
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
 } from "@/components/ui/menubar"
   
   <Menubar>
   <MenubarMenu>
-    <MenubarTrigger>File</MenubarTrigger>
+    <MenubarTrigger>Файл</MenubarTrigger>
     <MenubarContent>
       <MenubarItem>
-        New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+      Шинэ таб <MenubarShortcut>⌘T</MenubarShortcut>
       </MenubarItem>
-      <MenubarItem>New Window</MenubarItem>
+      <MenubarItem>Шинэ цонх</MenubarItem>
       <MenubarSeparator />
-      <MenubarItem>Share</MenubarItem>
+      <MenubarItem>Хуваалцах</MenubarItem>
       <MenubarSeparator />
-      <MenubarItem>Print</MenubarItem>
+      <MenubarItem>Хэвлэх</MenubarItem>
     </MenubarContent>
   </MenubarMenu>
 </Menubar>

@@ -31,6 +31,7 @@ export default async function Page({ params }: { params: Params }) {
     imageUrl: string;
     price: number;
     chapters: Chapter[];
+    attachments?: Attachment[];
   }
   interface Chapter {
     _id: string; // Converted to string
@@ -39,6 +40,13 @@ export default async function Page({ params }: { params: Params }) {
     isPublished?: boolean;
     isFree?: boolean;
     position: number;
+  }
+  interface Attachment {
+    _id: string;
+    createdAt?: Date;
+    courseId: string;
+    url?: string;
+    name?: string;
   }
 
   const course1 = (await db
@@ -74,6 +82,19 @@ export default async function Page({ params }: { params: Params }) {
           chapters: { $push: '$chapters' },
         },
       },
+      {
+        $lookup: {
+          from: 'attachments',
+          localField: '_id',
+          foreignField: 'courseId', // Assuming `courseId` in `attachments` links to `courses`
+          as: 'attachments',
+        },
+      },
+      {
+        $addFields: {
+          attachments: { $sortArray: { input: '$attachments', sortBy: { createdAt: -1 } } },
+        },
+      },
     ])
     .toArray()) as Course[];
 
@@ -85,60 +106,79 @@ export default async function Page({ params }: { params: Params }) {
   const courseWithPlainId = {
     ...course,
     _id: course._id.toString(),
-    chapters: course.chapters.map((chapter) => ({
-      ...chapter,
-      _id: chapter._id.toString(),
-      courseId: chapter.courseId.toString(),
+    chapters: course.chapters.map((chapter) => {
+      const chapterAttachments = (course.attachments || []).filter((attachment) => attachment.courseId.toString() === chapter.courseId.toString());
+      return {
+        ...chapter,
+        _id: chapter._id.toString(),
+        courseId: chapter.courseId.toString(),
+        attachments: chapterAttachments.map((attachment) => ({
+          _id: attachment._id.toString(),
+          url: attachment.url,
+          name: attachment.name,
+          courseId: attachment.courseId.toString(), // Ensure ObjectId is converted to string
+          createdAt: attachment.createdAt ? attachment.createdAt.toISOString() : null, // Ensure Date is converted to string
+        })),
+      };
+    }),
+    attachments: course.attachments?.map((attachment) => ({
+      _id: attachment._id.toString(),
+      url: attachment.url,
+      name: attachment.name,
+      courseId: attachment.courseId.toString(), // Ensure ObjectId is converted to string
+      createdAt: attachment.createdAt ? attachment.createdAt.toISOString() : null, // Ensure Date is converted to string
     })),
   };
-  const requiredFields = [course.title, course.description, course.imageUrl, course.price, course.chapters];
+
+  const requiredFields = [course.title, course.description, course.imageUrl, course.price, course.chapters?.[0], course.attachments?.[0]];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `(${completedFields}/${totalFields})`;
+
   return (
-    <div className="p-6">
+    <main className="p-6">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-medium">Course setup</h1>
-          <span className="text-sm text-slate-700">Complete all fields {completionText}</span>
+          <h1 className="text-2xl font-medium">Курс тохиргоо</h1>
+          <span className="text-sm text-slate-700">Бүх талбарыг бөглөнө үү {completionText}</span>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
         <div>
           <div className="flex items-center gap-x-2">
             <IconBadge icon={LayoutDashboard} />
-            <h2 className="text-xl">Customize your course</h2>
+            <h2 className="text-xl">Курсээ тохируулах</h2>
           </div>
           <TitleForm initialData={courseWithPlainId} />
-          <DescriptionForm initialData={courseWithPlainId} />
           <ImageForm initialData={courseWithPlainId} />
+          <DescriptionForm initialData={courseWithPlainId} />
         </div>
         <div className="space-y-6">
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={ListCheck} />
-              <h2 className="text-xl">Course chapters</h2>
+              <h2 className="text-xl">Курсын бүлгүүд</h2>
             </div>
             <div>
               <ChaptersForm initialData={courseWithPlainId} />
             </div>
           </div>
-          <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={CircleDollarSign} />
-              <h2 className="text-xl">Sell your course</h2>
-            </div>
-            <PriceForm initialData={courseWithPlainId} />
+        </div>
+        <div>
+          <div className="flex items-center gap-x-2">
+            <IconBadge icon={CircleDollarSign} />
+            <h2 className="text-xl">Курсаа худалдах</h2>
           </div>
-          <div>
+          <PriceForm initialData={courseWithPlainId} />
+          <div className="mt-6">
             <div className="flex items-center gap-x-2">
               <IconBadge icon={File} />
-              <h2 className="text-xl">Resources and Attachments</h2>
+              <h2 className="text-xl">Нөөц материал ба хавсралтууд</h2>
             </div>
             <AttachmentForm initialData={courseWithPlainId} />
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

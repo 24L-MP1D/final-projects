@@ -1,9 +1,17 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { DollarSign, Home, Laptop, LibraryBig, Settings, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+
+const items = [
+  { title: 'Нүүр хуудас', url: '#', icon: Home },
+  { title: 'Сургалтууд', url: '/admin-app/courses', icon: LibraryBig },
+  { title: 'Вебсайт тохиргоо', url: '#', icon: Laptop },
+  { title: 'Орлого', url: '#', icon: DollarSign },
+  { title: 'Тохиргоо', url: '#', icon: Settings },
+];
 
 export default function Page() {
   interface Course {
@@ -32,36 +40,51 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="w-[1000px] mx-auto p-10">
+    <div className="max-w-[1000px] ">
       <Link href="/admin-app/courses/create">
-        <Button className="p-6">Add new course</Button>
+        <button className="btn btn-primary hover:bg-transparent my-8 text-base">Шинэ хичээл нэмэх</button>
       </Link>
+
       <Table className="">
-        <TableCaption>Create and manage courses in your school.</TableCaption>
+        <TableCaption>Та сургуулийн сургалтуудыг үүсгэж, удирдаарай.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Thumbnail</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Author</TableHead>
-            <TableHead>Creation date</TableHead>
-            <TableHead>Sales</TableHead>
-            <TableHead>Enrollments</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead className="w-[100px]">Зураг</TableHead>
+            <TableHead>Нэр</TableHead>
+            <TableHead>Зохиогч</TableHead>
+            <TableHead>Үүсгэсэн огноо</TableHead>
+            <TableHead>Борлуулалт</TableHead>
+            <TableHead>Бүртгүүлсэн</TableHead>
+            <TableHead>Төлөв</TableHead>
+            <TableHead className="text-right">Үйлдлүүд</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {courses.map((course) => (
             <TableRow key={course._id}>
-              <TableCell className="font-medium"> {course.imageUrl && <Image src={course.imageUrl} height={40} width={40} alt="thumbnail" />}</TableCell>
-              <TableCell>{course.title}</TableCell>
+              <TableCell className="font-medium">
+                <Link href={`/admin-app/courses/${course._id}`}>
+                  {course.imageUrl && (
+                    <div className="aspect-auto rounded-md overflow-hidden">
+                      <Image src={course.imageUrl} height={80} width={80} alt="thumbnail" className="object-cover hover:scale-125 transition" />
+                    </div>
+                  )}{' '}
+                </Link>
+              </TableCell>
+              <TableCell>
+                <a className="link link-primary hover:text-lg transition" href={`/admin-app/courses/${course._id}`}>
+                  {course.title}
+                </a>
+              </TableCell>
               <TableCell>{course.author}</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell className="text-right">
-                <Button onClick={() => deleteCourse(course._id)}>delete</Button>
+                <button onClick={() => deleteCourse(course._id)} className="btn btn-neutral btn-sm">
+                  <Trash2 className="h-4 w-4" />
+                </button>
               </TableCell>
             </TableRow>
           ))}

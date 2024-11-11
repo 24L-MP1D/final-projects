@@ -1,20 +1,19 @@
 import { db } from "@/lib/db";
 import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
-
 type Params = Promise<{ courseId: string }>
-
-export async function GET(request: Request, { params }: { params: Params }) {
-  const {courseId}=await params
+export async function GET(request: Request, { params }: { params: Params}) {
+  const {courseId}= await params
   const chapters = await db.collection('chapters').find({courseId: new ObjectId(courseId)}).sort({ position: 1 }).limit(20).toArray();
   return NextResponse.json(chapters);
 }
 
-export async function POST(request: Request, { params }: { params: Params }) {
+export async function POST(request: Request, { params }: { params: Params}) {
   try {
-        const {courseId}=await params
+        const {courseId} = await params
         // const {userId}=auth()
         const {title}= await request.json();
+        
         // if (!userId){
         //   return new NextResponse("Unauthorized", {status:401})
         // }

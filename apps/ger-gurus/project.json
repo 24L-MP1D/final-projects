@@ -21,6 +21,13 @@
         },
         "production": {}
       }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rm -rf dist", "rm -rf .vercel", "mkdir .vercel", "cp -r ./apps/ger-gurus/vercel-local.json .vercel/project.json", "vercel build --prod", "vercel --prebuilt --prod"],
+        "parallel": false
+      }
     }
   }
 }

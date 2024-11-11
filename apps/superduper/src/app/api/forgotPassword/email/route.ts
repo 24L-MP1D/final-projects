@@ -18,13 +18,16 @@ export async function PUT(request: Request) {
       return new Response(null, { status: 400 });
     }
     const otp = Math.floor(Math.random() * 899999) + 100000;
-    console.log(otp);
+    const expirationTime = new Date();
+    expirationTime.setMinutes(expirationTime.getMinutes() + 5);
+
     const userWithOtp = await collection.updateOne(
       {
         _id: _id,
       },
       {
         $set: { otp },
+        expiresAt: expirationTime,
       }
     );
 
