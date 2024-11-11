@@ -6,9 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Food } from '@/lib/types';
 import { Label } from '@radix-ui/react-label';
+import { algoliasearch } from 'algoliasearch';
 import { Heart, Pencil, Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import LeftBar from '../components/leftbar';
+const client = algoliasearch('MLKXEEH303', '8afc4b223bd36c4137f45360abf5dfb0');
 
 export default function Foods() {
   const [order, setOrder] = useState<Food[]>([]);
@@ -144,7 +147,7 @@ export default function Foods() {
       toast.success('Food added to special items!');
     } catch (error) {
       console.error('Error adding special food:', error);
-      toast.error('Error a  dding to special items');
+      toast.error('Error a  adding to special items');
     }
   };
   const handleRemoveSpecial = async (foodId: string) => {
@@ -193,10 +196,11 @@ export default function Foods() {
   }, []);
 
   return (
-    <div className="text-md mb-10 ">
-      <div className="bg-slate-100">
+    <div className="text-md mb-10 flex">
+      <LeftBar />
+      <div className="bg-slate-100 mt-8 ">
         <div className="flex ">
-          <div className="bg-white  p-10 mt-6 ml-10 text-md rounded-lg mx-auto">
+          <div className="bg-white  p-10 mt-6  text-md rounded-lg mx-auto">
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="outline" className="mb-10 text-lg">
@@ -237,7 +241,7 @@ export default function Foods() {
                     </Label>
                     <Input id="width" className="col-span-2 h-12" />
                   </div> */}
-                  <Button variant="outline" className="mt-3" onClick={addFood}>
+                  <Button variant="outline" className="mt-3 " onClick={addFood}>
                     Оруулах
                   </Button>
                 </div>
@@ -247,30 +251,29 @@ export default function Foods() {
               <Table className="text-xl mb-5 ">
                 <TableHeader className="bg-slate-200">
                   <TableRow className="text-center font-bold text-wrap ">
-                    <TableHead className="text-bold ">№</TableHead>
+                    <TableHead className=" text-bold">Зураг</TableHead>
                     <TableHead className="text-bold ">Хоолны нэр, код</TableHead>
                     <TableHead className="text-bold">Орц</TableHead>
                     <TableHead className=" text-bold">Үнэ</TableHead>
-                    <TableHead className=" text-bold">Зураг</TableHead>
                     <TableHead className="text-bold">Засах</TableHead>
                     <TableHead className="text-bold">Устгах</TableHead>
-                    <TableHead className="text-bold">Онгой меню</TableHead>
+                    <TableHead className="text-bold">Онцгой меню</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody className="text-md">
                   {order.map((order: Food) => (
                     <TableRow key={order._id}>
-                      <TableCell className="font-medium text-black"></TableCell>
-                      <TableCell>{order.name}</TableCell>
-                      <TableCell>{order.ingredients}</TableCell>
-                      <TableCell className="text-black font-bold">{order.price}</TableCell>
                       <TableCell className="w-50 h-50">
                         <img className=" mx-auto w-[50px] h-[50px] object-cover rounded-full items-center" width={150} height={150} src={order.photos} alt={order.name} />
                       </TableCell>
+                      <TableCell>{order.name}</TableCell>
+                      <TableCell>{order.ingredients}</TableCell>
+                      <TableCell className="text-black font-bold">{order.price}</TableCell>
+
                       <TableCell className="text-center align-middle">
                         <Dialog>
                           <DialogTrigger asChild className="">
-                            <Button variant="default3">
+                            <Button>
                               <Pencil onClick={() => handleEditFood(order)} />
                             </Button>
                           </DialogTrigger>
@@ -321,13 +324,8 @@ export default function Foods() {
                         </Button>
                       </TableCell>
                       <TableCell className="text-center align-middle flex-col ">
-                        <Button>
-                          <Heart
-                            onClick={() => {
-                              handleSpecialFood(order._id);
-                            }}
-                            className={order.isSpecial ? 'fill-red-600' : 'fill-white'}
-                          />
+                        <Button onClick={() => handleSpecialToggle(order._id, order.isSpecial)}>
+                          <Heart className={order.isSpecial ? 'fill-red-600' : 'fill-white'} />
                         </Button>
                       </TableCell>
                     </TableRow>

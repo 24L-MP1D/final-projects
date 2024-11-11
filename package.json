@@ -117,7 +117,7 @@
     "ws": "^8.18.0",
     "yup": "^1.4.0",
     "zod": "^3.23.8",
-    "zustand": "^5.0.0"
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.8",

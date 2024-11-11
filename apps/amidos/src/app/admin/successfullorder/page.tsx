@@ -7,6 +7,7 @@ import { ColumnFiltersState, SortingState, VisibilityState } from '@tanstack/rea
 import axios from 'axios';
 import * as React from 'react';
 import { toast } from 'sonner';
+import LeftBar from '../components/leftbar';
 
 export type Oneorder = {
   id: string;
@@ -23,6 +24,7 @@ export type Orders = {
   otp: string;
   id: string;
   deliveryperson: string;
+  name: string;
 };
 
 const deliverystaff = [
@@ -39,6 +41,7 @@ export default function DataTableDemo() {
   const [deliveryperson, setDeliveryperson] = React.useState('');
   const [email, setEmail] = React.useState('');
   console.log(typeof ordersData);
+
   function renderorders() {
     axios
       .get('/api/admin/successfullorder')
@@ -93,57 +96,66 @@ export default function DataTableDemo() {
   //   }
 
   return (
-    <div className="max-w-screen-lg m-auto">
-      <div className="rounded-md border">
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Захиалга</TableHead>
-                <TableHead>Захиалгын мэдээлэл</TableHead>
-                <TableHead>Нийт үнийн дүн</TableHead>
-                <TableHead>Хүргэлтийн ажилтан сонгох</TableHead>
-                <TableHead>Хүргэлтийн ажилтантай холбогдох</TableHead>
-                <TableHead>Хүргэлтэнд хувиарлах</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {ordersData.map((order) => (
-                <TableRow key={order.id}>
-                  <TableCell>{order.otp}</TableCell>
-                  <TableCell>
-                    {order.order.map((oneorder) => (
-                      <div className="flex gap-2">
-                        <div>{oneorder.name}</div>
-                        <div>{oneorder.price}.0₮</div>
-                      </div>
-                    ))}
-                  </TableCell>
-                  <TableCell>{order.totalprice}</TableCell>
-                  <TableCell>
-                    <Select onValueChange={setDeliveryperson}>
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Хүргэлтийн ажилтан" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          {deliverystaff.map((delivery) => (
-                            <SelectItem value={delivery.phonenumber}>{delivery.name}</SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </TableCell>
-                  <TableCell>{order.deliveryperson}</TableCell>
-                  <Button onClick={() => adddeliveryperson(order)}>Хувиарлах</Button>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+    <div className="flex  w-full ">
+      <div>
+        <LeftBar />
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground"></div>
+      <div className=" mt-30 my-14">
+        <div className="text-5xl italic mb-4">Хүргэлтийн захиалгууд</div>
+        <div className="rounded-md border bg-white p-6">
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-wrap">Захиалга</TableHead>
+                  <TableHead className="text-wrap">Захиалгын мэдээлэл</TableHead>
+                  <TableHead className="text-wrap">Нийт үнийн дүн</TableHead>
+                  <TableHead className="text-wrap">Хүргэлтийн ажилтан сонгох</TableHead>
+                  <TableHead className="text-wrap">Хүргэлтийн ажилтантай холбогдох</TableHead>
+                  <TableHead className="text-wrap">Хүргэлтэнд хувиарлах</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {ordersData.map((order) => (
+                  <TableRow key={order.id}>
+                    <TableCell>{order.otp}</TableCell>
+
+                    {order.order.map((oneorder) => (
+                      <>
+                        <TableCell>{oneorder.name}</TableCell>
+                        <TableCell className="text-center">{oneorder.price}.0₮</TableCell>
+                      </>
+                    ))}
+
+                    <TableCell>
+                      <Select onValueChange={setDeliveryperson}>
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Хүргэлтийн ажилтан" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup className="text-center">
+                            {deliverystaff.map((delivery) => (
+                              <SelectItem value={delivery.phonenumber} className="text-center">
+                                {delivery.name}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </TableCell>
+                    <TableCell>{order.deliveryperson}</TableCell>
+                    <Button onClick={() => adddeliveryperson(order)} className="mt-2">
+                      Хувиарлах
+                    </Button>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <div className="flex-1 text-sm text-muted-foreground"></div>
+        </div>
       </div>
     </div>
   );
