@@ -40,7 +40,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
   const sticky = useRef<HTMLDivElement | null>(null);
   const startDate = new Date(oneProduct.startDate).getTime();
   let betweenDate = endDate - new Date().getTime();
-  console.log(bids[0]);
+
   useEffect(() => {
     const handleScroll = () => {
       if (sticky.current) {
@@ -82,7 +82,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
           Дуусах хугацаа{showDate?.day}d {showDate?.dateHours}h {showDate?.dateMinuts}m {showDate?.dateSecunds}s
         </div>
       ) : (
-        <div>удахгүй эхэлнэ</div>
+        <div>{dayjs(startDate).format('YYYY-MM-DD')}нд эхэлнэ</div>
       )}
       <div className="border-2 border-t-2 border-t-blue-600 border-b-2 border-slate-300">
         <div className="mt-3  py-8 px-6">

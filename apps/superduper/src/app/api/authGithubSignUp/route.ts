@@ -30,9 +30,11 @@ export async function GET(request: NextRequest) {
     });
     if (!userResponse) throw new Error('failed to retrieve user info');
     const githubUser = await userResponse.json();
+    console.log(githubUser);
+    const { email } = githubUser.email;
 
     const collection = await DB.collection('users');
-    const check = await collection.insertOne({ email: githubUser.email, name: githubUser.name, role: 'user' });
+    const check = await collection.insertOne({ email: email, firstName: githubUser.login, role: 'user' });
     const accessToken = jwt.sign({ email: githubUser.email, userId: check.insertedId }, ADMIN_ACCESS_TOKEN_SECRET, {
       expiresIn: '1d',
     });
@@ -43,7 +45,7 @@ export async function GET(request: NextRequest) {
     console.log('Redirecting to /client and setting cookie.');
     return response;
   } catch (error) {
-    const errorResponse = NextResponse.redirect(new URL('/admin', request.url));
+    const errorResponse = NextResponse.redirect(new URL('/sign-in', request.url));
     return errorResponse;
   }
 }

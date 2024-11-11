@@ -4,8 +4,6 @@ const { fontFamily } = require('tailwindcss/defaultTheme');
 
 const colors = require('tailwindcss/colors');
 
-
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [join(__dirname, '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'), './src/**/*.{ts,tsx}', ...createGlobPatternsForDependencies(__dirname)],

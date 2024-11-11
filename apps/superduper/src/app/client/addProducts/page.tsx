@@ -29,7 +29,15 @@ export default function Page() {
   useEffect(() => {
     loadCategory();
   }, []);
-
+  if (!categories.length)
+    return (
+      <div className="min-h-screen">
+        <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
+          <Image src={'/images/spinner.svg'} alt="loading" width={100} height={100} />
+          <div className="font-bold text-3xl">Loading...</div>
+        </div>
+      </div>
+    );
   return (
     <div className="max-w-[50%] mx-auto mt-10">
       <div className="flex flex-col gap-1 max-w-[500px] mx-auto text-2xl">
@@ -37,29 +45,30 @@ export default function Page() {
           <div className="p-0.5 border-2 border-[#00253e] rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
           </div>
-          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[100px]"></div>
           <div className="p-0.5 rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
           </div>
-          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[100px]"></div>
           <div className="p-0.5 rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
           </div>
-          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[100px]"></div>
           <div className="p-0.5 rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
           </div>
-          <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+          <div className="bg-[#f3f3f3] h-0.5 w-[100px]"></div>
           <div className="p-0.5 rounded-full">
             <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
           </div>
         </div>
-        <div className="flex gap-10 justify-center items-center ">
+
+        <div className="flex gap-5 relative left-[-50px] items-center">
           <div>Category</div>
-          <div className="text-[#f3f3f3]">Detail</div>
-          <div className="text-[#f3f3f3]">Photos</div>
-          <div className="text-[#f3f3f3]">Logistics</div>
-          <div className="text-[#f3f3f3]">Review</div>
+          <div>Дэлгэрэнгүй</div>
+          <div className="text-[#f3f3f3]">Зураг</div>
+          <div className="text-[#f3f3f3] ml-3">Логистик</div>
+          <div className="text-[#f3f3f3] ml-5">Хянан үзэх</div>
         </div>
       </div>
       <div className="mt-8 text-center text-[#333] text-[48px]">Choose your category</div>
