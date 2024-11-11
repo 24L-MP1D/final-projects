@@ -1,7 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { fetcher } from '@/lib/fetcher';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
@@ -19,6 +17,13 @@ const formSchema = z.object({
 });
 
 export default function Page() {
+  function deleteCookie() {
+    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax;';
+    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax';
+    window.location.reload();
+  }
   const router = useRouter();
   const [isExisting, setIsExisting] = useState<boolean | null>(null);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -28,7 +33,7 @@ export default function Page() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await axios.post(`/api/check-domain`, values);
+      const response = await axios.post(`/api/check-domain`, { domain: `${values.domain}.verse.mn` });
       setIsExisting(response.data); // instant
       toast.success('Checked if domain is available');
     } catch {
@@ -46,13 +51,18 @@ export default function Page() {
   }
 
   return (
-    <div className="flex justify-center h-screen items-center p-6">
+    <main className="flex justify-center h-screen items-center p-6">
+      <div onClick={deleteCookie} className="absolute top-4 right-8 cursor-pointer">
+        Log out
+      </div>
       <div>
-        <h1 className="text-2xl font-bold mb-4 text-center text-sky-600">Welcome to Your Content Creating Adventure!</h1>
-        <p className="mb-6 text-center text-gray-700">We're excited to have you here! Start by creating your unique space where you can share your skills and knowledge with the world.</p>
+        <h1 className="text-2xl font-bold mb-4 text-center text-primary">Контент Бүтээх Адал Явдалд Тавтай Морилно Уу!</h1>
+        <p className="mb-6 text-center text-gray-700">Дэлхийтэй хуваалцах чадвар болон мэдлэгээ оруулан өөрийн өвөрмөц орон зайг бий болгох гэж байгаа танд баяр хүргэе!</p>
+        <p className="mb-6 text-center text-base-content">Та давтагдашгүй домайн нэр оруулна уу.</p>
+
         <div className="flex flex-col items-center">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4 flex gap-4 items-start justify-center">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex gap-4 items-start justify-center">
               <FormField
                 control={form.control}
                 name="domain"
@@ -60,42 +70,50 @@ export default function Page() {
                   <FormItem>
                     <FormControl>
                       <div className="flex items-center">
-                        <Input
+                        <input
                           {...field}
                           type="text"
-                          placeholder="Enter your unique name"
-                          className="w-full max-w-xs text-base"
+                          placeholder="Энд нэрээ оруулна уу"
+                          className="w-full max-w-xs text-base-content text-right input input-bordered input-primary"
                           onChange={(e) => {
                             field.onChange(e);
                             setIsExisting(null);
                           }}
                         />
-                        <p className="ml-2">.verse.mn</p>
+                        <div className="ml-2">.verse.mn</div>
                       </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <div className="flex items-start gap-2">
-                <Button type="submit" disabled={!form.formState.isValid || form.formState.isSubmitting}>
-                  Check if available
+              <div className="flex gap-2 !mt-0">
+                <button type="submit" disabled={!form.formState.isValid || form.formState.isSubmitting} className="btn btn-primary">
+                  <p className="text-base-content">Давтагдсан эсэхийг шалгах</p>
                   <Search />
-                </Button>
+                </button>
               </div>
             </form>
           </Form>
 
-          <div className="h-10">
-            {isExisting === true && form.formState.isValid && <div> Domain is not available</div>}
-            {isExisting === false && form.formState.isValid && <div> Domain is available </div>}
+          <div className="h-10 mt-4">
+            {isExisting === true && form.formState.isValid && (
+              <div role="alert" className="alert alert-error">
+                Домен ашиглах боломжгүй! <p className="text-2xl text-center">😬</p>
+              </div>
+            )}
+            {isExisting === false && form.formState.isValid && (
+              <div role="success" className="alert alert-success">
+                Домайн ашиглах боломжтой! <p className="text-2xl text-center">😀</p>
+              </div>
+            )}
           </div>
 
-          <Button className="w-full max-w-xs mt-10" disabled={isExisting === null || isExisting === true} onClick={() => createSchool(form.getValues().domain)}>
-            Create My Space
-          </Button>
+          <button className="w-full max-w-xs mt-10 btn btn-primary" disabled={isExisting === null || isExisting === true} onClick={() => createSchool(form.getValues().domain)}>
+            <p className="text-base-content">Миний орон зайг үүсгэх</p>
+          </button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

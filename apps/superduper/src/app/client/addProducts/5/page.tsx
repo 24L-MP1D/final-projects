@@ -53,29 +53,30 @@ export default function Page() {
             <div className="p-0.5 rounded-full">
               <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
             </div>
-            <div className="bg-[#00253e] h-0.5 w-[70px]"></div>
+            <div className="bg-[#00253e] h-0.5 w-[100px]"></div>
+            <div className="p-0.5  rounded-full">
+              <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
+            </div>
+            <div className="bg-[#00253e] h-0.5 w-[100px]"></div>
+            <div className="p-0.5  rounded-full">
+              <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
+            </div>
+            <div className="bg-[#00253e] h-0.5 w-[100px]"></div>
             <div className="p-0.5 rounded-full">
               <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
             </div>
-            <div className="bg-[#00253e] h-0.5 w-[70px]"></div>
-            <div className="p-0.5 rounded-full">
-              <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
-            </div>
-            <div className="bg-[#00253e] h-0.5 w-[70px]"></div>
-            <div className="p-0.5 rounded-full">
-              <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
-            </div>
-            <div className="bg-[#00253e] h-0.5 w-[70px]"></div>
-            <div className="p-0.5 border-2 border-[#00253e] rounded-full">
+            <div className="bg-[#00253e] h-0.5 w-[100px]"></div>
+            <div className="p-0.5 rounded-full border-2 border-[#00253e]">
               <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
             </div>
           </div>
-          <div className="flex gap-10 justify-center items-center ">
-            <div>Ангилал</div>
+
+          <div className="flex gap-5 relative left-[-50px] items-center">
+            <div>Category</div>
             <div>Дэлгэрэнгүй</div>
             <div>Зураг</div>
-            <div>Логистик</div>
-            <div>Хянан үзэх</div>
+            <div className="ml-3">Логистик</div>
+            <div className="ml-5">Хянан үзэх</div>
           </div>
         </div>
         <div className="mt-8 text-center text-[#333] text-[48px] mb-16">Мэдээллийг хянан үзэх</div>
@@ -83,14 +84,14 @@ export default function Page() {
           <div className="border-b-[1px] items-center py-3 flex justify-between">
             <div className="text-2xl ">Ангилал</div>
             <Link className="text-2xl py-2 px-4 bg-slate-100 active:bg-red-200 border-[1px] hover:bg-red-500 rounded-lg" href={'/client/addProducts'}>
-            засварлах
+              засварлах
             </Link>
           </div>
           <div className="text-center my-10 text-xl">Ангилал: {getFromLocal?.category}</div>
           <div className="border-b-[1px] mb-8 items-center py-3 flex justify-between">
             <div className="text-2xl">Дэлгэрэнгүй</div>
             <Link className="text-2xl py-2 px-4 bg-slate-100 active:bg-red-200 border-[1px] hover:bg-red-500 rounded-lg" href={'/client/addProducts/2'}>
-            засварлах
+              засварлах
             </Link>
           </div>
           <div className="flex flex-col gap-2 text-xl items-center justify-center">

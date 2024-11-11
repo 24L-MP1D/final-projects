@@ -6,7 +6,7 @@ export const SchoolPageHeader = () => {
   return (
     <div className="p-4 min-[480px]:p-, min-[768px]:p-12 min-[1279px]:p-16 flex justify-between items-center">
       <div className="flex flex-col items-center">
-        <Image src={'/logo.png'} alt="school-logo" width={100} height={100} />
+        <Image priority={true} src={'/logo.png'} alt="school-logo" width={100} height={100} />
         <p className="mt-[-10px] bg-gradient-to-r from-fuchsia-500 to-cyan-500 bg-clip-text text-transparent font-semibold font-serif">VERSE</p>
       </div>
 

@@ -65,29 +65,30 @@ export default function Page() {
             <div className="p-0.5 rounded-full">
               <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
             </div>
-            <div className="bg-[#00253e] h-0.5 w-[70px]"></div>
-            <div className="p-0.5 rounded-full">
+            <div className="bg-[#00253e] h-0.5 w-[100px]"></div>
+            <div className="p-0.5  rounded-full">
               <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
             </div>
-            <div className="bg-[#00253e] h-0.5 w-[70px]"></div>
-            <div className="p-0.5 rounded-full">
+            <div className="bg-[#00253e] h-0.5 w-[100px]"></div>
+            <div className="p-0.5  rounded-full">
               <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
             </div>
-            <div className="bg-[#00253e] h-0.5 w-[70px]"></div>
-            <div className="p-0.5 border-2 border-[#00253e] rounded-full">
+            <div className="bg-[#00253e] h-0.5 w-[100px]"></div>
+            <div className="p-0.5 rounded-full border-2 border-[#00253e]">
               <div className="rounded-full w-4 h-4 bg-[#00253e]"></div>
             </div>
-            <div className="bg-[#f3f3f3] h-0.5 w-[70px]"></div>
+            <div className="bg-[#f3f3f3] h-0.5 w-[100px]"></div>
             <div className="p-0.5 rounded-full">
               <div className="rounded-full w-4 h-4 bg-[#f3f3f3]"></div>
             </div>
           </div>
-          <div className="flex gap-10 justify-center items-center ">
-            <div>Ангилал</div>
+
+          <div className="flex gap-5 relative left-[-50px] items-center">
+            <div>Category</div>
             <div>Дэлгэрэнгүй</div>
             <div>Зураг</div>
-            <div>Логистик</div>
-            <div className="text-[#f3f3f3]">Хянан үзэх</div>
+            <div className="ml-3">Логистик</div>
+            <div className="text-[#f3f3f3] ml-5">Хянан үзэх</div>
           </div>
         </div>
         <div className="mt-8 text-center text-[#333] text-[48px] mb-16">Холбоо барих болон ложистикийн мэдээллийг хуваалцах</div>
@@ -167,7 +168,7 @@ export default function Page() {
           <div className="flex gap-2 w-full justify-center fixed bottom-0 bg-[#ffffff] py-2 left-[50%] translate-x-[-50%]">
             <div>"Үргэлжлүүлэх" дээр дарж энэ алхамын явцаа хадгална уу</div>
             <Link className="bg-slate-300 text-center py-2 px-4 rounded-lg" href={'/client/addProducts/3'}>
-            БУЦАХ
+              БУЦАХ
             </Link>
             <Button type="submit">ҮРГЭЛЖЛҮҮЛЭХ</Button>
           </div>
