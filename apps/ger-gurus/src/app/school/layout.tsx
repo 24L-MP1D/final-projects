@@ -1,5 +1,4 @@
 import '@/app/global.css';
-
 import { ToastProvider } from '@/components/providers/toaster-provider';
 import { Open_Sans } from 'next/font/google';
 
@@ -15,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="sunset">
+    <html lang="en" data-theme="light"> {/* Example theme: 'light' can be dynamically set */}
       <body className="bg-base-100 text-primary">
         <ToastProvider />
         {children}

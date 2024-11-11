@@ -54,6 +54,7 @@ export default function Menu() {
               </Link>
             ))}
           </div>
+          <Swipersnew />
           <div className="w-full mx-auto flex mt-10 md:mx-auto">
             <div className="relative mx-auto">
               <Dialogs />
@@ -79,7 +80,7 @@ export default function Menu() {
                       <h1 className="text-[#342216] text-lg italic font-bold">{foodItem.price}.0</h1>
                     </div>
 
-                    <div className="flex flex-row mt-6 gap-5 text-xl justify-end ">
+                    <div className="flex flex-row mt-2 gap-5 text-xl justify-end ">
                       <Button variant="amidos2" className="row-1">
                         Сагсанд нэмэх
                       </Button>
@@ -92,7 +93,6 @@ export default function Menu() {
               </div>
             </div>
           </div>
-          <Swipersnew />
         </div>
       )}
     </>

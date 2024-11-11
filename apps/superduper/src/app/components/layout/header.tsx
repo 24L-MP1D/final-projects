@@ -141,7 +141,7 @@ export default function Header() {
           </div>
 
           <div className="flex gap-5 items-center">
-            <Link href="/client/category" className="flex gap-1 items-center text-white">
+            <Link href="/client/categoryFilter" className="flex gap-1 items-center text-white">
               Ангилалууд
               <ChevronDown size={16} color="white" />
             </Link>
