@@ -33,7 +33,7 @@ export default function ClientHeader() {
 
   const translateY = scrollPos / 20;
   return (
-    <main className="max-w-[1440px] mx-auto flex flex-col items-center pt-20 gap-5 text-[#201116]">
+    <main className="max-w-[1440px] mx-auto flex flex-col items-center p-20 gap-5 text-[#201116]">
       <div className="font-extrabold text-8xl text-center">
         <span className="block">Create</span>
         <span className="block">
