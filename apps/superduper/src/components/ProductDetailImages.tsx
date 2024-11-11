@@ -20,7 +20,7 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
   }, []);
 
   return (
-    <div className="max-w-[750px] mx-auto w-full">
+    <div className="max-w-[750px] mx-auto w-full ">
       <div>
         <div className="text-[40px]">{oneProduct.productName}</div>
         <div>NO.14214</div>
@@ -84,11 +84,11 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
         </div>
       </div>
       <div className="mt-8 px-6 py-6">
-        <div className="border-b-2 py-6 grid grid-cols-2 text-[#000000] gap-5 text-xl items-center justify-center">
+        <div className="border-b-2 py-6 grid grid-cols-2 text-[#000000]  gap-5 text-xl items-center justify-center">
           <div className="flex gap-2 flex-col">
             <div className="text-[#565B60] text-sm">Бүтээгдэхүүний нэр</div>
-            <div>
-              <TypewriterEffectSmooth words={words(oneProduct.productName)} />
+            <div className="w-full">
+              <TextGenerateEffect words={oneProduct.productName} />
             </div>
           </div>
           <div className="flex gap-2 flex-col">
@@ -123,8 +123,9 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
           </div>
           <div className="flex gap-2 flex-col">
             <div className="text-[#565B60] text-sm">Эхлэх үнэ</div>
-            <div>
+            <div className="flex items-center">
               <TypewriterEffectSmooth words={words(String(oneProduct.startBid))} />
+              <div className="text-3xl">₮</div>
             </div>
           </div>
           {oneProduct.Currency && (

@@ -10,13 +10,11 @@ type filtType = {
 const collection = DB.collection('product');
 
 export async function GET(request: Request) {
-  console.log('ajillaj bn');
   const { searchParams } = new URL(request.url);
   const stat = searchParams.get('status');
   const dateFrom = searchParams.get('startDate');
   const dateTo = searchParams.get('endDate');
   const filt: filtType = {};
-
   if (stat) {
     filt.status = stat;
   }
@@ -27,8 +25,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const result = await collection.find({}).toArray();
-    console.log(result);
+    const result = await collection.find(filt).toArray();
     return Response.json(result);
   } catch (err) {
     return new Response(null, { status: 404 });
@@ -52,7 +49,7 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   try {
-    const product: any = {};
+    const product: any = { status: 'Accept' };
     const body = await request.json();
     const { searchValue } = body;
     if (searchValue) {

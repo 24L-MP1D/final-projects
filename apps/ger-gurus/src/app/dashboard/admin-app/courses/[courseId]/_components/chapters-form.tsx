@@ -85,7 +85,7 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Курсын бүлгүүд
-        <Button variant="ghost" onClick={toggleCreating}>
+        <button className="btn btn-ghost hover:scale-105 transition" onClick={toggleCreating}>
           {isCreating && <>Болих</>}
           {!isCreating && (
             <>
@@ -93,7 +93,7 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
               Бүлэг нэмэх
             </>
           )}
-        </Button>
+        </button>
       </div>
       {/* {!isCreating && ( */}
       <div className={cn('text-sm mt-2', !initialData.chapters?.length && 'text-slate-500 italic')}>

@@ -131,6 +131,7 @@ function Realtime({ chatId }: { chatId: string }) {
     const response = await fetch(`/api/products/${chatId}`);
     const data = await response.json();
     setOneProduct(data);
+    setMaximumBid(data.startBid);
   };
 
   const handleFavourite = (productId: string) => {

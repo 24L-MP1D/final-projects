@@ -15,8 +15,8 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" data-theme="sunset">
+      <body className="bg-base-100 text-primary">
         <ToastProvider />
         {children}
       </body>
