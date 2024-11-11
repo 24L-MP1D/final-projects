@@ -1,6 +1,5 @@
 'use client';
 
-<<<<<<< HEAD
 import { useState } from 'react';
 import { DashboardAside } from '../components/DashboardAside';
 
@@ -9,7 +8,7 @@ const Settings = () => {
   const [email, setEmail] = useState('');
   const [notifications, setNotifications] = useState(false);
 
-  const handleSave = (e) => {
+  const handleSave = (e: any) => {
     e.preventDefault();
     // Handle the save logic here (e.g., send data to an API)
     console.log('Settings saved:', { username, email, notifications });
@@ -47,8 +46,3 @@ const Settings = () => {
 };
 
 export default Settings;
-=======
-export default function Home() {
-  return <div className="flex">settings</div>;
-}
->>>>>>> main

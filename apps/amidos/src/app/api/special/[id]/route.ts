@@ -2,7 +2,7 @@ import { db } from '@/lib/db';
 import { ObjectId } from 'mongodb';
 
 export async function POST(request: Request, { params }: { params: { id: string } }) {
-  const isSpecial = await db.collection('addFood').updateOne(
+  const isSpecial = await db.collection('admin').updateOne(
     {
       _id: new ObjectId(params.id),
     },
@@ -15,7 +15,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
 }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
-  const isSpecial = await db.collection('addFood').updateOne(
+  const isSpecial = await db.collection('admin').updateOne(
     {
       _id: new ObjectId(params.id),
     },
