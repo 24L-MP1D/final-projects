@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { DB } from '../../lib/db';
 
-export async function POST(request: Request, { params }: { params?: { id: string } }) {
+export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { images, video, link } = body;
@@ -21,14 +21,21 @@ export async function POST(request: Request, { params }: { params?: { id: string
     });
   }
 }
-export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const { id } = await params;
+export async function GET(request: Request) {
+  try {
+    const body = await request.json;
 
-  if (!ObjectId.isValid(id)) {
-    return new Response(JSON.stringify({ message: 'Invalid recipeId format' }), { status: 400 });
-  }
-  const ads = await DB.collection('advertisements').findOne({ _id: new ObjectId(id) });
-  if (!ads) {
-    return new Response(JSON.stringify({ message: 'Ads not found' }), { status: 404 });
+    console.log('Received ID:', body);
+
+    const ad = await DB.collection('advertisements').findOne({ _id: new ObjectId() });
+
+    if (!ad) {
+      return new Response(JSON.stringify({ message: 'Advertisement not found' }), { status: 404 });
+    }
+
+    return new Response(JSON.stringify(ad), { status: 200, headers: { 'Content-Type': 'application/json' } });
+  } catch (e) {
+    console.error('Error fetching advertisement:', e);
+    return new Response(JSON.stringify({ message: 'Internal server error' }), { status: 500 });
   }
 }

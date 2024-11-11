@@ -1,5 +1,4 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { ObjectId } from 'mongodb';
 import { DB } from '../../../lib/db';
 
 const JWT_SECRET = process.env.JWT_SECRET || '';
@@ -23,11 +22,10 @@ async function verifyToken(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const userId = await verifyToken(request);
 
     const body = await request.json();
     const date = new Date();
-    const { title, description, prepTime, servings, ingredients, instructions, nutritionFacts, category, difficulty, availability, images, video, tags, comment } = body;
+    const { title, description, prepTime, servings, ingredients, instructions, nutritionFacts, category, difficulty, availability, images, video, tags } = body;
 
     const res = await DB.collection('recipes').insertOne({
       title,
@@ -46,7 +44,6 @@ export async function POST(request: Request) {
       visits: 0,
       createdAt: date.toDateString(),
       updatedAt: date.toDateString(),
-      comment,
     });
 
     return new Response(JSON.stringify({ res: 'Succeed' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
@@ -59,22 +56,22 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const { id } = await params;
+export async function GET(req: Request, { params }: { params: { slug: string } }) {
+  const { slug } = await params;
 
-  const trimmedId = id.trim();
-  if (!ObjectId.isValid(trimmedId)) {
-    return new Response(JSON.stringify({ message: 'Invalid recipeId format' }), { status: 400 });
-  }
+  console.log('Received slug:', slug);
 
-  const recipe = await DB.collection('recipes').findOne({ _id: new ObjectId(trimmedId) });
+  const recipe = await DB.collection('recipes').findOne({ title: slug });
+
   if (!recipe) {
+    console.log('Recipe not found for title:', slug);
     return new Response(JSON.stringify({ message: 'Recipe not found' }), { status: 404 });
   }
 
-  const comments = await DB.collection('comments')
-    .find({ recipeId: new ObjectId(trimmedId) })
-    .toArray();
+  const comments = await DB.collection('comments').find({ recipeId: recipe._id }).toArray();
 
-  return new Response(JSON.stringify({ recipe, comments }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+  return new Response(JSON.stringify({ recipe, comments }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
 }

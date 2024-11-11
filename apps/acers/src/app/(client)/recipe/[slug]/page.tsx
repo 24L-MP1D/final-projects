@@ -1,4 +1,5 @@
 'use client';
+import Ably from 'ably';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -10,6 +11,13 @@ import { ScrollArea } from '../../components/ui/scroll-area';
 import { Table, TableBody, TableCaption, TableCell, TableHeader, TableRow } from '../../components/ui/Table';
 
 dayjs.extend(relativeTime);
+
+export const formatTitle = (slug: string) => {
+  if (!slug) {
+    return '';
+  }
+  return slug.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
+};
 
 interface Recipe {
   _id: string;
@@ -33,112 +41,124 @@ interface Recipe {
 }
 
 interface Comment {
+  _id: string;
   recipeId: string;
   userId: string;
+  firstName: string;
   comment: string;
   createdAt: Date;
+}
+
+interface Ads {
+  name: string;
+  id: string;
+  images: string[];
+  link: string;
 }
 
 interface User {
   id: string;
   firstName: string;
-  role: Role[];
   profilePicture: string;
 }
 
-enum Role {
-  GOLD = 'gold',
-  SILVER = 'silver',
-  BRONZE = 'bronze',
-  FREE = 'free',
-  ADMIN = 'admin',
-}
-
 export default function RecipeComponent() {
-  const params = useParams<{ id: string }>();
-
-  // console.log('params', params?.id);
-  const id = params.id;
-  const [loading, setLoading] = useState<boolean>(false);
-  const [recipe, setRecipe] = useState<Recipe>({});
+  const { slug } = useParams<{ slug: string }>();
   const [user, setUser] = useState<Partial<User>>({ firstName: '' });
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [newComment, setNewComment] = useState<string>('');
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const [ads, setAds] = useState<Ads>({});
+  const [adsHover, setAdsHover] = useState<number>(0);
+  const [recipe, setRecipe] = useState<Recipe>({});
+  const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //   const checkLoginStatus = async () => {
-  //     try {
-  //       const token = localStorage.getItem('authtoken');
-  //       const response = await axios.get('/api/user', {
-  //         headers: {
-  //           authtoken: token,
-  //         },
-  //       });
-  //       setUser(response.data.user);
-  //       setIsLoggedIn(true);
-  //     } catch (error) {
-  //       console.error('Error checking authentication status:', error);
-  //       setIsLoggedIn(false);
-  //     }
-  //   };
-
-  //   checkLoginStatus();
-  // }, []);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [newComment, setNewComment] = useState<Ably.Message[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchRecipe = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`/api/recipe/${id}`);
-        if (!response) {
-          throw new Error('response not ok');
+    if (slug) {
+      const fetchRecipe = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.get(`/api/recipe/${slug}`);
+          if (response.data.recipe) {
+            setRecipe(response.data.recipe);
+            setComments(response.data.comments);
+          } else {
+            setErrorMessage('Recipe not found');
+          }
+        } catch (error) {
+          console.error('Error fetching recipe:', error);
+          setErrorMessage('Failed to fetch recipe.');
+        } finally {
+          setLoading(false);
         }
+      };
+      fetchRecipe();
+    }
+  }, [slug]);
 
-        console.log(response.data);
-        setRecipe(response.data.recipe);
-        console.log(recipe);
-        // setRecipe(response.data.recipes);
-        // setComments(response.data.comments || []);
+  useEffect(() => {
+    const fetchAds = async () => {
+      try {
+        const response = await axios.get('/api/ads');
+        setAds(response.data);
       } catch (error) {
-        console.error('Error fetching recipe:', error);
-        setErrorMessage('Failed to fetch recipe.');
-      } finally {
-        setLoading(false);
+        console.error('Error fetching ads:', error);
       }
     };
-
-    fetchRecipe();
+    fetchAds();
   }, []);
 
-  async function handleCommentSubmit() {
-    if (!newComment.trim()) {
-      alert('Comment cannot be empty!');
-      return;
+  const handleMouseEnter = () => {
+    if (ads.images && Array.isArray(ads.images)) {
+      setAdsHover((prev) => (prev === ads.images.length - 1 ? 0 : prev + 1));
     }
+  };
 
-    const commentData: Comment = {
-      recipeId: id as string,
-      userId: user.id || 'unknown',
-      comment: newComment,
-      createdAt: new Date(),
-    };
+  const handleMouseLeave = () => {
+    setAdsHover(0);
+  };
 
-    setComments((prevComments) => [...prevComments, commentData]);
-    setNewComment('');
-
-    try {
-      const response = await axios.post(`/api/comment/${id}`, commentData);
-      if (response.status !== 201) {
-        throw new Error('Failed to post comment');
-      }
-      alert('Comment posted successfully!');
-    } catch (error) {
-      console.error('Error posting comment:', error);
-      alert('Failed to post comment. Please try again.');
+  const handleAdClick = () => {
+    if (ads.link) {
+      window.open(ads.link, '_blank');
     }
-  }
+  };
+
+  useEffect(() => {
+    if (slug && typeof slug === 'string') {
+      const fetchRecipe = async () => {
+        try {
+          const response = await axios.get(`/api/recipe/${slug}`);
+          setRecipe(response.data.recipe);
+          setComments(response.data.comments);
+        } catch (error) {
+          console.error('Error fetching recipe:', error);
+        }
+      };
+      fetchRecipe();
+    }
+  }, [slug]);
+
+  // const handleCommentSubmit = async () => {
+  //   if (!newComment.trim()) return;
+
+  //   useConnectionStateListener('connected', () => {
+  //     console.log('Connected to Ably');
+  //   });
+
+  //   try {
+  //     const response = await axios.post(`/api/recipe/${slug}/comment`, {
+  //       comment: newComment,
+  //     });
+  //     if (response.data.success) {
+  //       setComments((prev) => [...prev, response.data.comment]);
+  //       setNewComment('');
+  //     }
+  //   } catch (error) {
+  //     console.error('Failed to submit comment:', error);
+  //   }
+  // };
 
   return (
     <div className="w-[1110px] m-auto flex flex-col gap-6 font-serif">
@@ -158,7 +178,7 @@ export default function RecipeComponent() {
               <Bookmark />
             </div>
           </div>
-          <p className="font-bold text-5xl">{recipe.title}</p>
+          <p className="font-bold text-5xl">{formatTitle(slug)}</p>
           <div className="flex">
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-3">
@@ -176,7 +196,7 @@ export default function RecipeComponent() {
               <Stars
                 size={15}
                 //  rating={rating} voteNum={ratingNum}
-                id={id}
+                //  id={id}
               />
             </div>
           </div>
@@ -259,14 +279,14 @@ export default function RecipeComponent() {
               </div>
               <div>
                 <h4 className="text-lg font-semibold p-3">Fresh Recipes</h4>
-                {[...Array(5)].map((_, index) => (
+                {[...Array(2)].map((_, index) => (
                   <div key={index} className="flex mb-5 gap-3">
                     <div className="w-[150px] h-[100px] bg-gray-200"></div>
                     <div>
                       <Stars
                         size={15}
                         //  rating={rating} voteNum={ratingNum}
-                        id={id}
+                        //id={id}
                       />
                       <div>Rating</div>
                       <p>Spinach and Cheese Pasta</p>
@@ -274,20 +294,28 @@ export default function RecipeComponent() {
                   </div>
                 ))}
               </div>
-              <div className="bg-gray-300 w-full h-[200px]"></div>
+              <div className="ad-section bg-gray-300 w-full h-[200px] relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleAdClick}>
+                {ads?.images?.length > 0 ? (
+                  <div className="ad-images flex justify-center items-center w-full h-full">
+                    <img src={ads.images[adsHover]} alt={`Ad Image ${adsHover + 1}`} className="ad-image w-[30%] h-full object-cover mx-2" />
+                  </div>
+                ) : (
+                  <p>No ads available</p>
+                )}
+              </div>
             </div>
           </div>
           <p>Already made this?</p>
           {/* {isLoggedIn ? (
-            <button onClick={handleCommentSubmit}>Share your feedback</button>
-          ) : (
-            <div className="flex gap-1">
-              <a href="/login" className="text-orange-500">
-                Login
-              </a>
-              <p> to post a comment</p>
-            </div>
-          )} */}
+          <button onClick={handleCommentSubmit}>Share your feedback</button>
+        ) : (
+          <div className="flex gap-1">
+            <a href="/login" className="text-orange-500">
+              Login
+            </a>
+            <p> to post a comment</p>
+          </div>
+        )} */}
           <div className="h-3 bg-orange-400"></div>
           <div>
             <p>{comments.length} Comments</p>
@@ -304,7 +332,7 @@ export default function RecipeComponent() {
                           <div className="w-12 h-12 rounded-full bg-gray-300"></div>
                         </TableCell>
                         <TableCell className="flex flex-col gap-1">
-                          <p className="pt-2">{comment.userId}</p>
+                          <p className="pt-2">{user.firstName}</p>
                           <p className="text-gray-400">{dayjs(comment.createdAt).fromNow()}</p>
                           <p className="p-4">{comment.comment}</p>
                           <div className="flex items-center text-gray-400 gap-4">
@@ -328,20 +356,20 @@ export default function RecipeComponent() {
                 </TableBody>
               </Table>
             </ScrollArea>
-            {isLoggedIn && (
-              <div className="relative">
-                <input
-                  className="h-[400px] w-full max-w-[1110px] bg-gray-200 rounded p-4"
-                  placeholder="Write your comment..."
-                  aria-label="Comment input"
-                  value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                />
-                <button className="bg-orange-500 hover:bg-orange-400 w-[200px] h-[50px] rounded mt-2 absolute right-[36px] bottom-8 z-10" aria-label="Post comment" onClick={handleCommentSubmit}>
-                  Post Comment
-                </button>
-              </div>
-            )}
+            {/* {isLoggedIn && (
+            <div className="relative">
+              <input
+                className="h-[40px] w-full max-w-[1110px] bg-gray-200 rounded p-4"
+                placeholder="Write your comment..."
+                aria-label="Comment input"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+              />
+              <button className="bg-orange-500 hover:bg-orange-400 w-[200px] h-[50px] rounded mt-2 absolute right-[36px] bottom-8 z-10" aria-label="Post comment" onClick={handleCommentSubmit}>
+                Post Comment
+              </button>
+            </div>
+          )} */}
           </div>
           <p>You might also like</p>
           <div></div>
