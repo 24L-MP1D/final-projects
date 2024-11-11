@@ -63,7 +63,7 @@ export default function Page() {
     <div className="container grid-flow-col m-7 justify-center">
       {categoryFilter.map((category) => (
         // <span className="container grid-cols-4">
-        <Button className="bg-sky-200 h-40 w-96 rounded-sm m-2" onClick={() => setSelectedCategory(category.value)} key={category.value}>
+        <Button className="bg-sky-500 h-40 w-96 rounded-sm m-2" onClick={() => setSelectedCategory(category.value)} key={category.value}>
           {category.name}
         </Button>
         // </span>
