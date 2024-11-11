@@ -49,7 +49,7 @@ export default async function Page({ params }: { params: Params }) {
   const isComplete = requiredFields.every(Boolean);
 
   return (
-    <div className="h-screen">
+    <div className="h-full mb-20">
       {!chapter.isPublished && (
         <div role="alert" className="alert alert-warning flex">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
@@ -64,7 +64,7 @@ export default async function Page({ params }: { params: Params }) {
         </div>
       )}
 
-      <div className="p-6 md:container md:mx-auto shadow-xl h-full">
+      <div className="p-6 md:container md:mx-auto h-full">
         <div className="flex items-center justify-between max-w-2xl">
           <Link href={`/admin-app/courses/${courseId}`} className="flex items-center text-sm  transition mb-6 link link-primary hover:scale-125">
             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -72,7 +72,7 @@ export default async function Page({ params }: { params: Params }) {
           </Link>
         </div>
         <div className="flex items-center justify-between">
-          <div className="flex flex-col gap-2 prose">
+          <div className="prose">
             <h1 className="">Бүлэг үүсгэх</h1>
             <p className="text-error">Бүх талбарыг бөглөнө үү {completionText}</p>
           </div>

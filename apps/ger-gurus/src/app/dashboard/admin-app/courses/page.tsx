@@ -43,7 +43,7 @@ export default function Page() {
     <div className="md:container md:mx-auto px-6 shadow-xl">
       <Link href="/admin-app/courses/create">
         <button className="btn btn-primary hover:bg-transparent my-8 prose">
-          <h2>Шинэ хичээл нэмэх</h2>
+          <h3>Шинэ хичээл нэмэх</h3>
         </button>
       </Link>
 

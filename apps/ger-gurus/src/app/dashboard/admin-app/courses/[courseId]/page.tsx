@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { redirect } from 'next/navigation';
 import { AttachmentForm } from './_components/attachment-form';
 import { ChaptersForm } from './_components/chapters-form';
+import { CourseActions } from './_components/course-actions';
 import { DescriptionForm } from './_components/description-form';
 import { ImageForm } from './_components/image-form';
 import { PriceForm } from './_components/price-form';
@@ -29,6 +30,7 @@ export default async function Page({ params }: { params: Params }) {
     description: string;
     imageUrl: string;
     price: number;
+    isPublished: boolean;
     chapters: Chapter[];
     attachments?: Attachment[];
   }
@@ -133,61 +135,78 @@ export default async function Page({ params }: { params: Params }) {
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `(${completedFields}/${totalFields})`;
+  const isComplete = requiredFields.every(Boolean);
 
   return (
-    <main>
-      <div className=" md:container md:mx-auto shadow-xl p-[10%] max-h-full">
-        <div className="flex items-center justify-between">
-          <div className="flex flex-col gap-2 prose">
-            <h1 className="">Курс тохиргоо</h1>
-            <p className="text-error">Бүх талбарыг бөглөнө үү {completionText}</p>
+    <>
+      <main>
+        {!course.isPublished && (
+          <div role="alert" className="alert alert-warning flex">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+            <span className="text-sm">Энэхүү бүлэг хичээл нь нийтлэгдээгүй байна. Вебсайтын бүлэг хичээл хэсэгт харагдахгүй байх болно.</span>
           </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-6 mt-8">
-          <div>
+        )}
+        <div className=" md:container md:mx-auto px-[10%] py-[2%] max-h-full">
+          <div className="flex items-center justify-between">
             <div className="prose">
-              <h2 className="flex items-center gap-x-2">
-                <LayoutDashboard />
-                Курсээ тохируулах
-              </h2>
+              <h1 className="">Курс тохиргоо</h1>
+              <p className="text-error">Бүх талбарыг бөглөнө үү {completionText}</p>
             </div>
-            <TitleForm initialData={courseWithPlainId} />
-            <ImageForm initialData={courseWithPlainId} />
-            <DescriptionForm initialData={courseWithPlainId} />
+            <CourseActions disabled={!isComplete} courseId={courseId} isPublished={course.isPublished} />
           </div>
-          <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-6 mt-8">
             <div>
               <div className="prose">
                 <h2 className="flex items-center gap-x-2">
-                  <ListCheck />
-                  Курсын бүлгүүд
+                  <LayoutDashboard />
+                  Курсээ тохируулах
                 </h2>
               </div>
+              <TitleForm initialData={courseWithPlainId} />
+              <ImageForm initialData={courseWithPlainId} />
+              <DescriptionForm initialData={courseWithPlainId} />
+            </div>
+            <div className="space-y-6">
               <div>
-                <ChaptersForm initialData={courseWithPlainId} />
+                <div className="prose">
+                  <h2 className="flex items-center gap-x-2">
+                    <ListCheck />
+                    Курсын бүлгүүд
+                  </h2>
+                </div>
+                <div>
+                  <ChaptersForm initialData={courseWithPlainId} />
+                </div>
               </div>
             </div>
-          </div>
-          <div>
-            <div className="prose">
-              <h2 className="flex items-center gap-x-2">
-                <CircleDollarSign />
-                Курсаа худалдах
-              </h2>
-            </div>
-            <PriceForm initialData={courseWithPlainId} />
-            <div className="mt-6">
+            <div>
               <div className="prose">
                 <h2 className="flex items-center gap-x-2">
-                  <File />
-                  Нөөц материал ба хавсралтууд
+                  <CircleDollarSign />
+                  Курсаа худалдах
                 </h2>
               </div>
-              <AttachmentForm initialData={courseWithPlainId} />
+              <PriceForm initialData={courseWithPlainId} />
+              <div className="mt-6">
+                <div className="prose">
+                  <h2 className="flex items-center gap-x-2">
+                    <File />
+                    Нөөц материал ба хавсралтууд
+                  </h2>
+                </div>
+                <AttachmentForm initialData={courseWithPlainId} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
