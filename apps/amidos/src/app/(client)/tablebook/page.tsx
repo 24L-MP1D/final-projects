@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocalStorage } from "@uidotdev/usehooks";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
@@ -86,9 +85,9 @@ function TableBook() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center gap-8 p-20 mx-auto">
+    <div className="flex justify-between p-10 mx-auto max-w-screen-2xl">
       <div className="flex justify-between items-center">
-        <div className="flex gap-8 p-3">
+        <div className="flex flex-col gap-8 p-3">
           <div className="flex flex-col gap-4">
             <p className="text-xl font-semibold">Өдөр сонгох</p>
             <DatePicker
@@ -122,22 +121,23 @@ function TableBook() {
               className="p-5"
             />
           </div>
-        </div>
-        <Button
-          className={`w-[200px] h-[40px] py-2 text-center bg-[#52071B] rounded-xl text-white text-base font-semibold hover:bg-[#52071b92] 
+          <Button
+            className={`w-[200px] h-[40px] py-2 text-center bg-[#52071B] rounded-xl text-white text-base font-semibold hover:bg-[#52071b92] 
                         ${!selectedTime || !selectedTable || !reservedSeat ? "opacity-50 cursor-not-allowed" : ""}`}
-          onClick={handleSubmit}
-          disabled={!selectedTime || !selectedTable || !reservedSeat}
-        >
-          Continue
-        </Button>
+            onClick={handleSubmit}
+            disabled={!selectedTime || !selectedTable || !reservedSeat}
+          >
+            Continue
+          </Button>
+        </div>
+
       </div>
       {loading ? (
         <div>Loading tables...</div>
       ) : (
-        <div className="relative h-[800px] w-[800px]">
-          <Image src={"/BackroundImage.jpg"} width={1600} height={800} alt="Zaalnii plan zurag"
-            className="max-w-screen-2xl h-[850px]" />
+        <div className="relative h-[800px] w-[1200px]">
+          {/* <Image src={"/BackroundImage.jpg"} width={1200} height={800} alt="Zaalnii plan zurag"
+            className="max-w-screen-xl h-[850px]" /> */}
           {tables.map((table) => (
             <div style={{ top: table.coordinate.y, left: table.coordinate.x }}
               className={`absolute w-20 h-20 rounded-full ${selectedTable === table._id ? "bg-[#52071B] text-white" : "bg-yellow-400 hover:bg-yellow-600"}`}
