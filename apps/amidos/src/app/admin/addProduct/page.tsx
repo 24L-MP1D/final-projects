@@ -71,43 +71,12 @@ export default function Foods() {
         },
         body: JSON.stringify(newFood),
       });
-      client.saveObject({ indexName: 'amidos', body: { name: name, ingredients: ingredients, price: price, photos: imageUrl } });
       toast('Хоол амжилттай нэмэгдлээ');
       console.log('created');
     } catch (error) {
       console.log('error');
     }
   };
-  // const addFood = async () => {
-  //   const newFood = {
-  //     name,
-  //     ingredients,
-  //     price,
-  //     photos: imageUrl,
-  //   };
-
-  //   try {
-  //     const response = await fetch('/api/addFood', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(newFood),
-  //     });
-
-  //     if (response.ok) {
-  //       await response.json();
-  //       toast('Successfully added the product');
-  //       loadlist();
-  //     } else {
-  //       toast.error('Failed to add food');
-  //       console.log('Error:', response.statusText);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error adding food:', error);
-  //     toast.error('An error occurred while adding food');
-  //   }
-  // };
 
   const handleEditFood = (selectedItem: Food) => {
     if (selectedItem) {
@@ -229,9 +198,9 @@ export default function Foods() {
   return (
     <div className="text-md mb-10 flex">
       <LeftBar />
-      <div className="bg-slate-100 p-8">
+      <div className="bg-slate-100 mt-8 ">
         <div className="flex ">
-          <div className="bg-white  p-10 mt-6 ml-10 text-md rounded-lg mx-auto">
+          <div className="bg-white  p-10 mt-6  text-md rounded-lg mx-auto">
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="outline" className="mb-10 text-lg">
@@ -272,7 +241,7 @@ export default function Foods() {
                     </Label>
                     <Input id="width" className="col-span-2 h-12" />
                   </div> */}
-                  <Button variant="outline" className="mt-3" onClick={addFood}>
+                  <Button variant="outline" className="mt-3 " onClick={addFood}>
                     Оруулах
                   </Button>
                 </div>
@@ -282,30 +251,29 @@ export default function Foods() {
               <Table className="text-xl mb-5 ">
                 <TableHeader className="bg-slate-200">
                   <TableRow className="text-center font-bold text-wrap ">
-                    <TableHead className="text-bold ">№</TableHead>
+                    <TableHead className=" text-bold">Зураг</TableHead>
                     <TableHead className="text-bold ">Хоолны нэр, код</TableHead>
                     <TableHead className="text-bold">Орц</TableHead>
                     <TableHead className=" text-bold">Үнэ</TableHead>
-                    <TableHead className=" text-bold">Зураг</TableHead>
                     <TableHead className="text-bold">Засах</TableHead>
                     <TableHead className="text-bold">Устгах</TableHead>
-                    <TableHead className="text-bold">Онгой меню</TableHead>
+                    <TableHead className="text-bold">Онцгой меню</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody className="text-md">
                   {order.map((order: Food) => (
                     <TableRow key={order._id}>
-                      <TableCell className="font-medium text-black"></TableCell>
-                      <TableCell>{order.name}</TableCell>
-                      <TableCell>{order.ingredients}</TableCell>
-                      <TableCell className="text-black font-bold">{order.price}</TableCell>
                       <TableCell className="w-50 h-50">
                         <img className=" mx-auto w-[50px] h-[50px] object-cover rounded-full items-center" width={150} height={150} src={order.photos} alt={order.name} />
                       </TableCell>
+                      <TableCell>{order.name}</TableCell>
+                      <TableCell>{order.ingredients}</TableCell>
+                      <TableCell className="text-black font-bold">{order.price}</TableCell>
+
                       <TableCell className="text-center align-middle">
                         <Dialog>
                           <DialogTrigger asChild className="">
-                            <Button variant="default3">
+                            <Button>
                               <Pencil onClick={() => handleEditFood(order)} />
                             </Button>
                           </DialogTrigger>

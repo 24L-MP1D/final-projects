@@ -8,8 +8,8 @@ import { useAuthStore } from './useauthstore';
 export function Protect({ children, role }: { children: ReactNode; role: string }) {
   const currentUser = useAuthStore((state) => state.currentUser);
   if (!currentUser) {
-    toast.error('Бүртгэлгүй байна! Бүртгүүлэх хуудас руу чиглүүлж байна...');
-    
+    toast.error('Бүртгэлгүй байна!');
+
     return;
   }
   console.log;

@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Search } from 'lucide-react';
 import { ObjectId } from 'mongodb';
 import { useEffect, useState } from 'react';
+import LeftBar from '../components/leftbar';
 
 export type tableType =
   | {
@@ -57,7 +58,8 @@ const Order = () => {
   }, [incomeFilter]);
 
   return (
-    <div className="flex max-w-[1440px] mx-auto">
+    <div className="flex max-w-[1440px] ">
+      <LeftBar />
       <div className="flex flex-col w-full">
         <div className="mx-[23.5px] mt-[34px] mb-6 flex justify-between ">
           <div className="flex  gap-2">
@@ -102,7 +104,7 @@ const Order = () => {
           </div>
         </div>
         <div className="rounded-[12px] shadow-xl border border-[#ECEDF0] ml-[23.5px] mr-6 pb-4">
-          <div className="py-[20px] px-6 font-bold text-xl">Ширээ захиалгын мэдээлэл</div>
+          <div className="py-[20px] px-6 font-bold text-5xl italic">Ширээ захиалгын мэдээлэл</div>
           <div className="">
             <Table className="bg-[##F7F7F8] border-b-[1px] w-[1218px] rounded-none">
               <TableHeader>
