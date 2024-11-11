@@ -5,9 +5,9 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { FilePenLine, Plus, X } from 'lucide-react';
 import { ObjectId } from 'mongodb';
 import Link from 'next/link';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../(client)/components/ui/Table';
 import { DashboardAside } from '../components/DashboardAside';
 import { Input } from '../components/ui/Input';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/Table';
 
 export default function Home() {
   interface Recipe {
@@ -44,7 +44,7 @@ export default function Home() {
         // Debugging line
         setRecipes(response.data);
         setLoading(false);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error fetching recipes:', error);
         setError(error.message);
       }
@@ -83,7 +83,7 @@ export default function Home() {
     }
   };
 
-  const updateRecipe = async (recipeId, updatedFields) => {
+  const updateRecipe = async (recipeId: any, updatedFields: any) => {
     try {
       const response = await axios.put(`/api/recipes/${recipeId}`, {
         _id: recipeId,
@@ -92,7 +92,7 @@ export default function Home() {
 
       console.log('Recipe updated successfully:', response.data);
       // Optionally, handle success (e.g., show a success message, refresh the recipe list, etc.)
-    } catch (error) {
+    } catch (error: any) {
       if (error.response) {
         // The request was made, and the server responded with a status code
         console.error('Error updating recipe:', error.response.data);
@@ -198,7 +198,7 @@ export default function Home() {
                   </TableCell>
                 )} */}
                 <TableCell>
-                  <button onClick={() => updateRecipe(recipe._id)} className=" hover:text-red-700">
+                  <button onClick={() => updateRecipe(recipe._id, undefined)} className=" hover:text-red-700">
                     <FilePenLine />
                   </button>
                 </TableCell>

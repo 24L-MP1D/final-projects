@@ -155,16 +155,16 @@ export default function Header() {
           <div className="flex gap-4 items-center w-[150px] ">
             <div className="relative hover:cursor-pointer">
               <FaRegHeart size={24} color="white" onClick={save} />
-
               {favlength === 0 ? null : <div className="absolute left-5 bottom-4  bg-red-500 text-white rounded-full w-5 h-5 text-center text-sm">{favlength}</div>}
             </div>
-
             {signin ? (
+
               <div className="flex relative gap-5 items-center p-1">
                 <div onClick={() => setShowNotif(true)} className="hover:cursor-pointer">
                   <div className="relative ">
                     <Bell color="white" />
                     {isSeenNotif.length > 0 && <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm top-[-5px] left-0 text-white">{isSeenNotif.length}</div>}
+
                   </div>
                   {showNotif && (
                     <div className="absolute top-12 left-0 z-50">

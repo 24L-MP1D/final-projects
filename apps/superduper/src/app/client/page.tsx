@@ -19,12 +19,15 @@ export default function Index() {
   const [swiperProducts, setSwiperProducts] = useState<ProductType[]>([]);
   const [progress, setProgress] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
+
   const [count, setCount] = useState(15);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   interface product {
     image: string;
   }
+
+
 
   const loadProducts = async () => {
     try {
