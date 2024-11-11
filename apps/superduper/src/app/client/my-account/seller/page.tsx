@@ -45,7 +45,6 @@ export default function App() {
     return (
       <div className="min-h-screen">
         <ProfileAside queryValue={queryValue} />
-
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
           <div className="text-3xl">Одоогоор бүтээгдэхүүн байхгүй байна.</div>
         </div>

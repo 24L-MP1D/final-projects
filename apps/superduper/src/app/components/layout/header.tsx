@@ -141,10 +141,10 @@ export default function Header() {
           </div>
 
           <div className="flex gap-5 items-center">
-            <Link href="/client/categoryFilter" className="flex gap-1 items-center text-white">
+            <div onClick={() => value?.setShowCategory(true)} className="flex gap-1 cursor-pointer items-center text-white">
               Ангилалууд
               <ChevronDown size={16} color="white" />
-            </Link>
+            </div>
             <button onClick={sell} className="bg-[#333333] hover:border-b-[1px] hover:border-black text-white">
               Зарах
             </button>
@@ -158,13 +158,11 @@ export default function Header() {
               {favlength === 0 ? null : <div className="absolute left-5 bottom-4  bg-red-500 text-white rounded-full w-5 h-5 text-center text-sm">{favlength}</div>}
             </div>
             {signin ? (
-
               <div className="flex relative gap-5 items-center p-1">
                 <div onClick={() => setShowNotif(true)} className="hover:cursor-pointer">
                   <div className="relative ">
                     <Bell color="white" />
                     {isSeenNotif.length > 0 && <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm top-[-5px] left-0 text-white">{isSeenNotif.length}</div>}
-
                   </div>
                   {showNotif && (
                     <div className="absolute top-12 left-0 z-50">

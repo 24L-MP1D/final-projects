@@ -19,10 +19,10 @@ export default function Page() {
     const data = await response.json();
     setCategories(data);
   };
-  const saveCategory = (category: string) => {
+  const saveCategory = (categoryId: string) => {
     const addProductObject = JSON.parse(localStorage.getItem('addProduct') || '{}');
 
-    addProductObject.category = category;
+    addProductObject.categoryId = categoryId;
     localStorage.setItem('addProduct', JSON.stringify(addProductObject));
     router.push('/client/addProducts/2');
   };
@@ -83,7 +83,7 @@ export default function Page() {
         <div>
           {categories.map((category, index) => (
             <div key={category._id} className="flex justify-between py-6 border-b-[1px]">
-              <div onClick={() => saveCategory(category.category)} className="flex gap-2 text-black text-3xl hover:gap-1 hover:cursor-pointer items-center">
+              <div onClick={() => saveCategory(category._id)} className="flex gap-2 text-black text-3xl hover:gap-1 hover:cursor-pointer items-center">
                 <div>
                   <ChevronRight className="w-10 h-10" />
                 </div>

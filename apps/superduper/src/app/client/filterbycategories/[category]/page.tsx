@@ -1,5 +1,6 @@
 'use client';
 
+import { ProductItem } from '@/app/components/productItem';
 import { Categories } from '@/components/category';
 import { ProductType } from '@/components/productType';
 import { Button } from '@/components/ui/button';
@@ -11,32 +12,26 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { Swiper as SwiperType } from 'swiper';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { ProductItem } from '../components/productItem';
-import { RealtimeNotif } from './layout';
+import { RealtimeNotif } from '../../layout';
 
-export default function Index() {
+export default function Index({ params }: { params: { category: string } }) {
   const [isClick, setClick] = useState(false);
   const value = useContext(RealtimeNotif);
   const [swiperProducts, setSwiperProducts] = useState<ProductType[]>([]);
   const [progress, setProgress] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
 
-  const [count, setCount] = useState(15);
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
   interface product {
     image: string;
   }
 
   const loadProducts = async () => {
     try {
-      setLoading(true);
       const response = await fetch('/api/products', {
         method: 'PUT',
         body: JSON.stringify({
           searchValue: value?.searchValue,
-          limit: count,
-          page,
+          categoryId: params.category,
         }),
         headers: {
           'Content-type': 'application/json',
@@ -45,7 +40,6 @@ export default function Index() {
       const data = await response.json();
 
       value?.setProducts(data);
-      setLoading(false);
     } catch (err) {
       console.error(err);
     }
@@ -74,7 +68,7 @@ export default function Index() {
     if (storage) value?.setFavourite(JSON.parse(storage));
     loadSwiperProducts();
     loadProducts();
-  }, [value?.searchValue, page]);
+  }, [value?.searchValue]);
 
   const handleFavourite = (productId: string) => {
     let result: string[] = [];
@@ -96,7 +90,7 @@ export default function Index() {
       <div className="min-h-screen">
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
           <Image src={'/images/spinner.svg'} alt="loading" width={100} height={100} />
-          <div className="font-bold text-3xl">Loading...</div>
+          <div className="font-bold text-3xl">Энэ ангилалд бараа байхгүй байна.</div>
         </div>
       </div>
     );
@@ -226,24 +220,11 @@ export default function Index() {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-10 mt-[30px] w-full">
-        {value?.products.slice(0, 20).map((product) => (
+        {value.products.map((product) => (
           <ProductItem isClick={isClick} product={product} favourite={value?.favourite || []} key={product._id} onClickFavourite={() => handleFavourite(product._id)} />
         ))}
       </div>
-      {value.products.length >= count * page && (
-        <div className="flex justify-center mt-10">
-          <Button
-            disabled={loading}
-            onClick={() => {
-              setPage(page + 1);
-            }}
-            className="flex items-center gap-1"
-          >
-            {loading && <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
-            <div> Load more</div>
-          </Button>
-        </div>
-      )}
+
       {value.showCategory && <div className="fixed inset-0 bg-slate-500 opacity-50"></div>}
       {value.showCategory && <Categories />}
     </div>
