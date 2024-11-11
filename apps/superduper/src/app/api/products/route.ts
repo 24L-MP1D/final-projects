@@ -5,6 +5,7 @@ type filtType = {
   status?: string;
   startDate?: { $gte: Date };
   endDate?: { $lt: Date };
+  category?:string
 };
 
 const collection = DB.collection('product');
@@ -14,11 +15,12 @@ export async function GET(request: Request) {
   const stat = searchParams.get('status');
   const dateFrom = searchParams.get('startDate');
   const dateTo = searchParams.get('endDate');
+  const category = searchParams.get("category")
   const filt: filtType = {};
   if (stat) {
     filt.status = stat;
   }
-
+  if(category) filt.category = category
   if (dateFrom && dateTo) {
     filt.startDate = { $gte: new Date(dateFrom) };
     filt.endDate = { $lt: new Date(dateTo) };

@@ -51,7 +51,6 @@ export default function Page() {
     const response = await fetch(`http://localhost:3000/api/products?category=${selectedCategory}`);
     const data = await response.json();
     setCategory(data);
-
     setFiltering(false);
   }
 
@@ -68,6 +67,7 @@ export default function Page() {
         </Button>
         // </span>
       ))}
+
       {/* ${selecedCategory === category.value ? "bg-sky-700" : "bg-sky-500"} */}
     </div>
   );
