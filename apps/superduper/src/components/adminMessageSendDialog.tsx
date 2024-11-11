@@ -49,7 +49,7 @@ export const AdminMessageSendDialog = ({ open, productId, setFeedBackInput, load
   if (!product) return;
   <Dialog open={open}>
     <DialogContent className="sm:max-w-md px-2 py-6 text-center content-center">
-      <div>loading...</div>
+      <div>ачааллаж байна...</div>
     </DialogContent>
   </Dialog>;
   return (
@@ -60,12 +60,12 @@ export const AdminMessageSendDialog = ({ open, productId, setFeedBackInput, load
             <X className="flex-1 hover:cursor-pointer " onClick={() => setOpen(false)} />
           </DialogHeader>
           <Image src={product.frontImage} alt="jordans" height="400" width="400" className="object-contain" />
-          <div className="text-2xl text-black dark:text-neutral-200">Product Name: {product.productName}</div>
-          <div className="text-2xl">Start Bid: {product.startBid}</div>
-          <div className="text-2xl">status: {product.status}</div>
+          <div className="text-2xl text-black dark:text-neutral-200">Бүтээгдэхүүний нэр: {product.productName}</div>
+          <div className="text-2xl">Үнийн санал эхлүүлэх: {product.startBid}</div>
+          <div className="text-2xl">Төлөв: {product.status}</div>
           <div className="flex gap-4 mt-2">
             <Button className="flex-1 bg-green-600 hover:bg-green-800" onClick={() => updateProductStatus('Accept')}>
-              Accept
+            Зөвшөөрөх
             </Button>
             <Button
               onClick={() => {
@@ -74,7 +74,7 @@ export const AdminMessageSendDialog = ({ open, productId, setFeedBackInput, load
               }}
               className="flex-1 bg-red-700 hover:bg-red-800"
             >
-              Deny
+              Үгүйсгэх
             </Button>
           </div>
         </BackgroundGradient>

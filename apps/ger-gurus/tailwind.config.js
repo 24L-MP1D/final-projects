@@ -1,15 +1,18 @@
 const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
 const { join } = require('path');
 const { fontFamily } = require("tailwindcss/defaultTheme")
+const {withUt}=require("uploadthing/tw")
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+module.exports = withUt({
   darkMode: ["class"],
-  content: ["app/**/*.{ts,tsx}", "components/**/*.{ts,tsx}", join(__dirname, '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'), ...createGlobPatternsForDependencies(__dirname)],
+  content: ["app/**/*.{ts,tsx}", "components/**/*.{ts,tsx}", './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    join(__dirname, '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'), ...createGlobPatternsForDependencies(__dirname)],
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "28px",
       screens: {
         "2xl": "1400px",
       },
@@ -68,7 +71,8 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        inter: ['Inter', 'sans-serif'],
+        pangolin: ['Pangolin', 'cursive'],
       },
       keyframes: {
         "accordion-down": {
@@ -85,6 +89,43 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
-    plugins: [],
-  }
-};
+  },
+  plugins: [
+    require('daisyui'),
+    require('@tailwindcss/typography')
+  ],
+  daisyui: {
+    themes: ["light", 
+      "dark", 
+      "cupcake",
+      "bumblebee",
+      "emerald",
+      "corporate",
+      "synthwave",
+      "retro",
+      "cyberpunk",
+      "valentine",
+      "halloween",
+      "garden",
+      "forest",
+      "aqua",
+      "lofi",
+      "pastel",
+      "fantasy",
+      "wireframe",
+      "black",
+      "luxury",
+      "dracula",
+      "cmyk",
+      "autumn",
+      "business",
+      "acid",
+      "lemonade",
+      "night",
+      "coffee",
+      "winter",
+      "dim",
+      "nord",
+      "sunset",], // Customize themes as needed
+  },
+});

@@ -1,14 +1,18 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as Ably from 'ably';
 import { X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { Button } from './ui/button';
 import { Input } from './ui/Input';
+const client = new Ably.Realtime({ key: process.env.NEXT_PUBLIC_ABLYKEY });
+
 type FeedBackInput = {
   setFeedBackInput: (value: boolean) => void;
 
   loadProduct: () => void;
+
   userId: string;
 
   productId: string;
@@ -40,13 +44,11 @@ export const FeedBackInput = ({ setFeedBackInput, userId, loadProduct, productId
           'Content-Type': 'application/json',
         },
       });
-      // await fetch(`/api/users/${userId}`, {
-      //   method: 'PUT',
-      //   body: JSON.stringify({ message: values.feedback }),
-      //   headers: {
-      //     'Content-type': 'application/json',
-      //   },
-      // });
+
+      const channel = client.channels.get('notifications');
+
+      channel.publish('new-notifications', { status: 'Deny', isSeen: false, message: values.feedback, userId });
+
       loadProduct();
       toast('succesfully sent');
       setFeedBackInput(false);
@@ -61,7 +63,7 @@ export const FeedBackInput = ({ setFeedBackInput, userId, loadProduct, productId
         <div className="sm:max-w-md flex flex-col gap-3">
           <div>
             <div className="flex justify-between">
-              <div>Feedback Message</div>
+              <div>Санал хүсэлтийн мессеж</div>
               <X className="hover:cursor-pointer" onClick={() => setFeedBackInput(false)} />
             </div>
           </div>
@@ -69,7 +71,7 @@ export const FeedBackInput = ({ setFeedBackInput, userId, loadProduct, productId
             <Input id="feedback" {...register('feedback', { required: true })} placeholder="send a feedback" />
             {touchedFields.feedback && errors.feedback && <p className="text-red-400">{errors.feedback.message}</p>}
           </div>
-          <Button type="submit">Send</Button>
+          <Button type="submit">Илгээх</Button>
         </div>
       </div>
     </form>

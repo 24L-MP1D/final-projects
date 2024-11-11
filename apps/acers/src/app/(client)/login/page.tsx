@@ -48,13 +48,16 @@ export default function Login() {
           <Input type="password" placeholder="Нууц үг" className="border-[1px] border-slate-200 hover:border-slate-400" {...register('password', { required: true })} />
           {errors.password && <span className="text-red-400 text-[12px] ml-2">Нууц үгээ оруулна уу</span>}
 
-          <Button className="bg-blue-200" type="submit">
+          <Button className="bg-blue-200 hover:bg-blue-300" type="submit">
             Нэвтрэх
           </Button>
         </div>
+        <Link href="/forgetPassword" className="text-blue-400 hover:text-blue-600 text-center text-sm">
+          Нууц үг сэргээх
+        </Link>
         <div className="text-sm text-slate-500 text-center">
           <p className="">Шинэ хэрэглэгч?</p>
-          <Link href="/register" className="text-blue-400">
+          <Link href="/register" className="text-blue-400 hover:text-blue-600">
             Бүртгүүлэх
           </Link>
         </div>

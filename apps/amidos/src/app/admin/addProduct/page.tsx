@@ -7,7 +7,7 @@ import { Switch } from '@/components/ui/switch';
 import { Food } from '@/lib/types';
 import { Label } from '@radix-ui/react-label';
 import { Heart, Pencil, Trash } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 export default function Foods() {
@@ -53,56 +53,25 @@ export default function Foods() {
     }
   };
 
-  // const addFood = (data: any) => {
-  //   const newFood = {
-  //     name,
-  //     ingredients,
-  //     price,
-  //     photos: imageUrl,
-  //   };
-  //   try {
-  //     const response = fetch('/api/addFood', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(newFood),
-  //     });
-  //     toast('Хоол амжилттай нэмэгдлээ');
-  //     console.log('created');
-  //   } catch (error) {
-  //     console.log('error');
-  //   }
-  // };
-  const addFood = async () => {
+  const addFood = (data: any) => {
     const newFood = {
       name,
       ingredients,
       price,
       photos: imageUrl,
     };
-
     try {
-      const response = await fetch('/api/addFood', {
+      const response = fetch('/api/addFood', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newFood),
       });
-
-      if (response.ok) {
-        await response.json();
-        toast('Successfully added the product');
-        loadlist();
-        console.log('Created');
-      } else {
-        toast.error('Failed to add food');
-        console.log('Error:', response.statusText);
-      }
+      toast('Хоол амжилттай нэмэгдлээ');
+      console.log('created');
     } catch (error) {
-      console.error('Error adding food:', error);
-      toast.error('An error occurred while adding food');
+      console.log('error');
     }
   };
 
@@ -207,21 +176,21 @@ export default function Foods() {
   const toggleButtonColor = () => {
     setButtonColor((prevColor) => (prevColor === 'bg-slate-600' ? 'bg-red-600' : 'bg-slate-600'));
   };
-  // useEffect(() => {
-  //   fetch('/api/addFood')
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setOrder(data);
-  //     });
-  // }, []);
-  // useEffect(() => {
-  //   // fetch('/api/special')
-  //   //   .then((res) => res.json())
-  //   //   .then((data) => {
-  //   //     setSpecial(data);
-  //   //   });
-  //   loadlist();
-  // }, []);
+  useEffect(() => {
+    fetch('/api/addFood')
+      .then((res) => res.json())
+      .then((data) => {
+        setOrder(data);
+      });
+  }, []);
+  useEffect(() => {
+    fetch('/api/special')
+      .then((res) => res.json())
+      .then((data) => {
+        setSpecial(data);
+      });
+    loadlist();
+  }, []);
 
   return (
     <div className="text-md mb-10 ">
@@ -357,7 +326,7 @@ export default function Foods() {
                             onClick={() => {
                               handleSpecialFood(order._id);
                             }}
-                            className={order.special ? 'fill-red-600' : 'fill-white'}
+                            className={order.isSpecial ? 'fill-red-600' : 'fill-white'}
                           />
                         </Button>
                       </TableCell>

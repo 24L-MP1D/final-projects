@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { DB } from '../../../lib/db';
-import { auth, generateSalt } from '../../auth/route';
+import { auth, generateSalt } from '../../auth/authFunctions';
 
 const JWT_SECRET = process.env.JWT_SECRET || '';
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, { params }: { params: any }) {
   const authResult = await auth(request, params.id);
 
   if (authResult.status !== 200) {
@@ -45,7 +45,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     await DB.collection('users').updateOne({ _id: userId }, { $set: updateData });
     return new Response(null, { status: 204 });
   } catch (error) {
-    console.error(error); // Log the error
+    console.error(error);
     return new Response('Invalid token or error processing request', { status: 403 });
   }
 }
