@@ -3,11 +3,6 @@ const { join } = require('path');
 const { fontFamily } = require('tailwindcss/defaultTheme');
 
 const colors = require('tailwindcss/colors');
-<<<<<<< HEAD
-=======
-
-
->>>>>>> main
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
