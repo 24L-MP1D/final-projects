@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { CardBody, CardContainer, CardItem } from './ui/card';
 
-
 export interface Product {
   Country: string;
   additionalInformation: string;
@@ -32,7 +31,6 @@ export interface Product {
 }
 
 export function ProductItem({ product, favourite, onClickFavourite }: { product: ProductType; isClick: boolean; favourite: string[]; onClickFavourite: () => void }) {
-
   const [isClick, setClick] = useState(false);
 
   useEffect(() => {
@@ -67,7 +65,7 @@ export function ProductItem({ product, favourite, onClickFavourite }: { product:
           </CardItem>
           <div className="flex justify-between items-center">
             <CardItem translateZ={20} href="https://twitter.com/mannupaaji" target="__blank" className="py-2 rounded-xl text-sm font-normal dark:text-white">
-              Bid now →
+              Одоо үнийн санал оруулах →
             </CardItem>
             <button className="text-sm bg-slate-200 text-blue-700 w-[70px] h-[30px] rounded-xl">Дуудах</button>
           </div>
