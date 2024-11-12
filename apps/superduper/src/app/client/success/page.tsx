@@ -44,6 +44,15 @@ export default function SubmissionPage() {
       setShowAnimate(false);
     }, 5000);
   }, []);
+  if (!product)
+    return (
+      <div className="min-h-screen">
+        <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
+          <Image src={'/images/spinner.svg'} alt="loading" width={100} height={100} />
+          <div className="font-bold text-3xl">Loading...</div>
+        </div>
+      </div>
+    );
   return (
     <Suspense>
       <div className="min-h-screen" style={{ textAlign: 'center', padding: '20px' }}>
@@ -67,7 +76,9 @@ export default function SubmissionPage() {
         {!showAnimate && (
           <div className="flex max-w-[500px] mt-5 mx-auto flex-col justify-center items-center gap-4">
             <div className="text-2xl">Таныг хүлээн авч байгаадаа баяртай байна!</div>
-            <div className="text-xl">Та удахгүй баталгаажуулах имэйл болон дараагийн хийх алхмуудыг хүлээн авах болно. Таны илгээсэн мэдээлэлд ямар нэгэн шинэчлэлт орох тохиолдолд бид тантай холбогдох болно.</div>
+            <div className="text-xl">
+              Та удахгүй баталгаажуулах имэйл болон дараагийн хийх алхмуудыг хүлээн авах болно. Таны илгээсэн мэдээлэлд ямар нэгэн шинэчлэлт орох тохиолдолд бид тантай холбогдох болно.
+            </div>
             <div className="h-[2px] w-full bg-slate-200"></div>
             <div className="flex gap-2 items-center justify-center">
               <Image className="w-20 object-cover" src={product?.frontImage || '/'} alt="productimage" width={500} height={500} />
@@ -81,7 +92,7 @@ export default function SubmissionPage() {
             "
             >
               <Button className="active:bg-black" onClick={routerChange}>
-              ШИНЭ ЗҮЙЛ ИЛГЭЭХ
+                ШИНЭ ЗҮЙЛ ИЛГЭЭХ
               </Button>
               <Button>ПОРТАЛ РУУ ОРОХ</Button>
             </div>
