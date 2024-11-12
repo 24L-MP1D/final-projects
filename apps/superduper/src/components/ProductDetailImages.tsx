@@ -1,12 +1,12 @@
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { ProductType } from './productType';
 import { TextGenerateEffect } from './ui/text-generate-effect';
 import { TypewriterEffectSmooth } from './ui/typewriter-effect';
-
 export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType }) => {
   const [frontImage, setFrontImage] = useState('');
-
+  const [animate, setAnimat] = useState(false);
   const words = (text: string) => {
     const array = [];
     for (let i = 0; i < text.length; i++) {
@@ -22,11 +22,19 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
   return (
     <div className="max-w-[750px] mx-auto w-full ">
       <div>
-        <div className="text-[40px]">{oneProduct.productName}</div>
         <div>NO.14214</div>
+        <div className="text-[30px]">{oneProduct.productName}</div>
         <div className="flex gap-3">
-          <div className="w-full">
-            <Image className="object-cover rounded-lg w-full shadow drop-shadow-xl" src={frontImage} alt="front-image" width={1000} height={1000} />
+          <div className="w-full relative">
+            <motion.img
+              key={frontImage}
+              src={frontImage}
+              alt="Selected"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+              style={{ width: '100%', borderRadius: '8px', maxHeight: '650px', objectFit: 'cover', marginBottom: '20px' }}
+            />{' '}
           </div>
           <div className="flex flex-col gap-3 relative">
             <Image

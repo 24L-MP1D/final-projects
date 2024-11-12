@@ -46,7 +46,6 @@ type CategoriesType = {
 };
 export function Categories() {
   const value = useContext(RealtimeNotif);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const [category, setCategory] = useState<CategoriesType[]>([]);
 
@@ -68,19 +67,10 @@ export function Categories() {
         </div>
         <div className="grid grid-cols-3 gap-6 mt-5 text-xl">
           {category.map((category, index) => (
-            <Link
-              href={`/client/filterbycategories/${category._id}`}
-              style={{ backgroundColor: colors[index] }}
-              className={`flex text-wrap p-4 aspect-video`}
-              onClick={() => {
-                setSelectedCategory(category.category);
-                value?.setShowCategory(false);
-              }}
-              key={category._id}
-            >
+            <Link href={`/client/filterbycategories/${category._id}`} style={{ backgroundColor: colors[index] }} className={`flex group  text-wrap p-4 aspect-video`} key={category._id}>
               <div className="w-[60%]">{category.category}</div>
-              <div className="w-[40%]">
-                <Image src={category.image} alt="image" width={400} height={500} className="w-full h-full rounded-full object-cover" />
+              <div className="w-[40%] overflow-hidden rounded-full">
+                <Image src={category.image} alt="image" width={400} height={500} className="w-full transition-all group-hover:scale-150 h-full rounded-full object-cover" />
               </div>
             </Link>
           ))}

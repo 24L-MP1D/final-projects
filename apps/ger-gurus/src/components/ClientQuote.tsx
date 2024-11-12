@@ -3,7 +3,7 @@
 export default function ClientQuote() {
   return (
     <div className="max-w-[1440px] mx-auto">
-      <section className="max-w-[1020px] mx-auto px-10 py-20 flex flex-col gap-8 items-center">
+      <section className="max-w-[1020px] mx-auto px-10 py-20 flex flex-col gap-4 items-center">
         <div className="text-lg font-bold text-purple-600">Our mission</div>
         <div className="text-5xl text-[#201116] font-bold text-center">
           Together, we aim to empower and inspire people to unlock their creative potential, making design accessible and impactful for everyone. 👻

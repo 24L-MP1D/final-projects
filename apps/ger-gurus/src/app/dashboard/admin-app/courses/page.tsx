@@ -45,7 +45,7 @@ export default function Page() {
         <button className="btn btn-primary hover:bg-transparent my-8 text-base">Шинэ хичээл нэмэх</button>
       </Link>
 
-      <Table className="">
+      <Table>
         <TableCaption>Та сургуулийн сургалтуудыг үүсгэж, удирдаарай.</TableCaption>
         <TableHeader>
           <TableRow>

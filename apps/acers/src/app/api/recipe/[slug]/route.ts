@@ -22,7 +22,6 @@ async function verifyToken(request: Request) {
 
 export async function POST(request: Request) {
   try {
-
     const body = await request.json();
     const date = new Date();
     const { title, description, prepTime, servings, ingredients, instructions, nutritionFacts, category, difficulty, availability, images, video, tags } = body;
@@ -44,10 +43,7 @@ export async function POST(request: Request) {
       visits: 0,
       createdAt: date.toDateString(),
       updatedAt: date.toDateString(),
-<<<<<<< HEAD:apps/acers/src/app/api/recipe/[slug]/route.ts
-=======
       comment,
->>>>>>> main:apps/acers/src/app/api/recipe/[id]/route.ts
     });
 
     return new Response(JSON.stringify({ res: 'Succeed' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
@@ -60,19 +56,10 @@ export async function POST(request: Request) {
   }
 }
 
-<<<<<<< HEAD:apps/acers/src/app/api/recipe/[slug]/route.ts
 export async function GET(req: Request, { params }: { params: { slug: string } }) {
   const { slug } = await params;
 
   console.log('Received slug:', slug);
-=======
-export async function GET(request: Request, { params }: { params: { id: string } | any }) {
-  console.log('Fetching recipe with ID:', params?.id);
-
-  try {
-    if (params && params?.id) {
-      const { id } = params;
->>>>>>> main:apps/acers/src/app/api/recipe/[id]/route.ts
 
   const recipe = await DB.collection('recipes').findOne({ title: slug });
 

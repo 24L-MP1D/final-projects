@@ -20,7 +20,7 @@ export function middleware(request: NextRequest) {
       domain = 'school';
       break;
     default:
-      domain = 'school';
+      domain = 'client';
   }
 
   return NextResponse.rewrite(new URL(`/${domain}${pathname}${search}`, request.url));
