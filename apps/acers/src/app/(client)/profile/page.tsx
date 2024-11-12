@@ -1,10 +1,56 @@
-'use client;';
+'use client';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../components/ui/Accordion';
-
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
+import axios from 'axios';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { ObjectId } from 'mongodb';
+import { Input } from '../components/ui/Input';
+import { useRouter } from 'next/navigation';
 
 export default function page() {
+  interface users {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: number;
+    role: string;
+  }
+
+  const [name, setName] = useState('');
+  const [lastName, setlastName] = useState('');
+  const [email, setEmail] = useState();
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [role, setRole] = useState('');
+
+  const token = localStorage.getItem('authtoken');
+
+  const router = useRouter();
+
+  if (!window) {
+    return null;
+  }
+
+  if (!token) {
+    return router.push('/login');
+  }
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axios.get('/api/profile', {
+          headers: { authtoken: token },
+        });
+        const user = response.data;
+        setName(user.firstName);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    getUser();
+  }, [name]);
+
   return (
     <div className="flex justify-center">
       <div className="flex gap-20 max-w-screen-xl ">
@@ -51,7 +97,7 @@ export default function page() {
                   </AccordionTrigger>
                 </div>
                 <AccordionContent className="flex items-center justify-between">
-                  <p className="text-m">nyambaatar@pinecone.mn</p>
+                  <p className="text-m">{}</p>
                   <Button className="text-xs" variant="outline">
                     change
                   </Button>
@@ -88,7 +134,7 @@ export default function page() {
                   </AccordionTrigger>
                 </div>
                 <AccordionContent className="flex items-center justify-between">
-                  <p className="text-m">Nyambaatar</p>
+                  <p className="text-m">{name}</p>
                   <Button className="text-xs" variant="outline">
                     change
                   </Button>
@@ -105,7 +151,7 @@ export default function page() {
                   </AccordionTrigger>
                 </div>
                 <AccordionContent className="flex items-center justify-between">
-                  <p className="text-m">Nyambaaa</p>
+                  <p className="text-m">lastnamehere</p>
                   <Button className="text-xs" variant="outline">
                     change
                   </Button>
