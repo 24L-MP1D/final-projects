@@ -127,10 +127,29 @@ function Realtime({ chatId }: { chatId: string }) {
   const sendBid = () => {
     channel.publish('auction-bids', { bid: !isBid });
   };
-
+  const updateWinnerStatus = async (userId: string) => {
+    try {
+      await fetch(`/api/products/${chatId}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          status: 'Done',
+          userId: userId,
+        }),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const loadProductDetail = async () => {
     const response = await fetch(`/api/products/${chatId}`);
     const data = await response.json();
+    if (data.endDate.getTime() < new Date().getTime() && data.status == 'Accept') {
+      updateWinnerStatus(data.userId);
+    }
+
     setOneProduct(data);
     setMaximumBid(data.startBid);
   };
@@ -150,6 +169,7 @@ function Realtime({ chatId }: { chatId: string }) {
 
     value?.setFavourite(result);
   };
+
   const loadProducts = async () => {
     try {
       const response = await fetch('/api/products', {
@@ -162,19 +182,20 @@ function Realtime({ chatId }: { chatId: string }) {
         },
       });
       const data = await response.json();
-      setProducts(data);
+      const filtData = data.filter((data: ProductType) => data._id !== chatId);
+      setProducts(filtData);
     } catch (err) {
       console.error(err);
     }
   };
   useEffect(() => {
-    loadBids();
     loadProductDetail();
+    loadBids();
     loadProducts();
+
     const storage = localStorage.getItem('favourites');
     if (storage) value?.setFavourite(JSON.parse(storage));
   }, [isBid, value?.searchValue]);
-
   if (!oneProduct)
     return (
       <div className="min-h-screen">
@@ -189,7 +210,7 @@ function Realtime({ chatId }: { chatId: string }) {
     <form onSubmit={formik.handleSubmit} className={`max-w-[1240px] mx-auto w-full`}>
       <div className={`flex gap-24`}>
         <ProductDetailImages oneProduct={oneProduct} />
-        <div className="flex flex-col gap-8 pb-12">
+        <div className="flex flex-col gap-8 pb-12 mt-10">
           <Bid
             formikSetFieldValue={formik.setFieldValue}
             formikTouched={formik.touched}

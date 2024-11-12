@@ -2,6 +2,7 @@
 
 import { ProductItem } from '@/app/components/productItem';
 import { ProductType } from '@/components/productType';
+import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 import { RealtimeNotif } from '../layout';
 
@@ -52,7 +53,21 @@ export default function App() {
     localStorage.setItem('favourites', JSON.stringify(result));
     value?.setFavourite(result);
   };
-
+  if (!products.length)
+    return (
+      <div className="text-3xl min-h-screen  font-bold ">
+        <div className="flex gap-1 absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
+          <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />
+          <div className="">Loading...</div>
+        </div>
+      </div>
+    );
+  if (!favourites.length)
+    return (
+      <div className="text-3xl font-bold min-h-screen">
+        <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">Хадгалсан бараа байхгүй байна.</div>
+      </div>
+    );
   return (
     <div className="grid grid-cols-3 gap-10 mt-[30px] w-full">
       {products
