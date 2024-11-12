@@ -20,7 +20,6 @@ export function Swipersnew() {
   };
   return (
     <div className="text-center py-16">
-      {/* <div className="text-[#8B0000] font-semibold text-3xl pb-8">7 ХОНОГИЙН ОНЦЛОХ MЕНЮ</div> */}
       <h1 className="text-7xl italic text-center text-[#8B0000] mb-20">Онцлох Меню</h1>
       <Swiper
         slidesPerView={3}
@@ -36,8 +35,8 @@ export function Swipersnew() {
         className="mySwiper"
       >
         {specialFood.map((special) => (
-          <SwiperSlide key={special._id} onClick={() => choose(special.id)}>
-            <Image src={special.photos} width={600} height={200} alt="Image" className="max-h-[300px] aspect-video object-cover" />
+          <SwiperSlide key={special._id} onClick={() => choose(special.id)} className="rounded-md">
+            <Image src={special.photos} width={600} height={200} alt="Image" className="max-h-[300px] aspect-video object-cover rounded-md" />
             <div className="flex flex-col absolute left-[11px] bottom-[13px]">
               <div className="text-white md:text-2xl font-bold text-base self-start">{special.name}</div>
               <p className=" text-white md:text-xl text-sm self-start">{special.price}</p>
