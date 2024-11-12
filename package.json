@@ -24,6 +24,7 @@
     "@radix-ui/react-navigation-menu": "^1.2.1",
     "@radix-ui/react-popover": "^1.1.2",
     "@radix-ui/react-scroll-area": "^1.2.0",
+    "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.1",
@@ -78,6 +79,7 @@
     "menubar": "^9.5.1",
     "mime": "^4.0.4",
     "mongodb": "^6.9.0",
+    "multer": "^1.4.5-lts.1",
     "nanoid": "^5.0.8",
     "next": "14.2.3",
     "next-client-cookies": "^2.0.0",
@@ -107,6 +109,7 @@
     "react-spring": "^9.7.4",
     "react-time-picker": "^7.0.0",
     "react-use": "^17.5.1",
+    "recharts": "^2.13.3",
     "shadcn": "^2.1.4",
     "slick-carousel": "^1.8.1",
     "sonner": "^1.5.0",
@@ -119,7 +122,7 @@
     "ws": "^8.18.0",
     "yup": "^1.4.0",
     "zod": "^3.23.8",
-    "zustand": "^5.0.0"
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.8",

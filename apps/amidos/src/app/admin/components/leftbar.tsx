@@ -1,7 +1,7 @@
 'use client';
 
 import { Sidebar } from 'flowbite-react';
-import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser } from 'react-icons/hi';
+import { HiChartPie, HiShoppingBag, HiTable, HiUser } from 'react-icons/hi';
 
 export default function LeftBar() {
   return (
@@ -12,31 +12,34 @@ export default function LeftBar() {
 }
 function Component1() {
   return (
-    <div className="dropdown bg-white text-black pl-6 ml-6 my-6 w-[400px]">
+    <div className=" w-[400px] pr-8 h-[800px]">
       <Sidebar className="dropdown">
-        <div className="text-3xl">AMIDO'S</div>
-        <Sidebar.Items className="">
+        <div className="text-3xl text-center text-bold italic text-[#52071B]">AMIDO'S</div>
+        <Sidebar.Items className="ml-4 text-md">
           <Sidebar.ItemGroup>
-            <Sidebar.Item href="/admin" className="text-black" icon={HiChartPie}>
-              Dashboard
+            <Sidebar.Item href="/admin" className="text-black text-2xl italic hover:text-[#52071B]" icon={HiChartPie}>
+              Хяналтын самбар
             </Sidebar.Item>
-            <Sidebar.Collapse icon={HiShoppingBag} label="Amido's">
-              <Sidebar.Item href="/admin/addProduct">Бүтээгдэхүүн</Sidebar.Item>
-              <Sidebar.Item href="/admin/orders">Хүргэлт</Sidebar.Item>
-              <Sidebar.Item href="#">Буцаалт</Sidebar.Item>
-              <Sidebar.Item href="/admin/tablesOrder">Ширээ захиалга</Sidebar.Item>
+            <Sidebar.Collapse icon={HiShoppingBag} label="Amido's" className="text-black text-2xl italic hover:text-[#52071B]">
+              <Sidebar.Item href="/admin/addProduct" className="text-xl italic hover:text-[#52071B]">
+                Бүтээгдэхүүн
+              </Sidebar.Item>
+              <Sidebar.Item href="/admin/successfullorder" className="text-xl italic hover:text-[#52071B]">
+                Хүргэлт
+              </Sidebar.Item>
+              <Sidebar.Item href="#" className="text-xl italic hover:text-[#52071B]">
+                Буцаалт
+              </Sidebar.Item>
+              <Sidebar.Item href="/admin/tablesOrder" className="text-xl italic hover:text-[#52071B]">
+                Ширээ захиалга
+              </Sidebar.Item>
             </Sidebar.Collapse>
-            <Sidebar.Item href="#" icon={HiInbox}>
-              Inbox
+
+            <Sidebar.Item href="#" className="text-2xl italic hover:text-[#52071B]" icon={HiUser}>
+              Админ
             </Sidebar.Item>
-            <Sidebar.Item href="#" icon={HiUser}>
-              Users
-            </Sidebar.Item>
-            <Sidebar.Item href="#" icon={HiArrowSmRight}>
-              Sign In
-            </Sidebar.Item>
-            <Sidebar.Item href="#" icon={HiTable}>
-              Sign Up
+            <Sidebar.Item href="#" icon={HiTable} className="text-2xl italic hover:text-[#52071B]">
+              Гарах
             </Sidebar.Item>
           </Sidebar.ItemGroup>
         </Sidebar.Items>

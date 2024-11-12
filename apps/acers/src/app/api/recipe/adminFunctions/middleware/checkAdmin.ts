@@ -25,7 +25,7 @@
 
 import jwt from 'jsonwebtoken';
 
-export default async function checkAdmin(Request) {
+export default async function checkAdmin(Request: any) {
   const authToken = Request.headers.get('authtoken');
 
   if (!authToken) {
@@ -34,8 +34,8 @@ export default async function checkAdmin(Request) {
   }
 
   try {
-    const decoded = jwt.verify(authToken, process.env.JWT_SECRET || 'your_secret_key'); // Verify token using your secret
-    if (decoded.role !== 'admin') {
+    const decoded = jwt.verify(authToken, process.env.JWT_SECRET || 'your_secret_key') as { role: string }; // Verify token using your secret
+    if (decoded?.role !== 'admin') {
       console.log('User is not an admin');
       return null; // User is not an admin
     }

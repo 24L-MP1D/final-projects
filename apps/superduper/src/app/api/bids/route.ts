@@ -152,6 +152,7 @@ export async function PUT(request: Request) {
     }
 
     const response = await collection.aggregate(pipeline).toArray();
+
     return Response.json(response);
   } catch (err) {
     return Response.json({ message: 'not found' }, { status: 404 });
