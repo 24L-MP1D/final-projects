@@ -1,6 +1,9 @@
 'use client';
 
 import { useAuthStore } from '@/components/components/useAuthStore';
+import LogoGallery from '@/components/LogoGallery';
+
+import TeacherWebSecondLayout from '@/components/teacherWebSecondLayout';
 import TeacherWebThirdLayout from '@/components/teacherWebThirdLayout';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -192,6 +195,8 @@ export default function Page() {
         <div className="mt-40 border-green-300 border" />
       </div>
       <TeacherWebThirdLayout />
+      <TeacherWebSecondLayout />
+      <LogoGallery />
     </main>
   );
 }
