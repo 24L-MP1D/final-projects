@@ -5,7 +5,6 @@ import ClientFeature from '@/components/ClientFeature';
 import ClientHeader from '@/components/ClientHeader';
 import ClientQuote from '@/components/ClientQuote';
 
-
 export default function Page() {
   return (
     <main>
