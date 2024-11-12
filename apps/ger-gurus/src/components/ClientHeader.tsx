@@ -44,12 +44,12 @@ export default function ClientHeader() {
       </div>
       <div className="text-xl">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
       <div className="flex gap-6 text-lg font-medium z-10">
-        <button className="py-5 px-10 border flex items-center gap-3 rounded transition-transform duration-300 ease-in-out hover:translate-y-[-5px] hover:shadow-lg">
+        <button className="py-5 px-10 border flex items-center gap-3 rounded transition-transform duration-300 ease-in-out hover:translate-y-[-3px] hover:shadow-lg">
           <span>Watch Preview</span>
           <FaPlay />
         </button>
 
-        <button className="py-5 px-10 flex items-center gap-3 rounded text-white bg-purple-600 transition-transform duration-300 ease-in-out hover:translate-y-[-5px] hover:shadow-xl">
+        <button className="py-5 px-10 flex items-center gap-3 rounded text-white bg-purple-600 transition-transform duration-300 ease-in-out hover:translate-y-[-3px] hover:shadow-xl">
           <span>Get Create Now</span>
           <BsHandIndexThumbFill />
         </button>
