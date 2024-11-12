@@ -35,11 +35,19 @@ export default function Menu() {
   const [oneFoodId, setOneFoodId] = useQueryState('id');
 
   useEffect(() => {
-    fetch(`/api/addFood`)
-      .then((res) => res.json())
-      .then(setFood)
-      .catch((error) => console.error('Error fetching food:', error))
-      .finally(() => setLoading(false));
+    if (searchvalue) {
+      fetch(`/api/addFood?searchvalue=${searchvalue}`)
+        .then((res) => res.json())
+        .then(setFood)
+        .catch((error) => console.error('Error fetching food:', error))
+        .finally(() => setLoading(false));
+    } else {
+      fetch(`/api/addFood`)
+        .then((res) => res.json())
+        .then(setFood)
+        .catch((error) => console.error('Error fetching food:', error))
+        .finally(() => setLoading(false));
+    }
   }, []);
 
   const choose = (id: string) => {
