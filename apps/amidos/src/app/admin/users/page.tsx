@@ -6,6 +6,7 @@ import { ColumnFiltersState, SortingState, VisibilityState } from '@tanstack/rea
 import axios from 'axios';
 import * as React from 'react';
 import toast from 'react-hot-toast';
+import LeftBar from '../components/leftbar';
 
 export type Users = {
   username: string;
@@ -62,8 +63,11 @@ export default function DataTableDemo() {
   }
 
   return (
-    <div className="max-w-screen-lg m-auto">
-      <div className="rounded-md border">
+    <div className="flex max-w-[1440px]">
+      <LeftBar />
+
+      <div className="rounded-md border bg-white p-4  mt-12 flex-col w-full">
+        <div className="mb-4 text-5xl italic ">Админ</div>
         <div className="rounded-md border">
           <Table>
             <TableHeader>

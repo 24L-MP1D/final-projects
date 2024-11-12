@@ -3,10 +3,15 @@
 import axios from 'axios';
 import { decode } from 'jsonwebtoken';
 import { Bookmark } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { HandyCarousel } from './components/homePageComponents/handyCarousel';
 import { Stars } from './components/itemComponents/stars';
+import { formatTitle } from './recipe/[slug]/page';
+
+const formatSlugForNavigation = (slug: string) => {
+  return slug.toLowerCase();
+};
 
 export default function Index() {
   const [collections, setCollections] = useState([]);
@@ -44,8 +49,6 @@ const AvailableContent = () => {
   const [token, setToken] = useState<null | string>(null);
   const [role, setRole] = useState('');
 
-  // Decode the token and handle the null case
-
   const getRecipes = async (role: string) => {
     const res = await axios.post('/api/recipe/getRecipe', { role });
     console.log(res.data.hiddenData);
@@ -57,7 +60,6 @@ const AvailableContent = () => {
     if (token) {
       const decodedToken = decode(token);
       if (decodedToken) {
-        // Now we can safely extract role
         const { role } = decodedToken as { role: string };
 
         setToken(token);
@@ -82,12 +84,13 @@ const CollectionByAdmin = ({ collection }: { collection: any }) => {
 
   const getCollectionItems = async () => {
     const res = await axios.post('/api/recipe/getRecipe', { tags: collection.collection });
-
     setCollectionItems(res.data.hiddenData);
   };
+
   useEffect(() => {
     getCollectionItems();
   }, []);
+
   return (
     <div className="flex flex-col gap-4">
       <span className="text-2xl mt-3.5">{collection.name}</span>
@@ -146,7 +149,7 @@ const OccasionMeals = () => {
 };
 
 const RecipeOfTheDay = () => {
-  const router = useRouter();
+  const { slug } = useParams();
   const [data, setData] = useState({
     img: 'https://img.freepik.com/free-photo/fresh-pasta-with-hearty-bolognese-parmesan-cheese-generated-by-ai_188544-9469.jpg?semt=ais_hybrid',
     title: 'Malaay Qumbe (Coconut Fish Curry)',
@@ -156,27 +159,38 @@ const RecipeOfTheDay = () => {
     id: 'Trend',
     prepTime: '40 minutes',
   });
+
   const getRecipeOfTheDay = async () => {
-    const res = await axios.get('/api/recipe/trending?number=1');
-    setData(res.data[0]);
+    if (slug) {
+      const res = await axios.get(`/api/recipe/${slug}`);
+      setData(res.data[0]);
+    }
   };
+
   useEffect(() => {
-    getRecipeOfTheDay();
-  }, []);
+    if (slug) {
+      getRecipeOfTheDay();
+    }
+  }, [slug]);
+
   const { img, title, description, rating, ratingNum, id, prepTime } = data;
+  const formatedTitle = formatTitle(title);
   return (
     <div className="flex flex-col lg:flex-row items-center gap-10 max-w-[auto] md:max-w-[80%] xl:max-w-[1160px] w-full m-auto">
       <div className="relative bg-slate-500">
-        <img src={img} className={`max-w-auto aspect-video sm:w-[710px] object-cover`} onClick={() => router.push(`/recipe/${id}`)} />
-
+        <img
+          src={img}
+          className={`max-w-auto aspect-video sm:w-[710px] object-cover`}
+          onClick={() => (window.location.href = `/recipe/${formatedTitle}`)} // Use lowercase for navigation
+        />
         <SaveButton id={id} className="absolute right-6 bottom-6" />
       </div>
       <div className="flex flex-col text-[#222222] max-w-[80%]">
         <span className="text-[#DF321B] text-[14px] font-bold">Recipe of the day</span>
-        <span className=" text-[31px]">{title}</span>
+        <span className="text-[31px]">{formatedTitle}</span>
         <span>{description}</span>
         <Stars size={11} rating={rating} voteNum={ratingNum} id={id} />
-        <span className={``}>{prepTime}</span>
+        <span>{prepTime}</span>
       </div>
     </div>
   );
@@ -184,9 +198,9 @@ const RecipeOfTheDay = () => {
 
 const SaveButton = ({ id, className }: { id: string; className?: string }) => {
   const addToSaved = (id: string) => {
-    // here will be fucntion
     console.log(id);
   };
+
   return (
     <button
       onClick={() => {

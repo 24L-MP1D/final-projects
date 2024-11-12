@@ -2,7 +2,7 @@ import { db } from '@/lib/db';
 import { ObjectId } from 'mongodb';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const oneDish = await db.collection('addFood').findOne({ _id: new ObjectId(params.id) });
+  const oneDish = await db.collection('admin').findOne({ _id: new ObjectId(params.id) });
   if (!oneDish) {
     return new Response('Not Found', { status: 404 });
   }
@@ -12,7 +12,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   const body = await request.json();
 
-  await db.collection('addFood').updateOne(
+  await db.collection('admin').updateOne(
     {
       _id: new ObjectId(params.id),
     },
@@ -24,6 +24,6 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
-  await db.collection('addFood').deleteOne({ _id: new ObjectId(params.id) });
+  await db.collection('admin').deleteOne({ _id: new ObjectId(params.id) });
   return new Response(null, { status: 204 });
 }

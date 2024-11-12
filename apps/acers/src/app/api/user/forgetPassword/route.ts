@@ -75,3 +75,7 @@
 //     return new Response('An error occurred', { status: 500 });
 //   }
 // }
+
+export const GET = () => {
+  return Response.json({ val: 'zaaval 1 func baih ystoi shu' });
+};
