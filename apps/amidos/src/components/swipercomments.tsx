@@ -26,7 +26,7 @@ export function Swipercomments() {
   //   }, []);
   return (
     <>
-      <div className="md:block hidden ">
+      <div className="md:block hidden mx-20 my-20 ">
         <Swiper
           slidesPerView={4}
           spaceBetween={30}
