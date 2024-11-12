@@ -13,7 +13,7 @@ export default function Page() {
       <ClientFeature />
       <ClientQuote />
       <ClientCategory />
-      <div className="h-[2000px] w-auto"></div>
+      <div className="h-[1000px] w-auto"></div>
     </main>
   );
 }
