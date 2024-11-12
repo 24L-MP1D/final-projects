@@ -69,15 +69,9 @@ export default function Page() {
     setIsMenuOpen((prev) => !prev);
   };
 
-  const deleteCookie = () => {
-    const cookies = [
-      'authtoken',
-      'userId',
-    ];
-    cookies.forEach(cookie => {
-      document.cookie = `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax`;
-      document.cookie = `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    });
+  function deleteCookie() {
+    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; domain=localhost; Secure; SameSite=Lax';
+    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; domain=localhost; Secure; SameSite=Lax';
     window.location.reload();
   };
 

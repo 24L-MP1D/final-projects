@@ -40,3 +40,63 @@ export async function GET(request: Request) {
     return new Response(null, { status: 404 });
   }
 }
+
+//////////////////////CRUD///////////////////////////////
+
+// export async function POST(request: Request, { params }: { params: { id: string } }) {
+//   try {
+//     const body = await request.json();
+//     const user = await DB.collection('users').insertOne(body);
+//     return Response.json('Success', { status: 200 });
+//   } catch (err) {
+//     return new Response('failed to create user', { status: 400 });
+//   }
+// }
+///////////////////////GET////////////////////////////////
+
+// export async function GET(
+//   request: Request,
+//   {
+//     params,
+//   }: {
+//     params: { id: string };
+//   }
+// ) {
+//   try {
+//     const oneUser = await DB.collection('users').findOne({ _id: new ObjectId(params.id) });
+//     if (!oneUser) {
+//       return new Response('User Not Found', { status: 404 });
+//     }
+//     return new Response('success');
+//   } catch (error) {
+//     return new Response('internal server error', { status: 500 });
+//   }
+// }
+
+///////////////////Update////////////////////////////////////
+
+// export async function PUT(request: Request, { params }: { params: { id: string } }) {
+//   try {
+//     const body = await request.json();
+//     const result = await DB.collection('users').updateOne({ _id: new Object(params.id) }, { $set: body });
+//     if (!result) {
+//       return new Response('Not Found', { status: 404 });
+//     }
+//     return new Response('Success', { status: 204 });
+//   } catch (err) {
+//     return new Response('Internal Server Error', { status: 500 });
+//   }
+// }
+////////////////Delete////////////////////////////////////
+
+// export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+//   try {
+//     const result = await DB.collection('users').deleteOne({ _id: new Object(params.id) });
+//     if (!result) {
+//       return new Response('User Not Found', { status: 404 });
+//     }
+//     return new Response('User deleted successfully', { status: 200 });
+//   } catch (err) {
+//     return new Response('Internal Server Errror', { status: 500 });
+//   }
+// }
