@@ -9,6 +9,7 @@ export type BidType = {
     email: string;
     firstName: string;
   }[];
+  email: string;
 
   productInfo: ProductType[];
 

@@ -13,7 +13,7 @@ const globalStyles = `
   @keyframes floatBubbles {
     0% { transform: translateY(0); }
     50% { transform: translateY(-30px); }
-    100% { transform: translateY(0); }  
+    100% { transform: translateY(0); }
   }
 
   @keyframes fadeInMoveUp {
@@ -42,42 +42,59 @@ export default function Page() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const currentUser = useAuthStore((state) => state.currentUser);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-
   const [url, setUrl] = useState<string | null>(null);
+  const [theme, setTheme] = useState<string>('light'); 
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setUrl(window.location.origin);
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      setTheme(currentTheme || 'light');
+
+      const handleThemeChange = () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        setTheme(currentTheme || 'light');
+      };
+
+      window.addEventListener('storage', handleThemeChange);
+
+      return () => {
+        window.removeEventListener('storage', handleThemeChange);
+      };
     }
   }, []);
-  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
 
+  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
-  function deleteCookie() {
-    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax';
-    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax';
-    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  const deleteCookie = () => {
+    const cookies = [
+      'authtoken',
+      'userId',
+    ];
+    cookies.forEach(cookie => {
+      document.cookie = `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax`;
+      document.cookie = `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    });
     window.location.reload();
-  }
+  };
 
   const bubbleStyle = (duration: number = 5, delay: number = 0): React.CSSProperties => ({
     position: 'absolute',
     borderRadius: '50%',
-    backgroundColor: '#43A047',
     opacity: 0.5,
-    zIndex: -1,
+    zIndex: 10,
     pointerEvents: 'none',
     animation: `floatBubbles ${duration}s ease-in-out infinite ${delay}s`,
-    boxShadow: '0 0 15px 10px rgba(52, 211, 153, 0.5)',
+    boxShadow: theme === 'dark' ? '0 0 15px 10px rgba(52, 211, 153, 0.5)' : '0 0 15px 10px rgba(100, 255, 118, 0.5)', 
+    backgroundColor: theme === 'dark' ? '#43A047' : '#A5D6A7', 
   });
 
   return (
-    <main>
-      <div className="flex justify-between items-center py-5 px-10" style={{ fontFamily: 'Roboto, sans-serif' }}>
+    <main className="max-w-[1600px] mx-auto relative bg-base-100">
+      <div className="flex justify-between items-center py-5 px-10">
         {/* Logo */}
         <div className="flex items-center w-60 h-12">
           <Image priority={true} src="/verse.png" width={99} height={29.3} alt="Logo" />
@@ -95,12 +112,11 @@ export default function Page() {
         {/* Navigation Menu */}
         <ul className={`md:flex gap-6 text-base text-green-950 items-center font-bold ${isMenuOpen ? 'flex' : 'hidden'} md:flex`}>
           <li className="hover:text-green-600 cursor-pointer transition-all duration-200">ХИЧЭЭЛ</li>
-          <li className="hover:text-green-600 cursor-pointer transition-all duration-200">БАГШИЙН ТАНИЛЦУУЛГА</li>
+          <li className="hover:text-green-600 cursor-pointer transition-all duration-200">БАГШИЙН ТУХАЙ</li>
         </ul>
 
         {/* Buttons */}
         <div className="flex gap-3 relative">
-          {/* Button with cursor-pointer and hover effect */}
           {currentUser ? (
             <div className="flex items-center">
               <CircleUser size={30} onClick={toggleDropdown} className="cursor-pointer" />
@@ -116,14 +132,14 @@ export default function Page() {
             </div>
           ) : (
             <Link href={`https://dash.verse.mn/login?url=${url}`}>
-              <Button variant="teacherButton" className="cursor-pointer bg-white text-black border border-black hover:border-slate-500 hover:text-slate-500 transition duration-200">
+              <button  className="text-black bg-white hover:bg-gray-200 border border-black hover:border-slate-500 btn">
                 НЭВТРЭХ
-              </Button>
+              </button>
             </Link>
           )}
-          <Button variant="teacherButton" className="cursor-pointer bg-green-600 hover:bg-green-700 transition duration-200">
+          <button className={`bg-${theme === 'dark' ? 'green-600' : 'green-500'} hover:bg-${theme === 'dark' ? 'green-700' : 'green-600'} text-white bg-green-600 btn`}>
             ЗАХИАЛАХ
-          </Button>
+          </button>
         </div>
       </div>
 
@@ -145,30 +161,29 @@ export default function Page() {
         </div>
 
         {/* Main Content */}
-        <div className="flex flex-col items-center mx-auto mt-20" style={{ fontFamily: 'Roboto, sans-serif' }}>
+        <div className="flex flex-col items-center mx-auto mt-20">
           <div className="text-9xl font-black text-green-600">
             <motion.h1 className="myclass text-9xl font-black text-white hero_h1-white text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-              ИРЭЭДҮЙДЭЭ
+              Жерригийн сургуульд
             </motion.h1>
 
             <motion.h1 className="text-9xl font-black text-green-600 hero_h1-green text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}>
-              ХӨРӨНГӨ ОРУУЛ
+              тавтай морилно уу !
             </motion.h1>
           </div>
 
-          <div className="w-[671px] h-16 mx-auto text-center text-green-950 mt-6">
+          <div className="w-[671px] h-16 mx-auto text-center mt-6">
             <motion.p
               className="text-base mt-6"
               initial={{ opacity: 0, scale: 0.8, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 4, ease: 'easeInOut', delay: 0.6, type: 'spring', stiffness: 250, damping: 20 }}
             >
-              Манай вебсайт нь боловсролын салбарт шилдэг туршлагуудыг танилцуулж, суралцагчдад чанартай мэдлэгийг хялбархан, хүртээмжтэйгээр хүргэх зорилготой. Бид сургалтын хөтөлбөрүүд, онлайн
-              сургалтууд болон боловсролын нөөцүүдийг олон нийтэд хүргэж, сурах процессыг илүү сонирхолтой, үр дүнтэй болгохын тулд инноваци, боловсруулалтыг эрэлхийлж байна.
+              Манай вебсайт нь дижитал артын салбарт шилдэг туршлагуудыг танилцуулж, суралцагчдад чанартай мэдлэгийг хялбархан, хүртээмжтэйгээр хүргэх зорилготой...
             </motion.p>
 
             <div className="mt-6">
-              <Button variant="teacherButton" className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-all duration-300 ease-in-out cursor-pointer mb-40">
+              <Button className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg btn cursor-pointer scale-75">
                 ЗАХИАЛАХ
               </Button>
             </div>

@@ -13,11 +13,11 @@ export function middleware(request: NextRequest) {
   switch (currentHost) {
     case 'www.verse.mn':
     case 'verse.mn':
-      domain = 'client';
+      domain = 'school';
       break;
     case 'dashboard.verse.mn':
     case 'dash.verse.mn':
-      domain = 'dashboard';
+      domain = 'school';
       break;
     default:
       domain = 'school';

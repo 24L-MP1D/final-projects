@@ -1,5 +1,4 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { ObjectId } from 'mongodb';
 import { DB } from '../../../lib/db';
 
 const JWT_SECRET = process.env.JWT_SECRET || '';
@@ -23,11 +22,10 @@ async function verifyToken(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const userId = await verifyToken(request);
 
     const body = await request.json();
     const date = new Date();
-    const { title, description, prepTime, servings, ingredients, instructions, nutritionFacts, category, difficulty, availability, images, video, tags, comment } = body;
+    const { title, description, prepTime, servings, ingredients, instructions, nutritionFacts, category, difficulty, availability, images, video, tags } = body;
 
     const res = await DB.collection('recipes').insertOne({
       title,
@@ -46,7 +44,10 @@ export async function POST(request: Request) {
       visits: 0,
       createdAt: date.toDateString(),
       updatedAt: date.toDateString(),
+<<<<<<< HEAD:apps/acers/src/app/api/recipe/[slug]/route.ts
+=======
       comment,
+>>>>>>> main:apps/acers/src/app/api/recipe/[id]/route.ts
     });
 
     return new Response(JSON.stringify({ res: 'Succeed' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
@@ -59,34 +60,31 @@ export async function POST(request: Request) {
   }
 }
 
+<<<<<<< HEAD:apps/acers/src/app/api/recipe/[slug]/route.ts
+export async function GET(req: Request, { params }: { params: { slug: string } }) {
+  const { slug } = await params;
+
+  console.log('Received slug:', slug);
+=======
 export async function GET(request: Request, { params }: { params: { id: string } | any }) {
   console.log('Fetching recipe with ID:', params?.id);
 
   try {
     if (params && params?.id) {
       const { id } = params;
+>>>>>>> main:apps/acers/src/app/api/recipe/[id]/route.ts
 
-      const trimmedId = id.trim();
-      if (!ObjectId.isValid(trimmedId)) {
-        return new Response(JSON.stringify({ message: 'Invalid recipeId format' }), { status: 400 });
-      }
+  const recipe = await DB.collection('recipes').findOne({ title: slug });
 
-      const recipe = await DB.collection('recipes').findOne({ _id: new ObjectId(trimmedId) });
-      if (!recipe) {
-        return new Response(JSON.stringify({ message: 'Recipe not found' }), { status: 404 });
-      }
-
-      const comments = await DB.collection('comments')
-        .find({ recipeId: new ObjectId(trimmedId) })
-        .toArray();
-
-      return new Response(JSON.stringify({ recipe, comments }), { status: 200, headers: { 'Content-Type': 'application/json' } });
-    } else {
-      const recipes = await DB.collection('recipes').find().toArray();
-      return new Response(JSON.stringify(recipes), { status: 200, headers: { 'Content-Type': 'application/json' } });
-    }
-  } catch (e) {
-    console.error('Error fetching recipe or comments:', e);
-    return new Response(JSON.stringify({ error: 'Internal server error' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+  if (!recipe) {
+    console.log('Recipe not found for title:', slug);
+    return new Response(JSON.stringify({ message: 'Recipe not found' }), { status: 404 });
   }
+
+  const comments = await DB.collection('comments').find({ recipeId: recipe._id }).toArray();
+
+  return new Response(JSON.stringify({ recipe, comments }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
 }
