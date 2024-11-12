@@ -46,7 +46,6 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
       if (sticky.current) {
         const { bottom } = sticky.current.getBoundingClientRect();
         setIsSticky(bottom < 0);
-        console.log(bottom);
       }
     };
     window.addEventListener('scroll', handleScroll);
@@ -104,23 +103,29 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
               {Math.ceil(maximumBid) + 15000}
             </div>
           </div>
-          <label className="border-solid bg-[#f8f7f8] flex gap-1 items-center py-1 px-3 w-full">
-            <div className="text-slate-500">₮</div>
-            <Input
-              id="bid"
-              onChange={formikHandleChange}
-              value={formikValues.bid > 0 ? formikValues.bid : ''}
-              className="w-full p-2 bg-[#f8f7f8]"
-              placeholder={`${maximumBid ? maximumBid + 5000 : oneProduct.startBid + 5000} or up`}
-              type="number"
-            />
-          </label>
+          {!(new Date().getTime() > endDate) ? (
+            <label className="border-solid bg-[#f8f7f8] flex gap-1 items-center py-1 px-3 w-full">
+              <div className="text-slate-500">₮</div>
+              <Input
+                id="bid"
+                onChange={formikHandleChange}
+                value={formikValues.bid > 0 ? formikValues.bid : ''}
+                className="w-full p-2 bg-[#f8f7f8]"
+                placeholder={`${maximumBid ? maximumBid + 5000 : oneProduct.startBid + 5000} or up`}
+                type="number"
+              />
+            </label>
+          ) : (
+            <div>Үнийн санал оруулах хугацаа дууссан</div>
+          )}
           {formikTouched.bid && formikErrors.bid && <p className="ml-8 text-red-500">{formikErrors.bid}</p>}
-          <div className="flex gap-1 w-full">
-            <Button type="submit" className="flex-1 hover:bg-blue-500 active:bg-blue-400 hover:text-white border-[1px] py-2 px-4 bg-white text-blue-500 text-center">
-              Үнийн санал оруулах
-            </Button>
-          </div>
+          {!(new Date().getTime() > endDate) && (
+            <div className="flex gap-1 w-full">
+              <Button type="submit" className="flex-1 hover:bg-blue-500 active:bg-blue-400 hover:text-white border-[1px] py-2 px-4 bg-white text-blue-500 text-center">
+                Үнийн санал оруулах
+              </Button>
+            </div>
+          )}
         </div>
         <div className="mt-8 flex flex-col gap-2.5 border-b-2 border-slate-300">
           <Link href={'#satisfy'} className="px-4 flex items-center gap-2 text-green-400">

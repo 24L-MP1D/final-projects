@@ -108,6 +108,11 @@ export default function Header() {
     Cookies.remove('token');
     window.location.reload();
   };
+
+  const jumpProductDetailfromSearch = (id: string) => {
+    value?.setSearchValue('');
+    router.push(`/client/productDetails/${id}`);
+  };
   return (
     <div onClick={() => showNotif && setShowNotif(false)} className=" pt-5 flex items-center max-w-[1280px] ">
       <div className="bg-[#1F1F1FF2] py-4 px-6  max-w-[1280px] rounded-2xl flex-1">
@@ -128,12 +133,16 @@ export default function Header() {
               {value?.searchValue && (
                 <div className="absolute z-50 bg-white w-full max-h-[500px] overflow-y-scroll top-10 rounded-xl">
                   {value?.products.map((product) => (
-                    <Link href={`/client/productDetails/${product._id}`} key={product._id} className="flex gap-2 items-center p-2 border-b border-blue-200">
+                    <div
+                      onClick={() => jumpProductDetailfromSearch(product._id)}
+                      key={product._id}
+                      className="flex gap-2 hover:cursor-pointer active:bg-slate-200 items-center p-2 border-b border-blue-200"
+                    >
                       <div className="flex-1">{product.productName}</div>
                       <div className="">
                         <Image src={product.frontImage || '/'} alt="image" width={100} height={100} className="rounded-full w-16 h-16" />
                       </div>
-                    </Link>
+                    </div>
                   ))}
                 </div>
               )}

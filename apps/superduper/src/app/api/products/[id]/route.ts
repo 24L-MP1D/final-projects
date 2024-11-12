@@ -26,7 +26,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
   }
 }
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
-  const { status, message, userId } = await request.json();
+  const { status, message = 'Таны барааны дуудлага худалдаа дууслаа', userId } = await request.json();
 
   try {
     await notifCollection.insertOne({ message, isSeen: false, productId: new ObjectId(params.id), userId });
