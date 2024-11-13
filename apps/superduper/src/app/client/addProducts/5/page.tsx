@@ -135,7 +135,7 @@ export default function Page() {
             </Link>
           </div>
           <div className="flex gap-4 items-center justify-center my-10 text-xl">
-            <div>Зураг:</div>
+            <div>Зураг</div>
             <div className="flex gap-1">
               {getFromLocal?.frontImage && <Image className="object-cover rounded-lg border" src={getFromLocal?.frontImage} alt="a" width={100} height={100} />}
               {getFromLocal?.backImage && <Image className="object-cover rounded-lg border" src={getFromLocal?.backImage} alt="a" width={100} height={100} />}
