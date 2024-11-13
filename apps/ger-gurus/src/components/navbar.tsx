@@ -9,7 +9,7 @@ const items = [
 ];
 export default function Navbar() {
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 shadow-xl">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle lg:hidden">
@@ -22,7 +22,7 @@ export default function Navbar() {
               <li key={item.title} className="mb-2">
                 <a href={item.url}>
                   <item.icon />
-                  {item.title}
+                  <h4>{item.title}</h4>
                 </a>
               </li>
             ))}

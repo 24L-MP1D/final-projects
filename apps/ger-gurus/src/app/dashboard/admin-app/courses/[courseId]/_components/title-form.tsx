@@ -47,8 +47,8 @@ export const TitleForm: React.FC<TitleFormProps> = ({ initialData }) => {
   }
   return (
     <div className="mt-6 border shadow-xl rounded-md p-4">
-      <div className="font-medium flex items-center justify-between">
-        Курсын гарчиг
+      <div className="prose flex items-center justify-between">
+        <h4>Курсын гарчиг</h4>
         <button className="btn btn-ghost hover:scale-105 transition" onClick={toggleEdit}>
           {isEditing && <>Цуцлах</>}
           {!isEditing && (
@@ -59,7 +59,7 @@ export const TitleForm: React.FC<TitleFormProps> = ({ initialData }) => {
           )}
         </button>
       </div>
-      {!isEditing && <p className="text-sm mt-2">{initialData.title}</p>}
+      {!isEditing && <h4 className=" mt-2">{initialData.title}</h4>}
       {isEditing && (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">

@@ -17,10 +17,10 @@ export function middleware(request: NextRequest) {
       break;
     case 'dashboard.verse.mn':
     case 'dash.verse.mn':
-      domain = 'school';
+      domain = 'dashboard';
       break;
     default:
-      domain = 'client';
+      domain = 'school';
   }
 
   return NextResponse.rewrite(new URL(`/${domain}${pathname}${search}`, request.url));

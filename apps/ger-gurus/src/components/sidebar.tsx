@@ -14,7 +14,7 @@ type Props = {
 
 export const SideBar: React.FC<Props> = ({ children }) => {
   return (
-    <div className="drawer lg:drawer-open font-pangolin">
+    <div className="drawer 2xl:drawer-open font-pangolin z-10">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
 
       <div className="drawer-content flex flex-col items-center justify-center">
@@ -27,19 +27,20 @@ export const SideBar: React.FC<Props> = ({ children }) => {
 
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
+
         <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-8 text-base text-center">
           {/* Sidebar content here */}
-          <div className="flex gap-10 items-center">
+          <div className="flex gap-4 items-center ">
             <div className="avatar mb-6">
-              <div className="mask mask-squircle w-12">
-                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+              <div className="mask mask-squircle w-12 shadow-xl">
+                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" className="shadow-xl" />
               </div>
             </div>
             <p> Surguuli </p>
           </div>
 
           {items.map((item) => (
-            <li key={item.title}>
+            <li key={item.title} className="shadow-sm rounded-lg">
               <a className="hover:scale-105 transition !font-pangolin hover:bg-accent" href={item.url}>
                 <item.icon /> {item.title}
               </a>
