@@ -20,6 +20,8 @@ export type state = {
   searchValue: string;
   products: ProductType[];
   setProducts: (value: ProductType[]) => void;
+  setShowCategory: (value: boolean) => void;
+  showCategory: boolean;
 };
 
 export const RealtimeNotif = createContext<state | null>(null);
@@ -27,11 +29,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const [favourite, setFavourite] = useState<string[]>([]);
   const [products, setProducts] = useState<ProductType[]>([]);
   const [notif, setNotif] = useState<notifications[]>([]);
+  const [showCategory, setShowCategory] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   return (
     <Suspense>
       <div className="max-w-[1280px] mx-auto">
-        <RealtimeNotif.Provider value={{ notif, products, setProducts, favourite, searchValue, setSearchValue, setFavourite, setNotif }}>
+        <RealtimeNotif.Provider value={{ notif, products, setShowCategory, showCategory, setProducts, favourite, searchValue, setSearchValue, setFavourite, setNotif }}>
           <Header />
           <div>{children}</div>
         </RealtimeNotif.Provider>

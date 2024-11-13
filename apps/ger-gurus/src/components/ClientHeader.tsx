@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { BsHandIndexThumbFill } from 'react-icons/bs';
 import { FaPlay } from 'react-icons/fa';
+import MagneticPlayButton from './ClientMagicCursor';
 import { useAuthStore } from './components/useAuthStore';
 
 export default function ClientHeader() {
@@ -33,7 +34,7 @@ export default function ClientHeader() {
 
   const translateY = scrollPos / 20;
   return (
-    <main className="max-w-[1440px] mx-auto flex flex-col items-center pt-20 gap-5 text-[#201116]">
+    <main className="max-w-[1440px] mx-auto flex flex-col items-center p-20 gap-5 text-[#201116]">
       <div className="font-extrabold text-8xl text-center">
         <span className="block">Create</span>
         <span className="block">
@@ -42,12 +43,13 @@ export default function ClientHeader() {
         <span className="block"> Verse </span>
       </div>
       <div className="text-xl">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-      <div className="flex gap-6 text-lg font-medium">
-        <button className="py-5 px-10 border flex items-center gap-3 rounded">
+      <div className="flex gap-6 text-lg font-medium z-10">
+        <button className="py-5 px-10 border flex items-center gap-3 rounded transition-transform duration-300 ease-in-out hover:translate-y-[-3px] hover:shadow-lg">
           <span>Watch Preview</span>
           <FaPlay />
         </button>
-        <button className="py-5 px-10 flex items-center gap-3 rounded text-white bg-purple-600">
+
+        <button className="py-5 px-10 flex items-center gap-3 rounded text-white bg-purple-600 transition-transform duration-300 ease-in-out hover:translate-y-[-3px] hover:shadow-xl">
           <span>Get Create Now</span>
           <BsHandIndexThumbFill />
         </button>
@@ -93,6 +95,9 @@ export default function ClientHeader() {
           <video className="videoTag aspect-video object-cover overflow-hidden w-[100%] rounded-xl" autoPlay loop muted>
             <source src={'/home-video.mp4'} type="video/mp4" />
           </video>
+        </div>
+        <div className="absolute z-10 mt-[140px]">
+          <MagneticPlayButton />
         </div>
       </div>
     </main>

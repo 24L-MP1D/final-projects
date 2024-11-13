@@ -22,7 +22,6 @@ async function verifyToken(request: Request) {
 
 export async function POST(request: Request) {
   try {
-
     const body = await request.json();
     const date = new Date();
     const { title, description, prepTime, servings, ingredients, instructions, nutritionFacts, category, difficulty, availability, images, video, tags } = body;

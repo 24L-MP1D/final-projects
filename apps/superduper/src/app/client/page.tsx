@@ -1,5 +1,6 @@
 'use client';
 
+import { Categories } from '@/components/category';
 import { ProductType } from '@/components/productType';
 import { Button } from '@/components/ui/button';
 import dayjs from 'dayjs';
@@ -27,8 +28,6 @@ export default function Index() {
     image: string;
   }
 
-
-
   const loadProducts = async () => {
     try {
       setLoading(true);
@@ -37,6 +36,7 @@ export default function Index() {
         body: JSON.stringify({
           searchValue: value?.searchValue,
           limit: count,
+          page,
         }),
         headers: {
           'Content-type': 'application/json',
@@ -96,12 +96,12 @@ export default function Index() {
       <div className="min-h-screen">
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
           <Image src={'/images/spinner.svg'} alt="loading" width={100} height={100} />
-          <div className="font-bold text-3xl">Loading...</div>
+          <div className="font-bold text-3xl">Ачааллаж байна...</div>
         </div>
       </div>
     );
   return (
-    <div className="max-w-[1280px] mx-auto w-full">
+    <div className={`max-w-[1280px]  mx-auto w-full`}>
       <div className="grid grid-cols-2 mt-0.5">
         <div className="w-[1280px] h-full">
           <Swiper
@@ -240,10 +240,12 @@ export default function Index() {
             className="flex items-center gap-1"
           >
             {loading && <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
-            <div> Load more</div>
+            <div>Илүү ихийг дуудах</div>
           </Button>
         </div>
       )}
+      {value.showCategory && <div className="fixed inset-0 bg-slate-500 opacity-50"></div>}
+      {value.showCategory && <Categories />}
     </div>
   );
 }

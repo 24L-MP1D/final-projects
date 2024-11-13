@@ -34,11 +34,8 @@ export function Login() {
       .then(({ data, status, statusText }) => {
         if (status === 200) {
           toast.success('Амжилттай нэвтэрлээ.', { className: 'custom-toast success' });
-          document.cookie = `authtoken=${data.token}; path=/; domain=.verse.mn; Secure; SameSite=Lax`;
-          document.cookie = `authtoken=${data.token}; path=/;`;
-          document.cookie = `userId=${data.userId}; path=/; domain=.verse.mn; Secure; SameSite=Lax`;
-          document.cookie = `userId=${data.userId}; path=/;`;
-
+          document.cookie = `authtoken=${data.token}; path=/; domain=.verse.mn; domain=localhost; Secure; SameSite=Lax`;
+          document.cookie = `userId=${data.userId}; path=/; domain=.verse.mn; domain=localhost; Secure; SameSite=Lax`;
           if (url) {
             setTimeout(() => {
               window.location.href = `${url}`;
@@ -80,7 +77,7 @@ export function Login() {
   };
 
   return (
-    <main className="flex flex-col items-center h-[800px] gap-6 pt-[100px]">
+    <div className="flex flex-col items-center h-[800px] gap-6 pt-[100px]">
       <div className="py-2 font-medium text-2xl">Нэвтрэх</div>
       <div className="flex">
         <div className="flex flex-col gap-12">
@@ -129,6 +126,6 @@ export function Login() {
         </div>
       </div>
       <Toaster />
-    </main>
+    </div>
   );
 }
