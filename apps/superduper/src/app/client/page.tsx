@@ -170,7 +170,7 @@ export default function Index() {
                 <div className="absolute top-0 right-0 w-1/2  rounded-xl h-full flex flex-col justify-center items-center  text-white p-5">
                   <div className="p-3 rounded-3xl h-fit bg-white/10 backdrop-blur-xl w-[450px]  mt-12 md:mt-0">
                     <div className="py-3 px-3">
-                      <Button className="rounded-2xl border-8 w-[400px] h-[50px] border-[#f8f3f8]  hover:cursor-auto font-extralight shadow">Хялбар үйлчилгээ</Button>
+                      <Button className="rounded-2xl border-8 w-[400px] h-[50px] border-[#f8f3f8]  hover:cursor-auto font-extralight shadow">Манай үйлчилгээнүүд</Button>
                       <div className="bg-[#f4f5fa] rounded-2xl mt-3 p-4 ">
                         <div className="grid grid-cols-2">
                           <Link

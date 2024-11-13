@@ -5,7 +5,6 @@ import { ProductItem } from '@/app/components/productItem';
 import { Bid } from '@/components/Bid';
 import { BidDialog } from '@/components/bidDialog';
 import { BidType } from '@/components/bidType';
-import { HelpCenter } from '@/components/helpCenter';
 import { PlacedBidDialog } from '@/components/placedBidDialog';
 import { ProductDetailImages } from '@/components/ProductDetailImages';
 import { ProductType } from '@/components/productType';
@@ -54,8 +53,8 @@ function Realtime({ chatId }: { chatId: string }) {
   const validationSchema = yup.object({
     bid: yup
       .number()
-      .required('Please insert a valid bid amount')
-      .min(maximumBid + 500, `minumum bid is ${maximumBid + 500} ₮`),
+      .required('Хүчинтэй үнийн дүнг оруулна уу')
+      .min(maximumBid + 500, `хамгийн бага үнийн санал нь ${maximumBid + 500} ₮`),
   });
 
   const formik = useFormik({
@@ -211,31 +210,13 @@ function Realtime({ chatId }: { chatId: string }) {
             setIsSticky={setIsSticky}
           />
           <Safity oneProduct={oneProduct} />
-          <HelpCenter oneProduct={oneProduct} />
-          {/* {isSticky && (
-            <BidSticky
-              formikSetFieldValue={formik.setFieldValue}
-              formikTouched={formik.touched}
-              oneProduct={oneProduct}
-              formikErrors={formik.errors}
-              sendBid={sendBid}
-              bids={bids}
-              open={open}
-              setOpen={setOpen}
-              formikValues={formik.values}
-              formikHandleChange={formik.handleChange}
-              maximumBid={maximumBid}
-              isSticky={isSticky}
-              setIsSticky={setIsSticky}
-            />
-          )} */}
         </div>
       </div>
       {open && <div className="absolute inset-0 bg-slate-500 opacity-50"></div>}
       {open && <BidDialog bid={formik.values.bid} open={open} setOpen={setOpen} />}
       <PlacedBidDialog secondDialog={secondDialog} setSecondDialog={setSecondDialog} bid={dialogsBid} />
 
-      <div className="grid grid-cols-3 gap-10 w-full">
+      <div className="grid grid-cols-3 gap-10 w-full pt-10">
         {products.slice(0, 20).map((product) => (
           <ProductItem isClick={isClick} product={product} favourite={value?.favourite || []} key={product._id} onClickFavourite={() => handleFavourite(product._id)} />
         ))}
