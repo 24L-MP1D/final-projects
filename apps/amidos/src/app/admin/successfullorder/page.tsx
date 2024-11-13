@@ -99,7 +99,7 @@ export default function DataTableDemo() {
     <div className="flex  w-full  bg-gradient-to-r from-pink-100  to-white">
       <LeftBar />
       <div className=" mt-30 ml-6 ">
-        <div className="text-5xl italic mb-4">Хүргэлтийн захиалгууд</div>
+        <div className="text-5xl italic mt-16  mb-4">Хүргэлтийн захиалгууд</div>
         <div className="rounded-md border bg-white p-6">
           <div className="rounded-md border">
             <Table>
