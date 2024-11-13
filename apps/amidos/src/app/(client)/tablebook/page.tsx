@@ -17,7 +17,6 @@ type Table = {
   }
 };
 
-
 export default function Page() {
   const [mounted, setMounted] = useState(false)
 
@@ -86,6 +85,20 @@ function TableBook() {
 
   return (
     <div className="flex justify-between p-10 mx-auto max-w-screen-2xl">
+      {loading ? (
+        <div>Loading tables...</div>
+      ) : (
+        <div className="relative h-[800px] w-[1200px]">
+          {tables.map((table) => (
+            <div style={{ top: table.coordinate.y, left: table.coordinate.x }}
+              className={`absolute w-20 h-20 rounded-full ${selectedTable === table._id ? "bg-[#52071B] text-white" : "bg-yellow-400 hover:bg-yellow-600"}`}
+              key={table._id}
+              onClick={() => setSelectedTable(table._id)}>
+              {table.name}
+            </div>
+          ))}
+        </div>
+      )}
       <div className="flex justify-between items-center">
         <div className="flex flex-col gap-8 p-3">
           <div className="flex flex-col gap-4">
@@ -130,24 +143,7 @@ function TableBook() {
             Continue
           </Button>
         </div>
-
       </div>
-      {loading ? (
-        <div>Loading tables...</div>
-      ) : (
-        <div className="relative h-[800px] w-[1200px]">
-          {/* <Image src={"/BackroundImage.jpg"} width={1200} height={800} alt="Zaalnii plan zurag"
-            className="max-w-screen-xl h-[850px]" /> */}
-          {tables.map((table) => (
-            <div style={{ top: table.coordinate.y, left: table.coordinate.x }}
-              className={`absolute w-20 h-20 rounded-full ${selectedTable === table._id ? "bg-[#52071B] text-white" : "bg-yellow-400 hover:bg-yellow-600"}`}
-              key={table._id}
-              onClick={() => setSelectedTable(table._id)}>
-              {table.name}
-            </div>
-          ))}
-        </div>
-      )}
     </div >
   );
 }
