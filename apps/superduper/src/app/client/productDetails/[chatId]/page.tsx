@@ -6,6 +6,7 @@ import { Bid } from '@/components/Bid';
 import { BidDialog } from '@/components/bidDialog';
 import { BidType } from '@/components/bidType';
 import { HelpCenter } from '@/components/helpCenter';
+
 import { PlacedBidDialog } from '@/components/placedBidDialog';
 import { ProductDetailImages } from '@/components/ProductDetailImages';
 import { ProductType } from '@/components/productType';
@@ -16,8 +17,10 @@ import { useFormik } from 'formik';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
+import { toast, Toaster } from 'sonner';
 import * as yup from 'yup';
 import { RealtimeNotif } from '../../layout';
+
 const client = new Ably.Realtime({ key: process.env.NEXT_PUBLIC_ABLYKEY });
 
 export default function App({ params }: { params: { chatId: string } }) {
@@ -66,7 +69,12 @@ function Realtime({ chatId }: { chatId: string }) {
       const cookie = Cookies.get('token');
       if (!cookie) {
         formik.setFieldValue('bid', 0);
-        return alert('first you must sign-in');
+        return toast.custom(() => (
+          <div className={`bg-red-50 shadow-lg rounded-lg p-3 border border-red-600 flex items-center`}>
+            <div className="text-3xl">❗</div>
+            <div>Та дуудлага худалдаанд оролцохын тулд эхлээд нэвтэрнэ үү.</div>
+          </div>
+        ));
       }
       if (open) {
         sendBid();
@@ -146,7 +154,7 @@ function Realtime({ chatId }: { chatId: string }) {
   const loadProductDetail = async () => {
     const response = await fetch(`/api/products/${chatId}`);
     const data = await response.json();
-    if (data.endDate.getTime() < new Date().getTime() && data.status == 'Accept') {
+    if (new Date(data.endDate).getTime() < new Date().getTime() && data.status == 'Accept') {
       updateWinnerStatus(data.userId);
     }
 
@@ -208,6 +216,7 @@ function Realtime({ chatId }: { chatId: string }) {
 
   return (
     <form onSubmit={formik.handleSubmit} className={`max-w-[1240px] mx-auto w-full`}>
+      <Toaster />
       <div className={`flex gap-24`}>
         <ProductDetailImages oneProduct={oneProduct} />
         <div className="flex flex-col gap-8 pb-12 mt-10">

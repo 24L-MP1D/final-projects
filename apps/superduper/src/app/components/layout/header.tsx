@@ -161,7 +161,7 @@ export default function Header() {
               Тусламж
             </Link>
           </div>
-          <div className="flex gap-4 items-center w-[150px] ">
+          <div className="flex gap-4 items-center w-[150px] mr-10">
             <div className="relative hover:cursor-pointer">
               <FaRegHeart size={24} color="white" onClick={save} />
               {favlength === 0 ? null : <div className="absolute left-5 bottom-4  bg-red-500 text-white rounded-full w-5 h-5 text-center text-sm">{favlength}</div>}
