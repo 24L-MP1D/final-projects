@@ -102,6 +102,7 @@ export default function Header() {
   }, [value?.favourite]);
   const logOut = () => {
     Cookies.remove('token');
+
     window.location.reload();
   };
 
