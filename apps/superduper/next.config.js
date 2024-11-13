@@ -31,6 +31,9 @@ const nextConfig = {
       {
         hostname: 'media.istockphoto.com',
       },
+      {
+        hostname: 'sandbox-s.qpay.mn',
+      },
     ],
   },
 

@@ -1,8 +1,8 @@
 'use client';
 
 import { ProductItem } from '@/app/components/productItem';
+import '@/app/styles.css';
 import { ProductType } from '@/components/productType';
-import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 import { RealtimeNotif } from '../layout';
 
@@ -57,8 +57,15 @@ export default function App() {
     return (
       <div className="text-3xl min-h-screen  font-bold ">
         <div className="flex gap-1 absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
-          <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />
-          <div className="">Ачааллаж байна...</div>
+
+          <div className="loader">
+            <div className="loader-bar bar-1"></div>
+            <div className="loader-bar bar-2"></div>
+            <div className="loader-bar bar-3"></div>
+            <div className="loader-bar bar-4"></div>
+          </div>
+          <div className="">Ачаалж байна...</div>
+
         </div>
       </div>
     );

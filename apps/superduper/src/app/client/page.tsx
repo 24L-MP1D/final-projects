@@ -1,5 +1,6 @@
 'use client';
 
+import '@/app/styles.css';
 import { Categories } from '@/components/category';
 import { ProductType } from '@/components/productType';
 import { Button } from '@/components/ui/button';
@@ -95,8 +96,15 @@ export default function Index() {
     return (
       <div className="min-h-screen">
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
-          <Image src={'/images/spinner.svg'} alt="loading" width={100} height={100} />
-          <div className="font-bold text-3xl">Ачааллаж байна...</div>
+
+          <div className="loader">
+            <div className="loader-bar bar-1"></div>
+            <div className="loader-bar bar-2"></div>
+            <div className="loader-bar bar-3"></div>
+            <div className="loader-bar bar-4"></div>
+          </div>
+          <div className="font-bold text-3xl">Ачаалж байна...</div>
+
         </div>
       </div>
     );
@@ -148,14 +156,14 @@ export default function Index() {
                           .map((_, index) => (
                             <div key={index} className="relative h-[7px] w-full bg-gray-300 rounded-full">
                               <div
-                                className={`absolute top-0 left-0 h-full bg-[#5ba3f5] rounded-full`}
+                                className={`absolute top-0 left-0 h-full bg-[#306fcd] rounded-full`}
                                 style={{ width: progress === index ? '100%' : '0%', transition: 'width 0.8s ease-in-out' }}
                               ></div>
                               <div className="absolute top-0 left-0 h-full w-full cursor-pointer" onClick={() => handleProgressClick(index)}></div>
                             </div>
                           ))}
-                        <Button className="items-center text-[#0033FF] bg-white hover:bg-white ml-[5px]" onClick={handleNextSlide}>
-                          <ChevronRight strokeWidth={1.75} />
+                        <Button className="items-center text-[#1c4480] bg-white  ml-[5px] hover:bg-[#73a3ec]" onClick={handleNextSlide}>
+                          <ChevronRight strokeWidth={1.75} width={30} />
                         </Button>
                       </div>
                     </div>
@@ -164,14 +172,14 @@ export default function Index() {
                 <div className="absolute top-0 right-0 w-1/2  rounded-xl h-full flex flex-col justify-center items-center  text-white p-5">
                   <div className="p-3 rounded-3xl h-fit bg-white/10 backdrop-blur-xl w-[450px]  mt-12 md:mt-0">
                     <div className="py-3 px-3">
-                      <Button className="rounded-2xl border-8 w-[400px] h-[50px] border-[#f8f3f8] bg-[#79b3f4] hover:bg-[#79b3f4] hover:cursor-auto">Хялбар үйлчилгээ</Button>
+                      <Button className="rounded-2xl border-8 w-[400px] h-[50px] border-[#f8f3f8]  hover:cursor-auto font-extralight shadow">Манай үйлчилгээнүүд</Button>
                       <div className="bg-[#f4f5fa] rounded-2xl mt-3 p-4 ">
                         <div className="grid grid-cols-2">
                           <Link
                             href={`/client/productDetails/${product._id}`}
                             className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full"
                           >
-                            <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
+                            <div className="flex justify-center hover:bg-blue-200 items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
                               <Image src="/bid.png" alt="bid" width={36} height={36} className="" />
                             </div>
                             <div className="mt-3 font-semibold flex items-center transition-all duration-300 text-xs md:text-sm text-neutral group-hover/item:-translate-x-2 text-textHigh text-black text-center transform group-hover:-translate-x-1">
@@ -237,10 +245,12 @@ export default function Index() {
             onClick={() => {
               setPage(page + 1);
             }}
-            className="flex items-center gap-1"
+            className="flex items-center gap-1 shadow__btn"
           >
             {loading && <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
-            <div>Илүү ихийг дуудах</div>
+
+            <div className="flex items-center gap-1 shadow__btn"> Цааш үзэх</div>
+
           </Button>
         </div>
       )}

@@ -91,54 +91,70 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
           </div>
         </div>
       </div>
-      <div className="mt-8 px-6 py-6">
-        <div className="border-b-2 py-6 grid grid-cols-2 text-[#000000]  gap-5 text-xl items-center justify-center">
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Бүтээгдэхүүний нэр</div>
-            <div className="w-full">
+      <div className="mt-16">
+        <div className="grid grid-cols-2 gap-6 text-xl text-[#333]">
+          {/* Product Name */}
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Бүтээгдэхүүний нэр</div>
+            <div>
               <TextGenerateEffect words={oneProduct.productName} />
             </div>
           </div>
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Тухайн зүйлийн гарал үүслийн улс</div>
+
+          {/* Country */}
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Тухайн зүйлийн гарал үүслийн улс</div>
             <div>
               <TextGenerateEffect words={oneProduct.Country} />
             </div>
           </div>
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Нэмэлт мэдээлэл</div>
+
+          {/* Additional Information */}
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Нэмэлт мэдээлэл</div>
             <div>
               <TextGenerateEffect words={oneProduct?.additionalInformation} />
             </div>
           </div>
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Гарын үсэг</div>
-            <div>
-              <TextGenerateEffect words={oneProduct?.signatures} />
+
+          {/* Signatures */}
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Эхлэх үнэ</div>
+            <div className="flex items-center">
+              <TypewriterEffectSmooth words={words(String(oneProduct.startBid))} />
+              <div className="text-3xl ml-2">₮</div>
             </div>
           </div>
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Гэмтэлтэй хэсэг</div>
+
+          {/* Damage Section */}
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Гэмтэлтэй хэсэг</div>
             <div>
               <TextGenerateEffect words={oneProduct?.damage} />
             </div>
           </div>
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Тухайн бараа сэргээгдсэн үү? Хэрэв тийм бол ямар хэмжээгээр?</div>
+
+          {/* Restoration Info */}
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Тухайн бараа сэргээгдсэн үү? Хэрэв тийм бол ямар хэмжээгээр?</div>
             <div>
               <TextGenerateEffect words={oneProduct?.restored} />
             </div>
           </div>
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Эхлэх үнэ</div>
-            <div className="flex items-center">
-              <TypewriterEffectSmooth words={words(String(oneProduct.startBid))} />
-              <div className="text-3xl">₮</div>
+
+          {/* Start Bid */}
+
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Гарын үсэг</div>
+            <div>
+              <TextGenerateEffect words={oneProduct?.signatures} />
             </div>
           </div>
+
+          {/* Currency */}
           {oneProduct.Currency && (
-            <div className="flex gap-2 flex-col">
-              <div className="text-[#565B60] text-sm">Валют</div>
+            <div className="flex flex-col gap-2">
+              <div className="text-sm text-[#565B60]">Валют</div>
               <div>
                 <TextGenerateEffect words={oneProduct.Currency} />
               </div>

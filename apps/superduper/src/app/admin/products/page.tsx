@@ -1,4 +1,5 @@
 'use client';
+import '@/app/styles.css';
 import { AdminLayout } from '@/components/adminLayout';
 import { AdminMessageSendDialog } from '@/components/adminMessageSendDialog';
 import { DatePickerWithRange } from '@/components/dateRange';
@@ -113,8 +114,15 @@ const Home = () => {
       <AdminLayout>
         <div className="min-h-screen">
           <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
-            <Image src={'/images/spinner.svg'} alt="loading" width={100} height={100} />
-            <div className="font-bold text-3xl">Ачааллаж байна...</div>
+
+            <div className="loader">
+              <div className="loader-bar bar-1"></div>
+              <div className="loader-bar bar-2"></div>
+              <div className="loader-bar bar-3"></div>
+              <div className="loader-bar bar-4"></div>
+            </div>
+            <div className="font-bold text-3xl">Ачаалж байна...</div>
+
           </div>
         </div>
       </AdminLayout>
@@ -251,7 +259,7 @@ const Home = () => {
             className="flex items-center gap-1"
           >
             {loading && <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
-            <div> Load more</div>
+            <div> Цааш үзэх </div>
           </Button>
         </div>
       )}

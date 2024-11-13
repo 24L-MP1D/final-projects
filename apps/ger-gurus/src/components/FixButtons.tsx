@@ -31,13 +31,13 @@ export default function FixButton() {
           : 'fixed bottom-0 opacity-0 translate-y-6 pointer-events-none' // Зөөлөн алга болох хөдөлгөөн
       } w-fit mx-auto left-1/2 transform -translate-x-1/2 flex justify-center gap-4 p-1 rounded-full bg-gray-100 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-70 border border-gray-100`}
     >
-      <button className="py-5 px-10 border flex items-center gap-3 rounded-full transition-transform duration-300 ease-in-out hover:translate-y-[-3px] hover:shadow-lg">
-        <span>Watch Preview</span>
+      <button className="py-5 px-10 border flex items-center gap-3 rounded-full bg-white transition-transform duration-300 ease-in-out hover:translate-y-[-3px] hover:shadow-lg">
+        <span>Үнэгүй турших</span>
         <FaPlay />
       </button>
 
-      <button className="py-5 px-10 flex items-center gap-3 rounded-full text-white bg-purple-600 transition-transform duration-300 ease-in-out hover:translate-y-[-3px] hover:shadow-xl">
-        <span>Get Create Now</span>
+      <button className="py-5 px-20 flex items-center gap-3 rounded-full text-white bg-purple-600 transition-transform duration-300 ease-in-out hover:translate-y-[-3px] hover:shadow-xl">
+        <span>Эхлэх</span>
         <BsHandIndexThumbFill />
       </button>
     </section>

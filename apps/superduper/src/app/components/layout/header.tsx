@@ -1,5 +1,4 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import * as Ably from 'ably';
 import Cookies from 'js-cookie';
 import { Bell, ChevronDown, CircleUser, LogOut, UserRoundPen } from 'lucide-react';
@@ -8,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
+import '../../styles.css';
 
 import { RealtimeNotif } from '@/app/client/layout';
 import Image from 'next/image';
@@ -118,7 +118,7 @@ export default function Header() {
       <div className="bg-[#1F1F1FF2] py-4 px-6  max-w-[1280px] rounded-2xl flex-1">
         <div className="flex  justify-between">
           <div className="flex items-center gap-16 w-[200px]">
-            <Link href={'/client'} className="flex gpa-1 items-center gap-3">
+            <Link href="/client" className="flex gpa-1 items-center gap-3">
               <Image src="/logo.png" width={60} height={60} alt="logo" className="rounded-full w-[50px] h-[50px] " />
               <div className="text-white font-bold">Bidscape</div>
             </Link>
@@ -150,21 +150,23 @@ export default function Header() {
           </div>
 
           <div className="flex gap-5 items-center">
-            <div onClick={() => value?.setShowCategory(true)} className="flex gap-1 cursor-pointer items-center text-white">
+            <div onClick={() => value?.setShowCategory(true)} className="flex gap-1 cursor-pointer items-center text-white px-3 xl:px-4  hover:bg-[#3D3D3D] rounded-lg p-2 font-semibold">
               Ангилалууд
               <ChevronDown size={16} color="white" />
             </div>
-            <button onClick={sell} className="bg-[#333333] hover:border-b-[1px] hover:border-black text-white">
+            <div onClick={sell} className="flex gap-1 cursor-pointer items-center text-white px-3 xl:px-4  hover:bg-[#3D3D3D] rounded-lg p-2 font-semibold">
               Зарах
-            </button>
-            <Link href="/chatbot" className="bg-[#333333] hover:border-b-[1px] hover:border-black text-white">
+            </div>
+            <Link href="/chatbot" className="flex gap-1 cursor-pointer items-center text-white px-3 xl:px-4  hover:bg-[#3D3D3D] rounded-lg p-2 font-semibold">
               Тусламж
             </Link>
           </div>
+
           <div className="flex gap-4 items-center w-[150px] ">
-            <div className="relative hover:cursor-pointer">
+            <div className="relative hover:cursor-pointer  ">
+
               <FaRegHeart size={24} color="white" onClick={save} />
-              {favlength === 0 ? null : <div className="absolute left-5 bottom-4  bg-red-500 text-white rounded-full w-5 h-5 text-center text-sm">{favlength}</div>}
+              {favlength === 0 ? null : <div className="absolute left-5 bottom-5 bg-red-500 text-white rounded-full w-5 h-5 text-center text-[13px]">{favlength}</div>}
             </div>
             {signin ? (
               <div className="flex relative gap-5 items-center p-1">
@@ -208,9 +210,10 @@ export default function Header() {
                 </div>
               </div>
             ) : (
-              <Button onClick={() => router.push(`/client/sign-in`)} className="bg-[#333333] rounded-none">
+              <button onClick={() => router.push(`/client/sign-in`)} className="rounded-2xl hover:cursor-auto font-extralight shadow__btn">
+                {' '}
                 Нэвтрэх
-              </Button>
+              </button>
             )}
           </div>
         </div>

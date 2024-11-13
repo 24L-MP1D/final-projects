@@ -29,15 +29,15 @@ export default function Page() {
     endDate: new Date(''),
   };
   const validationSchema = yup.object({
-    countryOfOrigin: yup.string().required('you must enter country of origin'),
-    productName: yup.string().required('you must enter product name'),
-    additionalInformation: yup.string().required('you must enter additional information'),
-    signatures: yup.string().required('you must enter signatures'),
-    damage: yup.string().required('you must enter damage'),
-    restored: yup.string().required('you must enter restored'),
-    startBid: yup.number().required('you must enter startBid').min(1),
-    startDate: yup.date().required('start date must be required'),
-    endDate: yup.date().required('end date must be required'),
+    countryOfOrigin: yup.string().required('та гарал үүслийн улсаа оруулах ёстой'),
+    productName: yup.string().required('та бүтээгдэхүүний нэрийг оруулах ёстой'),
+    additionalInformation: yup.string().required('та нэмэлт мэдээлэл оруулах ёстой'),
+    signatures: yup.string().required('та гарын үсэг оруулах ёстой'),
+    damage: yup.string().required('та гэмтлийн тухай мэдээлэл оруулах ёстой'),
+    restored: yup.string().required('та сэргээгдсэн тухай мэдээлэл оруулах ёстой'),
+    startBid: yup.number().required('та эхлэх үнийн саналыг оруулах ёстой').min(1),
+    startDate: yup.date().required('эхлэх огноо заавал байх ёстой'),
+    endDate: yup.date().required('дуусах огноо заавал байх ёстой'),
   });
   const formik = useFormik({
     initialValues,
