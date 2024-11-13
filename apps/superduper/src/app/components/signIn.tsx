@@ -1,6 +1,5 @@
 'use client';
 
-import { Checkbox } from '@/components/ui/Checkbox';
 import { oauth_github_client, oauth_google_client } from 'config';
 
 import { useFormik } from 'formik';
@@ -25,15 +24,15 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
   const [dialogOpen, setDialogOpen] = useState(true);
   const initialValues = { email: '', password: '' };
   const validationSchema = yup.object({
-    email: yup.string().email('Буруу и-мэйл').required('и-мэйл шаардлагатай'),
+    email: yup.string().email('И-мэйл хаяг буруу байна').required('И-мэйл хаягаа оруулна уу'),
     password: yup
       .string()
-      .required('Шаардлагатай')
-      .min(8, '8 ба түүнээс дээш тэмдэгт байх ёстой')
-      .matches(/[a-z]+/, 'Нэг жижиг үсэг')
-      .matches(/[A-Z]+/, 'Нэг том үсэг')
-      .matches(/[@$!%*#?&]+/, 'Нэг тусгай тэмдэгт')
-      .matches(/\d+/, 'Нэг тоо'),
+      .required('Нууц үгээ оруулна уу')
+      .min(8, 'Нууц үг 8 ба түүнээс дээш тэмдэгттэй байх шаардлагатай')
+      .matches(/[a-z]+/, 'Нууц үгэнд дор хаяж нэг жижиг үсэг байх ёстой')
+      .matches(/[A-Z]+/, 'Нууц үгэнд дор хаяж нэг том үсэг байх ёстой')
+      .matches(/[@$!%*#?&]+/, 'Нууц үгэнд дор хаяж нэг тусгай тэмдэгт байх ёстой')
+      .matches(/\d+/, 'Нууц үгэнд дор хаяж нэг тоо байх ёстой'),
   });
 
   const formik = useFormik({
@@ -144,7 +143,6 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
             </span>
           </div>
 
-          <p className="text-slate-500 mb-4">үргэлжлүүлнэ үү</p>
           <div className="flex gap-4 mb-4">
             <Button className="w-full h-[40px] bg-blue-600 text-white flex items-center justify-center rounded-lg hover:bg-blue-700 transition duration-200" onClick={SignInbyGithub}>
               <Github className="h-5 w-5" />
@@ -157,6 +155,7 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
           </div>
           <div className="flex items-center gap-2 py-3">
             <div className="h-[1px] flex-1 bg-slate-300"></div>
+
             <p className="text-gray-500">эсвэл</p>
             <div className="h-[1px] flex-1 bg-slate-300"></div>
           </div>
@@ -183,11 +182,7 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
             {formik.errors.password && <span className="text-red-600 text-sm">{formik.errors.password}</span>}
           </div>
           <div className="flex justify-between items-center mb-4">
-            <div className="flex items-center gap-2">
-              <Checkbox />
-              <p className="text-gray-600">Намайг санах</p>
-            </div>
-            <Link className="text-blue-500 hover:underline" href="/">
+            <Link className="text-blue-500 hover:underline ml-[100px]" href="/">
               Нууц үгээ мартсан уу?
             </Link>
           </div>

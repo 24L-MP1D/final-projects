@@ -23,17 +23,17 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
     password: '',
   };
   const validationSchema = yup.object({
-    firstName: yup.string().min(1).required('Нэр оруулах шаардлагатай'),
-    lastName: yup.string().min(1).required('Овог оруулах шаардлагатай'),
-    email: yup.string().email('Буруу и-мэйл').required('и-мэйл шаардлагатай'),
+    firstName: yup.string().min(1).required('Та нэрээ оруулна уу'),
+    lastName: yup.string().min(1).required('Та овгоо оруулна уу'),
+    email: yup.string().email('И-мэйл хаяг буруу байна').required('Та и-мэйл хаягаа оруулна уу'),
     password: yup
       .string()
-      .required('Шаардлагатай')
-      .min(8, '8 ба түүнээс дээш тэмдэгт байх ёстой')
-      .matches(/[a-z]+/, 'Нэг жижиг үсэг')
-      .matches(/[A-Z]+/, 'Нэг том үсэг')
-      .matches(/[@$!%*#?&]+/, 'Нэг тусгай тэмдэгт')
-      .matches(/\d+/, 'Нэг тоо'),
+      .required('Та нууц үгээ оруулна уу')
+      .min(8, 'Нууц үг 8 ба түүнээс дээш тэмдэгттэй байх ёстой')
+      .matches(/[a-z]+/, 'Нууц үгэнд нэг жижиг үсэг оруулах шаардлагатай')
+      .matches(/[A-Z]+/, 'Нууц үгэнд нэг том үсэг оруулах шаардлагатай')
+      .matches(/[@$!%*#?&]+/, 'Нууц үгэнд нэг тусгай тэмдэгт оруулах шаардлагатай')
+      .matches(/\d+/, 'Нууц үгэнд нэг тоо оруулах шаардлагатай'),
   });
 
   const formik = useFormik({
@@ -63,9 +63,7 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
         body: JSON.stringify(values),
       });
       if (response.status === 201) {
-
         console.log('success');
-
 
         toast.custom(() => (
           <div className={`bg-green-50 shadow-lg rounded-lg p-3 border border-green-600 flex items-center`}>
@@ -85,7 +83,6 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
             <div>Бүртгэл амжилтгүй.</div>
           </div>
         ));
-
 
         setDialogOpen(false);
       }
@@ -124,27 +121,28 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
     <Dialog open>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={formik.handleSubmit}>
-          <DialogTitle className="font-thin text-center flex justify-between border-b-2 border-slate-200s pb-4">
-            <div>Нэвтрэх эсвэл бүртгэл үүсгэх</div>
+          <DialogTitle className="text-center font-semibold text-blue-600 flex justify-between items-center mb-4">
+            <span>Нэвтрэх эсвэл бүртгэл үүсгэх</span>
             <Link href="/client">
-              <X onClick={() => setDialogOpen(false)} className="h-4 w-4" />
+              <X onClick={() => setDialogOpen(false)} className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" />
             </Link>
           </DialogTitle>
+          <div className="h-[2px] bg-slate-200 my-3"></div>
           <div className="flex justify-between">
-            <p className="font-bold"></p>
+            <p className="font-bold text-gray-800">Эргээд тавтай морил!</p>
             <span onClick={toggleForm}>
               <div className="text-blue-500 hover:cursor-pointer">Нэвтрэх</div>
             </span>
           </div>
-          <p className="text-slate-500 mb-3">үргэлжлүүлнэ үү</p>
-          <div className="flex gap-4">
-            <Button className="w-full h-[30px] border-2 flex items-center gap-2 p-8 bg-blue-500 rounded-lg" onClick={SignInbyGithub}>
-              <Github />
-              <p className="text-white">ГитХаб</p>
+
+          <div className="flex gap-4 mb-4 mt-4">
+            <Button className="w-full h-[40px] bg-blue-600 text-white flex items-center justify-center rounded-lg hover:bg-blue-700 transition duration-200" onClick={SignInbyGithub}>
+              <Github className="h-5 w-5" />
+              <span>Github</span>
             </Button>
-            <Button className="w-full h-[30px] border-2 flex items-center gap-2 p-8 rounded-lg" onClick={SignInbyGoogle}>
-              <FcGoogle />
-              <p>Гүүгл</p>
+            <Button className="w-full h-[40px] border bg-white text-gray-700 flex items-center justify-center rounded-lg hover:bg-gray-100 transition duration-200" onClick={SignInbyGoogle}>
+              <FcGoogle className="h-5 w-5" />
+              <span>Google</span>
             </Button>
           </div>
           <div className="flex items-center gap-2 py-3">
@@ -155,30 +153,29 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
           <div className="flex gap-2 mb-3">
             <div>
               <Input name="firstName" placeholder="Нэр" value={formik.errors.firstName} onChange={formik.handleChange} />
-              {formik.errors.firstName && formik.touched.firstName && <span className="text-red-600 ml-3">{formik.errors.firstName}</span>}
+              {formik.errors.firstName && formik.touched.firstName && <span className="text-red-600 ml-3 text-[13px]">{formik.errors.firstName}</span>}
             </div>
             <div>
               <Input name="lastName" placeholder="Овог" value={formik.values.lastName} onChange={formik.handleChange} />
-              {formik.errors.lastName && formik.touched.lastName && <span className="text-red-600 ml-3">{formik.errors.lastName}</span>}
+              {formik.errors.lastName && formik.touched.lastName && <span className="text-red-600 ml-3 text-[13px]">{formik.errors.lastName}</span>}
             </div>
           </div>
           <div>
             <Input name="email" placeholder="И-мэйл" value={formik.values.email} onChange={formik.handleChange} />
-            {formik.errors.email && formik.touched.email && <span className="text-red-600 ml-3">{formik.errors.email}</span>}
+            {formik.errors.email && formik.touched.email && <span className="text-red-600 ml-3 text-[13px]">{formik.errors.email}</span>}
           </div>
-          <div className="my-3 flex items-center relative">
+          <div className="mt-3 flex items-center relative">
             <Input name="password" type={showPassword ? 'text' : 'password'} placeholder="Нууц үг" value={formik.values.password} onChange={formik.handleChange} />
             <div className="absolute right-5 hover:cursor-pointer">
               {formik.values.password && showPassword ? <FaEye onClick={() => setShowPassword(false)} /> : <FaRegEyeSlash onClick={() => setShowPassword(true)} />}
             </div>
-
-            {formik.errors.password && formik.touched.password && <span className="text-red-600 ml-3">{formik.errors.password}</span>}
           </div>
-          <DialogDescription>Хамгийн багадаа 8 тэмдэгт, нэг том үсэг, нэг жижиг үсэг, нэг тоо, нэг тусгай тэмдэгт.</DialogDescription>
+          {formik.errors.password && formik.touched.password && <span className="text-red-600 ml-3 text-[13px]">{formik.errors.password}</span>}
+          <DialogDescription className="text-[13px] mt-3 ml-5">**Хамгийн багадаа 8 тэмдэгт, нэг том үсэг, нэг жижиг үсэг, нэг тоо, нэг тусгай тэмдэгт**.</DialogDescription>
           <DialogFooter>
-            <Button className="bg-blue-700 flex-1 disabled:cursor-not-allowed" type="submit" disabled={loading}>
+            <Button className="bg-blue-700 flex-1 disabled:cursor-not-allowed font-bold mt-4" type="submit" disabled={loading}>
               {loading && <Image src={'/images/spinner.svg'} alt="a" width={40} height={40} color="white" />}
-              Зөвшөөрч, үргэлжлүүлнэ үү
+              Бүртгүүлэх
             </Button>
           </DialogFooter>
         </form>
