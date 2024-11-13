@@ -51,7 +51,7 @@ const Home = () => {
       <div>
         <div className="max-w-[300px] relative items-center mt-6 mb-4 ml-4 flex gap-2 w-full px-4 py-2 rounded-lg bg-slate-100">
           <Search width={20} height={20} />
-          <input className="flex-1 bg-slate-100 outline-none border-0" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} type="search" placeholder="search value..." />
+          <input className="flex-1 bg-slate-100 outline-none border-0" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} type="search" placeholder="хайх..." />
         </div>
         <Table>
           <TableHeader>
