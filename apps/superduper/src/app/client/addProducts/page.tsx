@@ -34,7 +34,7 @@ export default function Page() {
       <div className="min-h-screen">
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
           <Image src={'/images/spinner.svg'} alt="loading" width={100} height={100} />
-          <div className="font-bold text-3xl">Loading...</div>
+          <div className="font-bold text-3xl">Ачааллаж байна...</div>
         </div>
       </div>
     );
@@ -64,21 +64,21 @@ export default function Page() {
         </div>
 
         <div className="flex gap-5 relative left-[-50px] items-center">
-          <div>Category</div>
+          <div>Ангилал</div>
           <div className="text-[#f3f3f3]">Дэлгэрэнгүй</div>
           <div className="text-[#f3f3f3]">Зураг</div>
           <div className="text-[#f3f3f3] ml-3">Логистик</div>
           <div className="text-[#f3f3f3] ml-5">Хянан үзэх</div>
         </div>
       </div>
-      <div className="mt-8 text-center text-[#333] text-[48px]">Choose your category</div>
+      <div className="mt-8 text-center text-[#333] text-[48px]">Ангилалаа сонгоно уу</div>
 
       <div className="text-[#aeaeae] w-full text-3xl">
         <div className="flex gap-2 items-center py-8">
           <div>
             <ChevronLeft className="w-10 h-10" />
           </div>
-          <div>Categories</div>
+          <div>Ангилалууд</div>
         </div>
         <div>
           {categories.map((category, index) => (

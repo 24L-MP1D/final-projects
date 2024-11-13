@@ -196,13 +196,13 @@ export default function Header() {
                       <div>
                         <CircleUser />
                       </div>
-                      <div>Account</div>
+                      <div>Данс</div>
                     </Link>
                     <div onClick={logOut} className="border-b rounded-lg border-white p-2 bg-[#1F1F1FF2] text-white flex gap-2">
                       <div>
                         <LogOut />
                       </div>
-                      <div>Sign-out</div>
+                      <div>Гарах</div>
                     </div>
                   </div>
                 </div>

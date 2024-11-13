@@ -40,7 +40,7 @@ export const Bid = () => {
             <Input id="bid" onChange={formik.handleChange} value={formik.values.bid !== 0 ? formik.values.bid : ''} className="w-full p-2 bg-[#f8f7f8]" placeholder="3,350 or up" type="number" />
           </label>
           <div className="flex gap-1 w-full">
-            <Button className="flex-1 border-[1px] py-2 px-4 bg-white text-blue-500 text-center">Place bid</Button>
+            <Button className="flex-1 border-[1px] py-2 px-4 bg-white text-blue-500 text-center">Үнийн санал оруулах</Button>
             <Button type="submit" className="flex-1 border-[1px] py-2 px-4 bg-blue-600 text-white text-center">
               Хамгийн их үнийн саналыг тохируулах
             </Button>

@@ -201,7 +201,7 @@ function Realtime({ chatId }: { chatId: string }) {
       <div className="min-h-screen">
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
           <Image src={'/images/spinner.svg'} alt="loading" width={100} height={100} />
-          <div className="font-bold text-3xl">Loading...</div>
+          <div className="font-bold text-3xl">Ачааллаж байна...</div>
         </div>
       </div>
     );
