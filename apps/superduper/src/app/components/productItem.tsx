@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import '../styles.css';
 import { CardBody, CardContainer, CardItem } from './ui/card';
+
 export interface Product {
   Country: string;
   additionalInformation: string;
@@ -55,15 +56,27 @@ export function ProductItem({ product, favourite, onClickFavourite }: { product:
         </CardItem>
         <Link href={`/client/productDetails/${product._id}`}>
           <CardItem translateZ="100" className="w-full mt-4">
+
             <Image alt={product.frontImage} src={product.frontImage} width={100} height={100} className="!w-full !h-[200px] !object-cover rounded-md shadow-product" />
           </CardItem>
           <CardItem translateZ="50" className="text-xl font-bold text-neutral-600 dark:text-white mt-5 overflow-hidden h-[30px]">
             {product.productName}
+
+            <Image alt={product.frontImage} src={product.frontImage} width={100} height={100} className="!w-full !h-[200px] !object-cover rounded-md" />
+          </CardItem>
+
+          <CardItem translateZ="50" className="text-lg font-bold text-neutral-600 dark:text-white">
+            {product.startBid}₮
+
           </CardItem>
 
           <div className="flex justify-between items-center mt-5">
             <CardItem translateZ={20} href="https://twitter.com/mannupaaji" target="__blank" className="py-2 rounded-xl text-sm font-normal dark:text-white">
+
               {product.startBid}₮
+
+              Одоо үнийн санал оруулах →
+
             </CardItem>
             <button className="text-sm bg-slate-200 text-[#3a7bd5] p-2 rounded-xl">Дуудлага худалдаанд оролцох</button>
           </div>

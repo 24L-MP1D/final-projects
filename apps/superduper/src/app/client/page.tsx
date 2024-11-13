@@ -96,6 +96,7 @@ export default function Index() {
     return (
       <div className="min-h-screen">
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
+
           <div className="loader">
             <div className="loader-bar bar-1"></div>
             <div className="loader-bar bar-2"></div>
@@ -103,6 +104,7 @@ export default function Index() {
             <div className="loader-bar bar-4"></div>
           </div>
           <div className="font-bold text-3xl">Ачаалж байна...</div>
+
         </div>
       </div>
     );
@@ -246,7 +248,9 @@ export default function Index() {
             className="flex items-center gap-1 shadow__btn"
           >
             {loading && <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
+
             <div className="flex items-center gap-1 shadow__btn"> Цааш үзэх</div>
+
           </Button>
         </div>
       )}

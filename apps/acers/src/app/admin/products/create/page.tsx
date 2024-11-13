@@ -1,7 +1,5 @@
 'use client';
 
-'use client';
-
 import { X } from 'lucide-react';
 import { ObjectId } from 'mongodb';
 import { useEffect, useState } from 'react';
@@ -80,7 +78,6 @@ const Page = () => {
   register('tags', { required: 'Таг оруулна уу?' });
   register('imagesFile', { required: 'Ядаж 1 зураг оруулна уу.' });
 
-  // For nutritionFacts, you need to register each item in the array
   nutritionFields.forEach((_, index) => {
     register(`nutritionFacts.${index}.name`, { required: 'Тэжээлийн нэрийг оруулна уу.' });
     register(`nutritionFacts.${index}.value`, { required: 'Хэмжээг оруулна уу.' });
@@ -101,9 +98,12 @@ const Page = () => {
       setValue('video', videoURL);
     }
     const updatedData = getValues();
+
     fetchAddRecipe(updatedData);
     setLoading(false);
   }
+
+  console.log(getValues());
 
   const getDatas = async () => {
     const categoryResponse = await fetch('/api/category');

@@ -5,6 +5,9 @@ import { ProductItem } from '@/app/components/productItem';
 import { Bid } from '@/components/Bid';
 import { BidDialog } from '@/components/bidDialog';
 import { BidType } from '@/components/bidType';
+
+import { HelpCenter } from '@/components/helpCenter';
+
 import { PlacedBidDialog } from '@/components/placedBidDialog';
 import { ProductDetailImages } from '@/components/ProductDetailImages';
 import { ProductType } from '@/components/productType';
@@ -14,9 +17,11 @@ import { AblyProvider, ChannelProvider, useChannel } from 'ably/react';
 import { useFormik } from 'formik';
 import Cookies from 'js-cookie';
 import { useContext, useEffect, useState } from 'react';
+import { toast, Toaster } from 'sonner';
 import * as yup from 'yup';
 import '../../../styles.css';
 import { RealtimeNotif } from '../../layout';
+
 const client = new Ably.Realtime({ key: process.env.NEXT_PUBLIC_ABLYKEY });
 
 export default function App({ params }: { params: { chatId: string } }) {
@@ -54,7 +59,9 @@ function Realtime({ chatId }: { chatId: string }) {
     bid: yup
       .number()
       .required('Хүчинтэй үнийн дүнг оруулна уу')
+
       .min(maximumBid + 500, `хамгийн бага үнийн санал нь ${maximumBid + 500} ₮`),
+
   });
 
   const formik = useFormik({
@@ -65,7 +72,14 @@ function Realtime({ chatId }: { chatId: string }) {
       const cookie = Cookies.get('token');
       if (!cookie) {
         formik.setFieldValue('bid', 0);
-        return alert('first you must sign-in');
+
+        return alert('эхлээд та нэвтрэх ёстой');
+        return toast.custom(() => (
+          <div className={`bg-red-50 shadow-lg rounded-lg p-3 border border-red-600 flex items-center`}>
+            <div className="text-3xl">❗</div>
+            <div>Та дуудлага худалдаанд оролцохын тулд эхлээд нэвтэрнэ үү.</div>
+          </div>
+        ));
       }
       if (open) {
         sendBid();
@@ -126,10 +140,29 @@ function Realtime({ chatId }: { chatId: string }) {
   const sendBid = () => {
     channel.publish('auction-bids', { bid: !isBid });
   };
-
+  const updateWinnerStatus = async (userId: string) => {
+    try {
+      await fetch(`/api/products/${chatId}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          status: 'Done',
+          userId: userId,
+        }),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const loadProductDetail = async () => {
     const response = await fetch(`/api/products/${chatId}`);
     const data = await response.json();
+    if (new Date(data.endDate).getTime() < new Date().getTime() && data.status == 'Accept') {
+      updateWinnerStatus(data.userId);
+    }
+
     setOneProduct(data);
     setMaximumBid(data.startBid);
   };
@@ -149,6 +182,7 @@ function Realtime({ chatId }: { chatId: string }) {
 
     value?.setFavourite(result);
   };
+
   const loadProducts = async () => {
     try {
       const response = await fetch('/api/products', {
@@ -161,23 +195,25 @@ function Realtime({ chatId }: { chatId: string }) {
         },
       });
       const data = await response.json();
-      setProducts(data);
+      const filtData = data.filter((data: ProductType) => data._id !== chatId);
+      setProducts(filtData);
     } catch (err) {
       console.error(err);
     }
   };
   useEffect(() => {
-    loadBids();
     loadProductDetail();
+    loadBids();
     loadProducts();
+
     const storage = localStorage.getItem('favourites');
     if (storage) value?.setFavourite(JSON.parse(storage));
   }, [isBid, value?.searchValue]);
-
   if (!oneProduct)
     return (
       <div className="min-h-screen">
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
+
           <div className="loader">
             <div className="loader-bar bar-1"></div>
             <div className="loader-bar bar-2"></div>
@@ -185,15 +221,17 @@ function Realtime({ chatId }: { chatId: string }) {
             <div className="loader-bar bar-4"></div>
           </div>
           <div className="font-bold text-3xl">Ачаалж байна...</div>
+
         </div>
       </div>
     );
 
   return (
     <form onSubmit={formik.handleSubmit} className={`max-w-[1240px] mx-auto w-full`}>
+      <Toaster />
       <div className={`flex gap-24`}>
         <ProductDetailImages oneProduct={oneProduct} />
-        <div className="flex flex-col gap-8 pb-12">
+        <div className="flex flex-col gap-8 pb-12 mt-10">
           <Bid
             formikSetFieldValue={formik.setFieldValue}
             formikTouched={formik.touched}

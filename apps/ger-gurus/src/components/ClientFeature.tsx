@@ -8,9 +8,9 @@ export default function ClientFeature() {
         <span className="text-[#00B4A9]">stand out from the crowd.</span> 🥋
       </div>
       <div className="grid grid-cols-3 max-w-[1200px] gap-x-6">
-        <div className="bg-red-600 w-[384px] h-[612px] rounded-2xl"></div>
-        <div className="bg-yellow-400 w-[384px] h-[612px] rounded-2xl"></div>
-        <div className="bg-pink-500 w-[384px] h-[612px] rounded-2xl"></div>
+        <div className="bg-[#FF6375] w-[384px] h-[612px] rounded-2xl"></div>
+        <div className="bg-[#fda801] w-[384px] h-[612px] rounded-2xl"></div>
+        <div className="bg-[#00B4A9] w-[384px] h-[612px] rounded-2xl"></div>
       </div>
     </section>
   );

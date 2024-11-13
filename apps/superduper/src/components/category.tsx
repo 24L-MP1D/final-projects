@@ -15,7 +15,9 @@ type CategoriesType = {
 
 export function Categories() {
   const value = useContext(RealtimeNotif);
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
   const [category, setCategory] = useState<CategoriesType[]>([]);
 
   // Fetch categories
@@ -39,6 +41,7 @@ export function Categories() {
 
         <div className="grid grid-cols-3 gap-6 mt-5 text-xl">
           {category.map((category, index) => (
+
             <Link
               href={`/client/filterbycategories/${category._id}`}
               style={{ backgroundColor: colors[index % colors.length] }}
@@ -58,6 +61,7 @@ export function Categories() {
                   height={500}
                   className="w-full h-full rounded-full object-cover transition-transform duration-300 transform hover:scale-105"
                 />
+
               </div>
             </Link>
           ))}

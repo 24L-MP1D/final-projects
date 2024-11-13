@@ -49,7 +49,7 @@ export const AdminMessageSendDialog = ({ open, productId, setFeedBackInput, load
   if (!product) return;
   <Dialog open={open}>
     <DialogContent className="sm:max-w-md px-2 py-6 text-center content-center">
-      <div>ачааллаж байна...</div>
+      <div>Ачааллаж байна...</div>
     </DialogContent>
   </Dialog>;
   return (
@@ -65,7 +65,7 @@ export const AdminMessageSendDialog = ({ open, productId, setFeedBackInput, load
           <div className="text-2xl">Төлөв: {product.status}</div>
           <div className="flex gap-4 mt-2">
             <Button className="flex-1 bg-green-600 hover:bg-green-800" onClick={() => updateProductStatus('Accept')}>
-            Зөвшөөрөх
+              Зөвшөөрөх
             </Button>
             <Button
               onClick={() => {

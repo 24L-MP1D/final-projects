@@ -1,7 +1,9 @@
 'use client';
 
+
 import { Checkbox } from '@/components/ui/Checkbox';
 import { oauth_github_client, oauth_google_client } from 'config';
+
 import { useFormik } from 'formik';
 import { Github, X } from 'lucide-react';
 import Image from 'next/image';
@@ -24,15 +26,15 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
   const [dialogOpen, setDialogOpen] = useState(true);
   const initialValues = { email: '', password: '' };
   const validationSchema = yup.object({
-    email: yup.string().email('Wrong e-mail').required('e-mail required'),
+    email: yup.string().email('Буруу и-мэйл').required('и-мэйл шаардлагатай'),
     password: yup
       .string()
-      .required('Required')
-      .min(8, 'Must be 8 characters or more')
-      .matches(/[a-z]+/, 'One lowercase character')
-      .matches(/[A-Z]+/, 'One uppercase character')
-      .matches(/[@$!%*#?&]+/, 'One special character')
-      .matches(/\d+/, 'One number'),
+      .required('Шаардлагатай')
+      .min(8, '8 ба түүнээс дээш тэмдэгт байх ёстой')
+      .matches(/[a-z]+/, 'Нэг жижиг үсэг')
+      .matches(/[A-Z]+/, 'Нэг том үсэг')
+      .matches(/[@$!%*#?&]+/, 'Нэг тусгай тэмдэгт')
+      .matches(/\d+/, 'Нэг тоо'),
   });
 
   const formik = useFormik({
@@ -47,10 +49,36 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
         });
 
         if (response.status === 201) {
-          toast('Signed Up Successfully');
+
+          toast('Signed in Successfully');
           window.location.href = '/client';
         } else {
           toast('Sign-In Unsuccessful');
+
+          console.log('success');
+
+
+          toast.custom(() => (
+            <div className={`bg-green-50 shadow-lg rounded-lg p-3 border border-green-600 flex items-center`}>
+              <div className="text-3xl">✅</div>
+              <div>Амжилттай нэвтэрлээ.</div>
+            </div>
+          ));
+
+          setLoading(false);
+          window.location.href = '/client';
+        } else {
+          console.log('error');
+
+          toast.custom(() => (
+            <div className={`bg-red-50 shadow-lg rounded-lg p-3 border border-red-600 flex items-center`}>
+              <div className="text-3xl">❗</div>
+              <div>Амжилтгүй нэвтэрлээ.</div>
+            </div>
+          ));
+
+          setDialogOpen(false);
+
         }
         setLoading(false);
         setDialogOpen(false);
@@ -87,6 +115,33 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
     window.location.href = url.toString();
   }
 
+
+  async function Submit(values: FormikValues) {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/signin', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+      if (response.status === 201) {
+        console.log('success');
+        setLoading(false);
+
+        toast('Амжилттай бүртгүүлээ.');
+        window.location.href = '/client';
+      } else {
+        console.log('error');
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log('error in sign in');
+    }
+  }
+
+
   return (
     <Dialog open={dialogOpen}>
       <DialogContent className="sm:max-w-[425px] rounded-lg shadow-lg bg-white">
@@ -98,13 +153,16 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
             </Link>
           </DialogTitle>
 
+
           <div className="h-[2px] bg-slate-200 my-3"></div>
           <div className="flex justify-between items-center mb-3">
             <p className="font-bold text-gray-800">Эргээд тавтай морил!</p>
+
             <span onClick={toggleForm}>
               <div className="text-blue-500 hover:underline cursor-pointer">Бүртгэл үүсгэх</div>
             </span>
           </div>
+
           <p className="text-slate-500 mb-4">үргэлжлүүлнэ үү</p>
           <div className="flex gap-4 mb-4">
             <Button className="w-full h-[40px] bg-blue-600 text-white flex items-center justify-center rounded-lg hover:bg-blue-700 transition duration-200" onClick={SignInbyGithub}>
@@ -114,6 +172,7 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
             <Button className="w-full h-[40px] border bg-white text-gray-700 flex items-center justify-center rounded-lg hover:bg-gray-100 transition duration-200" onClick={SignInbyGoogle}>
               <FcGoogle className="h-5 w-5" />
               <span>Google</span>
+
             </Button>
           </div>
           <div className="flex items-center gap-2 py-3">
@@ -121,6 +180,7 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
             <p className="text-gray-500">эсвэл</p>
             <div className="h-[1px] flex-1 bg-slate-300"></div>
           </div>
+
 
           <div className="mb-3">
             <Input
@@ -149,6 +209,7 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
               <p className="text-gray-600">Намайг санах</p>
             </div>
             <Link className="text-blue-500 hover:underline" href="/">
+
               Нууц үгээ мартсан уу?
             </Link>
           </div>
@@ -169,3 +230,12 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
     </Dialog>
   );
 };
+
+
+export function SonnerDemo() {
+  return (
+    <Button variant="outline" onClick={() => toast('Амжилттай бүртгүүлээ.')}>
+      Show Toast
+    </Button>
+  );
+}

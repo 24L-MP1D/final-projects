@@ -90,6 +90,7 @@ export default function Index({ params }: { params: { category: string } }) {
     return (
       <div className="min-h-screen">
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
+
           <div className="loader">
             <div className="loader-bar bar-1"></div>
             <div className="loader-bar bar-2"></div>
@@ -97,9 +98,11 @@ export default function Index({ params }: { params: { category: string } }) {
             <div className="loader-bar bar-4"></div>
           </div>
           <div className="font-bold text-3xl">Энэ ангилалд бараа байхгүй байна.</div>
+
         </div>
       </div>
     );
+
   return (
     <div className={`max-w-[1280px]  mx-auto w-full`}>
       <div className="grid grid-cols-2 mt-0.5">
