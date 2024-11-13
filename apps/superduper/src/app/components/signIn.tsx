@@ -1,8 +1,5 @@
 'use client';
 
-
-import { Checkbox } from '@/components/ui/Checkbox';
-
 import { oauth_github_client, oauth_google_client } from 'config';
 
 import { useFormik } from 'formik';
@@ -64,17 +61,12 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
             </div>
           ));
 
-
           window.location.href = '/client';
-
-
-
         }
         setLoading(false);
         setDialogOpen(false);
       } catch (err) {
         console.error('Sign-in error');
-     
       }
     },
     validationSchema,
@@ -189,11 +181,7 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
             {formik.errors.password && <span className="text-red-600 text-sm">{formik.errors.password}</span>}
           </div>
           <div className="flex justify-between items-center mb-4">
-
             <Link className="text-blue-500 hover:underline ml-[100px]" href="/">
-
-            
-           
               Нууц үгээ мартсан уу?
             </Link>
           </div>

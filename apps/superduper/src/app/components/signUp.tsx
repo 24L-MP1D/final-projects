@@ -1,6 +1,6 @@
 'use client';
 
-import { oauth_github_client_signUp, oauth_google_client_signUp } from 'config';
+import { oauth_github_client, oauth_google_client } from 'config';
 import { FormikValues, useFormik } from 'formik';
 import { Github, X } from 'lucide-react';
 import Image from 'next/image';
@@ -92,27 +92,25 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
   }
   function SignInbyGoogle() {
     const query = {
-      client_id: oauth_google_client_signUp.client_id || '',
-      redirect_uri: oauth_google_client_signUp.redirect_uri,
+      client_id: oauth_google_client.client_id || '',
+      redirect_uri: oauth_google_client.redirect_uri,
       response_type: 'code',
-      scope: oauth_google_client_signUp.scopes,
+      scope: oauth_google_client.scopes,
       prompt: 'consent',
     };
-
-    const url = new URL(oauth_google_client_signUp.endpoint);
+    const url = new URL(oauth_google_client.endpoint);
     url.search = new URLSearchParams(query).toString();
-
     window.location.href = url.toString();
   }
 
   function SignInbyGithub() {
     const query = {
-      client_id: oauth_github_client_signUp.client_id || '',
-      redirect_uri: oauth_github_client_signUp.redirect_uri,
-      scope: oauth_github_client_signUp.scopes,
+      client_id: oauth_github_client.client_id || '',
+      redirect_uri: oauth_github_client.redirect_uri,
+      scope: oauth_github_client.scopes,
       prompt: 'consent',
     };
-    const url = new URL(oauth_github_client_signUp.endpoint);
+    const url = new URL(oauth_github_client.endpoint);
     url.search = new URLSearchParams(query).toString();
     window.location.href = url.toString();
   }
