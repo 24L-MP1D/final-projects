@@ -13,14 +13,14 @@ export function middleware(request: NextRequest) {
   switch (currentHost) {
     case 'www.verse.mn':
     case 'verse.mn':
-      domain = 'school';
+      domain = 'client';
       break;
     case 'dashboard.verse.mn':
     case 'dash.verse.mn':
       domain = 'school';
       break;
     default:
-      domain = 'client';
+      domain = 'school';
   }
 
   return NextResponse.rewrite(new URL(`/${domain}${pathname}${search}`, request.url));
