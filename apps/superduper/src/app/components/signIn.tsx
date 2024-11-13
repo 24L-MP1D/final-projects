@@ -27,15 +27,15 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
     password: '',
   };
   const validationSchema = yup.object({
-    email: yup.string().email('Wrong e-mail').required('e-mail required'),
+    email: yup.string().email('Буруу и-мэйл').required('и-мэйл шаардлагатай'),
     password: yup
       .string()
-      .required('Required')
-      .min(8, 'Must be 8 characters or more')
-      .matches(/[a-z]+/, 'One lowercase character')
-      .matches(/[A-Z]+/, 'One uppercase character')
-      .matches(/[@$!%*#?&]+/, 'One special character')
-      .matches(/\d+/, 'One number'),
+      .required('Шаардлагатай')
+      .min(8, '8 ба түүнээс дээш тэмдэгт байх ёстой')
+      .matches(/[a-z]+/, 'Нэг жижиг үсэг')
+      .matches(/[A-Z]+/, 'Нэг том үсэг')
+      .matches(/[@$!%*#?&]+/, 'Нэг тусгай тэмдэгт')
+      .matches(/\d+/, 'Нэг тоо'),
   });
 
   const formik = useFormik({
@@ -54,22 +54,26 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
         if (response.status === 201) {
           console.log('success');
 
+
           toast.custom(() => (
             <div className={`bg-green-50 shadow-lg rounded-lg p-3 border border-green-600 flex items-center`}>
               <div className="text-3xl">✅</div>
               <div>Амжилттай нэвтэрлээ.</div>
             </div>
           ));
+
           setLoading(false);
           window.location.href = '/client';
         } else {
           console.log('error');
+
           toast.custom(() => (
             <div className={`bg-red-50 shadow-lg rounded-lg p-3 border border-red-600 flex items-center`}>
               <div className="text-3xl">❗</div>
               <div>Амжилтгүй нэвтэрлээ.</div>
             </div>
           ));
+
           setDialogOpen(false);
         }
         setDialogOpen(false);
@@ -120,7 +124,7 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
         console.log('success');
         setLoading(false);
 
-        toast('Signed Up Successfully');
+        toast('Амжилттай бүртгүүлээ.');
         window.location.href = '/client';
       } else {
         console.log('error');
@@ -156,11 +160,11 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
           <div className="flex gap-4">
             <Button className="w-full h-[30px] border-2 flex items-center gap-2 p-8 bg-blue-500 rounded-lg" onClick={SignInbyGithub}>
               <Github />
-              <p className="text-white">Github</p>
+              <p className="text-white">ГитХаб</p>
             </Button>
             <Button className="w-full h-[30px] border-2 flex items-center gap-2 p-8 rounded-lg" onClick={SignInbyGoogle}>
               <FcGoogle />
-              <p>Google</p>
+              <p>Гүүгл</p>
             </Button>
           </div>
           <div className="flex items-center gap-2 py-3">
@@ -170,11 +174,11 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
           </div>
 
           <div>
-            <Input name="email" placeholder="E-mail" value={formik.values.email} onChange={formik.handleChange} />
+            <Input name="email" placeholder="И-мэйл" value={formik.values.email} onChange={formik.handleChange} />
             {<span className="text-red-600">{formik.errors.email}</span>}
           </div>
           <div className="flex my-3">
-            <Input name="password" placeholder="Password" value={formik.values.password} onChange={formik.handleChange} />
+            <Input name="password" placeholder="Нууц үг" value={formik.values.password} onChange={formik.handleChange} />
             {<span className="text-red-600">{formik.errors.password}</span>}
           </div>
           <div className="flex justify-between m-3">
@@ -203,7 +207,7 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
 
 export function SonnerDemo() {
   return (
-    <Button variant="outline" onClick={() => toast('Signed up successfully')}>
+    <Button variant="outline" onClick={() => toast('Амжилттай бүртгүүлээ.')}>
       Show Toast
     </Button>
   );
