@@ -1,6 +1,7 @@
 'use client';
 
 import { ProductItem } from '@/app/components/productItem';
+import '@/app/styles.css';
 import { Categories } from '@/components/category';
 import { ProductType } from '@/components/productType';
 import { Button } from '@/components/ui/button';
@@ -89,7 +90,12 @@ export default function Index({ params }: { params: { category: string } }) {
     return (
       <div className="min-h-screen">
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
-          <Image src={'/images/spinner.svg'} alt="loading" width={100} height={100} />
+          <div className="loader">
+            <div className="loader-bar bar-1"></div>
+            <div className="loader-bar bar-2"></div>
+            <div className="loader-bar bar-3"></div>
+            <div className="loader-bar bar-4"></div>
+          </div>
           <div className="font-bold text-3xl">Энэ ангилалд бараа байхгүй байна.</div>
         </div>
       </div>
