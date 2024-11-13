@@ -37,7 +37,7 @@ export default function HeaderNavigationMenu() {
             </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>
-        <NavigationMenuList>
+        {/* <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger>Recipes</NavigationMenuTrigger>
             <NavigationMenuContent>
@@ -162,7 +162,7 @@ export default function HeaderNavigationMenu() {
               </NavigationMenuLink>
             </NavigationMenuContent>
           </NavigationMenuItem>
-        </NavigationMenuList>
+        </NavigationMenuList> */}
       </NavigationMenu>
     </div>
   );

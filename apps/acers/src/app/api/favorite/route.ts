@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
+import { ObjectId } from 'mongodb';
 import { DB } from '../../lib/db';
+import { hideData } from '../recipe/handyFunctions';
 
 const JWT_SECRET = process.env.JWT_SECRET || '';
 
@@ -10,8 +12,13 @@ export const POST = async (req: Request) => {
     const token = req.headers.get('authtoken') || '';
     const decoded = jwt.verify(token, JWT_SECRET);
     const { userId } = decoded as { userId: string };
+    const isExist = await DB.collection('favorites').findOne({ recipeId, userId });
+    if (isExist) {
+      const result = await DB.collection('favorites').deleteOne({ recipeId, userId });
+      return new Response(JSON.stringify({ s: 'succeed' }), { status: 200 });
+    }
     const res = await DB.collection('favorites').insertOne({ userId, recipeId });
-    return new Response(JSON.stringify({ s: 'suxeed' }), { status: 200 });
+    return new Response(JSON.stringify({ s: 'succeed' }), { status: 200 });
   } catch (e) {
     return new Response(JSON.stringify({ error: e || 'An error occurred' }), { status: 500 });
   }
@@ -28,7 +35,14 @@ export async function GET(request: Request) {
     console.log(token);
     const decoded = jwt.verify(token, JWT_SECRET);
     const { userId } = decoded as { userId: string };
-    const recipeList = await DB.collection('favorites').find({ userId }).toArray();
+    const recipeIdlist = await DB.collection('favorites').find({ userId }).toArray();
+
+    const recipeIds = recipeIdlist.map((favorite) => new ObjectId(favorite.recipeId));
+
+    const recipeListFull = await DB.collection('recipes')
+      .find({ _id: { $in: recipeIds } })
+      .toArray();
+    const recipeList = hideData(recipeListFull);
     if (!recipeList) {
       return new Response('No recipe found', { status: 404 });
     }

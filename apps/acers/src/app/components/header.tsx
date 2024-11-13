@@ -81,10 +81,10 @@ export default function Header() {
         </div>
         <div className="flex gap-1 items-center mt-1 ">
           <button className="border border-gray-600 rounded-full font-bold leading-3 px-[19px] py-[11px] " onClick={() => router.push(`/login`)}>
-            Log In
+            Нэвтрэх
           </button>
           <button className="border bg-slate-400 text-white rounded-full leading-3 px-[19px]  py-[11px]" onClick={() => router.push(`/subscribe`)}>
-            Subscribe
+            Багц
           </button>
         </div>
       </div>

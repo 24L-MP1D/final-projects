@@ -5,6 +5,7 @@ import { decode } from 'jsonwebtoken';
 import { Bookmark } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { FavoriteRecipes } from './components/homePageComponents/favorites';
 import { HandyCarousel } from './components/homePageComponents/handyCarousel';
 import { Stars } from './components/itemComponents/stars';
 
@@ -28,6 +29,7 @@ export default function Index() {
         <RecipeOfTheDay />
         <div className="flex flex-col gap-16 max-w-[80%] xl:max-w-[1160px] w-full m-auto">
           <AvailableContent />
+          <FavoriteRecipes />
           <OccasionMeals />
           {collections.map((collection: any) => (
             <CollectionByAdmin key={collection._id} collection={collection} />
