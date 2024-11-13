@@ -114,7 +114,6 @@ const Home = () => {
       <AdminLayout>
         <div className="min-h-screen">
           <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
-
             <div className="loader">
               <div className="loader-bar bar-1"></div>
               <div className="loader-bar bar-2"></div>
@@ -122,7 +121,6 @@ const Home = () => {
               <div className="loader-bar bar-4"></div>
             </div>
             <div className="font-bold text-3xl">Ачаалж байна...</div>
-
           </div>
         </div>
       </AdminLayout>
@@ -245,7 +243,7 @@ const Home = () => {
           </TableBody>
         </Table>
         {open && <AdminMessageSendDialog setFeedBackInput={setFeedBackInput} productId={productId} open={open} loadProduct={loadProduct} setOpen={setOpen} />}
-        {feedBackInput && <div className="absolute inset-0 opacity-50 bg-slate-500"></div>}
+        {feedBackInput && <div className="fixed inset-0 opacity-50 bg-slate-500"></div>}
         {feedBackInput && <FeedBackInput productId={productId} userId={userId} loadProduct={loadProduct} setFeedBackInput={setFeedBackInput} />}
       </div>
       <Toaster />

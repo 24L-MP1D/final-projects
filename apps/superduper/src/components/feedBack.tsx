@@ -58,7 +58,7 @@ export const FeedBackInput = ({ setFeedBackInput, userId, loadProduct, productId
   };
 
   return (
-    <form className="bg-white absolute p-4 rounded-lg translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] max-w-[400px] w-full" onSubmit={handleSubmit(onSubmit)}>
+    <form className="bg-white fixed p-4 rounded-lg translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] max-w-[400px] w-full" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <div className="sm:max-w-md flex flex-col gap-3">
           <div>

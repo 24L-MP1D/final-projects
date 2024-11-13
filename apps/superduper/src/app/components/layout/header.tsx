@@ -44,11 +44,7 @@ export default function Header() {
     });
     const data = await response.json();
     setNotifications(data);
-    setIsSeenNotif(
-      data.map((data: notifications) => {
-        return !data.isSeen && data;
-      })
-    );
+    setIsSeenNotif(data.filter((data: notifications) => data.isSeen == false));
     const channel = ably.channels.get('notifications');
     await channel.subscribe('new-notification', (message) => {
       setNotifications((prev) => [...prev, message.data]);
@@ -59,7 +55,7 @@ export default function Header() {
     const cookie = Cookies.get('token');
     if (cookie) {
       setSignin(true);
-      loadNotif();
+      if (currentUser?._id) loadNotif();
     }
   }, [currentUser]);
 
@@ -106,12 +102,23 @@ export default function Header() {
   }, [value?.favourite]);
   const logOut = () => {
     Cookies.remove('token');
+
     window.location.reload();
   };
 
   const jumpProductDetailfromSearch = (id: string) => {
     value?.setSearchValue('');
     router.push(`/client/productDetails/${id}`);
+  };
+  const notificationUpdate = async (id: string) => {
+    try {
+      await fetch(`/api/notifications/${id}`, {
+        method: 'PUT',
+      });
+    } catch (err) {
+      throw new Error('aldaa notif');
+    }
+    setShowNotif(false);
   };
   return (
     <div onClick={() => showNotif && setShowNotif(false)} className=" pt-5 flex items-center max-w-[1280px] ">
@@ -164,22 +171,26 @@ export default function Header() {
 
           <div className="flex gap-4 items-center w-[150px] ">
             <div className="relative hover:cursor-pointer  ">
-
               <FaRegHeart size={24} color="white" onClick={save} />
-              {favlength === 0 ? null : <div className="absolute left-5 bottom-5 bg-red-500 text-white rounded-full w-5 h-5 text-center text-[13px]">{favlength}</div>}
+              {favlength === 0 ? null : <div className="absolute left-4 bottom-4 bg-red-500 text-white rounded-full w-5 h-5 text-center text-[13px]">{favlength}</div>}
             </div>
             {signin ? (
               <div className="flex relative gap-5 items-center p-1">
                 <div onClick={() => setShowNotif(true)} className="hover:cursor-pointer">
                   <div className="relative ">
                     <Bell color="white" />
-                    {isSeenNotif.length > 0 && <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm top-[-5px] left-0 text-white">{isSeenNotif.length}</div>}
+                    {currentUser?._id && isSeenNotif.length > 0 && (
+                      <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm top-[-12px] left-3 text-white">{isSeenNotif.length}</div>
+                    )}
                   </div>
                   {showNotif && (
-                    <div className="absolute top-12 left-0 z-50">
-                      {notifications.map((notification) => (
-                        <div key={notification._id} onClick={() => setShowNotif(false)} className={`p-2 hover:cursor-pointer shadow border ${notification.isSeen ? 'bg-slate-100' : 'bg-red-200'}`}>
-                          {notification.message}
+                    <div className="absolute top-12 left-[-300px] list-decimal right-0 z-50 max-w-[400px]">
+                      {notifications.map((notification, index) => (
+                        <div key={notification._id} onClick={() => notificationUpdate(notification._id)} className={`border-b rounded-lg items-center border-white p-2 bg-[#1F1F1FF2] text-white flex`}>
+                          <div>
+                            {index + 1}. {notification.message}
+                          </div>
+                          {isSeenNotif.length ? <div className="text-sm text-red-500 ml-7">new product notification</div> : <div className="text-sm text-red-500 ml-7">old product notification</div>}
                         </div>
                       ))}
                     </div>
@@ -198,7 +209,7 @@ export default function Header() {
                       <div>
                         <CircleUser />
                       </div>
-                      <div>Данс</div>
+                      <div>Профайл</div>
                     </Link>
                     <div onClick={logOut} className="border-b rounded-lg border-white p-2 bg-[#1F1F1FF2] text-white flex gap-2">
                       <div>
