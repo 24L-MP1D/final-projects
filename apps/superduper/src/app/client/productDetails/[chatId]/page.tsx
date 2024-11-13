@@ -54,8 +54,8 @@ function Realtime({ chatId }: { chatId: string }) {
   const validationSchema = yup.object({
     bid: yup
       .number()
-      .required('Please insert a valid bid amount')
-      .min(maximumBid + 500, `minumum bid is ${maximumBid + 500} ₮`),
+      .required('Хүчинтэй үнийн дүнг оруулна уу')
+      .min(maximumBid + 500, `хамгийн бага үнийн санал ${maximumBid + 500} ₮`),
   });
 
   const formik = useFormik({
@@ -66,7 +66,7 @@ function Realtime({ chatId }: { chatId: string }) {
       const cookie = Cookies.get('token');
       if (!cookie) {
         formik.setFieldValue('bid', 0);
-        return alert('first you must sign-in');
+        return alert('эхлээд та нэвтрэх ёстой');
       }
       if (open) {
         sendBid();
