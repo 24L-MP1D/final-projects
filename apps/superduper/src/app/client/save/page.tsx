@@ -57,7 +57,6 @@ export default function App() {
     return (
       <div className="text-3xl min-h-screen  font-bold ">
         <div className="flex gap-1 absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
-
           <div className="loader">
             <div className="loader-bar bar-1"></div>
             <div className="loader-bar bar-2"></div>
@@ -65,7 +64,6 @@ export default function App() {
             <div className="loader-bar bar-4"></div>
           </div>
           <div className="">Ачаалж байна...</div>
-
         </div>
       </div>
     );
@@ -76,13 +74,15 @@ export default function App() {
       </div>
     );
   return (
-    <div className="grid grid-cols-3 gap-10 mt-[30px] w-full">
-      {products
-        .filter((item) => favourites.includes(item._id))
-        .slice(0, 20)
-        .map((product) => (
-          <ProductItem isClick={isClick} product={product} favourite={value?.favourite || []} key={product._id} onClickFavourite={() => handleFavourite(product._id)} />
-        ))}
+    <div>
+      <div className="grid grid-cols-3 gap-10 mt-[30px] w-full">
+        {products
+          .filter((item) => favourites.includes(item._id))
+          .slice(0, 20)
+          .map((product) => (
+            <ProductItem isClick={isClick} product={product} favourite={value?.favourite || []} key={product._id} onClickFavourite={() => handleFavourite(product._id)} />
+          ))}
+      </div>
     </div>
   );
 }

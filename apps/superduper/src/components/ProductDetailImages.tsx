@@ -7,6 +7,7 @@ import { TypewriterEffectSmooth } from './ui/typewriter-effect';
 export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType }) => {
   const [frontImage, setFrontImage] = useState('');
   const [animate, setAnimat] = useState(false);
+  const [oneProductId, setOneProductId] = useState<string>();
   const words = (text: string) => {
     const array = [];
     for (let i = 0; i < text.length; i++) {
@@ -17,14 +18,21 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
 
   useEffect(() => {
     setFrontImage(oneProduct.frontImage);
+    let id = '';
+    for (let i = 0; i < oneProduct._id.length / 2; i++) {
+      id = id + oneProduct._id[i];
+    }
+    const replacedId = id.replace(/\D/g, '');
+    setOneProductId(replacedId);
   }, []);
 
   return (
     <div className="max-w-[750px] mx-auto w-full ">
       <div>
-        <div>NO.14214</div>
-        <div className="text-[30px]">{oneProduct.productName}</div>
-        <div className="flex gap-3">
+        <div className="text-[30px] pt-2 font-medium text-center">{oneProduct.productName}</div>
+        <div className="text-[15px]">No.{oneProductId}</div>
+
+        <div className="flex gap-3 mt-6">
           <div className="w-full relative">
             <motion.img
               key={frontImage}
@@ -34,12 +42,13 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
               style={{ width: '100%', borderRadius: '8px', maxHeight: '650px', objectFit: 'cover', marginBottom: '20px' }}
+              className="shadow"
             />{' '}
           </div>
           <div className="flex flex-col gap-3 relative">
             <Image
               onClick={() => setFrontImage(oneProduct.frontImage)}
-              className="object-cover rounded-lg w-[150px] h-[150px] hover:cursor-pointer shadow drop-shadow-xl"
+              className="object-cover rounded-lg w-[150px] h-[150px] hover:cursor-pointer shadow drop-shadow-xl shadow"
               src={oneProduct.frontImage}
               alt="front-image"
               width={1000}
