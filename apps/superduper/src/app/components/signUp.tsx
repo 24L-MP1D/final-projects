@@ -63,9 +63,7 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
         body: JSON.stringify(values),
       });
       if (response.status === 201) {
-
         console.log('success');
-
 
         toast.custom(() => (
           <div className={`bg-green-50 shadow-lg rounded-lg p-3 border border-green-600 flex items-center`}>
@@ -85,7 +83,6 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
             <div>Бүртгэл амжилтгүй.</div>
           </div>
         ));
-
 
         setDialogOpen(false);
       }

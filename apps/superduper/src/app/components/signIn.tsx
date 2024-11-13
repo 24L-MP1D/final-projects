@@ -113,7 +113,12 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
         console.log('success');
         setLoading(false);
 
-        toast('Амжилттай бүртгүүлээ.');
+        toast.custom(() => (
+          <div className={`bg-green-50 shadow-lg rounded-lg p-3 border border-green-600 flex items-center`}>
+            <div className="text-3xl">✅</div>
+            <div>Амжилттай нэвтэрлээ</div>
+          </div>
+        ));
         window.location.href = '/client';
       } else {
         console.log('error');
