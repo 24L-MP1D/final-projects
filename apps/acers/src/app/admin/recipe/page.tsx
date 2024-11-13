@@ -18,7 +18,7 @@ export default function Home() {
     prepTime: string;
     servings: number;
     videoFile: File | null;
-    ingredients: { name: string }[]; // Update ingredient structure to use an object
+    ingredients: { name: string }[];
     instructions: { step: string }[];
     nutritionFacts: { name: string; value: string }[];
     category: ObjectId;

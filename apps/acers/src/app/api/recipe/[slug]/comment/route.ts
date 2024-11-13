@@ -9,19 +9,21 @@ export async function POST(request: Request, { params }: { params: { title: stri
 
   try {
     const body = await request.json();
-    const { comment, userId, firstName, id } = body;
+    const { comment, userId, firstName, _id: recipeId } = body;
 
-    if (!comment || !userId) {
-      return new Response('Missing required fields (comment, userId)', { status: 400 });
+    if (!comment || !userId || !recipeId) {
+      return new Response('Missing required fields (comment, userId, recipeId)', { status: 400 });
     }
 
-    const recipe = await DB.collection('recipes').findOne({ title });
+    const recipeObjectId = new ObjectId(recipeId);
+
+    const recipe = await DB.collection('recipes').findOne({ _id: recipeObjectId });
     if (!recipe) {
       return new Response('Recipe not found', { status: 404 });
     }
 
     const newComment = {
-      recipeId: id,
+      recipeId: recipeObjectId,
       userId,
       firstName: firstName || 'Anonymous',
       comment,
@@ -30,10 +32,16 @@ export async function POST(request: Request, { params }: { params: { title: stri
 
     const result = await DB.collection('comments').insertOne(newComment);
 
+    const responseComment = {
+      ...newComment,
+      _id: result.insertedId.toString(),
+      recipeId: recipeObjectId.toString(),
+    };
+
     const channel = ably.channels.get(`recipe-${title}-comments`);
     channel.publish('new-comment', newComment);
 
-    return new Response(JSON.stringify({ success: true, comment: { ...newComment, _id: result.insertedId } }), {
+    return new Response(JSON.stringify({ success: true, comment: responseComment }), {
       status: 201,
       headers: { 'Content-Type': 'application/json' },
     });

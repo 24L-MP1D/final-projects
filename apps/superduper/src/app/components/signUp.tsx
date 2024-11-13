@@ -59,12 +59,26 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
       if (response.status === 201) {
         console.log('success');
 
-        toast('Амжилттай бүртгүүлээ.');
+
+        toast.custom(() => (
+          <div className={`bg-green-50 shadow-lg rounded-lg p-3 border border-green-600 flex items-center`}>
+            <div className="text-3xl">✅</div>
+            <div>Амжилттай бүртгэгдлээ</div>
+          </div>
+        ));
+
         setLoading(false);
         window.location.href = '/client/sign-in';
       } else {
         console.log('error');
-        toast('амжилтгүй');
+
+        toast.custom(() => (
+          <div className={`bg-red-50 shadow-lg rounded-lg p-3 border border-red-600 flex items-center`}>
+            <div className="text-3xl">❗</div>
+            <div>Бүртгэл амжилтгүй.</div>
+          </div>
+        ));
+
         setDialogOpen(false);
       }
     } catch (err) {

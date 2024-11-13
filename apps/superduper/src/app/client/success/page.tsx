@@ -92,9 +92,9 @@ export default function SubmissionPage() {
             "
             >
               <Button className="active:bg-black" onClick={routerChange}>
-                ШИНЭ ЗҮЙЛ ИЛГЭЭХ
+                ШИНЭ БАРАА ОРУУЛАХ
               </Button>
-              <Button>ПОРТАЛ РУУ ОРОХ</Button>
+              <Button onClick={() => router.push('/client/my-account/seller?seller=sl')}>ӨӨРИЙН БАРААГ ХАРАХ</Button>
             </div>
           </div>
         )}

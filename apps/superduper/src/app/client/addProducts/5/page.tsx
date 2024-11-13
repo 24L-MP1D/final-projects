@@ -1,6 +1,5 @@
 'use client';
 
-import { useAuthStore } from '@/app/components/auth/useAuthStore';
 import { ProductType } from '@/components/productType';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -9,8 +8,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function Page() {
-  const currentUser = useAuthStore((state) => state.currentUser);
-
   const router = useRouter();
   const [getFromLocal, setGetFromLocal] = useState<ProductType>();
   const [loadding, setLoading] = useState(false);
@@ -19,22 +16,11 @@ export default function Page() {
     try {
       if (getFromLocal) {
         setLoading(true);
-        const response = await fetch('/api/products', {
-          method: 'POST',
-          body: JSON.stringify({
-            getFromLocal,
-            userId: currentUser?._id,
-          }),
-          headers: {
-            'Content-type': 'application/json',
-          },
-        });
-        const data = await response.json();
 
-        setGetFromLocal(undefined);
-        localStorage.removeItem('addProduct');
+        localStorage.setItem('addProduct', JSON.stringify(getFromLocal));
+
         setLoading(false);
-        router.push(`/client/success?id=${data.insertedId}`);
+        router.push('/client/addProducts/6');
       }
     } catch (err) {
       console.error(err);
@@ -178,7 +164,7 @@ export default function Page() {
             <Link className="bg-slate-300 text-center py-2 px-4 rounded-lg" href={'/client/addProducts/4'}>
               БУЦАХ
             </Link>
-            <Button onClick={postToDatabase}>{loadding ? <Image className="animate-spin" src={'/images/spinner.svg'} height={50} width={50} alt="loading" /> : <div>ИЛГЭЭХ</div>}</Button>
+            <Button onClick={postToDatabase}>{loadding ? <Image className="animate-spin" src={'/images/spinner.svg'} height={50} width={50} alt="loading" /> : <div>ҮРГЭЛЖЛҮҮЛЭХ</div>}</Button>
           </div>
         </div>
       </div>
