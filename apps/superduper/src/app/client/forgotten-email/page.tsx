@@ -17,11 +17,11 @@ export default function Page() {
       .then(({ data, status, statusText }) => {
         localStorage.setItem('email', JSON.stringify(data.email));
         if (status === 200) {
-          toast('Check your e-mail!');
+          toast('Имэйлээ шалгана уу!');
           window.location.href = '/client/forgotten-otp';
         } else {
           status === 404;
-          toast('This e-mail does not registered!');
+          toast('Энэ и-мэйл бүртгүүлээгүй байна!');
         }
         setLoading(false);
       })

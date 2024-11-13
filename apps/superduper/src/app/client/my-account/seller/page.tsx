@@ -97,7 +97,7 @@ export default function App() {
               className="flex items-center gap-1"
             >
               {loading && <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
-              <div> Load more</div>
+              <div>Илүү их</div>
             </Button>
           </div>
         )}

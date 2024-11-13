@@ -11,20 +11,20 @@ import { oauth_github, oauth_google } from 'config';
 import { z } from 'zod';
 
 const SignInSchema = z.object({
-  email: z.string().email({ message: 'invalid email' }),
+  email: z.string().email({ message: 'хүчингүй имэйл' }),
   password: z
     .string()
-    .min(6, { message: 'Password must be longer than 6 characters.' })
-    .max(20, { message: ' Password must be shorter than 20 characters.' })
+    .min(6, { message: 'Нууц үг 6 тэмдэгтээс урт байх ёстой.' })
+    .max(20, { message: 'Нууц үг 20 тэмдэгтээс богино байх ёстой.' })
     .refine((password) => /[A-Z]/.test(password), {
-      message: 'Password must contain at least one uppercase letter.',
+      message: 'Нууц үг дор хаяж нэг том үсэг агуулсан байх ёстой.',
     })
     .refine((password) => /[a-z]/.test(password), {
-      message: 'Password must contain at least one lowercase letter',
+      message: 'Нууц үг дор хаяж нэг жижиг үсэг агуулсан байх ёстой.',
     })
-    .refine((password) => /[0-9]/.test(password), { message: 'Password must include at least one number. ' })
+    .refine((password) => /[0-9]/.test(password), { message: 'Нууц үгэнд дор хаяж нэг тоо орсон байх ёстой.' })
     .refine((password) => /[!@#$%^&*]/.test(password), {
-      message: 'Password must contain at least one special character',
+      message: 'Нууц үг дор хаяж нэг тусгай тэмдэгт агуулсан байх ёстой.',
     }),
 });
 
@@ -83,12 +83,8 @@ export default function LoginForm() {
   }
 
   return (
-
-
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200 ml-6">🤗 Bidscape-ийн админд тавтай морилно уу 🤗</h2>
-
-
 
       <form className="my-8 form" onSubmit={handleSubmit(onSubmit)}>
         <LabelInputContainer className="mb-4">

@@ -128,7 +128,7 @@ export const BidSticky = ({ bids, maximumBid, formikValues, isSticky, open, setO
             <div>
               <Clock />
             </div>
-            <div> Closes: {dayjs(oneProduct.endDate).format(' YYYY-MM-DD  hh-mm')}</div>
+            <div> Хаагдана: {dayjs(oneProduct.endDate).format(' YYYY-MM-DD  hh-mm')}</div>
           </div>
         </div>
 
