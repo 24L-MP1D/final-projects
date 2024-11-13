@@ -72,7 +72,7 @@ export default function Page() {
           </div>
 
           <div className="flex gap-5 relative left-[-50px] items-center">
-            <div>Category</div>
+            <div>Ангилал</div>
             <div>Дэлгэрэнгүй</div>
             <div>Зураг</div>
             <div className="ml-3">Логистик</div>

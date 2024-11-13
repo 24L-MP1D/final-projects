@@ -58,7 +58,7 @@ export default function App() {
       <div className="text-3xl min-h-screen  font-bold ">
         <div className="flex gap-1 absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
           <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />
-          <div className="">Loading...</div>
+          <div className="">Ачааллаж байна...</div>
         </div>
       </div>
     );
