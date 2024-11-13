@@ -19,8 +19,7 @@ export function Swipersnew() {
     router.push(`/lunch?id=${id}`);
   };
   return (
-    <div className="text-center py-16">
-      {/* <div className="text-[#8B0000] font-semibold text-3xl pb-8">7 ХОНОГИЙН ОНЦЛОХ MЕНЮ</div> */}
+    <div className="text-center my-20">
       <h1 className="text-7xl italic text-center text-[#8B0000] mb-20">Онцлох Меню</h1>
       <Swiper
         slidesPerView={3}
@@ -29,16 +28,16 @@ export function Swipersnew() {
           clickable: true,
         }}
         autoplay={{
-          delay: 2500,
+          delay: 1500,
           disableOnInteraction: true,
         }}
         modules={[Pagination, Scrollbar, Autoplay]}
         className="mySwiper"
       >
         {specialFood.map((special) => (
-          <SwiperSlide key={special._id} onClick={() => choose(special.id)}>
-            <Image src={special.photos} width={600} height={200} alt="Image" className="max-h-[300px] aspect-video object-cover" />
-            <div className="flex flex-col absolute left-[11px] bottom-[13px]">
+          <SwiperSlide key={special._id} onClick={() => choose(special.id)} className="rounded-md mb-20">
+            <Image src={special.photos} width={600} height={300} alt="Image" className="max-h-[300px] aspect-video object-cover rounded-md ml-3" />
+            <div className="flex flex-col absolute left-[22px] bottom-[13px]">
               <div className="text-white md:text-2xl font-bold text-base self-start">{special.name}</div>
               <p className=" text-white md:text-xl text-sm self-start">{special.price}</p>
             </div>

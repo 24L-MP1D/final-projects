@@ -9,7 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-slate-100">
+      <body className="bg-white">
         <NuqsAdapter>{children}</NuqsAdapter>
         <Toaster />
       </body>
