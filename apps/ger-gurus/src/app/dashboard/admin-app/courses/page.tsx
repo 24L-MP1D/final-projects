@@ -47,7 +47,7 @@ export default function Page() {
         </button>
       </Link>
 
-      <Table className="">
+      <Table>
         <TableCaption>Та сургуулийн сургалтуудыг үүсгэж, удирдаарай.</TableCaption>
         <TableHeader>
           <TableRow>

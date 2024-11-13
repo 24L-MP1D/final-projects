@@ -14,6 +14,7 @@ import * as Ably from 'ably';
 import { AblyProvider, ChannelProvider, useChannel } from 'ably/react';
 import { useFormik } from 'formik';
 import Cookies from 'js-cookie';
+import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { RealtimeNotif } from '../../layout';
@@ -126,10 +127,29 @@ function Realtime({ chatId }: { chatId: string }) {
   const sendBid = () => {
     channel.publish('auction-bids', { bid: !isBid });
   };
-
+  const updateWinnerStatus = async (userId: string) => {
+    try {
+      await fetch(`/api/products/${chatId}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          status: 'Done',
+          userId: userId,
+        }),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const loadProductDetail = async () => {
     const response = await fetch(`/api/products/${chatId}`);
     const data = await response.json();
+    if (data.endDate.getTime() < new Date().getTime() && data.status == 'Accept') {
+      updateWinnerStatus(data.userId);
+    }
+
     setOneProduct(data);
     setMaximumBid(data.startBid);
   };
@@ -149,6 +169,7 @@ function Realtime({ chatId }: { chatId: string }) {
 
     value?.setFavourite(result);
   };
+
   const loadProducts = async () => {
     try {
       const response = await fetch('/api/products', {
@@ -161,26 +182,35 @@ function Realtime({ chatId }: { chatId: string }) {
         },
       });
       const data = await response.json();
-      setProducts(data);
+      const filtData = data.filter((data: ProductType) => data._id !== chatId);
+      setProducts(filtData);
     } catch (err) {
       console.error(err);
     }
   };
   useEffect(() => {
-    loadBids();
     loadProductDetail();
+    loadBids();
     loadProducts();
+
     const storage = localStorage.getItem('favourites');
     if (storage) value?.setFavourite(JSON.parse(storage));
   }, [isBid, value?.searchValue]);
-
-  if (!oneProduct) return <div>Ачааллаж байна</div>;
+  if (!oneProduct)
+    return (
+      <div className="min-h-screen">
+        <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
+          <Image src={'/images/spinner.svg'} alt="loading" width={100} height={100} />
+          <div className="font-bold text-3xl">Ачааллаж байна...</div>
+        </div>
+      </div>
+    );
 
   return (
     <form onSubmit={formik.handleSubmit} className={`max-w-[1240px] mx-auto w-full`}>
       <div className={`flex gap-24`}>
         <ProductDetailImages oneProduct={oneProduct} />
-        <div className="flex flex-col gap-8 pb-12">
+        <div className="flex flex-col gap-8 pb-12 mt-10">
           <Bid
             formikSetFieldValue={formik.setFieldValue}
             formikTouched={formik.touched}

@@ -22,17 +22,17 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
     password: '',
   };
   const validationSchema = yup.object({
-    firstName: yup.string().min(1).required('First name is required'),
-    lastName: yup.string().min(1).required('Last name required'),
-    email: yup.string().email('Wrong e-mail').required('e-mail required'),
+    firstName: yup.string().min(1).required('Нэрийг оруулах шаардлагатай'),
+    lastName: yup.string().min(1).required('Овог оруулах шаардлагатай'),
+    email: yup.string().email('Буруу и-мэйл').required('и-мэйл шаардлагатай'),
     password: yup
       .string()
-      .required('Required')
-      .min(8, 'Must be 8 characters or more')
-      .matches(/[a-z]+/, 'One lowercase character')
-      .matches(/[A-Z]+/, 'One uppercase character')
-      .matches(/[@$!%*#?&]+/, 'One special character')
-      .matches(/\d+/, 'One number'),
+      .required('Шаардлагатай')
+      .min(8, '8 ба түүнээс дээш тэмдэгт байх ёстой')
+      .matches(/[a-z]+/, 'Нэг жижиг үсэг')
+      .matches(/[A-Z]+/, 'Нэг том үсэг')
+      .matches(/[@$!%*#?&]+/, 'Нэг тусгай тэмдэгт')
+      .matches(/\d+/, 'Нэг тоо'),
   });
 
   const formik = useFormik({
@@ -59,12 +59,12 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
       if (response.status === 201) {
         console.log('success');
 
-        toast('Signed Up Successfully');
+        toast('Амжилттай бүртгүүлээ.');
         setLoading(false);
         window.location.href = '/client/sign-in';
       } else {
         console.log('error');
-        toast('Unsuccessful');
+        toast('амжилтгүй');
         setDialogOpen(false);
       }
     } catch (err) {
@@ -118,11 +118,11 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
           <div className="flex gap-4">
             <Button className="w-full h-[30px] border-2 flex items-center gap-2 p-8 bg-blue-500 rounded-lg" onClick={SignInbyGithub}>
               <Github />
-              <p className="text-white">Github</p>
+              <p className="text-white">ГитХаб</p>
             </Button>
             <Button className="w-full h-[30px] border-2 flex items-center gap-2 p-8 rounded-lg" onClick={SignInbyGoogle}>
               <FcGoogle />
-              <p>Google</p>
+              <p>Гүүгл</p>
             </Button>
           </div>
           <div className="flex items-center gap-2 py-3">
@@ -132,20 +132,20 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
           </div>
           <div className="flex gap-2 mb-3">
             <div>
-              <Input name="firstName" placeholder="First name" value={formik.errors.firstName} onChange={formik.handleChange} />
+              <Input name="firstName" placeholder="Нэр" value={formik.errors.firstName} onChange={formik.handleChange} />
               {formik.errors.firstName && formik.touched.firstName && <span className="text-red-600 ml-3">{formik.errors.firstName}</span>}
             </div>
             <div>
-              <Input name="lastName" placeholder="Last name" value={formik.values.lastName} onChange={formik.handleChange} />
+              <Input name="lastName" placeholder="Овог" value={formik.values.lastName} onChange={formik.handleChange} />
               {formik.errors.lastName && formik.touched.lastName && <span className="text-red-600 ml-3">{formik.errors.lastName}</span>}
             </div>
           </div>
           <div>
-            <Input name="email" placeholder="E-mail" value={formik.values.email} onChange={formik.handleChange} />
+            <Input name="email" placeholder="И-мэйл" value={formik.values.email} onChange={formik.handleChange} />
             {formik.errors.email && formik.touched.email && <span className="text-red-600 ml-3">{formik.errors.email}</span>}
           </div>
           <div className="my-3">
-            <Input name="password" placeholder="Password" value={formik.values.password} onChange={formik.handleChange} />
+            <Input name="password" placeholder="Нууц үг" value={formik.values.password} onChange={formik.handleChange} />
             {formik.errors.password && formik.touched.password && <span className="text-red-600 ml-3">{formik.errors.password}</span>}
           </div>
           <DialogDescription>Хамгийн багадаа 8 тэмдэгт, нэг том үсэг, нэг жижиг үсэг, нэг тоо, нэг тусгай тэмдэгт.</DialogDescription>
@@ -164,7 +164,7 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
 
 export function SonnerDemo() {
   return (
-    <Button variant="outline" onClick={() => toast('Signed up successfully')}>
+    <Button variant="outline" onClick={() => toast('Амжилттай бүртгүүлээ.')}>
       Show Toast
     </Button>
   );

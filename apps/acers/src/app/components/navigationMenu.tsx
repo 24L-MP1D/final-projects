@@ -4,10 +4,11 @@ export default function HeaderNavigationMenu() {
   return (
     <div>
       <NavigationMenu>
+        {/* First NavigationMenu List */}
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger>Want to Cook</NavigationMenuTrigger>
-            <NavigationMenuContent>
+            <NavigationMenuContent className="z-10 bg-white p-6">
               <NavigationMenuLink>
                 <div className="flex gap-x-20 py-8 px-[60px]">
                   <ul className="flex flex-col gap-y-4 w-[210px]">
@@ -37,14 +38,16 @@ export default function HeaderNavigationMenu() {
             </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>
+
+        {/* Second NavigationMenu List */}
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger>Recipes</NavigationMenuTrigger>
-            <NavigationMenuContent>
+            <NavigationMenuContent className="z-10 bg-white p-6">
               <NavigationMenuLink>
                 <div className="flex gap-x-20 py-8 px-[60px]">
                   <ul className="flex flex-col gap-y-4 w-[170px]">
-                    <p className="font-bold">EVERYDAY RECIEPES</p>
+                    <p className="font-bold">EVERYDAY RECIPES</p>
                     <li>Easy</li>
                     <li>Healthy</li>
                     <li>Weeknight</li>
@@ -78,10 +81,12 @@ export default function HeaderNavigationMenu() {
             </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>
+
+        {/* Third NavigationMenu List */}
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger>Ingredients</NavigationMenuTrigger>
-            <NavigationMenuContent>
+            <NavigationMenuContent className="z-10 bg-white p-6">
               <NavigationMenuLink>
                 <div className="flex gap-x-20 py-8 px-[60px]">
                   <ul className="flex flex-col gap-y-4 w-[142px]">
@@ -94,9 +99,9 @@ export default function HeaderNavigationMenu() {
                   </ul>
                   <ul className="flex flex-col gap-y-4 w-[184px]">
                     <p className="font-bold">VEGETABLE & FRUITS</p>
-                    <li>Zhucchini</li>
+                    <li>Zucchini</li>
                     <li>Sweet Potato</li>
-                    <li>Egg Plant</li>
+                    <li>Eggplant</li>
                     <li>Cabbage</li>
                     <li>Asparagus</li>
                     <li>Tomato</li>
@@ -106,7 +111,7 @@ export default function HeaderNavigationMenu() {
                     <li>Tofu</li>
                     <li>Lentil</li>
                     <li>Chickpea</li>
-                    <li>Bean</li>
+                    <li>Beans</li>
                   </ul>
                   <ul className="flex flex-col gap-y-4 w-[170px]">
                     <p className="font-bold">RICE, GRAINS, PASTA</p>
@@ -122,18 +127,20 @@ export default function HeaderNavigationMenu() {
             </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>
+
+        {/* Fourth NavigationMenu List */}
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Ocassions</NavigationMenuTrigger>
-            <NavigationMenuContent>
+            <NavigationMenuTrigger>Occasions</NavigationMenuTrigger>
+            <NavigationMenuContent className="z-10 bg-white p-6">
               <NavigationMenuLink>
                 <div className="flex gap-x-20 py-8 px-[60px]">
                   <ul className="flex flex-col gap-y-4 w-[142px]">
-                    <p className="font-bold">UP COMING HOLIDAY</p>
+                    <p className="font-bold">UPCOMING HOLIDAY</p>
                     <li>Halloween</li>
                     <li>Diwali</li>
-                    <li>Thanks Giving</li>
-                    <li>Cristmas</li>
+                    <li>Thanksgiving</li>
+                    <li>Christmas</li>
                   </ul>
                   <ul className="flex flex-col gap-y-4 w-[184px]">
                     <p className="font-bold">BY OCCASION</p>
@@ -148,14 +155,16 @@ export default function HeaderNavigationMenu() {
             </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>
+
+        {/* Fifth NavigationMenu List */}
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger>About</NavigationMenuTrigger>
-            <NavigationMenuContent>
+            <NavigationMenuContent className="z-10 bg-white p-6">
               <NavigationMenuLink>
-                <div className="w-60] py-8 px-[60px] ">
+                <div className="w-60 py-8 px-[60px]">
                   <ul className="flex flex-col gap-5 w-32">
-                    <li className="font-bold">About us</li>
+                    <li className="font-bold">About Us</li>
                     <li className="font-bold">The New York Times Food Section</li>
                   </ul>
                 </div>
