@@ -76,7 +76,7 @@ const LogoGallery: React.FC = () => {
   const logos = generateLogos();
 
   return (
-    <main className='max-w-[1500px] mx-auto'>
+    <main className='max-w-[1250px] mx-auto'>
     <CarouselContainer 
       onMouseEnter={() => setIsHovered(true)}  // Hover to trigger animation
       onMouseLeave={() => setIsHovered(false)}  // Mouse leave to reset animation
@@ -100,6 +100,7 @@ const LogoGallery: React.FC = () => {
         ))}
       </ScrollingCarousel>
     </CarouselContainer>
+    <div className="mt-2 border-green-500 border-t" />
     </main>
   );
 };

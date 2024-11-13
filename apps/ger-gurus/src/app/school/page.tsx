@@ -2,6 +2,7 @@
 
 import { useAuthStore } from '@/components/components/useAuthStore';
 import FlowText from '@/components/FlowText';
+import FooterOfSchool from '@/components/footerOfSchool';
 import LogoGallery from '@/components/LogoGallery';
 
 import TeacherWebSecondLayout from '@/components/teacherWebSecondLayout';
@@ -136,7 +137,7 @@ export default function Page() {
             </div>
           ) : (
             <Link href={`https://dash.verse.mn/login?url=${url}`}>
-              <button  className="text-black bg-white hover:bg-gray-200 border border-black hover:border-slate-500 btn">
+              <button  className="text-black bg-white hover:bg-gray-200 border border-black hover:border-slate-500 btn btn-primary">
                 НЭВТРЭХ
               </button>
             </Link>
@@ -152,7 +153,7 @@ export default function Page() {
 
         {/* Floating Bubbles */}
         <div className="absolute top-24 left-0 w-full h-[500px] mt-[-145px] overflow-hidden">
-          <div style={{ ...bubbleStyle(3, 0), width: '120px', height: '120px', top: '10%', left: '15%' }}></div>
+          <div style={{ ...bubbleStyle(3, 0), width: '120px', height: '120px', top: '20%', left: '0%' }}></div>
           <div style={{ ...bubbleStyle(4, 1), width: '100px', height: '100px', top: '25%', left: '60%' }}></div>
           <div style={{ ...bubbleStyle(5, 2), width: '90px', height: '90px', top: '80%', left: '30%' }}></div>
           <div style={{ ...bubbleStyle(3, 3), width: '80px', height: '80px', top: '70%', left: '75%' }}></div>
@@ -168,7 +169,7 @@ export default function Page() {
         <div className="flex flex-col items-center mx-auto mt-20">
           <div className="text-9xl font-black text-green-600">
             <motion.h1 className="myclass text-9xl font-black text-white hero_h1-white text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-              Жерригийн сургуульд
+              Жерригийн сайтад
             </motion.h1>
 
             <motion.h1 className="text-9xl font-black text-green-600 hero_h1-green text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}>
@@ -193,12 +194,13 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="mt-40 border-green-300 border" />
+        <div className="mt-40 border-green-500 border-t" />
       </div>
       <TeacherWebThirdLayout />
       <FlowText />
       <TeacherWebSecondLayout />
       <LogoGallery />
+      <FooterOfSchool />
     </main>
   );
 }

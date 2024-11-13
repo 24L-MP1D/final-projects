@@ -128,7 +128,7 @@ const TeacherWebThirdLayout: React.FC = () => {
           ))}
         </div>
       </div>
-      <div className="mt-16 border-green-300 border"/>
+      <div className="mt-16 border-green-500 border-t"/>
     </div>
   );
 };

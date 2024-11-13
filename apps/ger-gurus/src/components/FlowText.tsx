@@ -40,7 +40,7 @@ export default function FlowText() {
           </p>
         ))}
       </div>
-      <div className="mt-44 border-green-300 border" />
+      <div className="mt-44 border-green-500 border-t" />
     </div>
   );
 }
