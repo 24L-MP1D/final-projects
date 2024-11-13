@@ -2,7 +2,7 @@
 import { Parallax } from 'react-parallax';
 export default function Aboutupper() {
   const aboutRestaurant = [
-    { title: 'АЖИЛЛАХ ЦАГ', description: 'Monday to Friday - 09:00 - 00:00am' },
+    { title: 'АЖИЛЛАХ ЦАГ', description: 'Даваа- Баасан - 09:00 - 00:00am' },
     { title: 'ХОЛБОО БАРИХ ', description: '99769901, 88819900' },
     { title: 'ХАЯГ', description: 'МОНКОН БАРИЛГА 1-Р ДАВХАР' },
   ];
