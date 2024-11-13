@@ -60,9 +60,9 @@ export const AttachmentForm: React.FC<AttachmentFormProps> = ({ initialData }) =
     }
   }
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
-      <div className="font-medium flex items-center justify-between">
-        Курсын хавсралтууд
+    <div className="mt-6 border shadow-xl rounded-md p-4">
+      <div className="prose flex items-center justify-between">
+        <h4>Курсын хавсралтууд</h4>
         <button className="btn btn-ghost hover:scale-105 transition" onClick={toggleEdit}>
           {isEditing && <>Болих</>}
           {!isEditing && (
@@ -75,7 +75,7 @@ export const AttachmentForm: React.FC<AttachmentFormProps> = ({ initialData }) =
       </div>
       {!isEditing && (
         <>
-          {(initialData.attachments ?? []).length === 0 && <p className="text-sm mt-2 text-slate-500 italic">Хавсралт одоогоор алга байна</p>}
+          {(initialData.attachments ?? []).length === 0 && <h4 className="text-sm mt-2 text-slate-500 italic">Хавсралт одоогоор алга байна</h4>}
           {(initialData.attachments ?? []).length > 0 && (
             <div className="space-y-2">
               {(initialData.attachments ?? []).map((attachment) => (

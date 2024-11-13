@@ -29,7 +29,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
   const { status, message = 'Таны барааны дуудлага худалдаа дууслаа', userId } = await request.json();
 
   try {
-    await notifCollection.insertOne({ message, isSeen: false, productId: new ObjectId(params.id), userId });
+    await notifCollection.insertOne({ message, isSeen: false, createdAt: new Date(), productId: new ObjectId(params.id), userId });
     const data = await collection.updateOne({ _id: new ObjectId(params.id) }, { $set: { status: status } });
     const oneProduct = await collection.findOne({ _id: new ObjectId(params.id) });
     if (oneProduct?.status == 'Accept') {

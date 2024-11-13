@@ -43,7 +43,6 @@ export async function POST(request: Request) {
       visits: 0,
       createdAt: date.toDateString(),
       updatedAt: date.toDateString(),
-      comment,
     });
 
     return new Response(JSON.stringify({ res: 'Succeed' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
