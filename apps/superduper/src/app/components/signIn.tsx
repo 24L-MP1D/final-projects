@@ -1,6 +1,5 @@
 'use client';
 
-
 import { Checkbox } from '@/components/ui/Checkbox';
 import { oauth_github_client, oauth_google_client } from 'config';
 
@@ -49,14 +48,12 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
         });
 
         if (response.status === 201) {
-
           toast('Signed in Successfully');
           window.location.href = '/client';
         } else {
           toast('Sign-In Unsuccessful');
 
           console.log('success');
-
 
           toast.custom(() => (
             <div className={`bg-green-50 shadow-lg rounded-lg p-3 border border-green-600 flex items-center`}>
@@ -65,20 +62,7 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
             </div>
           ));
 
-          setLoading(false);
-          window.location.href = '/client';
-        } else {
-          console.log('error');
-
-          toast.custom(() => (
-            <div className={`bg-red-50 shadow-lg rounded-lg p-3 border border-red-600 flex items-center`}>
-              <div className="text-3xl">❗</div>
-              <div>Амжилтгүй нэвтэрлээ.</div>
-            </div>
-          ));
-
           setDialogOpen(false);
-
         }
         setLoading(false);
         setDialogOpen(false);
@@ -115,7 +99,6 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
     window.location.href = url.toString();
   }
 
-
   async function Submit(values: FormikValues) {
     setLoading(true);
     try {
@@ -141,7 +124,6 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
     }
   }
 
-
   return (
     <Dialog open={dialogOpen}>
       <DialogContent className="sm:max-w-[425px] rounded-lg shadow-lg bg-white">
@@ -152,7 +134,6 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
               <X onClick={() => setDialogOpen(false)} className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" />
             </Link>
           </DialogTitle>
-
 
           <div className="h-[2px] bg-slate-200 my-3"></div>
           <div className="flex justify-between items-center mb-3">
@@ -172,7 +153,6 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
             <Button className="w-full h-[40px] border bg-white text-gray-700 flex items-center justify-center rounded-lg hover:bg-gray-100 transition duration-200" onClick={SignInbyGoogle}>
               <FcGoogle className="h-5 w-5" />
               <span>Google</span>
-
             </Button>
           </div>
           <div className="flex items-center gap-2 py-3">
@@ -180,7 +160,6 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
             <p className="text-gray-500">эсвэл</p>
             <div className="h-[1px] flex-1 bg-slate-300"></div>
           </div>
-
 
           <div className="mb-3">
             <Input
@@ -209,7 +188,6 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
               <p className="text-gray-600">Намайг санах</p>
             </div>
             <Link className="text-blue-500 hover:underline" href="/">
-
               Нууц үгээ мартсан уу?
             </Link>
           </div>
@@ -230,7 +208,6 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
     </Dialog>
   );
 };
-
 
 export function SonnerDemo() {
   return (
