@@ -1,6 +1,5 @@
 'use client';
 
-import { Checkbox } from '@/components/ui/Checkbox';
 import { useFormik } from 'formik';
 import { Github, X } from 'lucide-react';
 
@@ -131,10 +130,6 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
               <X onClick={() => setDialogOpen(false)} className="h-4 w-4" />
             </Link>
           </DialogTitle>
-
-          {/* <button onClick={() => setDialogOpen(false)} className="text-gray-500 hover:text-gray-700">
-            ✕
-          </button> */}
           <div className="h-[2px] bg-slate-300 my-3"></div>
           <div className="flex justify-between">
             <p className="font-bold">Эргээд тавтай морил!</p>
@@ -161,19 +156,16 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
 
           <div>
             <Input name="email" placeholder="И-мэйл" value={formik.values.email} onChange={formik.handleChange} />
-            {<span className="text-red-600">{formik.errors.email}</span>}
+            <div className="mt-2 ml-2">{formik.errors.email && formik.touched.email && <span className="text-red-600">{formik.errors.email}</span>}</div>
           </div>
-          <div className="flex my-3">
+          <div className="my-3">
             <Input name="password" placeholder="Нууц үг" value={formik.values.password} onChange={formik.handleChange} />
-            {<span className="text-red-600">{formik.errors.password}</span>}
+            <div className="mt-2 ml-2">{formik.errors.password && formik.touched.password && <span className="text-red-600">{formik.errors.password}</span>}</div>
           </div>
           <div className="flex justify-between m-3">
-            <div className="flex items-center gap-3">
-              <Checkbox />
-              <p>Намайг санах</p>
-            </div>
+            <div className="flex items-center gap-3"></div>
 
-            <Link className="text-blue-500" href="/">
+            <Link className="text-blue-500" href="/client/forgotten-email">
               Нууц үгээ мартсан уу?
             </Link>
           </div>
