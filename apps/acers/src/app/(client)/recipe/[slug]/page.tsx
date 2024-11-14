@@ -75,25 +75,28 @@ export default function RecipeComponent() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
   const [freshRecipes, setFreshRecipes] = useState<Recipe[]>([]);
 
+
+  const fetchRecipe = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/api/recipe/${slug}`);
+      if (response.data.recipe) {
+        setRecipe(response.data.recipe);
+        setComments(response.data.comments);
+      } else {
+        setErrorMessage('Recipe not found');
+      }
+    } catch (error) {
+      console.error('Error fetching recipe:', error);
+      setErrorMessage('Failed to fetch recipe.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (slug) {
-      const fetchRecipe = async () => {
-        try {
-          setLoading(true);
-          const response = await axios.get(`/api/recipe/${slug}`);
-          if (response.data.recipe) {
-            setRecipe(response.data.recipe);
-            setComments(response.data.comments);
-          } else {
-            setErrorMessage('Recipe not found');
-          }
-        } catch (error) {
-          console.error('Error fetching recipe:', error);
-          setErrorMessage('Failed to fetch recipe.');
-        } finally {
-          setLoading(false);
-        }
-      };
+      
       fetchRecipe();
     }
   }, [slug]);
@@ -125,16 +128,21 @@ export default function RecipeComponent() {
     if (!newComment.trim()) return;
 
     try {
+      const token = localStorage.getItem('authtoken')
       const response = await axios.post(`/api/recipe/${slug}/comment`, {
         comment: newComment,
-      });
+        recipeTitle: slug
+      }, {headers: {authtoken : token}});
       if (response.data.success) {
         setComments((prev) => [...prev, response.data.comment]);
         setNewComment('');
       }
+      fetch
     } catch (error) {
       console.error('Failed to submit comment:', error);
     }
+
+    fetchRecipe();
   };
 
   return (
