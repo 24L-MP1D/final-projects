@@ -75,29 +75,11 @@ export default function HeaderNavigationMenu() {
                     <li>Шувууны мах</li>
                   </ul>
                   <ul className="flex flex-col gap-y-4 w-[184px]">
-                    <p className="font-bold">VEGETABLE & FRUITS</p>
-                    <li>Zhucchini</li>
-                    <li>Sweet Potato</li>
-                    <li>Egg Plant</li>
-                    <li>Cabbage</li>
-                    <li>Asparagus</li>
-                    <li>Tomato</li>
-                  </ul>
-                  <ul className="flex flex-col gap-y-4 w-[200px]">
-                    <p className="font-bold">PLANT-BASED PROTEINS</p>
-                    <li>Tofu</li>
-                    <li>Lentil</li>
-                    <li>Chickpea</li>
-                    <li>Bean</li>
-                  </ul>
-                  <ul className="flex flex-col gap-y-4 w-[170px]">
-                    <p className="font-bold">RICE, GRAINS, PASTA</p>
-                    <li>Pasta</li>
-                    <li>Noodles</li>
-                    <li>Rice</li>
-                    <li>Quinoa</li>
-                    <li>Bread</li>
-                    <li>Couscous</li>
+                    <p className="font-bold">Дэглэм</p>
+                    <li>Салат</li>
+                    <li>Уураглаг хоол</li>
+                    <li>Дэглэмийн хоол</li>
+                    <li>Сүүн бүтээгдэхүүн</li>
                   </ul>
                 </div>
               </NavigationMenuLink>
