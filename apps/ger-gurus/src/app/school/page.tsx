@@ -1,7 +1,8 @@
 'use client';
-
 import { useAuthStore } from '@/components/components/useAuthStore';
 import FlowText from '@/components/FlowText';
+import FooterOfSchool from '@/components/footerOfSchool';
+import { LoginByDialog } from '@/components/LoginByDialog';
 import LogoGallery from '@/components/LogoGallery';
 import TeacherWebSecondLayout from '@/components/teacherWebSecondLayout';
 import TeacherWebThirdLayout from '@/components/teacherWebThirdLayout';
@@ -10,8 +11,7 @@ import { fetcher } from '@/lib/fetcher';
 import { motion } from 'framer-motion';
 import { CircleUser } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const globalStyles = `
   @keyframes floatBubbles {
@@ -49,9 +49,11 @@ interface CurrentSchool {
 export default function Page() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const currentUser = useAuthStore((state) => state.currentUser);
+  const [open, setOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [url, setUrl] = useState<string | null>(null);
   const [theme, setTheme] = useState<string>('light');
+  const [domain, setDomain] = useState<string>();
+  const inputRef = useRef<HTMLDivElement>(null);
   const [currentSchool, setCurrentSchool] = useState<CurrentSchool>();
 
   console.log({ currentSchool });
@@ -67,8 +69,10 @@ export default function Page() {
 
   useEffect(() => {
     getCurrentSchool();
-  }, []);
-  useEffect(() => {
+    const hostname = window.location.hostname;
+    setDomain(hostname);
+    const currentHostname = hostname === 'localhost' ? process.env.CURRENT_HOST : hostname;
+    console.log(currentHostname);
     const currentTheme = document.documentElement.getAttribute('data-theme');
     setTheme(currentTheme || 'light');
 
@@ -110,10 +114,11 @@ export default function Page() {
     <main className="max-w-[1600px] mx-auto relative bg-base-100">
       <div className="flex justify-between items-center py-5 px-10">
         {/* Logo */}
+        {/* {loading && <div>loading...</div>}
+        {domain && !loading && <div>{domain} -н сургууль</div>} */}
         <div className="flex items-center w-60 h-12">
           <Image priority={true} src="/verse.png" width={99} height={29.3} alt="Logo" />
         </div>
-
         {/* Mobile Hamburger Icon */}
         <div className="md:hidden flex items-center">
           <button onClick={toggleMenu} className="text-green-950" aria-expanded={isMenuOpen ? 'true' : 'false'} aria-label="Toggle navigation menu">
@@ -122,15 +127,14 @@ export default function Page() {
             </svg>
           </button>
         </div>
-
         {/* Navigation Menu */}
         <ul className={`md:flex gap-6 text-base text-green-950 items-center font-bold ${isMenuOpen ? 'flex' : 'hidden'} md:flex`}>
           <li className="hover:text-green-600 cursor-pointer transition-all duration-200">ХИЧЭЭЛ</li>
           <li className="hover:text-green-600 cursor-pointer transition-all duration-200">БАГШИЙН ТУХАЙ</li>
         </ul>
-
         {/* Buttons */}
         <div className="flex gap-3 relative">
+          <LoginByDialog onOpen={open} setOpen={setOpen} />
           {currentUser ? (
             <div className="flex items-center">
               <CircleUser size={30} onClick={toggleDropdown} className="cursor-pointer" />
@@ -138,18 +142,17 @@ export default function Page() {
                 <div className="absolute top-full mt-2 right-0 w-48 bg-white border border-gray-300 rounded shadow-lg">
                   <ul className="flex flex-col">
                     <li onClick={deleteCookie} className="p-2 hover:bg-gray-100 cursor-pointer">
-                      Logout
+                      Гарах
                     </li>
                   </ul>
                 </div>
               )}
             </div>
           ) : (
-            <Link href={`https://dash.verse.mn/login?url=${url}`}>
-              <button className="text-black bg-white hover:bg-gray-200 border border-black hover:border-slate-500 btn">НЭВТРЭХ</button>
-            </Link>
+            <button onClick={() => setOpen(true)} className="text-black bg-white hover:bg-gray-200 border border-black hover:border-slate-500 btn">
+              НЭВТРЭХ
+            </button>
           )}
-          <button className={`bg-${theme === 'dark' ? 'green-600' : 'green-500'} hover:bg-${theme === 'dark' ? 'green-700' : 'green-600'} text-white bg-green-600 btn`}>ЗАХИАЛАХ</button>
         </div>
       </div>
 
@@ -158,7 +161,7 @@ export default function Page() {
 
         {/* Floating Bubbles */}
         <div className="absolute top-24 left-0 w-full h-[500px] mt-[-145px] overflow-hidden">
-          <div style={{ ...bubbleStyle(3, 0), width: '120px', height: '120px', top: '10%', left: '15%' }}></div>
+          <div style={{ ...bubbleStyle(3, 0), width: '120px', height: '120px', top: '20%', left: '0%' }}></div>
           <div style={{ ...bubbleStyle(4, 1), width: '100px', height: '100px', top: '25%', left: '60%' }}></div>
           <div style={{ ...bubbleStyle(5, 2), width: '90px', height: '90px', top: '80%', left: '30%' }}></div>
           <div style={{ ...bubbleStyle(3, 3), width: '80px', height: '80px', top: '70%', left: '75%' }}></div>
@@ -205,12 +208,13 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="mt-40 border-green-300 border" />
+        <div className="mt-40 border-green-500 border-t" />
       </div>
       <TeacherWebThirdLayout />
       <FlowText />
       <TeacherWebSecondLayout />
       <LogoGallery />
+      <FooterOfSchool />
     </main>
   );
 }

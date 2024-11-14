@@ -130,7 +130,6 @@ export default function Header() {
     }
     return shortName;
   };
-
   return (
     <div onClick={() => showNotif && setShowNotif(false)} className=" pt-5 flex items-center max-w-[1280px] ">
       <div className="bg-[#1F1F1FF2] py-4 px-6  max-w-[1280px] rounded-2xl flex-1">
