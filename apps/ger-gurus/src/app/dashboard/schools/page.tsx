@@ -19,5 +19,5 @@ export default function Page() {
     getSchools();
   }, []);
 
-  return <div> Schools that you own</div>;
+  return <main> Schools that you own</main>;
 }

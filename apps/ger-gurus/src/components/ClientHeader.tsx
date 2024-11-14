@@ -4,23 +4,22 @@ import { useEffect, useState } from 'react';
 import { BsHandIndexThumbFill } from 'react-icons/bs';
 import { FaPlay } from 'react-icons/fa';
 import MagneticPlayButton from './ClientMagicCursor';
-import { useAuthStore } from './components/useAuthStore';
 
 export default function ClientHeader() {
-  const currentUser = useAuthStore((state) => state.currentUser);
+  // const currentUser = useAuthStore((state) => state.currentUser);
 
-  function deleteCookie() {
-    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; domain=localhost; Secure; SameSite=Lax;';
-    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; domain=localhost; Secure; SameSite=Lax';
-    window.location.reload();
-  }
-  const [url, setUrl] = useState<string | null>(null);
+  // function deleteCookie() {
+  //   document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax;';
+  //   document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax';
+  //   window.location.reload();
+  // }
+  // const [url, setUrl] = useState('');
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setUrl(window.location.origin);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     setUrl(window.location.origin);
+  //   }
+  // }, []);
   const [scrollPos, setScrollPos] = useState(0);
 
   useEffect(() => {

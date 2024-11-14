@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     const collection = DB.collection('users');
     const body = await request.json();
     const { email, password } = body;
-    const user = await collection.findOne({ email });
+    const user = await collection.findOne({ email, role: 'admin' });
     if (!user) return Response.json({ status: 404 });
     const isSame = await bcrypt.compare(String(password), user.password);
 
