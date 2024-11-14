@@ -72,7 +72,7 @@ const AvailableContent = () => {
   if (!token) return;
 
   return (
-    <div className="border-t-2 border-[#222222] max-w-[1160px] w-full m-auto flex flex-col gap-4">
+    <div className="border-t-2 border-[#222222] max-w-[1110px] w-full m-auto flex flex-col gap-4">
       <span className="text-[23px]">{role} хэрэглэгчдэд </span>
       <HandyCarousel data={data} name="available" />
     </div>
@@ -181,7 +181,7 @@ const RecipeOfTheDay = () => {
         <img
           src={img}
           className={`max-w-auto aspect-video sm:w-[710px] object-cover`}
-          onClick={() => (window.location.href = `/recipe/${formatedTitle}`)} // Use lowercase for navigation
+          onClick={() => (window.location.href = `/recipe/${formatedTitle}`)}
         />
         <SaveButton id={id} className="absolute right-6 bottom-6" />
       </div>

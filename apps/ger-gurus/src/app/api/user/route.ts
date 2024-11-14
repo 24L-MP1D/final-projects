@@ -36,11 +36,11 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { name, email, password, role } = body;
+  const { name, email, password } = body;
   const lowerCaseEmail = email.toLowerCase();
 
   const createdAt = new Date()
-  const user = await db.collection('users').findOne({ email })
+  const user = await db.collection('users').findOne({ email: lowerCaseEmail })
 
   if (user) return new Response(null, { status: 401 })
   const hashedPassword = await bcrypt.hash(String(password), Number(process.env.SALT_SECRET))
@@ -48,7 +48,6 @@ export async function POST(request: Request) {
     name,
     email: lowerCaseEmail,
     password: hashedPassword,
-    role,
     createdAt
   });
   const authtoken = jwt.sign(
@@ -56,5 +55,7 @@ export async function POST(request: Request) {
     ACCESS_TOKEN_SECRET,
     { expiresIn: "24h" }
   );
-  return Response.json(authtoken, { status: 200 });
+  return new Response(JSON.stringify({ token: authtoken, userId: result.insertedId }), {
+    status: 200,
+  });
 }

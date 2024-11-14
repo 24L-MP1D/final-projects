@@ -5,8 +5,8 @@ export function middleware(request: NextRequest) {
   const hostname = request.headers.get('host');
   const pathname = request.nextUrl.pathname;
   const search = request.nextUrl.search;
-
   const currentHost = hostname === 'localhost:3000' ? process.env.CURRENT_HOST : hostname;
+  console.log(currentHost)
 
   let domain = '';
 

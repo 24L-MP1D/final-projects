@@ -32,7 +32,7 @@ export function Categories() {
   }, []);
 
   return (
-    <div className={`${value?.showCategory ? 'bottom-0 top-[10%]' : ''} fixed -bottom-full overflow-y-scroll transform h-full pb-28 bg-white left-0 z-20 right-0 transition-all duration-500`}>
+    <div className={`${value?.showCategory ? 'bottom-0 top-[10%]' : '-bottom-full top-[100%]'} fixed overflow-y-scroll transition-[10s] h-full pb-28 bg-white left-0 z-20 right-0`}>
       <div className="max-w-[1280px] mx-auto py-8 text-[#000000]">
         <div className="flex justify-between items-center">
           <div className="text-3xl font-semibold tracking-wide text-gray-900">Ангилалууд</div>
@@ -41,7 +41,6 @@ export function Categories() {
 
         <div className="grid grid-cols-3 gap-6 mt-5 text-xl">
           {category.map((category, index) => (
-
             <Link
               href={`/client/filterbycategories/${category._id}`}
               style={{ backgroundColor: colors[index % colors.length] }}
@@ -61,7 +60,6 @@ export function Categories() {
                   height={500}
                   className="w-full h-full rounded-full object-cover transition-transform duration-300 transform hover:scale-105"
                 />
-
               </div>
             </Link>
           ))}

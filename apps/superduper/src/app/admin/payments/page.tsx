@@ -9,15 +9,15 @@ import { Context } from '../layout';
 const approvedSellRequest = [
   {
     ObjectId: '1',
-    category: 'Art',
+    category: 'Урлаг ба цуглуулга',
   },
   {
     ObjectId: '2',
-    category: 'Jewellery',
+    category: 'Үнэт эдлэл ба цаг',
   },
   {
     ObjectId: '3',
-    category: 'Car',
+    category: 'Aвтомашинууд',
   },
 ];
 
@@ -62,7 +62,7 @@ export default function TableDemo() {
             <div className="container mx-auto flex">
               <div>
                 <Button variant="outline" onClick={() => (window.location.href = 'http://localhost:3000/admin')}>
-                Хаах
+                  Хаах
                 </Button>
               </div>
             </div>

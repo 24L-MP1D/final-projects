@@ -34,13 +34,14 @@ export default function FlowText() {
             ref={(el) => {
               linesRef.current[index] = el;
             }}
+            contentEditable={true}
             className={`text-stroke ${colors[index] || 'text-[#2E7D32]'} transition-colors duration-500 text-[74px] font-black leading-none`}
           >
             {line}
           </p>
         ))}
       </div>
-      <div className="mt-44 border-green-300 border" />
+      <div className="mt-44 border-green-500 border-t" />
     </div>
   );
 }

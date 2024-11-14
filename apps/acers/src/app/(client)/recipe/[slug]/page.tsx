@@ -67,12 +67,13 @@ export default function RecipeComponent() {
   const [user, setUser] = useState<Partial<User>>({ firstName: '' });
   const [ads, setAds] = useState<Ads>({});
   const [adsHover, setAdsHover] = useState<number>(0);
-  const [recipe, setRecipe] = useState<Recipe>({});
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
-  const [newComment, setNewComment] = useState<Ably.Message[]>([]);
+  const [newComment, setNewComment] = useState<string>('');
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const [freshRecipes, setFreshRecipes] = useState<Recipe[]>([]);
 
   useEffect(() => {
     if (slug) {
@@ -98,26 +99,30 @@ export default function RecipeComponent() {
   }, [slug]);
 
   useEffect(() => {
-    if (slug && typeof slug === 'string') {
-      const fetchRecipe = async () => {
-        try {
-          const response = await axios.get(`/api/recipe/${slug}`);
-          setRecipe(response.data.recipe);
-          setComments(response.data.comments);
-        } catch (error) {
-          console.error('Error fetching recipe:', error);
+    const fetchFreshRecipes = async () => {
+      try {
+        const response = await axios.post('/api/recipe/getRecipe');
+        console.log('Fresh recipes response:', response.data);
+
+        if (response.data && response.data.hiddenData) {
+          const sortedRecipes = response.data.hiddenData.sort((a: Recipe, b: Recipe) => {
+            const dateA = new Date(a.createdAt).getTime();
+            const dateB = new Date(b.createdAt).getTime();
+            return dateB - dateA;
+          });
+          setFreshRecipes(sortedRecipes.slice(0, 2));
+        } else {
+          console.error('No fresh recipes found');
         }
-      };
-      fetchRecipe();
-    }
-  }, [slug]);
+      } catch (error) {
+        console.error('Error fetching fresh recipes:', error);
+      }
+    };
+    fetchFreshRecipes();
+  }, []);
 
   const handleCommentSubmit = async () => {
     if (!newComment.trim()) return;
-
-    useConnectionStateListener('connected', () => {
-      console.log('Connected to Ably');
-    });
 
     try {
       const response = await axios.post(`/api/recipe/${slug}/comment`, {
@@ -133,7 +138,7 @@ export default function RecipeComponent() {
   };
 
   return (
-    <div className="w-[1110px] m-auto flex flex-col gap-6 font-serif">
+    <div className="xl:max-w-[1110px] w-full max-w-[80%] m-auto flex flex-col gap-6 font-serif ">
       {loading ? (
         <p>Loading recipe...</p>
       ) : errorMessage ? (
@@ -154,8 +159,15 @@ export default function RecipeComponent() {
           <div className="flex">
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-3">
-                <div className="bg-gray-300 w-[50px] h-[50px] rounded-full"></div>
-                <p>{user.firstName || 'Anonymous'}</p>
+                {recipe?.tags && recipe.tags.length > 0 ? (
+                  recipe?.tags.map((tag, index) => (
+                    <div key={index} className="bg-gray-300 rounded-full px-2 py-1 ml-3">
+                      {tag}
+                    </div>
+                  ))
+                ) : (
+                  <p>No tags available.</p>
+                )}
               </div>
               <div className="flex gap-2">
                 <Calendar />
@@ -165,18 +177,14 @@ export default function RecipeComponent() {
                 <MessageSquare />
                 {comments.length}
               </div>
-              <Stars
-                size={15}
-                //  rating={rating} voteNum={ratingNum}
-                //  id={id}
-              />
+              <Stars size={15} />
             </div>
           </div>
           <div className="h-[1px] w-[1110px] bg-gray-200"></div>
           <p className="font-semibold text-xl">{recipe?.description}</p>
           <div className="rounded">
             {recipe?.images ? (
-              recipe.images.map((image, index) => <img key={index} src={image} alt={`Recipe Image ${index + 1}`} className="w-[1110px] h-[624px] object-cover rounded" />)
+              recipe.images.map((image, index) => <img key={index} src={image} alt={`Recipe Image ${index + 1}`} className="w-[1110px]  object-cover rounded" />)
             ) : (
               <p>No images available</p>
             )}
@@ -191,11 +199,7 @@ export default function RecipeComponent() {
                   </div>
                   <div>
                     <p className="font-medium text-slate-600">SERVINGS</p>
-                    <div className="flex">
-                      {recipe?.servings} People
-                      {/* <SquarePen /> */}
-                    </div>
-                    {/* <Printer /> */}
+                    <div className="flex">{recipe?.servings} People</div>
                   </div>
                 </div>
                 <div>
@@ -251,26 +255,31 @@ export default function RecipeComponent() {
               </div>
               <div>
                 <h4 className="text-lg font-semibold p-3">Fresh Recipes</h4>
-                {[...Array(2)].map((_, index) => (
-                  <div key={index} className="flex mb-5 gap-3">
-                    <div className="w-[150px] h-[100px] bg-gray-200"></div>
-                    <div>
-                      <Stars
-                        size={15}
-                        //  rating={rating} voteNum={ratingNum}
-                        //id={id}
-                      />
-                      <div>Rating</div>
-                      <p>Spinach and Cheese Pasta</p>
+                {freshRecipes.length > 0 ? (
+                  freshRecipes.map((recipe, index) => (
+                    <div key={index} className="flex mb-5 gap-3">
+                      <div className="flex gap-2">
+                        {recipe.img ? (
+                          <img src={recipe.img} alt={`Fresh Recipe Image ${index + 1}`} className="w-[150px] h-[100px] object-cover rounded" />
+                        ) : (
+                          <div className="w-[150px] h-[100px] bg-gray-300 rounded"></div>
+                        )}
+                      </div>
+
+                      <div>
+                        <Stars size={15} />
+                        <div>{recipe.title}</div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <p>No fresh recipes available.</p>
+                )}
               </div>
               <Advertisement />
             </div>
           </div>
           <p>Already made this?</p>
-        
           <div className="h-3 bg-orange-400"></div>
           <div>
             <p>{comments.length} Comments</p>
@@ -326,20 +335,9 @@ export default function RecipeComponent() {
             </div>
           </div>
           <p>You might also like</p>
-          <div></div>
+
         </>
       )}
     </div>
   );
 }
-
-
-
-enum Role {
-  GOLD = 'gold',
-  SILVER = 'silver',
-  BRONZE = 'bronze',
-  FREE = 'free',
-  admin = 'admin',
-}
-

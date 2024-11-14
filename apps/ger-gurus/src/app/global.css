@@ -89,6 +89,40 @@
 }
 
 @layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+    
+}
+@layer base {
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+  .loader {
+    width: 36px;
+    height: 36px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid #E5E5E5;
+    border-right-color: green;
+    animation: l2 1s infinite linear;
+  }
+  @keyframes l2 {to{transform: rotate(1turn)}}
+.ql-container{
+    font-size: 18px !important
+}
+img {
+    width: auto; /* or set a max-width */
+    height: auto; /* This maintains the aspect ratio */
+    max-width: 100%; /* Ensures responsiveness */
   * {
     @apply border-border;
   }
@@ -100,11 +134,6 @@
 }
 .ql-container {
   font-size: 18px !important;
-}
-img {
-  width: auto; /* or set a max-width */
-  height: auto; /* This maintains the aspect ratio */
-  max-width: 100%; /* Ensures responsiveness */
 }
 
 @import '~@uploadthing/react/styles.css';
