@@ -173,7 +173,7 @@ function TableBook() {
             onClick={handleSubmit}
             disabled={!selectedTime || !selectedTable || !reservedSeat}
           >
-            Continue
+            Үргэлжлүүлэх
           </Button>
         </div>
       </div>
