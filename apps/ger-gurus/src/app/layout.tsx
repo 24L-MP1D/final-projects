@@ -1,7 +1,6 @@
 import { AuthProvider } from '@/components/components/AuthProvider';
 import './global.css';
 
-import { LoginByDialog } from '@/components/LoginByDialog';
 import { ToastProvider } from '@/components/providers/toaster-provider';
 
 // const myFont = localFont({
@@ -31,7 +30,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <AuthProvider>
           <ToastProvider />
-          <LoginByDialog />
           {children}
         </AuthProvider>
       </body>

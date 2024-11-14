@@ -1,7 +1,5 @@
 'use client';
 
-import { Checkbox } from '@/components/ui/Checkbox';
-
 import { oauth_github_client, oauth_google_client } from 'config';
 
 import { useFormik } from 'formik';
@@ -9,19 +7,20 @@ import { Github, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { FaEye, FaRegEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { Toaster, toast } from 'sonner';
 import * as yup from 'yup';
 import { Dialog, DialogContent, DialogFooter, DialogTitle } from './ui/Dialog';
 import { Input } from './ui/Input';
 import { Button } from './ui/button';
-
 interface FormikValues {
   email: string;
   password: string;
 }
 
 export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(true);
   const initialValues = { email: '', password: '' };
@@ -49,7 +48,7 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
         });
 
         if (response.status === 201) {
-           toast.custom(() => (
+          toast.custom(() => (
             <div className={`bg-green-50 shadow-lg rounded-lg p-3 border border-green-600 flex items-center`}>
               <div className="text-3xl">✅</div>
               <div>Амжилттай нэвтэрлээ.</div>
@@ -57,18 +56,17 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
           ));
           window.location.href = '/client';
         } else {
-           toast.custom(() => (
-          <div className={`bg-red-50 shadow-lg rounded-lg p-3 border border-red-600 flex items-center`}>
-            <div className="text-3xl">❗</div>
-            <div>Бүртгэл амжилтгүй.</div>
-          </div>
-        ));
+          toast.custom(() => (
+            <div className={`bg-red-50 shadow-lg rounded-lg p-3 border border-red-600 flex items-center`}>
+              <div className="text-3xl">❗</div>
+              <div>Бүртгэл амжилтгүй.</div>
+            </div>
+          ));
         }
         setLoading(false);
         setDialogOpen(false);
       } catch (err) {
         console.error('Sign-in error');
-     
       }
     },
     validationSchema,
@@ -169,32 +167,29 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
           <div className="mb-3">
             <Input
               name="email"
-              placeholder="E-mail"
+              placeholder="Имэйл"
               value={formik.values.email}
               onChange={formik.handleChange}
               className="border rounded-lg p-2 w-full focus:border-blue-500 focus:ring-blue-500 transition duration-200"
             />
             {formik.errors.email && <span className="text-red-600 text-sm">{formik.errors.email}</span>}
           </div>
-          <div className="mb-3">
+          <div className="mb-3 relative flex items-center">
             <Input
               name="password"
-              type="password"
-              placeholder="Password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Нууц үг"
               value={formik.values.password}
               onChange={formik.handleChange}
               className="border rounded-lg p-2 w-full focus:border-blue-500 focus:ring-blue-500 transition duration-200"
             />
-            {formik.errors.password && <span className="text-red-600 text-sm">{formik.errors.password}</span>}
+            <div className="absolute right-5 hover:cursor-pointer">
+              {formik.values.password && showPassword ? <FaEye onClick={() => setShowPassword(false)} /> : <FaRegEyeSlash onClick={() => setShowPassword(true)} />}
+            </div>
           </div>
+          {formik.errors.password && <span className="text-red-600 text-sm">{formik.errors.password}</span>}
           <div className="flex justify-between items-center mb-4">
-
-
-            <Link className="text-blue-500 hover:underline ml-[100px]" href="/">
-
-            
-           
-
+            <Link className="text-blue-500 hover:underline ml-[100px]" href="/client/forgotten-email">
               Нууц үгээ мартсан уу?
             </Link>
           </div>
