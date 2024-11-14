@@ -147,7 +147,6 @@ export default function Index() {
                           <div className="text-white text-sm">{value?.products?.[progress]?.category}</div>
                         </div>
                       </div>
-
                       <div className="flex w-[300px] gap-2 items-center">
                         {Array.from({ length: swiperProducts.length })
                           .slice(0, 6)
@@ -231,6 +230,7 @@ export default function Index() {
           </Swiper>
         </div>
       </div>
+
       {value?.products.length && (
         <div>
           <div className="grid grid-cols-3 gap-10 mt-[30px] w-full">
@@ -255,6 +255,7 @@ export default function Index() {
           )}
           {value.showCategory && <div className="fixed inset-0 bg-slate-500 opacity-50"></div>}
           {value.showCategory && <Categories />}
+
         </div>
       )}
     </div>

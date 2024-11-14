@@ -1,6 +1,7 @@
 'use client';
 import { LikeButton } from '@/components/heartLike/heartLikeButton';
 import { ProductType } from '@/components/productType';
+import { formatAmount } from '@/utils';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -60,7 +61,7 @@ export function ProductItem({ product, favourite, onClickFavourite }: { product:
           </CardItem>
           <div className="flex justify-between items-center mt-5">
             <CardItem translateZ={20} href="https://twitter.com/mannupaaji" target="__blank" className="py-2 rounded-xl text-sm font-normal dark:text-white">
-              <div>Эхлэх үнэ:{product.startBid}</div>
+              <div>Эхлэх үнэ: {formatAmount(product.startBid)}₮</div>
             </CardItem>
             <button className="text-[12px] bg-slate-200 text-[#3a7bd5] p-2 rounded-xl ">Дуудлага худалдаанд оролцох</button>
           </div>

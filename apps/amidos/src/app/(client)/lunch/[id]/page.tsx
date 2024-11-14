@@ -12,21 +12,17 @@ export default function Dialogs() {
   const [oneFoodId, setOneFoodId] = useQueryState('id');
   const [loading, setLoading] = useState(true);
   const [loadingbutton, setLoadingbutton] = useState(false);
-
   const [special, setSpecial] = useState<Food[]>([]);
-
   const searchParams = useSearchParams();
   const searchid = searchParams.get('id');
-
+  const [selectedCount, setSelectedCount] = useState<number>(1);
+  const [selectedFood, setSelectedFood] = useState<Food | null>(null);
+  const [open, setOpen] = useState(false);
   const specialdishes = [
     { url: '/carbonara.jpg', price: 21000, name: 'Carbonara' },
     { url: '/pasta.jpg', price: 15000, name: 'Pasta' },
     { url: '/pizza.jpeg', price: 25000, name: 'Pizza' },
   ];
-
-  const [selectedCount, setSelectedCount] = useState<number>(1);
-  const [selectedFood, setSelectedFood] = useState<Food | null>(null);
-  const [open, setOpen] = useState(false);
 
   function close() {
     setOneFoodId(null);
