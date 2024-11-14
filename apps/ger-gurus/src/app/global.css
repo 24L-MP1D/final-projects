@@ -97,7 +97,25 @@
         @apply bg-background text-foreground;
         font-feature-settings: "rlig" 1, "calt" 1;
     }
+    
 }
+@layer base {
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+  .loader {
+    width: 36px;
+    height: 36px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid #E5E5E5;
+    border-right-color: green;
+    animation: l2 1s infinite linear;
+  }
+  @keyframes l2 {to{transform: rotate(1turn)}}
 .ql-container{
     font-size: 18px !important
 }

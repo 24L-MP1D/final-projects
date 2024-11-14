@@ -42,7 +42,7 @@ const bubbleStyle = (duration: number = 5, delay: number = 0): React.CSSProperti
   opacity: 0.5,
   zIndex: -1,
   pointerEvents: 'none',
-  animation: `floatBubbles ${duration}s ease-in-out infinite ${delay}s`,  
+  animation: `floatBubbles ${duration}s ease-in-out infinite ${delay}s`,
   boxShadow: '0 0 15px 10px rgba(52, 211, 153, 0.5)',
 });
 
@@ -53,7 +53,7 @@ const TeacherWebFirstLayout: React.FC = () => {
       <style>{globalStyles}</style>
 
       {/* Header Component */}
-      <TeacherWebFirstLayoutHeader/>
+      <TeacherWebFirstLayoutHeader />
 
       {/* Floating Bubbles */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
@@ -82,7 +82,12 @@ const TeacherWebFirstLayout: React.FC = () => {
         </div>
 
         <div className="w-[471px] h-16 mx-auto text-center text-green-950 mt-8">
-          <motion.p className="text-base mt-6" initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 4, ease: "easeInOut", delay: 0.6, type: "spring", stiffness: 250, damping: 20 }}>
+          <motion.p
+            className="text-base mt-6"
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 4, ease: 'easeInOut', delay: 0.6, type: 'spring', stiffness: 250, damping: 20 }}
+          >
             Pay suppliers faster, manage invoices, and extend cash for longer. Get access to funding without giving up equity, so that you can focus on growing your company.
           </motion.p>
 
@@ -95,7 +100,7 @@ const TeacherWebFirstLayout: React.FC = () => {
       </div>
 
       {/* Horizontal Rule */}
-      <div className='mt-40 border-green-950' />
+      <div className="mt-40 border-green-950" />
     </div>
   );
 };

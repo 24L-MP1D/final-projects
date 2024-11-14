@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
       break;
     case 'dashboard.verse.mn':
     case 'dash.verse.mn':
-      domain = 'school';
+      domain = 'dashboard';
       break;
     default:
       domain = 'client';
