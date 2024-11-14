@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const search = request.nextUrl.search;
   const currentHost = hostname === 'localhost:3000' ? process.env.CURRENT_HOST : hostname;
-  console.log(currentHost)
+  console.log(currentHost);
 
   let domain = '';
 
@@ -20,7 +20,7 @@ export function middleware(request: NextRequest) {
       domain = 'dashboard';
       break;
     default:
-      domain = 'school';
+      domain = 'dashboard';
   }
 
   return NextResponse.rewrite(new URL(`/${domain}${pathname}${search}`, request.url));
