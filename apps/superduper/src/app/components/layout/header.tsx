@@ -10,6 +10,7 @@ import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
 import '../../styles.css';
 
 import { RealtimeNotif } from '@/app/client/layout';
+import { ProductType } from '@/components/productType';
 import Image from 'next/image';
 import { useAuthStore } from '../auth/useAuthStore';
 
@@ -21,6 +22,7 @@ export type notifications = {
   userId: string;
   productId: string;
   isSeen: boolean;
+  productInfo: [ProductType];
 };
 
 export default function Header() {
@@ -119,6 +121,7 @@ export default function Header() {
       throw new Error('aldaa notif');
     }
     setShowNotif(false);
+    loadNotif();
   };
   const firstName = (name: string) => {
     let shortName = '';
@@ -127,6 +130,7 @@ export default function Header() {
     }
     return shortName;
   };
+
   return (
     <div onClick={() => showNotif && setShowNotif(false)} className=" pt-5 flex items-center max-w-[1280px] ">
       <div className="bg-[#1F1F1FF2] py-4 px-6  max-w-[1280px] rounded-2xl flex-1">
@@ -197,7 +201,14 @@ export default function Header() {
                           <div>
                             {index + 1}. {notification.message}
                           </div>
-                          {isSeenNotif.length ? <div className="text-sm text-red-500 ml-7">new product notification</div> : <div className="text-sm text-red-500 ml-7">old product notification</div>}
+                          <div>
+                            <Image className="object-cover" src={notification.productInfo[0].frontImage} alt="зураг" width={100} height={100} />
+                          </div>
+                          {notification.isSeen == false ? (
+                            <div className="text-sm text-red-500 ml-7">new product notification</div>
+                          ) : (
+                            <div className="text-sm text-red-500 ml-7">old product notification</div>
+                          )}
                         </div>
                       ))}
                     </div>

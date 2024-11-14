@@ -51,15 +51,14 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   try {
-    const product: any = {};
+    const product: any = { status: 'Accept' };
 
     const body = await request.json();
 
-    const { searchValue, status, userId, page, limit, categoryId } = body;
+    const { searchValue, userId, page, limit, categoryId } = body;
 
     if (categoryId) product.categoryId = categoryId;
 
-    if (status) product.status = 'Accept';
     if (userId) product.userId = new ObjectId(String(userId));
     if (searchValue) {
       product.$or = [
