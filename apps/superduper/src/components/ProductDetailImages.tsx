@@ -7,6 +7,7 @@ import { TypewriterEffectSmooth } from './ui/typewriter-effect';
 export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType }) => {
   const [frontImage, setFrontImage] = useState('');
   const [animate, setAnimat] = useState(false);
+  const [oneProductId, setOneProductId] = useState<string>();
   const words = (text: string) => {
     const array = [];
     for (let i = 0; i < text.length; i++) {
@@ -17,14 +18,21 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
 
   useEffect(() => {
     setFrontImage(oneProduct.frontImage);
+    let id = '';
+    for (let i = 0; i < oneProduct._id.length / 2; i++) {
+      id = id + oneProduct._id[i];
+    }
+    const replacedId = id.replace(/\D/g, '');
+    setOneProductId(replacedId);
   }, []);
 
   return (
     <div className="max-w-[750px] mx-auto w-full ">
       <div>
-        <div>NO.14214</div>
-        <div className="text-[30px]">{oneProduct.productName}</div>
-        <div className="flex gap-3">
+        <div className="text-[30px] pt-2 font-medium text-center">{oneProduct.productName}</div>
+        <div className="text-[15px]">No.{oneProductId}</div>
+
+        <div className="flex gap-3 mt-6">
           <div className="w-full relative">
             <motion.img
               key={frontImage}
@@ -34,12 +42,13 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
               style={{ width: '100%', borderRadius: '8px', maxHeight: '650px', objectFit: 'cover', marginBottom: '20px' }}
+              className="shadow"
             />{' '}
           </div>
           <div className="flex flex-col gap-3 relative">
             <Image
               onClick={() => setFrontImage(oneProduct.frontImage)}
-              className="object-cover rounded-lg w-[150px] h-[150px] hover:cursor-pointer shadow drop-shadow-xl"
+              className="object-cover rounded-lg w-[150px] h-[150px] hover:cursor-pointer shadow drop-shadow-xl shadow"
               src={oneProduct.frontImage}
               alt="front-image"
               width={1000}
@@ -91,54 +100,70 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
           </div>
         </div>
       </div>
-      <div className="mt-8 px-6 py-6">
-        <div className="border-b-2 py-6 grid grid-cols-2 text-[#000000]  gap-5 text-xl items-center justify-center">
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Бүтээгдэхүүний нэр</div>
-            <div className="w-full">
+      <div className="mt-16">
+        <div className="grid grid-cols-2 gap-6 text-xl text-[#333]">
+          {/* Product Name */}
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Бүтээгдэхүүний нэр</div>
+            <div>
               <TextGenerateEffect words={oneProduct.productName} />
             </div>
           </div>
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Тухайн зүйлийн гарал үүслийн улс</div>
+
+          {/* Country */}
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Тухайн зүйлийн гарал үүслийн улс</div>
             <div>
               <TextGenerateEffect words={oneProduct.Country} />
             </div>
           </div>
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Нэмэлт мэдээлэл</div>
+
+          {/* Additional Information */}
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Нэмэлт мэдээлэл</div>
             <div>
               <TextGenerateEffect words={oneProduct?.additionalInformation} />
             </div>
           </div>
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Гарын үсэг</div>
-            <div>
-              <TextGenerateEffect words={oneProduct?.signatures} />
+
+          {/* Signatures */}
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Эхлэх үнэ</div>
+            <div className="flex items-center">
+              <TypewriterEffectSmooth words={words(String(oneProduct.startBid))} />
+              <div className="text-3xl ml-2">₮</div>
             </div>
           </div>
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Гэмтэлтэй хэсэг</div>
+
+          {/* Damage Section */}
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Гэмтэлтэй хэсэг</div>
             <div>
               <TextGenerateEffect words={oneProduct?.damage} />
             </div>
           </div>
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Тухайн бараа сэргээгдсэн үү? Хэрэв тийм бол ямар хэмжээгээр?</div>
+
+          {/* Restoration Info */}
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Тухайн бараа сэргээгдсэн үү? Хэрэв тийм бол ямар хэмжээгээр?</div>
             <div>
               <TextGenerateEffect words={oneProduct?.restored} />
             </div>
           </div>
-          <div className="flex gap-2 flex-col">
-            <div className="text-[#565B60] text-sm">Эхлэх үнэ</div>
-            <div className="flex items-center">
-              <TypewriterEffectSmooth words={words(String(oneProduct.startBid))} />
-              <div className="text-3xl">₮</div>
+
+          {/* Start Bid */}
+
+          <div className="flex flex-col gap-2">
+            <div className="text-sm text-[#565B60]">Гарын үсэг</div>
+            <div>
+              <TextGenerateEffect words={oneProduct?.signatures} />
             </div>
           </div>
+
+          {/* Currency */}
           {oneProduct.Currency && (
-            <div className="flex gap-2 flex-col">
-              <div className="text-[#565B60] text-sm">Валют</div>
+            <div className="flex flex-col gap-2">
+              <div className="text-sm text-[#565B60]">Валют</div>
               <div>
                 <TextGenerateEffect words={oneProduct.Currency} />
               </div>

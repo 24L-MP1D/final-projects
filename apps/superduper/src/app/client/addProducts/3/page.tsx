@@ -26,9 +26,9 @@ export default function Page() {
   };
 
   const validationSchema = yup.object().shape({
-    frontImage: yup.mixed().required('image must be required'),
-    backImage: yup.mixed().required('image must be required'),
-    detailImage: yup.mixed().required('image must be required'),
+    frontImage: yup.mixed().required('зураг байх ёстой'),
+    backImage: yup.mixed().required('зураг байх ёстой'),
+    detailImage: yup.mixed().required('зураг байх ёстой'),
   });
 
   const formik = useFormik({

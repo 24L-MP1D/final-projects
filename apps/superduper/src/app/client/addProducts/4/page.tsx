@@ -23,11 +23,11 @@ export default function Page() {
     email: '',
   };
   const validationSchema = yup.object({
-    Country: yup.string().required('country must be required'),
-    firstName: yup.string().required('firstname must be required'),
-    lastName: yup.string().required('lastname must be required'),
-    city: yup.string().required('city must be required'),
-    email: yup.string().required('email must be required'),
+    Country: yup.string().required('улс байх ёстой'),
+    firstName: yup.string().required('нэр оруулах шаардлагатай'),
+    lastName: yup.string().required('овог оруулах шаардлагатай'),
+    city: yup.string().required('хот шаардлагатай'),
+    email: yup.string().required('и-мэйл шаардлагатай'),
   });
   const formik = useFormik({
     initialValues,
@@ -96,7 +96,7 @@ export default function Page() {
           <div className="flex flex-col gap-8">
             <div className="flex gap-2">
               <div className="flex-1 border-b-[1px]">
-                <p>Нэр</p>
+                <p>Нэр:</p>
                 <div>
                   <Input className="border-none" type="text" maxLength={32} id="firstName" value={formik.values.firstName} onChange={formik.handleChange} />
                   {formik.touched.firstName && formik.errors.firstName && <p className="text-red-600">{formik.errors.firstName}</p>}
@@ -104,7 +104,7 @@ export default function Page() {
               </div>
 
               <div className="flex-1 border-b-[1px]">
-                <p>Овог</p>
+                <p>Овог:</p>
                 <div>
                   <Input id="lastName" value={formik.values.lastName} type="text" maxLength={32} onChange={formik.handleChange} className="border-none" />
                   {formik.touched.lastName && formik.errors.lastName && <p className="text-red-600">{formik.errors.lastName}</p>}
@@ -112,7 +112,7 @@ export default function Page() {
               </div>
             </div>
             <div>
-              <p>Улс</p>
+              <p>Улс:</p>
               <div className="flex border-b-[1px] relative">
                 <Input
                   id="Country"
