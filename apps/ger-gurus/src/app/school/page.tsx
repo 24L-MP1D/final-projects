@@ -1,8 +1,8 @@
 'use client';
 import { useAuthStore } from '@/components/components/useAuthStore';
 import FlowText from '@/components/FlowText';
-import { LoginByDialog } from '@/components/LoginByDialog';
 import FooterOfSchool from '@/components/footerOfSchool';
+import { LoginByDialog } from '@/components/LoginByDialog';
 import LogoGallery from '@/components/LogoGallery';
 import TeacherWebSecondLayout from '@/components/teacherWebSecondLayout';
 import TeacherWebThirdLayout from '@/components/teacherWebThirdLayout';
@@ -54,14 +54,6 @@ export default function Page() {
   const [theme, setTheme] = useState<string>('light');
   const [domain, setDomain] = useState<string>();
   const inputRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const hostname = window.location.hostname;
-    setDomain(hostname);
-    const currentHostname = hostname === 'localhost' ? process.env.CURRENT_HOST : hostname;
-    console.log(currentHostname);
-  const [url, setUrl] = useState<string | null>(null);
-  const [theme, setTheme] = useState<string>('light');
   const [currentSchool, setCurrentSchool] = useState<CurrentSchool>();
 
   console.log({ currentSchool });
@@ -77,8 +69,10 @@ export default function Page() {
 
   useEffect(() => {
     getCurrentSchool();
-  }, []);
-  useEffect(() => {
+    const hostname = window.location.hostname;
+    setDomain(hostname);
+    const currentHostname = hostname === 'localhost' ? process.env.CURRENT_HOST : hostname;
+    console.log(currentHostname);
     const currentTheme = document.documentElement.getAttribute('data-theme');
     setTheme(currentTheme || 'light');
 
@@ -159,7 +153,6 @@ export default function Page() {
               НЭВТРЭХ
             </button>
           )}
-
         </div>
       </div>
 
