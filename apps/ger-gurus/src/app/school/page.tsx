@@ -50,6 +50,7 @@ export default function Page() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const currentUser = useAuthStore((state) => state.currentUser);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [url, setUrl] = useState<string | null>(null);
   const [theme, setTheme] = useState<string>('light');
   const [currentSchool, setCurrentSchool] = useState<CurrentSchool>();
 
@@ -63,8 +64,6 @@ export default function Page() {
       console.log(error);
     }
   }
-  const [theme, setTheme] = useState<string>('light');
-
 
   useEffect(() => {
     getCurrentSchool();
