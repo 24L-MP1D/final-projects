@@ -4,7 +4,6 @@ export default function HeaderNavigationMenu() {
   return (
     <div>
       <NavigationMenu>
-        {/* First NavigationMenu List */}
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger>Юу хайж байна</NavigationMenuTrigger>
@@ -28,7 +27,6 @@ export default function HeaderNavigationMenu() {
                     <li>Энэтхэг</li>
                     <li></li>
                   </ul>
-
                 </div>
               </NavigationMenuLink>
             </NavigationMenuContent>
@@ -55,7 +53,6 @@ export default function HeaderNavigationMenu() {
                     <li>Онцгой амттан</li>
                     <li>Жимсний хослол</li>
                   </ul>
-
                 </div>
               </NavigationMenuLink>
             </NavigationMenuContent>
@@ -104,6 +101,7 @@ export default function HeaderNavigationMenu() {
                     <li>Шинэ жил</li>
                     <li></li>
                   </ul>
+
                 </div>
               </NavigationMenuLink>
             </NavigationMenuContent>
