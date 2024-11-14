@@ -50,7 +50,7 @@ function SearchBar() {
       <SheetContent className="bg-white  duration-700 inset-y-0 left-0 h-full w-4/4 ">
         <div className="bg-white flex rounded-lg items-center border group focus-within:border-slate-700 pl-3 mt-2 p-1 gap-3 w-11/12">
           <Search width={22} height={22} />
-          <Input className="border-none focus-visible:ring-0  bg-white " placeholder="What's you gonna eat?" />
+          <Input className="border-none focus-visible:ring-0  bg-white " placeholder="Юу идмээр байнадаа" />
         </div>
       </SheetContent>
     </Sheet>
@@ -71,21 +71,23 @@ export default function Header() {
           <button className="border bg-slate-400 text-white rounded-full leading-3 px-[19px]  py-[11px] hidden md:block" onClick={() => router.push(`/subscribe`)}>
             Subscribe
           </button>
-          <UserCircle width={24} height={24} />
+          <button className="px-7">
+            <UserCircle width={24} height={24} />
+          </button>
         </div>
       </div>
       <div className="hidden lg:flex justify-between w-full">
         <Image priority={true} width={70} height={65} alt="logo" src={'/Logo.png'} onClick={() => router.push(`/`)} />
         <div className="flex h-full rounded-lg items-center border group focus-within:border-slate-700 pl-3 mt-4 p-1 gap-3 w-7/12">
           <Search width={22} height={22} />
-          <Input className="border-none focus-visible:ring-0" placeholder="What's you gonna eat?" />
+          <Input className="border-none focus-visible:ring-0" placeholder="Юу идмээр байнадаа ?" />
         </div>
         <div className="flex gap-1 items-center mt-1 ">
           <button className="border border-gray-600 rounded-full font-bold leading-3 px-[19px] py-[11px] " onClick={() => router.push(`/login`)}>
-            Log In
+            Нэвтрэх
           </button>
           <button className="border bg-slate-400 text-white rounded-full leading-3 px-[19px]  py-[11px]" onClick={() => router.push(`/subscribe`)}>
-            Subscribe
+            Багц
           </button>
         </div>
         <ThemeBackground />
