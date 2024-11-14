@@ -74,6 +74,15 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
 
         setLoading(false);
         window.location.href = '/client/sign-in';
+      } else if (response.status === 400) {
+        toast.custom(() => (
+          <div className={`bg-green-50 shadow-lg rounded-lg p-3 border border-red-600 flex items-center`}>
+            <div className="text-3xl">❗</div>
+            <div>Хэрэглэгч бүртгэлтэй байна!</div>
+          </div>
+        ));
+
+        setLoading(false);
       } else {
         console.log('error');
 
@@ -157,7 +166,7 @@ export const SignUp = ({ toggleForm }: { toggleForm: () => void }) => {
             </div>
             <div>
               <Input name="lastName" placeholder="Овог" value={formik.values.lastName} onChange={formik.handleChange} />
-              {formik.errors.lastName && formik.touched.lastName && <span className="text-red-600 ml-3 text-[13px]">{formik.errors.lastName}</span>}
+              {formik.errors.lastName && formik.touched.lastName && <span className="text-red-600 ml-3 text-[13px] flex-1">{formik.errors.lastName}</span>}
             </div>
           </div>
           <div>

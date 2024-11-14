@@ -8,9 +8,14 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { firstname, lastname, email, password } = body;
     if (!firstname || !lastname || !email || !password) return new Response(null, { status: 400 });
-    const hashedPassword = await bcrypt.hash(String(password), Number(AUTH_SALT));
-    const res = await collection.insertOne({ firstname, lastname, email, password: hashedPassword, role: 'admin' });
-    return new Response(null, { status: 201 });
+    const emailCheck = await collection.findOne({ email });
+    if (!emailCheck) {
+      const hashedPassword = await bcrypt.hash(String(password), Number(AUTH_SALT));
+      const res = await collection.insertOne({ firstname, lastname, email, password: hashedPassword, role: 'admin' });
+      return new Response(null, { status: 201 });
+    } else {
+      return new Response(null, { status: 400 });
+    }
   } catch (err) {
     return new Response(null, { status: 400 });
   }
