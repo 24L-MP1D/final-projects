@@ -6,8 +6,6 @@ import { Bid } from '@/components/Bid';
 import { BidDialog } from '@/components/bidDialog';
 import { BidType } from '@/components/bidType';
 
-import { HelpCenter } from '@/components/helpCenter';
-
 import { PlacedBidDialog } from '@/components/placedBidDialog';
 import { ProductDetailImages } from '@/components/ProductDetailImages';
 import { ProductType } from '@/components/productType';
@@ -61,7 +59,6 @@ function Realtime({ chatId }: { chatId: string }) {
       .required('Хүчинтэй үнийн дүнг оруулна уу')
 
       .min(maximumBid + 500, `хамгийн бага үнийн санал нь ${maximumBid + 500} ₮`),
-
   });
 
   const formik = useFormik({
@@ -72,8 +69,6 @@ function Realtime({ chatId }: { chatId: string }) {
       const cookie = Cookies.get('token');
       if (!cookie) {
         formik.setFieldValue('bid', 0);
-
-        return alert('эхлээд та нэвтрэх ёстой');
         return toast.custom(() => (
           <div className={`bg-red-50 shadow-lg rounded-lg p-3 border border-red-600 flex items-center`}>
             <div className="text-3xl">❗</div>
@@ -95,7 +90,6 @@ function Realtime({ chatId }: { chatId: string }) {
         setDialogsBid(formik.values.bid);
         resetForm();
         setOpen(false);
-
         const audio = new Audio('/images/bidaudio.mp3');
 
         audio.play();
@@ -162,7 +156,6 @@ function Realtime({ chatId }: { chatId: string }) {
     if (new Date(data.endDate).getTime() < new Date().getTime() && data.status == 'Accept') {
       updateWinnerStatus(data.userId);
     }
-
     setOneProduct(data);
     setMaximumBid(data.startBid);
   };
@@ -201,19 +194,18 @@ function Realtime({ chatId }: { chatId: string }) {
       console.error(err);
     }
   };
+
   useEffect(() => {
     loadProductDetail();
-    loadBids();
     loadProducts();
-
     const storage = localStorage.getItem('favourites');
     if (storage) value?.setFavourite(JSON.parse(storage));
+    loadBids();
   }, [isBid, value?.searchValue]);
   if (!oneProduct)
     return (
       <div className="min-h-screen">
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
-
           <div className="loader">
             <div className="loader-bar bar-1"></div>
             <div className="loader-bar bar-2"></div>
@@ -221,7 +213,6 @@ function Realtime({ chatId }: { chatId: string }) {
             <div className="loader-bar bar-4"></div>
           </div>
           <div className="font-bold text-3xl">Ачаалж байна...</div>
-
         </div>
       </div>
     );
@@ -250,7 +241,7 @@ function Realtime({ chatId }: { chatId: string }) {
           <Safity oneProduct={oneProduct} />
         </div>
       </div>
-      {open && <div className="absolute inset-0 bg-slate-500 opacity-50"></div>}
+      {open && <div className="fixed z-50 inset-0 bg-slate-500 opacity-50"></div>}
       {open && <BidDialog bid={formik.values.bid} open={open} setOpen={setOpen} />}
       <PlacedBidDialog secondDialog={secondDialog} setSecondDialog={setSecondDialog} bid={dialogsBid} />
 

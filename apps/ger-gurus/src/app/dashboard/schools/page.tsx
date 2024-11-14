@@ -27,6 +27,7 @@ export default function Page() {
     getSchools();
   }, []);
 
+
   const handleRedirect = () => {
     router.push('/');
   };
@@ -55,4 +56,5 @@ export default function Page() {
       </div>
     </div>
   );
+
 }

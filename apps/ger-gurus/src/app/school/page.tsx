@@ -50,7 +50,6 @@ export default function Page() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const currentUser = useAuthStore((state) => state.currentUser);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [url, setUrl] = useState<string | null>(null);
   const [theme, setTheme] = useState<string>('light');
   const [currentSchool, setCurrentSchool] = useState<CurrentSchool>();
 
@@ -64,25 +63,26 @@ export default function Page() {
       console.log(error);
     }
   }
+  const [theme, setTheme] = useState<string>('light');
+
 
   useEffect(() => {
     getCurrentSchool();
-    if (typeof window !== 'undefined') {
-      setUrl(window.location.origin);
+  }, []);
+  useEffect(() => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    setTheme(currentTheme || 'light');
+
+    const handleThemeChange = () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       setTheme(currentTheme || 'light');
-
-      const handleThemeChange = () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        setTheme(currentTheme || 'light');
-      };
 
       window.addEventListener('storage', handleThemeChange);
 
       return () => {
         window.removeEventListener('storage', handleThemeChange);
       };
-    }
+    };
   }, []);
 
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
@@ -91,11 +91,8 @@ export default function Page() {
   };
 
   const deleteCookie = () => {
-    const cookies = ['authtoken', 'userId'];
-    cookies.forEach((cookie) => {
-      document.cookie = `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax`;
-      document.cookie = `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    });
+    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn;  Secure; SameSite=Lax';
+    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn;  Secure; SameSite=Lax';
     window.location.reload();
   };
 
