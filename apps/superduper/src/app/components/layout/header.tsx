@@ -123,9 +123,9 @@ export default function Header() {
   return (
     <div onClick={() => showNotif && setShowNotif(false)} className=" pt-5 flex items-center max-w-[1280px] ">
       <div className="bg-[#1F1F1FF2] py-4 px-6  max-w-[1280px] rounded-2xl flex-1">
-        <div className="flex  justify-between">
+        <div className="flex justify-between">
           <div className="flex items-center gap-16 w-[200px]">
-            <Link href="/client" className="flex gpa-1 items-center gap-3">
+            <Link href="/client" className="flex hover:cursor-pointer items-center gap-3">
               <Image src="/logo.png" width={60} height={60} alt="logo" className="rounded-full w-[50px] h-[50px] " />
               <div className="text-white font-bold">Bidscape</div>
             </Link>
@@ -169,14 +169,14 @@ export default function Header() {
             </Link>
           </div>
 
-          <div className="flex gap-4 items-center w-[150px] ">
+          <div className="flex gap-4 items-center w-[150px] mr-10">
             <div className="relative hover:cursor-pointer  ">
               <FaRegHeart size={24} color="white" onClick={save} />
               {favlength === 0 ? null : <div className="absolute left-4 bottom-4 bg-red-500 text-white rounded-full w-5 h-5 text-center text-[13px]">{favlength}</div>}
             </div>
             {signin ? (
-              <div className="flex relative gap-5 items-center p-1">
-                <div onClick={() => setShowNotif(true)} className="hover:cursor-pointer">
+              <div className="flex gap-5 items-center p-1 relative">
+                <div onClick={() => setShowNotif(true)} className="hover:cursor-pointer ">
                   <div className="relative ">
                     <Bell color="white" />
                     {currentUser?._id && isSeenNotif.length > 0 && (

@@ -1,6 +1,5 @@
 'use client';
 
-
 import { Checkbox } from '@/components/ui/Checkbox';
 
 import { oauth_github_client, oauth_google_client } from 'config';
@@ -50,25 +49,20 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
         });
 
         if (response.status === 201) {
-          toast('Signed in Successfully');
-          window.location.href = '/client';
-        } else {
-          toast('Sign-In Unsuccessful');
-
-          console.log('success');
-
-          toast.custom(() => (
+           toast.custom(() => (
             <div className={`bg-green-50 shadow-lg rounded-lg p-3 border border-green-600 flex items-center`}>
               <div className="text-3xl">✅</div>
               <div>Амжилттай нэвтэрлээ.</div>
             </div>
           ));
-
-
           window.location.href = '/client';
-
-
-
+        } else {
+           toast.custom(() => (
+          <div className={`bg-red-50 shadow-lg rounded-lg p-3 border border-red-600 flex items-center`}>
+            <div className="text-3xl">❗</div>
+            <div>Бүртгэл амжилтгүй.</div>
+          </div>
+        ));
         }
         setLoading(false);
         setDialogOpen(false);
@@ -119,7 +113,12 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
         console.log('success');
         setLoading(false);
 
-        toast('Амжилттай бүртгүүлээ.');
+        toast.custom(() => (
+          <div className={`bg-green-50 shadow-lg rounded-lg p-3 border border-green-600 flex items-center`}>
+            <div className="text-3xl">✅</div>
+            <div>Амжилттай нэвтэрлээ</div>
+          </div>
+        ));
         window.location.href = '/client';
       } else {
         console.log('error');
@@ -190,10 +189,12 @@ export const SignIn = ({ toggleForm }: { toggleForm: () => void }) => {
           </div>
           <div className="flex justify-between items-center mb-4">
 
+
             <Link className="text-blue-500 hover:underline ml-[100px]" href="/">
 
             
            
+
               Нууц үгээ мартсан уу?
             </Link>
           </div>

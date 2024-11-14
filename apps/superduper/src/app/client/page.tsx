@@ -92,7 +92,7 @@ export default function Index() {
 
     value?.setFavourite(result);
   };
-  if (!value?.products.length)
+  if (!swiperProducts.length)
     return (
       <div className="min-h-screen">
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
@@ -230,28 +230,34 @@ export default function Index() {
           </Swiper>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-10 mt-[30px] w-full">
-        {value?.products.slice(0, 20).map((product) => (
-          <ProductItem isClick={isClick} product={product} favourite={value?.favourite || []} key={product._id} onClickFavourite={() => handleFavourite(product._id)} />
-        ))}
-      </div>
-      {value.products.length >= count * page && (
-        <div className="flex justify-center mt-10">
-          <Button
-            disabled={loading}
-            onClick={() => {
-              setPage(page + 1);
-            }}
-            className="flex items-center gap-1 shadow__btn"
-          >
-            {loading && <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
 
-            <div className="flex items-center gap-1 shadow__btn"> Цааш үзэх</div>
-          </Button>
+      {value?.products.length && (
+        <div>
+          <div className="grid grid-cols-3 gap-10 mt-[30px] w-full">
+            {value?.products.slice(0, 20).map((product) => (
+              <ProductItem isClick={isClick} product={product} favourite={value?.favourite || []} key={product._id} onClickFavourite={() => handleFavourite(product._id)} />
+            ))}
+          </div>
+          {value.products.length >= count * page && (
+            <div className="flex justify-center mt-10">
+              <Button
+                disabled={loading}
+                onClick={() => {
+                  setPage(page + 1);
+                }}
+                className="flex items-center gap-1 shadow__btn"
+              >
+                {loading && <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
+
+                <div className="flex items-center gap-1 shadow__btn"> Цааш үзэх</div>
+              </Button>
+            </div>
+          )}
+          {value.showCategory && <div className="fixed inset-0 bg-slate-500 opacity-50"></div>}
+          {value.showCategory && <Categories />}
+
         </div>
       )}
-      {value.showCategory && <div className="fixed inset-0 bg-slate-500 opacity-50"></div>}
-      {value.showCategory && <Categories />}
     </div>
   );
 }
