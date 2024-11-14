@@ -104,7 +104,6 @@ export default function HeaderNavigationMenu() {
                     <li>Шинэ жил</li>
                     <li></li>
                   </ul>
-
                 </div>
               </NavigationMenuLink>
             </NavigationMenuContent>
