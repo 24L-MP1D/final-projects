@@ -5,7 +5,6 @@ import { decode } from 'jsonwebtoken';
 import { Bookmark } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FavoriteRecipes } from './components/homePageComponents/favorites';
 import { HandyCarousel } from './components/homePageComponents/handyCarousel';
 import { Stars } from './components/itemComponents/stars';
 import { formatTitle } from './recipe/[slug]/page';

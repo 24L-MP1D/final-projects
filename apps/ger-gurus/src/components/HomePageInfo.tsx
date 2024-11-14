@@ -1,4 +1,4 @@
-'use-client';
+'use client';
 import { useEffect, useState } from 'react';
 import { useAuthStore } from './components/useAuthStore';
 
@@ -7,12 +7,11 @@ export const HomePageInfo = () => {
 
   function deleteCookie() {
     document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax;';
-    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; Secure; SameSite=Lax';
-    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     window.location.reload();
   }
-  const [url, setUrl] = useState<string | null>(null);
+
+  const [url, setUrl] = useState('');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -66,7 +65,7 @@ export const HomePageInfo = () => {
           </div>
         </div>
       )}
-      <div className=" relative flex flex-col items-center justify-center gap-[30px]">
+      <div className="relative flex flex-col items-center justify-center gap-[30px]">
         <div className="flex gap-[800px]">
           <div className="w-[200px] h-[150px] shadow-2xl">
             <video className="videoTag overflow-hidden rounded-xl" autoPlay loop muted>

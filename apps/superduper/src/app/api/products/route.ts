@@ -5,6 +5,7 @@ type filtType = {
   status?: string;
   startDate?: { $gte: Date };
   endDate?: { $lt: Date };
+  category?: string;
 };
 
 const collection = DB.collection('product');
@@ -14,11 +15,12 @@ export async function GET(request: Request) {
   const stat = searchParams.get('status');
   const dateFrom = searchParams.get('startDate');
   const dateTo = searchParams.get('endDate');
+  const category = searchParams.get('category');
   const filt: filtType = {};
   if (stat) {
     filt.status = stat;
   }
-
+  if (category) filt.category = category;
   if (dateFrom && dateTo) {
     filt.startDate = { $gte: new Date(dateFrom) };
     filt.endDate = { $lt: new Date(dateTo) };
@@ -49,15 +51,21 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   try {
-    const product: any = { status: 'Accept' };
+    const product: any = {};
+
     const body = await request.json();
-    const { searchValue } = body;
+
+    const { searchValue, status, userId, page, limit, categoryId } = body;
+
+    if (categoryId) product.categoryId = categoryId;
+
+    if (status) product.status = 'Accept';
+    if (userId) product.userId = new ObjectId(String(userId));
     if (searchValue) {
       product.$or = [
         { category: { $regex: searchValue, $options: 'i' } },
         { countryOfOrigin: { $regex: searchValue, $options: 'i' } },
         { productName: { $regex: searchValue, $options: 'i' } },
-        { additionalInformation: { $regex: searchValue, $options: 'i' } },
         {
           $expr: {
             $regexMatch: {
@@ -66,10 +74,11 @@ export async function PUT(request: Request) {
             },
           },
         },
-        { startBid: { $regex: searchValue, $options: 'i' } },
       ];
     }
-    const products = await collection.find(product).toArray();
+
+    const products = await collection.find(product, { limit: page * limit }).toArray();
+
     return Response.json(products);
   } catch (error) {
     return Response.json({ message: 'Failed to create product!' }, { status: 404 });

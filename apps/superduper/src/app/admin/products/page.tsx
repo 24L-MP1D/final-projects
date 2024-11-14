@@ -1,4 +1,5 @@
 'use client';
+import '@/app/styles.css';
 import { AdminLayout } from '@/components/adminLayout';
 import { AdminMessageSendDialog } from '@/components/adminMessageSendDialog';
 import { DatePickerWithRange } from '@/components/dateRange';
@@ -18,7 +19,7 @@ const Home = () => {
   const value = useContext(Context);
 
   const [CheckBoxArray, setCheckBoxArray] = useState<string[]>([]);
-
+  const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState<ProductType[]>([]);
 
   const [open, setOpen] = useState(false);
@@ -35,11 +36,26 @@ const Home = () => {
 
   const [userId, setUserId] = useState('');
 
+  const [page, setPage] = useState(1);
+
+  const [count, setCount] = useState(6);
+
   const loadProduct = async () => {
     try {
-      const response = await fetch('/api/products');
+      setLoading(true);
+      const response = await fetch('/api/products', {
+        method: 'PUT',
+        body: JSON.stringify({
+          page,
+          limit: count,
+        }),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
       const data = await response.json();
       setProducts(data);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -94,8 +110,23 @@ const Home = () => {
       loadProduct();
     }
     value?.setLayoutAside('Products');
-  }, [date]);
-  console.log(feedBackInput);
+  }, [date, page]);
+  if (!products.length)
+    return (
+      <AdminLayout>
+        <div className="min-h-screen">
+          <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
+            <div className="loader">
+              <div className="loader-bar bar-1"></div>
+              <div className="loader-bar bar-2"></div>
+              <div className="loader-bar bar-3"></div>
+              <div className="loader-bar bar-4"></div>
+            </div>
+            <div className="font-bold text-3xl">Ачаалж байна...</div>
+          </div>
+        </div>
+      </AdminLayout>
+    );
   return (
     <AdminLayout>
       <div onClick={() => show && setShow(false)}>
@@ -112,13 +143,13 @@ const Home = () => {
             {show && (
               <div className="flex hover:cursor-pointer flex-col border rounded-lg gap-2 absolute top-10 w-full left-0 bg-white z-50">
                 <div onClick={() => filtbyStatus('Pending')} className=" py-2 border-b w-full text-center">
-                Хүлээгдэж байна
+                  Хүлээгдэж байна
                 </div>
                 <div onClick={() => filtbyStatus('Accept')} className="py-2 border-b w-full text-center">
-                Зөвшөөрөх
+                  Зөвшөөрөх
                 </div>
                 <div onClick={() => filtbyStatus('Deny')} className="py-2 border-b w-full text-center">
-                Үгүйсгэх
+                  Үгүйсгэх
                 </div>
               </div>
             )}
@@ -153,29 +184,35 @@ const Home = () => {
               </div>
             )}
           </div>
-          <Button className="active:bg-slate-600" onClick={loadProduct}>
+          <Button
+            className="active:bg-slate-600"
+            onClick={() => {
+              setPage(products.length);
+              loadProduct();
+            }}
+          >
             Бүх бүтээгдэхүүн
           </Button>
         </div>
 
         <Table>
           <TableHeader>
-            <TableRow className="flex w-full  text-xl text-wrap py-3 bg-slate-200">
+            <TableRow className="flex w-full text-xl py-3 bg-slate-200">
               <TableHead></TableHead>
               <TableHead className="flex-1">Бүтээгдэхүүний нэр</TableHead>
               <TableHead className="flex-1">Бүтээгдэхүүний зураг</TableHead>
               <TableHead className="flex-1">Төлөв</TableHead>
-              <TableHead className="flex-1">Qpay</TableHead>
+              <TableHead className="flex-1">Төлбөр</TableHead>
               <TableHead className="flex-1">Эхлэх огноо</TableHead>
               <TableHead className="flex-1">Дуусах огноо</TableHead>
-              <TableHead className="flex-1">Үнийн санал эхлүүлэх</TableHead>
+              <TableHead className="flex-1">Эхлэх Үнэ</TableHead>
               <TableHead className="flex-1"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {products.map((product) => {
               return (
-                <TableRow className="flex items-center text-lg hover:cursor-pointer whitespace-nowrap border-b-2 border-solid">
+                <TableRow className="flex items-center text-lg hover:cursor-pointer text-wrap border-b-2 border-solid">
                   <TableCell>
                     <Checkbox checked={CheckBoxArray.includes(product._id)} onClick={() => CheckboxFunc(product._id)} />
                   </TableCell>
@@ -183,11 +220,11 @@ const Home = () => {
                   <TableCell className="font-medium flex-1 flex items-center justify-center">
                     <Image src={product.frontImage} width={500} height={500} className="w-28 h-28 object-cover rounded-full" alt="zurag" />
                   </TableCell>
-                  <TableCell className="flex-1">{product.status}</TableCell>
-                  <TableCell className="flex-1">Qpay</TableCell>
-                  <TableCell className="flex-1">{dayjs(product.startDate).format('YYYY-MM-DD')}</TableCell>
-                  <TableCell className="flex-1">{dayjs(product.endDate).format('YYYY-MM-DD')}</TableCell>
-                  <TableCell className="flex-1">{product.startBid}</TableCell>
+                  <TableCell className="flex-1 text-right">{product.status}</TableCell>
+                  <TableCell className="flex-1 text-right">Qpay</TableCell>
+                  <TableCell className="flex-1 text-center">{dayjs(product.startDate).format('YYYY-MM-DD')}</TableCell>
+                  <TableCell className="flex-1 text-center">{dayjs(product.endDate).format('YYYY-MM-DD')}</TableCell>
+                  <TableCell className="flex-1 text-center">{product.startBid}</TableCell>
                   <TableCell className="flex-1 flex gap-4 items-center">
                     <Trash
                       onClick={() => {
@@ -208,10 +245,24 @@ const Home = () => {
           </TableBody>
         </Table>
         {open && <AdminMessageSendDialog setFeedBackInput={setFeedBackInput} productId={productId} open={open} loadProduct={loadProduct} setOpen={setOpen} />}
-        {feedBackInput && <div className="absolute inset-0 opacity-50 bg-slate-500"></div>}
+        {feedBackInput && <div className="fixed inset-0 opacity-50 bg-slate-500"></div>}
         {feedBackInput && <FeedBackInput productId={productId} userId={userId} loadProduct={loadProduct} setFeedBackInput={setFeedBackInput} />}
       </div>
       <Toaster />
+      {products.length >= count * page && (
+        <div className="flex justify-center mt-10">
+          <Button
+            disabled={loading}
+            onClick={() => {
+              setPage(page + 1);
+            }}
+            className="flex items-center gap-1"
+          >
+            {loading && <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
+            <div> Цааш үзэх </div>
+          </Button>
+        </div>
+      )}
     </AdminLayout>
   );
 };

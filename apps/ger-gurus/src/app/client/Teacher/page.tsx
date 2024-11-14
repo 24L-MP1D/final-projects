@@ -1,6 +1,6 @@
 'use client';
 
-import TeacherWebFirstLayout from '@/components/teacherWebFirstLayout';
+import TeacherWebFirstLayout from '@/components/teacherWebFirstLayoutHeader';
 import TeacherWebSecondLayout from '@/components/teacherWebSecondLayout';
 import TeacherWebThirdLayout from '@/components/teacherWebThirdLayout';
 

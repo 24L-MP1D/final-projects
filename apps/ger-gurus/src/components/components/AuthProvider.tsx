@@ -19,6 +19,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
       .catch(() => {
         setCurrentUser(null);
+        document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn;  Secure; SameSite=Lax;';
+        document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn;  Secure; SameSite=Lax';
       });
   }, []);
 

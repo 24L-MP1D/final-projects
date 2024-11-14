@@ -1,13 +1,13 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import * as Ably from 'ably';
 import Cookies from 'js-cookie';
-import { ChevronDown, UserRoundPen } from 'lucide-react';
+import { Bell, ChevronDown, CircleUser, LogOut, UserRoundPen } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
+import '../../styles.css';
 
 import { RealtimeNotif } from '@/app/client/layout';
 import Image from 'next/image';
@@ -44,11 +44,7 @@ export default function Header() {
     });
     const data = await response.json();
     setNotifications(data);
-    setIsSeenNotif(
-      data.map((data: notifications) => {
-        return !data.isSeen && data;
-      })
-    );
+    setIsSeenNotif(data.filter((data: notifications) => data.isSeen == false));
     const channel = ably.channels.get('notifications');
     await channel.subscribe('new-notification', (message) => {
       setNotifications((prev) => [...prev, message.data]);
@@ -59,7 +55,7 @@ export default function Header() {
     const cookie = Cookies.get('token');
     if (cookie) {
       setSignin(true);
-      loadNotif();
+      if (currentUser?._id) loadNotif();
     }
   }, [currentUser]);
 
@@ -82,7 +78,7 @@ export default function Header() {
   // }, []);
 
   const router = useRouter();
-  console.log(favlength);
+
   const sell = () => {
     const cookie = Cookies.get('token');
     if (!cookie) return router.push('/client/sign-in');
@@ -95,10 +91,6 @@ export default function Header() {
     router.push('/client/save');
   };
 
-  const reload = () => {
-    router.push('/client');
-  };
-
   const showHeart = () => {
     const favourities = value?.favourite.length;
 
@@ -108,61 +100,138 @@ export default function Header() {
   useEffect(() => {
     setFavlength(showHeart());
   }, [value?.favourite]);
+  const logOut = () => {
+    Cookies.remove('token');
+    localStorage.removeItem('favourites');
+    window.location.reload();
+  };
+
+  const jumpProductDetailfromSearch = (id: string) => {
+    value?.setSearchValue('');
+    router.push(`/client/productDetails/${id}`);
+  };
+  const notificationUpdate = async (id: string) => {
+    try {
+      await fetch(`/api/notifications/${id}`, {
+        method: 'PUT',
+      });
+    } catch (err) {
+      throw new Error('aldaa notif');
+    }
+    setShowNotif(false);
+  };
+  const firstName = (name: string) => {
+    let shortName = '';
+    for (let i = 0; i < 4; i++) {
+      shortName += name[i];
+    }
+    return shortName;
+  };
   return (
     <div onClick={() => showNotif && setShowNotif(false)} className=" pt-5 flex items-center max-w-[1280px] ">
       <div className="bg-[#1F1F1FF2] py-4 px-6  max-w-[1280px] rounded-2xl flex-1">
-        <div className="flex  justify-between">
+        <div className="flex justify-between">
           <div className="flex items-center gap-16 w-[200px]">
-            <div className="flex gpa-1 items-center gap-3">
+            <Link href="/client" className="flex hover:cursor-pointer items-center gap-3">
               <Image src="/logo.png" width={60} height={60} alt="logo" className="rounded-full w-[50px] h-[50px] " />
               <div className="text-white font-bold">Bidscape</div>
-            </div>
-            <div className="flex flex-1 items-center bg-[#333333] rounded-3xl ml-8">
+            </Link>
+            <div className="flex flex-1 relative items-center bg-[#333333] rounded-3xl ml-8">
               <HiMiniMagnifyingGlass className="bg-[#333333] h-8 m-1 ml-3" color="gray" size={24} />
-              <input placeholder="Хайх" value={value?.searchValue} onChange={(e) => value?.setSearchValue(e.target.value)} className="px-2 w-[200px] p-2 rounded-3xl bg-[#333333]" />
+              <input
+                placeholder="Хайх"
+                value={value?.searchValue}
+                onChange={(e) => value?.setSearchValue(e.target.value)}
+                className="px-2 w-[200px] text-white outline-none p-2 rounded-3xl bg-[#333333]"
+              />
+              {value?.searchValue && (
+                <div className="absolute z-50 bg-white w-full max-h-[500px] overflow-y-scroll top-10 rounded-xl">
+                  {value?.products.map((product) => (
+                    <div
+                      onClick={() => jumpProductDetailfromSearch(product._id)}
+                      key={product._id}
+                      className="flex gap-2 hover:cursor-pointer active:bg-slate-200 items-center p-2 border-b border-blue-200"
+                    >
+                      <div className="flex-1">{product.productName}</div>
+                      <div className="">
+                        <Image src={product.frontImage || '/'} alt="image" width={100} height={100} className="rounded-full w-16 h-16" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
           <div className="flex gap-5 items-center">
-            <Link href="/client/category" className="flex gap-1 items-center text-white">
+            <div onClick={() => value?.setShowCategory(true)} className="flex gap-1 cursor-pointer items-center text-white px-3 xl:px-4  hover:bg-[#3D3D3D] rounded-lg p-2 font-semibold">
               Ангилалууд
               <ChevronDown size={16} color="white" />
-            </Link>
-            <button onClick={sell} className="bg-[#333333] hover:border-b-[1px] hover:border-black text-white">
+            </div>
+            <div onClick={sell} className="flex gap-1 cursor-pointer items-center text-white px-3 xl:px-4  hover:bg-[#3D3D3D] rounded-lg p-2 font-semibold">
               Зарах
-            </button>
-            <Link href="/Help" className="bg-[#333333] hover:border-b-[1px] hover:border-black text-white">
+            </div>
+            <Link href="/chatbot" className="flex gap-1 cursor-pointer items-center text-white px-3 xl:px-4  hover:bg-[#3D3D3D] rounded-lg p-2 font-semibold">
               Тусламж
             </Link>
           </div>
-          <div className="flex gap-4 items-center w-[150px] ">
-            <div className="relative">
+
+          <div className="flex gap-4 items-center w-[150px] mr-10">
+            <div className="relative hover:cursor-pointer  ">
               <FaRegHeart size={24} color="white" onClick={save} />
-              {favlength === 0 ? null : <div className="absolute left-5 bottom-4  bg-red-500 text-white rounded-full w-5 h-5 text-center text-sm">{favlength}</div>}
+              {favlength === 0 ? null : <div className="absolute left-4 bottom-4 bg-red-500 text-white rounded-full w-5 h-5 text-center text-[13px]">{favlength}</div>}
             </div>
             {signin ? (
-              <div className="flex relative p-1">
-                <div onClick={() => setShowNotif(true)} className="flex flex-col items-center hover:bg-slate-50 hover:cursor-pointer">
-                  <div className="flex relative">
-                    <UserRoundPen />
-                    {isSeenNotif.length > 0 && <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm left-4 text-white">{isSeenNotif.length}</div>}
+              <div className="flex gap-5 items-center p-1 relative">
+                <div onClick={() => setShowNotif(true)} className="hover:cursor-pointer ">
+                  <div className="relative ">
+                    <Bell color="white" />
+                    {currentUser?._id && isSeenNotif.length > 0 && (
+                      <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm top-[-12px] left-3 text-white">{isSeenNotif.length}</div>
+                    )}
                   </div>
-                  <div>{currentUser?.firstName}</div>
+                  {showNotif && (
+                    <div className="absolute top-12 left-[-300px] list-decimal right-0 z-50 max-w-[400px]">
+                      {notifications.map((notification, index) => (
+                        <div key={notification._id} onClick={() => notificationUpdate(notification._id)} className={`border-b rounded-lg items-center border-white p-2 bg-[#1F1F1FF2] text-white flex`}>
+                          <div>
+                            {index + 1}. {notification.message}
+                          </div>
+                          {isSeenNotif.length ? <div className="text-sm text-red-500 ml-7">new product notification</div> : <div className="text-sm text-red-500 ml-7">old product notification</div>}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                {showNotif && (
-                  <div className="absolute top-12 left-0 z-50">
-                    {notifications.map((notification) => (
-                      <div key={notification._id} onClick={() => setShowNotif(false)} className={`p-2 hover:cursor-pointer shadow border ${notification.isSeen ? 'bg-slate-100' : 'bg-red-200'}`}>
-                        {notification.message}
-                      </div>
-                    ))}
+                <div className="group relative flex-1">
+                  <div className="flex gap-2 hover:cursor-pointer  text-white hover:text-slate-300">
+                    <UserRoundPen color="white" />
+                    <div className="flex max-w-10">
+                      {currentUser?.firstName && firstName(currentUser.firstName)}
+                      <ChevronDown />
+                    </div>
                   </div>
-                )}
+                  <div className="absolute hidden left-[-100px] top-6 right-0 group-hover:block hover:block text-center hover:cursor-pointer z-50">
+                    <Link href={'/client/my-account/seller?seller=sl'} className="border-b rounded-lg border-white p-2 bg-[#1F1F1FF2] text-white flex gap-2">
+                      <div>
+                        <CircleUser />
+                      </div>
+                      <div>Профайл</div>
+                    </Link>
+                    <div onClick={logOut} className="border-b rounded-lg border-white p-2 bg-[#1F1F1FF2] text-white flex gap-2">
+                      <div>
+                        <LogOut />
+                      </div>
+                      <div>Гарах</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             ) : (
-              <Button onClick={() => router.push(`/client/sign-in`)} className="bg-[#333333] rounded-none">
+              <button onClick={() => router.push(`/client/sign-in`)} className="rounded-2xl hover:cursor-auto font-extralight shadow__btn">
+                {' '}
                 Нэвтрэх
-              </Button>
+              </button>
             )}
           </div>
         </div>

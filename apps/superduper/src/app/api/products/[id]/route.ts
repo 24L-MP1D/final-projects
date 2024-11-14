@@ -26,10 +26,9 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
   }
 }
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
-  const { status, message, userId } = await request.json();
-
+  const { status, message = 'Таны барааны дуудлага худалдаа дууслаа', userId } = await request.json();
   try {
-    await notifCollection.insertOne({ message, isSeen: false, productId: new ObjectId(params.id), userId });
+    await notifCollection.insertOne({ message, isSeen: false, createdAt: new Date(), productId: new ObjectId(params.id), userId });
     const data = await collection.updateOne({ _id: new ObjectId(params.id) }, { $set: { status: status } });
     const oneProduct = await collection.findOne({ _id: new ObjectId(params.id) });
     if (oneProduct?.status == 'Accept') {
@@ -49,13 +48,18 @@ export async function PUT(request: Request, { params }: { params: { id: string }
           const mailOptions = {
             from: 'galt.batzana1@gmail.com',
             to: users[i].email,
-            subject: 'Hello! Welcome to SuperDuper Auction!',
-            text: `Hello ${users[i].firstName}, We would like to invite to our auction.`,
-            html: `<p>Hello <b>${users[i].firstName}</b>, We invite you to participate in our auction. </p>
-              <h2>${oneProduct?.productName}</h2>
-              <div>Auction Starts at ${oneProduct?.startDate}</div>
+            subject: 'Сайн байна уу? "Сүпер Дүпер" дуудлага худалдаа эхлэх гэж байна!',
+            html: `<p>Сайн байна уу? <b>Эрхэм хүндэт ${users[i].firstName}</b>,</p>
+            <p>Бид таныг өөрсдийн зохион байгуулж байгаа дуудлага худалдаанд орохыг урьж байна. </p>
+            <p>Та доорх линк дээр даран манай веб руу орж болно.</p>
+              <a href="http://localhost:3000/client">Энд дарна уу</a>
+              <ul> 
+              <li>Бүтээгдэхүүний нэр: "${oneProduct?.productName}"</li>
+              <li>Дуудлага худалдаа эхлэх огноо: ${oneProduct?.startDate}</li>
+              <ul>
+            <div style="margin-top: 20px; ">  
               <img src=${oneProduct?.frontImage} alt="zurag">
-            `,
+            </div>`,
           };
 
           try {

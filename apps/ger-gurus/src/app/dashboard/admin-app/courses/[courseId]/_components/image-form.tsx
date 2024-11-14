@@ -67,9 +67,9 @@ export const ImageForm: React.FC<ImageFormProps> = ({ initialData }) => {
     }
   };
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
-      <div className="font-medium flex items-center justify-between">
-        Курсын зураг
+    <div className="mt-6 border shadow-xl rounded-md p-4">
+      <div className="prose flex items-center justify-between">
+        <h4>Курсын зураг</h4>
         <button className="btn btn-ghost hover:scale-105 transition" onClick={toggleEdit}>
           {isEditing && <>Цуцлах</>}
           {!isEditing && !initialData.imageUrl && (

@@ -40,12 +40,14 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="max-w-[1000px] ">
+    <main className="max-w-[1000px] ">
       <Link href="/admin-app/courses/create">
-        <button className="btn btn-primary hover:bg-transparent my-8 text-base">Шинэ хичээл нэмэх</button>
+        <button className="btn btn-primary hover:bg-transparent my-8 prose">
+          <h3>Шинэ хичээл нэмэх</h3>
+        </button>
       </Link>
 
-      <Table className="">
+      <Table>
         <TableCaption>Та сургуулийн сургалтуудыг үүсгэж, удирдаарай.</TableCaption>
         <TableHeader>
           <TableRow>
@@ -90,6 +92,6 @@ export default function Page() {
           ))}
         </TableBody>
       </Table>
-    </div>
+    </main>
   );
 }

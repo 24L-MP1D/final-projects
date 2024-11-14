@@ -89,7 +89,7 @@ export default function Table() {
   };
 
   return (
-    <div className="max-w-[1440px] mx-auto flex gap-5">
+    <div className="max-w-[1440px] mx-auto flex gap-5 ">
       <div className="flex gap-10 mt-5">
         <div className="w-[800px] h-[800px] bg-slate-400 relative">
           {tables &&
