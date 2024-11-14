@@ -102,7 +102,7 @@ export default function Header() {
   }, [value?.favourite]);
   const logOut = () => {
     Cookies.remove('token');
-
+    localStorage.removeItem('favourites');
     window.location.reload();
   };
 
