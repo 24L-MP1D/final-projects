@@ -32,7 +32,7 @@ export default function Page() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <main className="flex items-center justify-center h-screen">
       <div className="prose flex items-center justify-center flex-col gap-4">
         <h1> Сайн уу ? {schools?.[0].ownerName}</h1>
         <h1>Та эдгээр сайтуудыг эзэмшиж байна.</h1>
@@ -53,6 +53,6 @@ export default function Page() {
           Шинэ вебсайт нээх <PlusCircleIcon />
         </button>
       </div>
-    </div>
+    </main>
   );
 }
