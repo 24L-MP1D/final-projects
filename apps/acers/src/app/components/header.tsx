@@ -70,7 +70,9 @@ export default function Header() {
           <button className="border bg-slate-400 text-white rounded-full leading-3 px-[19px]  py-[11px] hidden md:block" onClick={() => router.push(`/subscribe`)}>
             Subscribe
           </button>
-          <UserCircle width={24} height={24} />
+          <button className="px-7">
+            <UserCircle width={24} height={24} />
+          </button>
         </div>
       </div>
       <div className="hidden lg:flex justify-between w-full">
