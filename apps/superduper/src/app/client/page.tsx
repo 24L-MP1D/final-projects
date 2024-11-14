@@ -16,7 +16,6 @@ import { ProductItem } from '../components/productItem';
 import { RealtimeNotif } from './layout';
 
 export default function Index() {
-  
   const [isClick, setClick] = useState(false);
   const value = useContext(RealtimeNotif);
   const [swiperProducts, setSwiperProducts] = useState<ProductType[]>([]);
@@ -111,7 +110,6 @@ export default function Index() {
     <div className={`max-w-[1280px]  mx-auto w-full`}>
       <div className="grid grid-cols-2 mt-0.5">
         <div className="w-[1280px] h-full">
-          
           <Swiper
             className="rounded-xl w-full"
             direction="horizontal"
@@ -171,9 +169,9 @@ export default function Index() {
                 <div className="absolute top-0 right-0 w-1/2  rounded-xl h-full flex flex-col justify-center items-center  text-white p-5">
                   <div className="p-3 rounded-3xl h-fit bg-white/10 backdrop-blur-xl w-[450px]  mt-12 md:mt-0">
                     <div className="py-3 px-3">
-                      <Button className="rounded-2xl border-8 w-[400px] h-[50px] border-[#f8f3f8]  hover:cursor-auto font-extralight shadow">Манай үйлчилгээнүүд</Button>
-                      <div className="bg-[#f4f5fa] rounded-2xl mt-3 p-4 ">
-                        <div className="grid grid-cols-2">
+                      <Button className="rounded-2xl border-8 w-[400px] h-[50px] border-[#f8f3f8]  hover:cursor-auto font-mono shadow">Хялбар дуудлага худалдаа</Button>
+                      <div className="bg-[#f4f5fa] rounded-2xl mt-5 p-4 ">
+                        <div className="grid grid-cols-2 ">
                           <Link
                             href={`/client/productDetails/${product._id}`}
                             className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full"
@@ -186,33 +184,10 @@ export default function Index() {
                               <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-1" />
                             </div>
                           </Link>
-                          <Link
-                            href={'/chatbot'}
-                            className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full"
-                          >
-                            <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
-                              <Image src="/chat.png" alt="bid" width={36} height={36} className="" />
-                            </div>
-                            <div className="mt-3 font-semibold flex items-center transition-all duration-300 text-xs md:text-sm text-neutral group-hover/item:-translate-x-2 text-textHigh text-black text-center transform group-hover:-translate-x-1">
-                              Чат бот-оос асуух
-                              <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-0.5" size={18} />
-                            </div>
-                          </Link>
+
                           <Link
                             href={`/client/addProducts`}
                             className="h-32  cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full"
-                          >
-                            <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
-                              <Image src="/add.png" alt="bid" width={36} height={36} className="" />
-                            </div>
-                            <div className="mt-3 font-semibold flex items-center transition-all duration-300 text-xs md:text-sm text-neutral group-hover/item:-translate-x-2 text-textHigh text-black text-center transform group-hover:-translate-x-1">
-                              Дуудлага худалдаа явуулах
-                              <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-x-1" />
-                            </div>
-                          </Link>
-                          <Link
-                            href={`/client/addProducts`}
-                            className="h-32 cursor-pointer flex flex-col justify-center items-center rounded-xl hover:border-2 hover:bg-white transition-all duration-300 hover:border-[#93C5FD] group w-full"
                           >
                             <div className="flex justify-center hover:bg-white items-center w-16 p-3 rounded-full border group-hover/item:bg-surfaceInverse transition-all duration-300 bg-[#E0F2FE] shadow-[inset_0_0_4px_0_rgba(59,130,246,1)] group-hover/item:shadow-[0_0_8px_0_rgba(59,130,246,1)]">
                               <Image src="/add.png" alt="bid" width={36} height={36} className="" />
@@ -257,10 +232,8 @@ export default function Index() {
           )}
           {value.showCategory && <div className="fixed inset-0 bg-slate-500 opacity-50"></div>}
           {value.showCategory && <Categories />}
-
         </div>
       )}
     </div>
-    
   );
 }
