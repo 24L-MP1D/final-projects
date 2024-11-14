@@ -5,22 +5,22 @@ export function middleware(request: NextRequest) {
   const hostname = request.headers.get('host');
   const pathname = request.nextUrl.pathname;
   const search = request.nextUrl.search;
-
   const currentHost = hostname === 'localhost:3000' ? process.env.CURRENT_HOST : hostname;
+  console.log(currentHost)
 
   let domain = '';
 
   switch (currentHost) {
     case 'www.verse.mn':
     case 'verse.mn':
-      domain = 'school';
+      domain = 'client';
       break;
     case 'dashboard.verse.mn':
     case 'dash.verse.mn':
-      domain = 'school';
+      domain = 'dashboard';
       break;
     default:
-      domain = 'client';
+      domain = 'school';
   }
 
   return NextResponse.rewrite(new URL(`/${domain}${pathname}${search}`, request.url));

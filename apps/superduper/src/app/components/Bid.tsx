@@ -37,7 +37,7 @@ export const Bid = () => {
           <div>3,000</div>
           <label className="border-solid bg-[#f8f7f8] flex gap-1 items-center py-1 px-3 w-full">
             <div className="text-slate-500">евро</div>
-            <Input id="bid" onChange={formik.handleChange} value={formik.values.bid !== 0 ? formik.values.bid : ''} className="w-full p-2 bg-[#f8f7f8]" placeholder="3,350 or up" type="number" />
+            <Input id="bid" onChange={formik.handleChange} value={formik.values.bid !== 0 ? formik.values.bid : ''} className="w-full p-2 bg-[#f8f7f8]" placeholder="3,350 эсвэл дээш" type="number" />
           </label>
           <div className="flex gap-1 w-full">
             <Button className="flex-1 border-[1px] py-2 px-4 bg-white text-blue-500 text-center">Үнийн санал оруулах</Button>

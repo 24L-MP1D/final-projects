@@ -335,6 +335,7 @@ export default function RecipeComponent() {
             </div>
           </div>
           <p>You might also like</p>
+
         </>
       )}
     </div>

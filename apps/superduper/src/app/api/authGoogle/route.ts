@@ -1,5 +1,5 @@
 import { DB } from '@/lib/db';
-import { oauth_google } from 'config';
+import { oauth_google_client } from 'config';
 import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
 import { NextResponse, type NextRequest } from 'next/server';
@@ -19,11 +19,11 @@ export async function GET(request: NextRequest) {
 
   try {
     const params = new URLSearchParams({
-      client_id: oauth_google.client_id,
-      client_secret: oauth_google.client_secret,
+      client_id: oauth_google_client.client_id,
+      client_secret: oauth_google_client.client_secret,
       code: code || '',
       grant_type: 'authorization_code',
-      redirect_uri: oauth_google.redirect_uri,
+      redirect_uri: oauth_google_client.redirect_uri,
     });
     const oauthResponse = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
@@ -48,8 +48,11 @@ export async function GET(request: NextRequest) {
     }
 
     const collection = await DB.collection('users');
-    const check = await collection.findOne({ email: payload.email, role: 'user' });
-    if (!check) return new Response(JSON.stringify({ message: '404' }), { status: 404 });
+    let check = await collection.findOne({ email: payload.email });
+    if (!check) {
+      const user = await collection.insertOne({ email: payload.email, firstName: payload.given_name, lastName: payload.family_name, role: 'user' });
+      check = { _id: user.insertedId, email: payload.email };
+    }
     const accessToken = jwt.sign({ email: payload.email, userId: check?._id }, ADMIN_ACCESS_TOKEN_SECRET, {
       expiresIn: '1d',
     });
@@ -59,5 +62,5 @@ export async function GET(request: NextRequest) {
     console.log('Redirecting to /admin and setting cookie.');
     return response;
   } catch (error) {}
-  return new Response(JSON.stringify({ message: '404' }), { status: 404 });
+  return NextResponse.redirect(new URL('/client', request.url));
 }

@@ -18,8 +18,8 @@ const formSchema = z.object({
 
 export default function Page() {
   function deleteCookie() {
-    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; domain=localhost; Secure; SameSite=Lax;';
-    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; domain=localhost; Secure; SameSite=Lax';
+    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn;  Secure; SameSite=Lax;';
+    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn;  Secure; SameSite=Lax';
     window.location.reload();
   }
   const router = useRouter();
@@ -29,10 +29,42 @@ export default function Page() {
     defaultValues: { domain: '' },
   });
 
+  function slugify(text: string): string {
+    const reservedWords = ['admin', 'user', 'login', 'dashboard', 'dash', 'school']; // Add more reserved words as needed
+
+    // Normalize text to handle accents and non-English characters
+    const normalizedText = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    const slug = normalizedText
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric characters with hyphens
+      .replace(/-+/g, '-') // Collapse multiple hyphens into one
+      .replace(/^-+|-+$/g, ''); // Remove leading and trailing hyphens
+
+    // Check if slug is a reserved word or too long
+    if (reservedWords.includes(slug) || slug.length > 40) {
+      return '';
+    }
+
+    return slug;
+  }
+
+  function isSlugEqual(input: string): boolean {
+    const slug = slugify(input);
+    // Check if input is already in slug format and if the slug is non-empty
+    return input === slug && slug.length > 0;
+  }
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await axios.post(`/api/check-domain`, { domain: `${values.domain}.verse.mn` });
-      setIsExisting(response.data); // instant
+      if (isSlugEqual(values.domain)) {
+        const response = await axios.post(`/api/check-domain`, { domain: `${values.domain}.verse.mn` });
+        setIsExisting(response.data); // instant
+      } else {
+        setIsExisting(true);
+      }
+
       toast.success('Checked if domain is available');
     } catch {
       toast.error('Something went wrong');
@@ -54,9 +86,11 @@ export default function Page() {
         Log out
       </div>
       <div>
-        <h1 className="text-2xl font-bold mb-4 text-center text-primary">Контент Бүтээх Адал Явдалд Тавтай Морилно Уу!</h1>
-        <p className="mb-6 text-center text-gray-700">Дэлхийтэй хуваалцах чадвар болон мэдлэгээ оруулан өөрийн өвөрмөц орон зайг бий болгох гэж байгаа танд баяр хүргэе!</p>
-        <p className="mb-6 text-center text-base-content">Та давтагдашгүй домайн нэр оруулна уу.</p>
+        <div className="prose">
+          <h1 className="text-2xl font-bold mb-4 text-center text-primary">Контент Бүтээх Адал Явдалд Тавтай Морилно Уу!</h1>
+          <p className="mb-6 text-center text-gray-700">Дэлхийтэй хуваалцах чадвар болон мэдлэгээ оруулан өөрийн өвөрмөц орон зайг бий болгох гэж байгаа танд баяр хүргэе!</p>
+          <p className="mb-6 text-center text-base-content">Та давтагдашгүй домайн нэр оруулна уу.</p>
+        </div>
 
         <div className="flex flex-col items-center">
           <Form {...form}>

@@ -5,7 +5,7 @@ import { ProductItem } from '@/app/components/productItem';
 import { Bid } from '@/components/Bid';
 import { BidDialog } from '@/components/bidDialog';
 import { BidType } from '@/components/bidType';
-import { HelpCenter } from '@/components/helpCenter';
+
 import { PlacedBidDialog } from '@/components/placedBidDialog';
 import { ProductDetailImages } from '@/components/ProductDetailImages';
 import { ProductType } from '@/components/productType';
@@ -14,10 +14,12 @@ import * as Ably from 'ably';
 import { AblyProvider, ChannelProvider, useChannel } from 'ably/react';
 import { useFormik } from 'formik';
 import Cookies from 'js-cookie';
-import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
+import { toast, Toaster } from 'sonner';
 import * as yup from 'yup';
+import '../../../styles.css';
 import { RealtimeNotif } from '../../layout';
+
 const client = new Ably.Realtime({ key: process.env.NEXT_PUBLIC_ABLYKEY });
 
 export default function App({ params }: { params: { chatId: string } }) {
@@ -54,8 +56,9 @@ function Realtime({ chatId }: { chatId: string }) {
   const validationSchema = yup.object({
     bid: yup
       .number()
-      .required('Please insert a valid bid amount')
-      .min(maximumBid + 500, `minumum bid is ${maximumBid + 500} ₮`),
+      .required('Хүчинтэй үнийн дүнг оруулна уу')
+
+      .min(maximumBid + 500, `хамгийн бага үнийн санал нь ${maximumBid + 500} ₮`),
   });
 
   const formik = useFormik({
@@ -66,7 +69,12 @@ function Realtime({ chatId }: { chatId: string }) {
       const cookie = Cookies.get('token');
       if (!cookie) {
         formik.setFieldValue('bid', 0);
-        return alert('first you must sign-in');
+        return toast.custom(() => (
+          <div className={`bg-red-50 shadow-lg rounded-lg p-3 border border-red-600 flex items-center`}>
+            <div className="text-3xl">❗</div>
+            <div>Та дуудлага худалдаанд оролцохын тулд эхлээд нэвтэрнэ үү.</div>
+          </div>
+        ));
       }
       if (open) {
         sendBid();
@@ -82,7 +90,6 @@ function Realtime({ chatId }: { chatId: string }) {
         setDialogsBid(formik.values.bid);
         resetForm();
         setOpen(false);
-
         const audio = new Audio('/images/bidaudio.mp3');
 
         audio.play();
@@ -146,12 +153,10 @@ function Realtime({ chatId }: { chatId: string }) {
   const loadProductDetail = async () => {
     const response = await fetch(`/api/products/${chatId}`);
     const data = await response.json();
-    if (data.endDate.getTime() < new Date().getTime() && data.status == 'Accept') {
+    if (new Date(data.endDate).getTime() < new Date().getTime() && data.status == 'Accept') {
       updateWinnerStatus(data.userId);
     }
-
     setOneProduct(data);
-    setMaximumBid(data.startBid);
   };
 
   const handleFavourite = (productId: string) => {
@@ -188,26 +193,32 @@ function Realtime({ chatId }: { chatId: string }) {
       console.error(err);
     }
   };
+
   useEffect(() => {
     loadProductDetail();
-    loadBids();
     loadProducts();
-
     const storage = localStorage.getItem('favourites');
     if (storage) value?.setFavourite(JSON.parse(storage));
+    loadBids();
   }, [isBid, value?.searchValue]);
   if (!oneProduct)
     return (
       <div className="min-h-screen">
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
-          <Image src={'/images/spinner.svg'} alt="loading" width={100} height={100} />
-          <div className="font-bold text-3xl">Ачааллаж байна...</div>
+          <div className="loader">
+            <div className="loader-bar bar-1"></div>
+            <div className="loader-bar bar-2"></div>
+            <div className="loader-bar bar-3"></div>
+            <div className="loader-bar bar-4"></div>
+          </div>
+          <div className="font-bold text-3xl">Ачаалж байна...</div>
         </div>
       </div>
     );
 
   return (
     <form onSubmit={formik.handleSubmit} className={`max-w-[1240px] mx-auto w-full`}>
+      <Toaster />
       <div className={`flex gap-24`}>
         <ProductDetailImages oneProduct={oneProduct} />
         <div className="flex flex-col gap-8 pb-12 mt-10">
@@ -227,31 +238,12 @@ function Realtime({ chatId }: { chatId: string }) {
             setIsSticky={setIsSticky}
           />
           <Safity oneProduct={oneProduct} />
-          <HelpCenter oneProduct={oneProduct} />
-          {/* {isSticky && (
-            <BidSticky
-              formikSetFieldValue={formik.setFieldValue}
-              formikTouched={formik.touched}
-              oneProduct={oneProduct}
-              formikErrors={formik.errors}
-              sendBid={sendBid}
-              bids={bids}
-              open={open}
-              setOpen={setOpen}
-              formikValues={formik.values}
-              formikHandleChange={formik.handleChange}
-              maximumBid={maximumBid}
-              isSticky={isSticky}
-              setIsSticky={setIsSticky}
-            />
-          )} */}
         </div>
       </div>
-      {open && <div className="absolute inset-0 bg-slate-500 opacity-50"></div>}
+      {open && <div className="fixed z-50 inset-0 bg-slate-500 opacity-50"></div>}
       {open && <BidDialog bid={formik.values.bid} open={open} setOpen={setOpen} />}
       <PlacedBidDialog secondDialog={secondDialog} setSecondDialog={setSecondDialog} bid={dialogsBid} />
-
-      <div className="grid grid-cols-3 gap-10 w-full">
+      <div className="grid grid-cols-3 gap-10 w-full pt-10">
         {products.slice(0, 20).map((product) => (
           <ProductItem isClick={isClick} product={product} favourite={value?.favourite || []} key={product._id} onClickFavourite={() => handleFavourite(product._id)} />
         ))}
