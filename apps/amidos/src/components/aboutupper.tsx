@@ -2,14 +2,14 @@
 import { Parallax } from 'react-parallax';
 export default function Aboutupper() {
   const aboutRestaurant = [
-    { title: 'АЖИЛЛАХ ЦАГ', description: 'Monday to Friday - 09:00 - 00:00am' },
+    { title: 'АЖИЛЛАХ ЦАГ', description: 'Даваа- Баасан - 09:00 - 00:00am' },
     { title: 'ХОЛБОО БАРИХ ', description: '99769901, 88819900' },
     { title: 'ХАЯГ', description: 'МОНКОН БАРИЛГА 1-Р ДАВХАР' },
   ];
   return (
     <>
       <Parallax blur={{ min: -5, max: 5 }} bgImage={'/pexels.jpeg'} bgImageAlt="food" strength={-500} className="hidden md:block">
-        <div className="sticky top-0 left-1/2 bg-white h-[100vh] w-[50%] flex flex-col gap-8 text-center justify-center items-center">
+        <div className="sticky top-0 left-1/2 bg-white h-[100vh] w-[50%]  flex flex-col gap-8 text-center justify-center items-center">
           <div className="flex flex-col gap-4">
             <div className="text-[#8B0000] text-4xl">МАНАЙ РЕСТОРАН</div>
             <hr />
@@ -23,7 +23,7 @@ export default function Aboutupper() {
             ))}
           </div>
         </div>
-        <div className="sticky top-0 left-0 bg-white h-[100vh] w-[50%] flex flex-col gap-8 justify-center items-center text-center">
+        <div className="sticky top-0 left-0 bg-white h-[100vh] w-[50%] flex flex-col gap-8 justify-center items-center text-center ">
           <div className="flex flex-col gap-4">
             <div className="text-[#8B0000] text-4xl text-center">Тогоочийн тухай</div>
             <hr />
@@ -37,7 +37,7 @@ export default function Aboutupper() {
           </div>
         </div>
       </Parallax>
-      <div className=" w-full bg-white py-6 flex flex-col gap-8 text-center justify-center items-center md:hidden">
+      <div className=" w-full bg-white mb-20 flex flex-col gap-8 text-center justify-center items-center md:hidden ">
         <div className="flex flex-col gap-4">
           <div className="text-[#8B0000] text-4xl">МАНАЙ РЕСТОРАН</div>
           <hr />

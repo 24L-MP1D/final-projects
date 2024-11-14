@@ -3,7 +3,7 @@ import Navbar from '@/components/navbar';
 import { SideBar } from '@/components/sidebar';
 import Head from 'next/head';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-theme="cupcake" className="">
       <Head>

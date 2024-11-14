@@ -49,7 +49,6 @@ export default function SubmissionPage() {
     return (
       <div className="min-h-screen">
         <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
-
           <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
             <div className="loader">
               <div className="loader-bar bar-1"></div>
@@ -59,8 +58,6 @@ export default function SubmissionPage() {
             </div>
             <div className="font-bold text-3xl">Ачаалж байна...</div>
           </div>
-          <div className="font-bold text-3xl">Ачаалж байна...</div>
-
         </div>
       </div>
     );
