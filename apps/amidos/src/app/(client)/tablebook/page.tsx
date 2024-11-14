@@ -112,7 +112,6 @@ function TableBook() {
     }
     router.push("/tablebook-verify");
   };
-
   useEffect(() => {
     const getTablesDetail = async () => {
       setLoading(true);
