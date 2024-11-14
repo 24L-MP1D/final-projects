@@ -6,12 +6,11 @@ const navs = [
   { name: 'БИДНИЙ ТУХАЙ', link: '/' },
   { name: 'MЕНЮ', link: '/menu' },
   { name: 'ГАЛЛЕРЕЙ', link: '/gallery' },
-  { name: 'ЗАХИАЛГА', link: '/order' },
-  { name: 'ХҮРГЭЛТ', link: '/delivery' },
+  { name: 'САГС', link: '/order' },
 ];
 export function Headers() {
   return (
-    <div className="flex bg-black gap-4 justify-center p-6 max-w-[900px] m-auto">
+    <div className="flex bg-black gap-4 justify-center p-6 max-w-full m-auto ">
       {navs.map((nav) => (
         <Link className="text-white" key={nav.name} href={nav.link}>
           {nav.name}

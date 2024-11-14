@@ -25,25 +25,26 @@ export default function Foods() {
   const [special, setSpecial] = useState(false);
   const CLOUDINARY_CLOUD_NAME = 'dozicpox6';
   const CLOUDINARY_UPLOAD_PRESET = 'pe3w78vd';
-
   function loadlist() {
-    fetch('api/addFood')
+    fetch('/api/addFood')
       .then((res) => res.json())
       .then((data) => {
         setOrder(data);
-        const handleRemoveSpecial = async (foodId: string) => {
-          try {
-            await fetch(`/api/special/${foodId}`, {
-              method: 'DELETE',
-            });
-            toast.success('Food removed from special list!');
-          } catch (error) {
-            console.error('Error removing special food:', error);
-            toast.error('Error removing to special items');
-          }
-        };
       });
   }
+
+  const handleRemoveSpecial = async (foodId: string) => {
+    try {
+      await fetch(`/api/special/${foodId}`, {
+        method: 'DELETE',
+      });
+      toast.success('Food removed from special list!');
+    } catch (error) {
+      console.error('Error removing special food:', error);
+      toast.error('Error removing to special items');
+    }
+  };
+
   const handleSpecialToggle = async (foodId: string, isSpecial: string) => {
     try {
       if (isSpecial) {
@@ -96,6 +97,7 @@ export default function Foods() {
         body: JSON.stringify(newFood),
       });
       toast('Хоол амжилттай нэмэгдлээ');
+      loadlist();
       console.log('created');
     } catch (error) {
       console.log('error');
@@ -122,13 +124,15 @@ export default function Foods() {
         if (res.status === 200) {
           setOrder(order.filter((food) => food._id !== _id));
           toast('Хоол амжилттай устлаа');
+          loadlist();
         } else {
           console.log('Error occurred during deletion');
         }
       })
       .catch((error) => {
         console.error('Error:', error);
-      });
+      })
+      .finally(() => loadlist());
   };
 
   const updateFood = async () => {
@@ -148,13 +152,14 @@ export default function Foods() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(updatedFood),
-      });
+      }).finally(() => loadlist());
 
       if (response.ok) {
         toast('Хоол амжилттай шинэчиллээ');
         const updatedOrder = await response.json();
         setOrder(order.map((food) => (food._id === updatedOrder._id ? updatedOrder : food)));
         setSelectedFood(null);
+        loadlist();
       } else {
         toast.error('Шинэчлэлд алдаа гарлаа');
       }
@@ -169,6 +174,7 @@ export default function Foods() {
         method: 'POST',
       });
       toast.success('Food added to special items!');
+      loadlist();
     } catch (error) {
       console.error('Error adding special food:', error);
       toast.error('Error a  adding to special items');
@@ -178,20 +184,14 @@ export default function Foods() {
   const toggleButtonColor = () => {
     setButtonColor((prevColor) => (prevColor === 'bg-slate-600' ? 'bg-red-600' : 'bg-slate-600'));
   };
-  useEffect(() => {
-    fetch('/api/addFood')
-      .then((res) => res.json())
-      .then((data) => {
-        setOrder(data);
-      });
-  }, []);
+
+  useEffect(() => loadlist(), []);
   useEffect(() => {
     fetch('/api/special')
       .then((res) => res.json())
       .then((data) => {
         setSpecial(data);
       });
-    loadlist();
   }, []);
 
   return (

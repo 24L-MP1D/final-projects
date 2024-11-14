@@ -3,14 +3,13 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Home() {
-  const [selectedImage, setSelectedImage] = useState('/restaurant:1.jpg');
-  const images = ['/restaurant:1.jpg', '/restaurant:2.jpg', '/restaurant:3.jpg', '/restaurant:4.jpg', '/restaurant:5.jpg'];
+  const [selectedImage, setSelectedImage] = useState('/restaurant/3.png');
+  const images = ['/restaurant/1.png', '/restaurant/2.png', '/restaurant/3.png', '/restaurant/4.png', '/restaurant/5.png', '/restaurant/1.png'];
   const navs = [
     { name: 'БИДНИЙ ТУХАЙ', link: '/' },
     { name: 'MЕНЮ', link: '/menu' },
     { name: 'ГАЛЛЕРЕЙ', link: '/gallery' },
     { name: 'ЗАХИАЛГА', link: '/order' },
-    { name: 'ХҮРГЭЛТ', link: '/delivery' },
   ];
   return (
     <>

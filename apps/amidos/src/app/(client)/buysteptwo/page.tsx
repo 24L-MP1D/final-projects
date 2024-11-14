@@ -8,7 +8,7 @@ export default function Buysteptwo() {
     { name: 'БИДНИЙ ТУХАЙ', link: '/' },
     { name: 'MЕНЮ', link: '/menu' },
     { name: 'ГАЛЛЕРЕЙ', link: '/gallery' },
-    { name: 'ЗАХИАЛГА', link: '/order' },
+    { name: 'САГС', link: '/order' },
     { name: 'ХҮРГЭЛТ', link: '/delivery' },
   ];
   return (
