@@ -42,8 +42,8 @@ export function LoginByDialog() {
       );
       if (status === 200) {
         toast.success('Амжилттай нэвтэрлээ.', { className: 'custom-toast success' });
-        document.cookie = `authtoken=${data.token}; path=/; domain=.verse.mn; domain=localhost; Secure; SameSite=Lax`;
-        document.cookie = `userId=${data.userId}; path=/; domain=.verse.mn; domain=localhost; Secure; SameSite=Lax`;
+        document.cookie = `authtoken=${data.token}; path=/; domain=.verse.mn;  Secure; SameSite=Lax`;
+        document.cookie = `userId=${data.userId}; path=/; domain=.verse.mn;  Secure; SameSite=Lax`;
         setTimeout(() => {
           window.location.reload();
         }, 1000);
@@ -71,8 +71,8 @@ export function LoginByDialog() {
   };
 
   function deleteCookie() {
-    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; domain=localhost; Secure; SameSite=Lax;';
-    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn; domain=localhost; Secure; SameSite=Lax';
+    document.cookie = 'authtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn;  Secure; SameSite=Lax;';
+    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.verse.mn;  Secure; SameSite=Lax';
     window.location.reload();
   }
 

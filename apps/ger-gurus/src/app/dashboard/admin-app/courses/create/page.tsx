@@ -37,7 +37,7 @@ export default function Page() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto flex items-center justify-center h-screen flex-col prose">
+    <main className="max-w-5xl mx-auto flex items-center justify-center h-screen flex-col prose">
       <h3 className="">Та хичээлдээ нэр өгнө үү</h3>
       <p>Хичээлийн нэрийг дараа сольж болно</p>
 
@@ -69,6 +69,6 @@ export default function Page() {
           </div>
         </form>
       </Form>
-    </div>
+    </main>
   );
 }
