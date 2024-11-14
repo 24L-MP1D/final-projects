@@ -58,6 +58,7 @@ export async function PUT(request: Request) {
     const { searchValue, status, userId, page, limit, categoryId } = body;
 
     if (categoryId) product.categoryId = categoryId;
+    console.log(categoryId);
     if (status) product.status = 'Accept';
     if (userId) product.userId = new ObjectId(String(userId));
     if (searchValue) {

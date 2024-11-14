@@ -54,9 +54,11 @@ export default function Page() {
         Log out
       </div>
       <div>
-        <h1 className="text-2xl font-bold mb-4 text-center text-primary">Контент Бүтээх Адал Явдалд Тавтай Морилно Уу!</h1>
-        <p className="mb-6 text-center text-gray-700">Дэлхийтэй хуваалцах чадвар болон мэдлэгээ оруулан өөрийн өвөрмөц орон зайг бий болгох гэж байгаа танд баяр хүргэе!</p>
-        <p className="mb-6 text-center text-base-content">Та давтагдашгүй домайн нэр оруулна уу.</p>
+        <div className="prose">
+          <h1 className="text-2xl font-bold mb-4 text-center text-primary">Контент Бүтээх Адал Явдалд Тавтай Морилно Уу!</h1>
+          <p className="mb-6 text-center text-gray-700">Дэлхийтэй хуваалцах чадвар болон мэдлэгээ оруулан өөрийн өвөрмөц орон зайг бий болгох гэж байгаа танд баяр хүргэе!</p>
+          <p className="mb-6 text-center text-base-content">Та давтагдашгүй домайн нэр оруулна уу.</p>
+        </div>
 
         <div className="flex flex-col items-center">
           <Form {...form}>

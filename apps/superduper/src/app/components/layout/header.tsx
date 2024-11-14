@@ -1,5 +1,4 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import * as Ably from 'ably';
 import Cookies from 'js-cookie';
 import { Bell, ChevronDown, CircleUser, LogOut, UserRoundPen } from 'lucide-react';
@@ -8,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
+import '../../styles.css';
 
 import { RealtimeNotif } from '@/app/client/layout';
 import Image from 'next/image';
@@ -44,11 +44,7 @@ export default function Header() {
     });
     const data = await response.json();
     setNotifications(data);
-    setIsSeenNotif(
-      data.map((data: notifications) => {
-        return !data.isSeen && data;
-      })
-    );
+    setIsSeenNotif(data.filter((data: notifications) => data.isSeen == false));
     const channel = ably.channels.get('notifications');
     await channel.subscribe('new-notification', (message) => {
       setNotifications((prev) => [...prev, message.data]);
@@ -59,7 +55,7 @@ export default function Header() {
     const cookie = Cookies.get('token');
     if (cookie) {
       setSignin(true);
-      loadNotif();
+      if (currentUser?._id) loadNotif();
     }
   }, [currentUser]);
 
@@ -106,14 +102,30 @@ export default function Header() {
   }, [value?.favourite]);
   const logOut = () => {
     Cookies.remove('token');
+
     window.location.reload();
+  };
+
+  const jumpProductDetailfromSearch = (id: string) => {
+    value?.setSearchValue('');
+    router.push(`/client/productDetails/${id}`);
+  };
+  const notificationUpdate = async (id: string) => {
+    try {
+      await fetch(`/api/notifications/${id}`, {
+        method: 'PUT',
+      });
+    } catch (err) {
+      throw new Error('aldaa notif');
+    }
+    setShowNotif(false);
   };
   return (
     <div onClick={() => showNotif && setShowNotif(false)} className=" pt-5 flex items-center max-w-[1280px] ">
       <div className="bg-[#1F1F1FF2] py-4 px-6  max-w-[1280px] rounded-2xl flex-1">
-        <div className="flex  justify-between">
+        <div className="flex justify-between">
           <div className="flex items-center gap-16 w-[200px]">
-            <Link href={'/client'} className="flex gpa-1 items-center gap-3">
+            <Link href="/client" className="flex hover:cursor-pointer items-center gap-3">
               <Image src="/logo.png" width={60} height={60} alt="logo" className="rounded-full w-[50px] h-[50px] " />
               <div className="text-white font-bold">Bidscape</div>
             </Link>
@@ -128,12 +140,16 @@ export default function Header() {
               {value?.searchValue && (
                 <div className="absolute z-50 bg-white w-full max-h-[500px] overflow-y-scroll top-10 rounded-xl">
                   {value?.products.map((product) => (
-                    <Link href={`/client/productDetails/${product._id}`} key={product._id} className="flex gap-2 items-center p-2 border-b border-blue-200">
+                    <div
+                      onClick={() => jumpProductDetailfromSearch(product._id)}
+                      key={product._id}
+                      className="flex gap-2 hover:cursor-pointer active:bg-slate-200 items-center p-2 border-b border-blue-200"
+                    >
                       <div className="flex-1">{product.productName}</div>
                       <div className="">
                         <Image src={product.frontImage || '/'} alt="image" width={100} height={100} className="rounded-full w-16 h-16" />
                       </div>
-                    </Link>
+                    </div>
                   ))}
                 </div>
               )}
@@ -141,34 +157,40 @@ export default function Header() {
           </div>
 
           <div className="flex gap-5 items-center">
-            <div onClick={() => value?.setShowCategory(true)} className="flex gap-1 cursor-pointer items-center text-white">
+            <div onClick={() => value?.setShowCategory(true)} className="flex gap-1 cursor-pointer items-center text-white px-3 xl:px-4  hover:bg-[#3D3D3D] rounded-lg p-2 font-semibold">
               Ангилалууд
               <ChevronDown size={16} color="white" />
             </div>
-            <button onClick={sell} className="bg-[#333333] hover:border-b-[1px] hover:border-black text-white">
+            <div onClick={sell} className="flex gap-1 cursor-pointer items-center text-white px-3 xl:px-4  hover:bg-[#3D3D3D] rounded-lg p-2 font-semibold">
               Зарах
-            </button>
-            <Link href="/chatbot" className="bg-[#333333] hover:border-b-[1px] hover:border-black text-white">
+            </div>
+            <Link href="/chatbot" className="flex gap-1 cursor-pointer items-center text-white px-3 xl:px-4  hover:bg-[#3D3D3D] rounded-lg p-2 font-semibold">
               Тусламж
             </Link>
           </div>
-          <div className="flex gap-4 items-center w-[150px] ">
-            <div className="relative hover:cursor-pointer">
+
+          <div className="flex gap-4 items-center w-[150px] mr-10">
+            <div className="relative hover:cursor-pointer  ">
               <FaRegHeart size={24} color="white" onClick={save} />
-              {favlength === 0 ? null : <div className="absolute left-5 bottom-4  bg-red-500 text-white rounded-full w-5 h-5 text-center text-sm">{favlength}</div>}
+              {favlength === 0 ? null : <div className="absolute left-4 bottom-4 bg-red-500 text-white rounded-full w-5 h-5 text-center text-[13px]">{favlength}</div>}
             </div>
             {signin ? (
-              <div className="flex relative gap-5 items-center p-1">
-                <div onClick={() => setShowNotif(true)} className="hover:cursor-pointer">
+              <div className="flex gap-5 items-center p-1 relative">
+                <div onClick={() => setShowNotif(true)} className="hover:cursor-pointer ">
                   <div className="relative ">
                     <Bell color="white" />
-                    {isSeenNotif.length > 0 && <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm top-[-5px] left-0 text-white">{isSeenNotif.length}</div>}
+                    {currentUser?._id && isSeenNotif.length > 0 && (
+                      <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm top-[-12px] left-3 text-white">{isSeenNotif.length}</div>
+                    )}
                   </div>
                   {showNotif && (
-                    <div className="absolute top-12 left-0 z-50">
-                      {notifications.map((notification) => (
-                        <div key={notification._id} onClick={() => setShowNotif(false)} className={`p-2 hover:cursor-pointer shadow border ${notification.isSeen ? 'bg-slate-100' : 'bg-red-200'}`}>
-                          {notification.message}
+                    <div className="absolute top-12 left-[-300px] list-decimal right-0 z-50 max-w-[400px]">
+                      {notifications.map((notification, index) => (
+                        <div key={notification._id} onClick={() => notificationUpdate(notification._id)} className={`border-b rounded-lg items-center border-white p-2 bg-[#1F1F1FF2] text-white flex`}>
+                          <div>
+                            {index + 1}. {notification.message}
+                          </div>
+                          {isSeenNotif.length ? <div className="text-sm text-red-500 ml-7">new product notification</div> : <div className="text-sm text-red-500 ml-7">old product notification</div>}
                         </div>
                       ))}
                     </div>
@@ -187,21 +209,22 @@ export default function Header() {
                       <div>
                         <CircleUser />
                       </div>
-                      <div>Account</div>
+                      <div>Профайл</div>
                     </Link>
                     <div onClick={logOut} className="border-b rounded-lg border-white p-2 bg-[#1F1F1FF2] text-white flex gap-2">
                       <div>
                         <LogOut />
                       </div>
-                      <div>Sign-out</div>
+                      <div>Гарах</div>
                     </div>
                   </div>
                 </div>
               </div>
             ) : (
-              <Button onClick={() => router.push(`/client/sign-in`)} className="bg-[#333333] rounded-none">
+              <button onClick={() => router.push(`/client/sign-in`)} className="rounded-2xl hover:cursor-auto font-extralight shadow__btn">
+                {' '}
                 Нэвтрэх
-              </Button>
+              </button>
             )}
           </div>
         </div>

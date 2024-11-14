@@ -17,11 +17,11 @@ export default function Page() {
       .then(({ data, status, statusText }) => {
         localStorage.setItem('email', JSON.stringify(data.email));
         if (status === 200) {
-          toast('Check your e-mail!');
+          toast('Имэйлээ шалгана уу!');
           window.location.href = '/client/forgotten-otp';
         } else {
           status === 404;
-          toast('This e-mail does not registered!');
+          toast('Энэ и-мэйл бүртгүүлээгүй байна!');
         }
         setLoading(false);
       })
@@ -38,7 +38,7 @@ export default function Page() {
         <p className="text-[24px] font-bold mt-8">Имэйл хаягаа оруулна уу</p>
         <p>Имэйл хаягаа оруулаад ИЛГЭЭХ товчийг дарна уу. Та таван минутын дотор ОТП дугаартай имэйл хүлээн авах болно.</p>
         <div>
-          <input onChange={(e) => setEmail(e.target.value)} placeholder="Email address" className="border-2 bg-slate-50 rounded-3xl w-full p-3" />
+          <input onChange={(e) => setEmail(e.target.value)} placeholder="Имэйл хаяг" className="border-2 bg-slate-50 rounded-3xl w-full p-3" />
         </div>
         <Button className="bg-blue-500 mb-8 disabled:cursor-not-allowed" onClick={Submit} disabled={loading}>
           {loading && <Image src={'/images/spinner.svg'} alt="a" width={40} height={40} />}

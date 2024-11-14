@@ -26,9 +26,9 @@ export default function Page() {
   };
 
   const validationSchema = yup.object().shape({
-    frontImage: yup.mixed().required('image must be required'),
-    backImage: yup.mixed().required('image must be required'),
-    detailImage: yup.mixed().required('image must be required'),
+    frontImage: yup.mixed().required('зураг байх ёстой'),
+    backImage: yup.mixed().required('зураг байх ёстой'),
+    detailImage: yup.mixed().required('зураг байх ёстой'),
   });
 
   const formik = useFormik({
@@ -110,7 +110,7 @@ export default function Page() {
           </div>
 
           <div className="flex gap-5 relative left-[-50px] items-center">
-            <div>Category</div>
+            <div>Ангилал</div>
             <div>Дэлгэрэнгүй</div>
             <div>Зураг</div>
             <div className="text-[#f3f3f3] ml-3">Логистик</div>

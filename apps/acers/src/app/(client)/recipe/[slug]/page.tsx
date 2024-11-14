@@ -1,11 +1,11 @@
 'use client';
-import Ably from 'ably';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Bookmark, Calendar, Ellipsis, Heart, MessageSquare, TrendingUp, Upload } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Advertisement from '../../ads/ads';
 import { Stars } from '../../components/itemComponents/stars';
 import { ScrollArea } from '../../components/ui/scroll-area';
 import { Table, TableBody, TableCaption, TableCell, TableHeader, TableRow } from '../../components/ui/Table';
@@ -98,34 +98,6 @@ export default function RecipeComponent() {
   }, [slug]);
 
   useEffect(() => {
-    const fetchAds = async () => {
-      try {
-        const response = await axios.get('/api/ads');
-        setAds(response.data);
-      } catch (error) {
-        console.error('Error fetching ads:', error);
-      }
-    };
-    fetchAds();
-  }, []);
-
-  const handleMouseEnter = () => {
-    if (ads.images && Array.isArray(ads.images)) {
-      setAdsHover((prev) => (prev === ads.images.length - 1 ? 0 : prev + 1));
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setAdsHover(0);
-  };
-
-  const handleAdClick = () => {
-    if (ads.link) {
-      window.open(ads.link, '_blank');
-    }
-  };
-
-  useEffect(() => {
     if (slug && typeof slug === 'string') {
       const fetchRecipe = async () => {
         try {
@@ -140,25 +112,25 @@ export default function RecipeComponent() {
     }
   }, [slug]);
 
-  // const handleCommentSubmit = async () => {
-  //   if (!newComment.trim()) return;
+  const handleCommentSubmit = async () => {
+    if (!newComment.trim()) return;
 
-  //   useConnectionStateListener('connected', () => {
-  //     console.log('Connected to Ably');
-  //   });
+    useConnectionStateListener('connected', () => {
+      console.log('Connected to Ably');
+    });
 
-  //   try {
-  //     const response = await axios.post(`/api/recipe/${slug}/comment`, {
-  //       comment: newComment,
-  //     });
-  //     if (response.data.success) {
-  //       setComments((prev) => [...prev, response.data.comment]);
-  //       setNewComment('');
-  //     }
-  //   } catch (error) {
-  //     console.error('Failed to submit comment:', error);
-  //   }
-  // };
+    try {
+      const response = await axios.post(`/api/recipe/${slug}/comment`, {
+        comment: newComment,
+      });
+      if (response.data.success) {
+        setComments((prev) => [...prev, response.data.comment]);
+        setNewComment('');
+      }
+    } catch (error) {
+      console.error('Failed to submit comment:', error);
+    }
+  };
 
   return (
     <div className="w-[1110px] m-auto flex flex-col gap-6 font-serif">
@@ -182,7 +154,7 @@ export default function RecipeComponent() {
           <div className="flex">
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-3">
-                <div className="bg-gray-300 w-[50px] h-[50px] rounded-full"></div> 
+                <div className="bg-gray-300 w-[50px] h-[50px] rounded-full"></div>
                 <p>{user.firstName || 'Anonymous'}</p>
               </div>
               <div className="flex gap-2">
@@ -294,28 +266,11 @@ export default function RecipeComponent() {
                   </div>
                 ))}
               </div>
-              <div className="ad-section bg-gray-300 w-full h-[200px] relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleAdClick}>
-                {ads?.images?.length > 0 ? (
-                  <div className="ad-images flex justify-center items-center w-full h-full">
-                    <img src={ads.images[adsHover]} alt={`Ad Image ${adsHover + 1}`} className="ad-image w-[30%] h-full object-cover mx-2" />
-                  </div>
-                ) : (
-                  <p>No ads available</p>
-                )}
-              </div>
+              <Advertisement />
             </div>
           </div>
           <p>Already made this?</p>
-          {/* {isLoggedIn ? (
-          <button onClick={handleCommentSubmit}>Share your feedback</button>
-        ) : (
-          <div className="flex gap-1">
-            <a href="/login" className="text-orange-500">
-              Login
-            </a>
-            <p> to post a comment</p>
-          </div>
-        )} */}
+        
           <div className="h-3 bg-orange-400"></div>
           <div>
             <p>{comments.length} Comments</p>
@@ -332,7 +287,7 @@ export default function RecipeComponent() {
                           <div className="w-12 h-12 rounded-full bg-gray-300"></div>
                         </TableCell>
                         <TableCell className="flex flex-col gap-1">
-                          <p className="pt-2">{user.firstName}</p>
+                          <p className="pt-2">{comment.firstName}</p>
                           <p className="text-gray-400">{dayjs(comment.createdAt).fromNow()}</p>
                           <p className="p-4">{comment.comment}</p>
                           <div className="flex items-center text-gray-400 gap-4">
@@ -356,7 +311,7 @@ export default function RecipeComponent() {
                 </TableBody>
               </Table>
             </ScrollArea>
-            {/* {isLoggedIn && (
+
             <div className="relative">
               <input
                 className="h-[40px] w-full max-w-[1110px] bg-gray-200 rounded p-4"
@@ -369,7 +324,6 @@ export default function RecipeComponent() {
                 Post Comment
               </button>
             </div>
-          )} */}
           </div>
           <p>You might also like</p>
           <div></div>
@@ -378,3 +332,14 @@ export default function RecipeComponent() {
     </div>
   );
 }
+
+
+
+enum Role {
+  GOLD = 'gold',
+  SILVER = 'silver',
+  BRONZE = 'bronze',
+  FREE = 'free',
+  admin = 'admin',
+}
+

@@ -42,7 +42,9 @@ export default function Page() {
   return (
     <main className="max-w-[1000px] ">
       <Link href="/admin-app/courses/create">
-        <button className="btn btn-primary hover:bg-transparent my-8 text-base">Шинэ хичээл нэмэх</button>
+        <button className="btn btn-primary hover:bg-transparent my-8 prose">
+          <h3>Шинэ хичээл нэмэх</h3>
+        </button>
       </Link>
 
       <Table>

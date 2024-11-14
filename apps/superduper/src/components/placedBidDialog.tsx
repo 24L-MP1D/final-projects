@@ -13,7 +13,7 @@ export function PlacedBidDialog({ secondDialog, setSecondDialog, bid }: Props) {
           <X className="flex-1 hover:cursor-pointer " onClick={() => setSecondDialog(false)} />
         </DialogHeader>
         <div className="text-2xl">Та үнийн саналаа амжилттай байршууллаа</div>
-        <div className="text-center text-3xl mb-2">€ {bid}</div>
+        <div className="text-center text-3xl mb-2">₮ {bid}</div>
       </DialogContent>
     </Dialog>
   );

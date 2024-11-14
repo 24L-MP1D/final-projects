@@ -58,9 +58,9 @@ const Order = () => {
   }, [incomeFilter]);
 
   return (
-    <div className="flex max-w-[1440px] ">
+    <div className="flex max-w-[1440px] bg-gradient-to-r from-pink-100 to-white ">
       <LeftBar />
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full ml-6 ">
         <div className="mx-[23.5px] mt-[34px] mb-6 flex justify-between ">
           <div className="flex  gap-2">
             <Button

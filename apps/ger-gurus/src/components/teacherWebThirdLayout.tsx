@@ -60,15 +60,15 @@ const TeacherWebThirdLayout: React.FC = () => {
       {/* Free Lessons Section */}
       <div className="mb-8">
         <div className="text-center mb-4">
-          <h1 className="text-3xl font-semibold text-gray-700">ШИНЭ ХИЧЭЭЛҮҮД</h1>
+          <h1 className="text-2xl font-semibold text-gray-700">ШИНЭ ХИЧЭЭЛҮҮД</h1>
         </div>
 
-        <div className="flex gap-6 justify-center">
+        <div className="flex gap-8 justify-center">
           {freeVideos.map((video, index) => (
             <div key={video.id} className="relative">
               <video
                 id={`free-${index}`}
-                className="rounded-md shadow-sm"
+                className="rounded-md shadow-sm w-[450px]"
                 muted
                 loop
                 aria-label={video.alt}
@@ -80,12 +80,12 @@ const TeacherWebThirdLayout: React.FC = () => {
 
               <div
                 onClick={() => handlePlayPause('free', index)}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg cursor-pointer"
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-3 rounded-full shadow-lg cursor-pointer"
               >
                 {isPlaying[`free-${index}`] ? (
-                  <Pause className="text-gray-800 w-6 h-6" />
+                  <Pause className="text-green-600 w-6 h-6" />
                 ) : (
-                  <PlayIcon className="text-gray-800 w-6 h-6" />
+                  <PlayIcon className="text-green-600 w-6 h-6" />
                 )}
               </div>
             </div>
@@ -96,7 +96,7 @@ const TeacherWebThirdLayout: React.FC = () => {
       {/* New Lessons Section */}
       <div>
         <div className="text-center mb-4">
-          <h1 className="text-3xl font-semibold text-gray-700">ҮНЭГҮЙ ХИЧЭЭЛҮҮД</h1>
+          <h1 className="text-2xl font-semibold text-gray-700">ҮНЭГҮЙ ХИЧЭЭЛҮҮД</h1>
         </div>
 
         <div className="flex gap-6 justify-center">
@@ -104,7 +104,7 @@ const TeacherWebThirdLayout: React.FC = () => {
             <div key={video.id} className="relative">
               <video
                 id={`new-${index}`}
-                className="rounded-md shadow-sm"
+                className="rounded-md shadow-sm w-[450px]"
                 muted
                 loop
                 aria-label={video.alt}
@@ -116,18 +116,19 @@ const TeacherWebThirdLayout: React.FC = () => {
 
               <div
                 onClick={() => handlePlayPause('new', index)}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg cursor-pointer"
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-3 rounded-full shadow-lg cursor-pointer"
               >
                 {isPlaying[`new-${index}`] ? (
-                  <Pause className="text-gray-800 w-6 h-6" />
+                  <Pause className="text-green-600 w-6 h-6" />
                 ) : (
-                  <PlayIcon className="text-gray-800 w-6 h-6" />
+                  <PlayIcon className="text-green-600 w-6 h-6" />
                 )}
               </div>
             </div>
           ))}
         </div>
       </div>
+      <div className="mt-16 border-green-300 border"/>
     </div>
   );
 };

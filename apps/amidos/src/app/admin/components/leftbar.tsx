@@ -12,10 +12,11 @@ export default function LeftBar() {
 }
 function Component1() {
   return (
-    <div className=" w-[400px] pr-8 h-[800px]">
-      <Sidebar className="dropdown">
-        <div className="text-3xl text-center text-bold italic text-[#52071B]">AMIDO'S</div>
-        <Sidebar.Items className="ml-4 text-md">
+    // <div className="  bg-gradient-to-r from-pink-100 to-white mr-6">
+    <Sidebar className="p-0">
+      <div className="dropdown rounded-lg bg-gradient-to-r from-pink-100 to-white  w-[400px] h-[800px]">
+        <div className="text-3xl  text-center text-bold italic text-[#52071B] ">AMIDO'S</div>
+        <Sidebar.Items className="m-4 text-md">
           <Sidebar.ItemGroup>
             <Sidebar.Item href="/admin" className="text-black text-2xl italic hover:text-[#52071B]" icon={HiChartPie}>
               Хяналтын самбар
@@ -25,13 +26,13 @@ function Component1() {
                 Бүтээгдэхүүн
               </Sidebar.Item>
               <Sidebar.Item href="/admin/successfullorder" className="text-xl italic hover:text-[#52071B]">
-                Хүргэлт
-              </Sidebar.Item>
-              <Sidebar.Item href="#" className="text-xl italic hover:text-[#52071B]">
-                Буцаалт
+                Хүргэлтийн захиалга
               </Sidebar.Item>
               <Sidebar.Item href="/admin/tablesOrder" className="text-xl italic hover:text-[#52071B]">
                 Ширээ захиалга
+              </Sidebar.Item>
+              <Sidebar.Item href="#" className="text-xl italic hover:text-[#52071B]">
+                Буцаалт
               </Sidebar.Item>
             </Sidebar.Collapse>
 
@@ -43,8 +44,9 @@ function Component1() {
             </Sidebar.Item>
           </Sidebar.ItemGroup>
         </Sidebar.Items>
-      </Sidebar>
-    </div>
+      </div>
+    </Sidebar>
+    // </div>
   );
 }
 //href="/admin/orders"
