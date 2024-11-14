@@ -231,7 +231,9 @@ export default function Index() {
             </div>
           )}
           {value.showCategory && <div className="fixed inset-0 bg-slate-500 opacity-50"></div>}
-          {value.showCategory && <Categories />}
+
+          <Categories />
+
         </div>
       )}
     </div>

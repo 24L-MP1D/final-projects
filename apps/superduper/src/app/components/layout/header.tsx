@@ -120,6 +120,13 @@ export default function Header() {
     }
     setShowNotif(false);
   };
+  const firstName = (name: string) => {
+    let shortName = '';
+    for (let i = 0; i < 4; i++) {
+      shortName += name[i];
+    }
+    return shortName;
+  };
   return (
     <div onClick={() => showNotif && setShowNotif(false)} className=" pt-5 flex items-center max-w-[1280px] ">
       <div className="bg-[#1F1F1FF2] py-4 px-6  max-w-[1280px] rounded-2xl flex-1">
@@ -196,11 +203,11 @@ export default function Header() {
                     </div>
                   )}
                 </div>
-                <div className="group relative">
-                  <div className="flex gap-2 hover:cursor-pointer text-white hover:text-slate-300">
+                <div className="group relative flex-1">
+                  <div className="flex gap-2 hover:cursor-pointer  text-white hover:text-slate-300">
                     <UserRoundPen color="white" />
-                    <div className="flex">
-                      {currentUser?.firstName}
+                    <div className="flex max-w-10">
+                      {currentUser?.firstName && firstName(currentUser.firstName)}
                       <ChevronDown />
                     </div>
                   </div>
