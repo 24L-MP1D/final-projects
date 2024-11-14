@@ -1,7 +1,9 @@
 'use client';
+import Editor from '@/components/blockNoteEditor';
 import { Preview } from '@/components/preview';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { cn } from '@/lib/utils';
+import { useCreateBlockNote } from '@blocknote/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { Pencil } from 'lucide-react';
@@ -33,11 +35,15 @@ export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ 
     defaultValues: initialData,
   });
 
+  const editor = useCreateBlockNote();
+
   const { isSubmitting, isValid } = form.formState;
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await axios.patch(`/api/courses/${initialData.courseId}/chapters/${initialData._id}`, values);
+      const content = editor.document;
+      console.log(content);
+      const response = await axios.patch(`/api/courses/${initialData.courseId}/chapters/${initialData._id}`, content);
       toast.success('Chapter description updated');
       toggleEdit();
       router.refresh();
@@ -47,8 +53,8 @@ export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ 
   }
   return (
     <div className="mt-6 border rounded-md p-4 shadow-xl">
-      <div className="font-medium flex items-center justify-between">
-        Бүлгийн тайлбар
+      <div className="prose flex items-center justify-between">
+        <h4>Бүлгийн тайлбар</h4>
         <button className="btn btn-ghost hover:scale-105 transition" onClick={toggleEdit}>
           {isEditing && <>Болих</>}
           {!isEditing && (
@@ -68,24 +74,42 @@ export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ 
       {isEditing && (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
+            {/* Description field with custom editor */}
             <FormField
               control={form.control}
               name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <textarea className="textarea textarea-primary form-control w-full" placeholder="" {...field}></textarea>
+                    {/* Integrate BlockNoteEditor with form */}
+                    <Editor editor={editor} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {/* Submit button */}
             <div className="flex items-center gap-2">
-              <button disabled={!isValid || isSubmitting} type="submit" className="btn btn-primary btn-outline">
+              <button disabled={!form.formState.isValid || form.formState.isSubmitting} type="submit" className="btn btn-primary btn-outline">
                 Хадгалах
               </button>
             </div>
           </form>
+          {/* <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/bqhwlU8qVsk?"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe> */}
+
+          {/* <iframe
+            src="https://player.vimeo.com/video/821101511?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+            title="THANK YOU FOR NOT ANSWERING"
+          ></iframe> */}
         </Form>
       )}
     </div>

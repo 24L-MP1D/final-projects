@@ -75,36 +75,39 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
   }, [showDate]);
 
   return (
-    <div className="max-w-[400px] w-full" ref={sticky}>
-      {new Date().getTime() <= endDate && new Date().getTime() >= startDate ? (
-        <div>
-          Дуусах хугацаа{showDate?.day}d {showDate?.dateHours}h {showDate?.dateMinuts}m {showDate?.dateSecunds}s
-        </div>
-      ) : (
-        <div>{dayjs(startDate).format('YYYY-MM-DD')}нд эхэлнэ</div>
-      )}
-      <div className="border-2 border-t-2 border-t-blue-600 border-b-2 border-slate-300">
-        <div className="mt-3  py-8 px-6">
+    <div className="max-w-[400px] w-full pt-10" ref={sticky}>
+      <div className="p-6 bg-gradient-to-r from-blue-400 to-indigo-400 text-white text-center font-bold text-xl rounded-t-lg shadow-lg">
+        <div className="text-[12px] uppercase tracking-wider">Энэ бүтээгдэхүүний дуудлага худалдаа</div>
+        {new Date().getTime() <= endDate && new Date().getTime() >= startDate ? (
+          <div className="mt-2 text-2xl font-extrabold">
+            Дуусах хугацаа: {showDate?.day}өдөр {showDate?.dateHours}цаг {showDate?.dateMinuts}минут {showDate?.dateSecunds}секунд
+          </div>
+        ) : (
+          <div className="mt-2 text-lg text-gray-100">{dayjs(startDate).format('YYYY.MM.DD')}нд эхэлнэ</div>
+        )}
+      </div>
+      <div className="border-2 border-t-2 border-blue-400  shadow-md">
+        <div className="mt-3 py-8 px-6">
           <div className="flex flex-col gap-2">
-            <div className="text-sm">Одоогийн үнийн санал</div>
-            <div className="font-bold text-3xl"> {maximumBid} ₮</div>
-            <div className="text-sm">Нөөцийн үнэ хангагдаагүй</div>
+            <div className="text-sm text-[#333]">Одоогийн үнийн санал</div>
+            <div className="font-bold text-3xl text-[#333]">{maximumBid} ₮</div>
           </div>
         </div>
-        <div className="flex flex-col gap-2 pt-8 px-4">
+        <div className="flex flex-col gap-2 pt-4 px-4">
           <div className="flex gap-4">
-            <div onClick={() => formikSetFieldValue('bid', Math.ceil(maximumBid) + 5000)} className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer">
+            <div onClick={() => formikSetFieldValue('bid', Math.ceil(maximumBid) + 5000)} className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer shadow-md">
               {Math.ceil(maximumBid) + 5000}
             </div>
-            <div onClick={() => formikSetFieldValue('bid', Math.ceil(maximumBid) + 10000)} className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer">
+            <div onClick={() => formikSetFieldValue('bid', Math.ceil(maximumBid) + 10000)} className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer shadow-md">
               {Math.ceil(maximumBid) + 10000}
             </div>
-            <div onClick={() => formikSetFieldValue('bid', Math.ceil(maximumBid) + 15000)} className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer">
+            <div onClick={() => formikSetFieldValue('bid', Math.ceil(maximumBid) + 15000)} className="py-1 px-4 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer shadow-md">
               {Math.ceil(maximumBid) + 15000}
             </div>
           </div>
+
           {!(new Date().getTime() > endDate) ? (
-            <label className="border-solid bg-[#f8f7f8] flex gap-1 items-center py-1 px-3 w-full">
+            <label className="border-solid bg-[#f8f7f8] flex gap-1 items-center py-1 px-3 w-full shadow-sm">
               <div className="text-slate-500">₮</div>
               <Input
                 id="bid"
@@ -121,13 +124,13 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
           {formikTouched.bid && formikErrors.bid && <p className="ml-8 text-red-500">{formikErrors.bid}</p>}
           {!(new Date().getTime() > endDate) && (
             <div className="flex gap-1 w-full">
-              <Button type="submit" className="flex-1 hover:bg-blue-500 active:bg-blue-400 hover:text-white border-[1px] py-2 px-4 bg-white text-blue-500 text-center">
+              <Button type="submit" className="flex-1 hover:bg-blue-500 active:bg-blue-400 hover:text-white border-[1px] py-2 px-4 bg-white text-blue-500 text-center btn">
                 Үнийн санал оруулах
               </Button>
             </div>
           )}
         </div>
-        <div className="mt-8 flex flex-col gap-2.5 border-b-2 border-slate-300">
+        <div className="mt-8 flex flex-col gap-2.5 border-b-2 border-slate-300 shadow-sm">
           <Link href={'#satisfy'} className="px-4 flex items-center gap-2 text-green-400">
             <div>
               <ShieldCheck />
@@ -151,7 +154,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
         <div className="pt-8 px-4 flex flex-col gap-[40px]">
           <div className="overflow-y-scroll relative w-full max-h-80 flex flex-col gap-2">
             {bids.slice(0, 3).map((bid, index) => (
-              <div key={bid._id} className="flex justify-between items-center border-b border-solid border-slate-200">
+              <div key={bid._id} className="flex justify-between items-center border-b border-solid border-slate-200 shadow-sm">
                 <div>{bid.email}</div>
                 <div className="p-2">{bid.bid} ₮</div>
                 <div>{dayjs(bid.createdAt).format('YYYY-MM-DD')}</div>
@@ -167,7 +170,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
           )}
           <div className="overflow-y-scroll relative w-full max-h-80 flex flex-col gap-2">
             {bids.slice(3, showAllBids).map((bid, index) => (
-              <div key={bid._id} className="flex justify-between items-center border-b border-solid border-slate-200">
+              <div key={bid._id} className="flex justify-between items-center border-b border-solid border-slate-200 shadow-sm">
                 <div>{bid.userInfo[0].firstName}</div>
                 <div className="p-2">{bid.bid}</div>
                 <div>{dayjs(bid.createdAt).format('YYYY-MM-DD')}</div>
