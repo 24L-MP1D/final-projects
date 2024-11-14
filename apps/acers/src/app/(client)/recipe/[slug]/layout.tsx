@@ -1,5 +1,4 @@
-import Footer from '../components/footer';
-import Header from '../components/header';
+import { Protect } from '../../../components/userAccess';
 
 export const metadata = {
   title: 'Next.js',
@@ -7,11 +6,5 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div>
-      <Header />
-      {children}
-      <Footer />
-    </div>
-  );
+  return <Protect roles={['Free', 'Gold']}>{children}</Protect>;
 }

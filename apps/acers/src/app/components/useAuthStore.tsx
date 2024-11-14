@@ -3,10 +3,10 @@
 import { create } from 'zustand';
 
 type User = {
-  _id: string;
+  _id: any;
   email: string;
-  roles: string[];
-  displayName: string;
+  role: string;
+  firstName: string;
 };
 
 type AuthState = {

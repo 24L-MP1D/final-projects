@@ -3,6 +3,7 @@
 import { Search, UserCircle } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import ThemeBackground from '../(client)/settingswrapper';
 import HeaderNavigationMenu from './navigationMenu';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -89,6 +90,7 @@ export default function Header() {
             Багц
           </button>
         </div>
+        <ThemeBackground />
       </div>
       <HeaderNavigationMenu />
     </div>

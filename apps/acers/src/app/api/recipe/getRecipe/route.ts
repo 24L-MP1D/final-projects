@@ -7,10 +7,8 @@ export async function POST(request: Request) {
     const body = await request.json().catch(() => ({}));
     const { tags, categoryid, role } = body;
 
-    // Initialize the query object
     const query: any = {};
 
-    // Handling the 'Free' role case
     if (role) {
       const idList = await DB.collection('tiers').find().toArray();
       const belowList: any[] = [];
@@ -18,22 +16,19 @@ export async function POST(request: Request) {
       for (const tier of idList) {
         belowList.push(tier._id.toString());
         if (tier.name === role) {
-          break; // Exit the loop if the role matches
+          break;
         }
       }
 
       console.log('lowList    ', belowList);
-      // Correct the $in operator usage
       query.availability = { $in: belowList };
     }
 
-    // Add tags to the query if provided
     if (tags && tags.length > 0) {
       const updatedTags = tags.map((tag: string) => new ObjectId(tag));
-      query.tags = { $elemMatch: { $in: updatedTags } }; // Check if any of the tags match
+      query.tags = { $elemMatch: { $in: updatedTags } };
     }
 
-    // Add categoryid to the query if provided
     if (categoryid) {
       query.categoryid = categoryid;
     }
