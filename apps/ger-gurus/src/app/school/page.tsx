@@ -1,7 +1,7 @@
 'use client';
-
 import { useAuthStore } from '@/components/components/useAuthStore';
 import FlowText from '@/components/FlowText';
+import { LoginByDialog } from '@/components/LoginByDialog';
 import LogoGallery from '@/components/LogoGallery';
 
 import TeacherWebSecondLayout from '@/components/teacherWebSecondLayout';
@@ -10,8 +10,7 @@ import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { CircleUser } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const globalStyles = `
   @keyframes floatBubbles {
@@ -45,17 +44,17 @@ const globalStyles = `
 export default function Page() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const currentUser = useAuthStore((state) => state.currentUser);
+  const [open, setOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [theme, setTheme] = useState<string>('light');
-
-  const [url, setUrl] = useState('');
+  const [domain, setDomain] = useState<string>();
+  const inputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setUrl(window.location.origin);
-    }
-  }, []);
-  useEffect(() => {
+    const hostname = window.location.hostname;
+    setDomain(hostname);
+    const currentHostname = hostname === 'localhost' ? process.env.CURRENT_HOST : hostname;
+    console.log(currentHostname);
     const currentTheme = document.documentElement.getAttribute('data-theme');
     setTheme(currentTheme || 'light');
 
@@ -97,10 +96,11 @@ export default function Page() {
     <main className="max-w-[1600px] mx-auto relative bg-base-100">
       <div className="flex justify-between items-center py-5 px-10">
         {/* Logo */}
+        {/* {loading && <div>loading...</div>}
+        {domain && !loading && <div>{domain} -н сургууль</div>} */}
         <div className="flex items-center w-60 h-12">
           <Image priority={true} src="/verse.png" width={99} height={29.3} alt="Logo" />
         </div>
-
         {/* Mobile Hamburger Icon */}
         <div className="md:hidden flex items-center">
           <button onClick={toggleMenu} className="text-green-950" aria-expanded={isMenuOpen ? 'true' : 'false'} aria-label="Toggle navigation menu">
@@ -109,15 +109,14 @@ export default function Page() {
             </svg>
           </button>
         </div>
-
         {/* Navigation Menu */}
         <ul className={`md:flex gap-6 text-base text-green-950 items-center font-bold ${isMenuOpen ? 'flex' : 'hidden'} md:flex`}>
           <li className="hover:text-green-600 cursor-pointer transition-all duration-200">ХИЧЭЭЛ</li>
           <li className="hover:text-green-600 cursor-pointer transition-all duration-200">БАГШИЙН ТУХАЙ</li>
         </ul>
-
         {/* Buttons */}
         <div className="flex gap-3 relative">
+          <LoginByDialog onOpen={open} setOpen={setOpen} />
           {currentUser ? (
             <div className="flex items-center">
               <CircleUser size={30} onClick={toggleDropdown} className="cursor-pointer" />
@@ -125,18 +124,17 @@ export default function Page() {
                 <div className="absolute top-full mt-2 right-0 w-48 bg-white border border-gray-300 rounded shadow-lg">
                   <ul className="flex flex-col">
                     <li onClick={deleteCookie} className="p-2 hover:bg-gray-100 cursor-pointer">
-                      Logout
+                      Гарах
                     </li>
                   </ul>
                 </div>
               )}
             </div>
           ) : (
-            <Link href={`https://dash.verse.mn/login?url=${url}`}>
-              <button className="text-black bg-white hover:bg-gray-200 border border-black hover:border-slate-500 btn">НЭВТРЭХ</button>
-            </Link>
+            <button onClick={() => setOpen(true)} className="text-black bg-white hover:bg-gray-200 border border-black hover:border-slate-500 btn">
+              НЭВТРЭХ
+            </button>
           )}
-          <button className={`bg-${theme === 'dark' ? 'green-600' : 'green-500'} hover:bg-${theme === 'dark' ? 'green-700' : 'green-600'} text-white bg-green-600 btn`}>ЗАХИАЛАХ</button>
         </div>
       </div>
 

@@ -25,6 +25,9 @@ const nextConfig = {
         pathname: '/**',
       }
     ],
+  },
+  env: {
+    CURRENT_HOST: process.env.CURRENT_HOST
   }
 };
 

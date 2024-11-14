@@ -7,12 +7,14 @@ import { CircleAlert, Eye, EyeOff, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { toast, Toaster } from 'sonner';
-import { useAuthStore } from './components/useAuthStore';
 import { Dialog, DialogContent, DialogOverlay, DialogTitle } from './ui/dialog';
 
-export function LoginByDialog() {
-  const currentUser = useAuthStore((state) => state.currentUser);
-  const [open, setOpen] = useState(false);
+interface OpenDialog {
+  onOpen: boolean;
+  setOpen: (open: boolean) => void;
+}
+
+export function LoginByDialog({ onOpen, setOpen }: OpenDialog) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -77,27 +79,14 @@ export function LoginByDialog() {
   }
 
   return (
-    <div>
-      <Dialog open={open}>
-        {currentUser ? (
-          <div className="flex justify-end p-1">
-            <div className="bg-green-500 hover:bg-opacity-90 cursor-pointer rounded-lg px-2 py-1" onClick={deleteCookie}>
-              Гарах
-            </div>
-          </div>
-        ) : (
-          <div className="flex justify-end p-1">
-            <div className="bg-green-500 hover:bg-opacity-90 cursor-pointer rounded-lg px-2 py-1" onClick={() => setOpen(true)}>
-              Нэвтрэх
-            </div>
-          </div>
-        )}
+    <main>
+      <Dialog open={onOpen}>
         <DialogOverlay onClick={() => setOpen(false)}>
           <Toaster />
         </DialogOverlay>
         <DialogContent aria-describedby="">
           <DialogTitle className="flex justify-between items-center">
-            Нэвтрэх <X onClick={() => setOpen(false)} />
+            Нэвтрэх <X className="cursor-pointer" onClick={() => setOpen(false)} />
           </DialogTitle>
 
           <div className="flex flex-col justify-center gap-12 h-[300px]">
@@ -143,6 +132,6 @@ export function LoginByDialog() {
           </div>
         </DialogContent>
       </Dialog>
-    </div>
+    </main>
   );
 }

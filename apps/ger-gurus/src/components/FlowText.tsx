@@ -34,6 +34,7 @@ export default function FlowText() {
             ref={(el) => {
               linesRef.current[index] = el;
             }}
+            contentEditable={true}
             className={`text-stroke ${colors[index] || 'text-[#2E7D32]'} transition-colors duration-500 text-[74px] font-black leading-none`}
           >
             {line}
