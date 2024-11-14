@@ -19,7 +19,6 @@ const Home = () => {
   const value = useContext(Context);
 
   const [CheckBoxArray, setCheckBoxArray] = useState<string[]>([]);
-
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState<ProductType[]>([]);
 
@@ -36,8 +35,11 @@ const Home = () => {
   const [searchValue, setSearchValue] = useState('');
 
   const [userId, setUserId] = useState('');
+
   const [page, setPage] = useState(1);
+
   const [count, setCount] = useState(6);
+
   const loadProduct = async () => {
     try {
       setLoading(true);

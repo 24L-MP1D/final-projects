@@ -16,7 +16,6 @@ import { ProductItem } from '../components/productItem';
 import { RealtimeNotif } from './layout';
 
 export default function Index() {
-  
   const [isClick, setClick] = useState(false);
   const value = useContext(RealtimeNotif);
   const [swiperProducts, setSwiperProducts] = useState<ProductType[]>([]);
@@ -111,7 +110,6 @@ export default function Index() {
     <div className={`max-w-[1280px]  mx-auto w-full`}>
       <div className="grid grid-cols-2 mt-0.5">
         <div className="w-[1280px] h-full">
-          
           <Swiper
             className="rounded-xl w-full"
             direction="horizontal"
@@ -256,11 +254,9 @@ export default function Index() {
             </div>
           )}
           {value.showCategory && <div className="fixed inset-0 bg-slate-500 opacity-50"></div>}
-          {value.showCategory && <Categories />}
-
+          <Categories />
         </div>
       )}
     </div>
-    
   );
 }

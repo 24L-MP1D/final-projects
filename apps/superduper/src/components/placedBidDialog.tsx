@@ -8,7 +8,7 @@ type Props = {
 export function PlacedBidDialog({ secondDialog, setSecondDialog, bid }: Props) {
   return (
     <Dialog open={secondDialog}>
-      <DialogContent className="sm:max-w-md px-2 py-6 text-center content-center">
+      <DialogContent className="sm:max-w-md border-red-300 border-2 px-2 py-6 text-center content-center">
         <DialogHeader className="flex items-end">
           <X className="flex-1 hover:cursor-pointer " onClick={() => setSecondDialog(false)} />
         </DialogHeader>

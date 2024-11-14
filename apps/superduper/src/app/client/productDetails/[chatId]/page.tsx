@@ -157,7 +157,6 @@ function Realtime({ chatId }: { chatId: string }) {
       updateWinnerStatus(data.userId);
     }
     setOneProduct(data);
-    setMaximumBid(data.startBid);
   };
 
   const handleFavourite = (productId: string) => {
@@ -244,7 +243,6 @@ function Realtime({ chatId }: { chatId: string }) {
       {open && <div className="fixed z-50 inset-0 bg-slate-500 opacity-50"></div>}
       {open && <BidDialog bid={formik.values.bid} open={open} setOpen={setOpen} />}
       <PlacedBidDialog secondDialog={secondDialog} setSecondDialog={setSecondDialog} bid={dialogsBid} />
-
       <div className="grid grid-cols-3 gap-10 w-full pt-10">
         {products.slice(0, 20).map((product) => (
           <ProductItem isClick={isClick} product={product} favourite={value?.favourite || []} key={product._id} onClickFavourite={() => handleFavourite(product._id)} />

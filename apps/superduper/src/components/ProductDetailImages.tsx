@@ -43,7 +43,7 @@ export const ProductDetailImages = ({ oneProduct }: { oneProduct: ProductType })
               transition={{ duration: 1 }}
               style={{ width: '100%', borderRadius: '8px', maxHeight: '650px', objectFit: 'cover', marginBottom: '20px' }}
               className="shadow"
-            />{' '}
+            />
           </div>
           <div className="flex flex-col gap-3 relative">
             <Image

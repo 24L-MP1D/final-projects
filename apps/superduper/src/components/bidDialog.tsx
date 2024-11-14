@@ -11,7 +11,7 @@ export const BidDialog = ({ open, setOpen, bid }: Props) => {
     <div className="bg-white fixed z-50 left-[50%] opacity-100 top-[50%] translate-x-[-50%] translate-y-[-50%]">
       <div className="sm:max-w-md py-6 text-center content-center px-6 text-[#000000]">
         <div className="text-center text-lg">Үүнийг өөрийн болгоход нэг алхам ойртлоо</div>
-        <div className="text-3xl">€ {bid}</div>
+        <div className="text-3xl">₮ {bid}</div>
         <div className="text-sm mt-4 text-[#565b60]">
           Сануулахад, бүх үнийн санал хуулийн дагуу заавал дагаж мөрдөх ёстой хүчин төгөлдөр үнэ болно. Хэрэв та хамгийн өндөр үнийн санал өгсөн бол энэ объектын төлбөрийг төлөхийг зөвшөөрч байгаа
           болно.

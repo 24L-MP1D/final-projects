@@ -97,22 +97,22 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
         <div className="mt-3 py-8 px-6">
           <div className="flex flex-col gap-2">
             <div className="text-sm text-[#333]">Одоогийн үнийн санал</div>
-            <div className="font-bold text-3xl text-[#333]">{maximumBid} ₮</div>
+            <div className="font-bold text-3xl text-[#333]">{maximumBid ? maximumBid : oneProduct.startBid} ₮</div>
           </div>
         </div>
         <div className="flex flex-col gap-2 pt-4 px-4">
           <div className="flex gap-4">
             <div
-              onClick={() => formikSetFieldValue('bid', Math.ceil(maximumBid) + 5000)}
+              onClick={() => formikSetFieldValue('bid', Math.ceil(maximumBid ? maximumBid : oneProduct.startBid) + 5000)}
               className="py-1 px-4 flex-1 border-2 rounded-3xl text-center hover:bg-slate-50 hover:cursor-pointer shadow-md"
             >
-              {Math.ceil(maximumBid) + 5000}
+              {Math.ceil(maximumBid ? maximumBid : oneProduct.startBid) + 5000}
             </div>
             <div
-              onClick={() => formikSetFieldValue('bid', Math.ceil(maximumBid) + 10000)}
+              onClick={() => formikSetFieldValue('bid', Math.ceil(maximumBid ? maximumBid : oneProduct.startBid) + 10000)}
               className="py-1 px-4 text-center flex-1 border-2 rounded-3xl hover:bg-slate-50 hover:cursor-pointer shadow-md"
             >
-              {Math.ceil(maximumBid) + 10000}
+              {Math.ceil(maximumBid ? maximumBid : oneProduct.startBid) + 10000}
             </div>
           </div>
 
@@ -181,8 +181,8 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
           <div className="overflow-y-scroll relative w-full max-h-80 flex flex-col gap-2">
             {bids.slice(3, showAllBids).map((bid, index) => (
               <div key={bid._id} className="flex justify-between items-center border-b border-solid border-slate-200 shadow-sm">
-                <div>Дуудлага худалдаанд оролцогч {bidId(bid._id)}</div>
-                <div className="p-2">{bid.bid}</div>
+                <div>оролцогч {bidId(bid._id)}</div>
+                <div className="p-2">{bid.bid} ₮</div>
                 <div>{dayjs(bid.createdAt).format('YYYY.MM.DD')}</div>
               </div>
             ))}
