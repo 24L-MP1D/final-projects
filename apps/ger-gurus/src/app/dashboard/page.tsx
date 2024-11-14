@@ -29,10 +29,42 @@ export default function Page() {
     defaultValues: { domain: '' },
   });
 
+  function slugify(text: string): string {
+    const reservedWords = ['admin', 'user', 'login', 'dashboard', 'dash', 'school']; // Add more reserved words as needed
+
+    // Normalize text to handle accents and non-English characters
+    const normalizedText = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    const slug = normalizedText
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric characters with hyphens
+      .replace(/-+/g, '-') // Collapse multiple hyphens into one
+      .replace(/^-+|-+$/g, ''); // Remove leading and trailing hyphens
+
+    // Check if slug is a reserved word or too long
+    if (reservedWords.includes(slug) || slug.length > 40) {
+      return '';
+    }
+
+    return slug;
+  }
+
+  function isSlugEqual(input: string): boolean {
+    const slug = slugify(input);
+    // Check if input is already in slug format and if the slug is non-empty
+    return input === slug && slug.length > 0;
+  }
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await axios.post(`/api/check-domain`, { domain: `${values.domain}.verse.mn` });
-      setIsExisting(response.data); // instant
+      if (isSlugEqual(values.domain)) {
+        const response = await axios.post(`/api/check-domain`, { domain: `${values.domain}.verse.mn` });
+        setIsExisting(response.data); // instant
+      } else {
+        setIsExisting(true);
+      }
+
       toast.success('Checked if domain is available');
     } catch {
       toast.error('Something went wrong');

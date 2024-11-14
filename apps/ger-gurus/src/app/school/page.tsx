@@ -3,10 +3,10 @@
 import { useAuthStore } from '@/components/components/useAuthStore';
 import FlowText from '@/components/FlowText';
 import LogoGallery from '@/components/LogoGallery';
-
 import TeacherWebSecondLayout from '@/components/teacherWebSecondLayout';
 import TeacherWebThirdLayout from '@/components/teacherWebThirdLayout';
 import { Button } from '@/components/ui/button';
+import { fetcher } from '@/lib/fetcher';
 import { motion } from 'framer-motion';
 import { CircleUser } from 'lucide-react';
 import Image from 'next/image';
@@ -42,18 +42,31 @@ const globalStyles = `
   }
 `;
 
+interface CurrentSchool {
+  ownerName: string;
+}
+
 export default function Page() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const currentUser = useAuthStore((state) => state.currentUser);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [url, setUrl] = useState<string | null>(null);
   const [theme, setTheme] = useState<string>('light');
+  const [currentSchool, setCurrentSchool] = useState<CurrentSchool>();
 
-  const [url, setUrl] = useState('');
+  console.log({ currentSchool });
+
+  async function getCurrentSchool() {
+    try {
+      const response = await fetcher().get(`api/currentSchool`);
+      setCurrentSchool(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setUrl(window.location.origin);
-    }
+    getCurrentSchool();
   }, []);
   useEffect(() => {
     const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -161,7 +174,7 @@ export default function Page() {
         <div className="flex flex-col items-center mx-auto mt-20">
           <div className="text-9xl font-black text-green-600">
             <motion.h1 className="myclass text-9xl font-black text-white hero_h1-white text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-              Жерригийн сургуульд
+              {currentSchool?.ownerName}-н вэбсайтад
             </motion.h1>
 
             <motion.h1 className="text-9xl font-black text-green-600 hero_h1-green text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}>
@@ -180,6 +193,14 @@ export default function Page() {
             </motion.p>
 
             <div className="mt-6">
+              {/* VIDEO IS HERE
+              <iframe
+                src="https://player.vimeo.com/video/1029540703?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                width="720"
+                height="900"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                title="42.Ажил #2"
+              ></iframe> */}
               <Button className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg btn cursor-pointer scale-75">ЗАХИАЛАХ</Button>
             </div>
           </div>
