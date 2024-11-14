@@ -178,8 +178,7 @@ export default function Page() {
         <div className="flex flex-col items-center mx-auto mt-20">
           <div className="text-9xl font-black text-green-600">
             <motion.h1 className="myclass text-9xl font-black text-white hero_h1-white text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-              {currentSchool?.ownerName}
-              Жерригийн сургуульд
+              {currentSchool?.ownerName}-н вэбсайтад
             </motion.h1>
 
             <motion.h1 className="text-9xl font-black text-green-600 hero_h1-green text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}>
@@ -197,15 +196,15 @@ export default function Page() {
               Манай вебсайт нь дижитал артын салбарт шилдэг туршлагуудыг танилцуулж, суралцагчдад чанартай мэдлэгийг хялбархан, хүртээмжтэйгээр хүргэх зорилготой...
             </motion.p>
 
-            <div className="mt-6 bg-red-500">
-              VIDEO IS HERE
+            <div className="mt-6">
+              {/* VIDEO IS HERE
               <iframe
                 src="https://player.vimeo.com/video/1029540703?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                 width="720"
                 height="900"
                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
                 title="42.Ажил #2"
-              ></iframe>
+              ></iframe> */}
               <Button className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg btn cursor-pointer scale-75">ЗАХИАЛАХ</Button>
             </div>
           </div>
