@@ -19,7 +19,7 @@ type FeedBackInput = {
 };
 export const FeedBackInput = ({ setFeedBackInput, userId, loadProduct, productId }: FeedBackInput) => {
   const messageSchema = z.object({
-    feedback: z.string().min(5, { message: 'at least must be 5 letters' }).max(100, { message: 'max letters 100' }),
+    feedback: z.string().min(5, { message: 'хамгийн багадаа 5 үсэг байх ёстой' }).max(100, { message: 'дээд тал нь 100 үсэг' }),
   });
 
   type messageSchemaType = z.infer<typeof messageSchema>;
@@ -50,7 +50,7 @@ export const FeedBackInput = ({ setFeedBackInput, userId, loadProduct, productId
       channel.publish('new-notifications', { status: 'Deny', isSeen: false, message: values.feedback, userId });
 
       loadProduct();
-      toast('succesfully sent');
+      toast('амжилттай илгээсэн');
       setFeedBackInput(false);
     } catch (err) {
       throw new Error('update hiihed aldaa garlaa');
@@ -68,7 +68,7 @@ export const FeedBackInput = ({ setFeedBackInput, userId, loadProduct, productId
             </div>
           </div>
           <div>
-            <Input id="feedback" {...register('feedback', { required: true })} placeholder="send a feedback" />
+            <Input id="feedback" {...register('feedback', { required: true })} placeholder="санал хүсэлтийг илгээнэ үү" />
             {touchedFields.feedback && errors.feedback && <p className="text-red-400">{errors.feedback.message}</p>}
           </div>
           <Button type="submit">Илгээх</Button>
