@@ -17,6 +17,53 @@ type Table = {
   }
 };
 
+const tableNumber = [
+  {
+    tableNumber: "Table-1"
+  },
+  {
+    tableNumber: "Table-2"
+  },
+  {
+    tableNumber: "Table-3"
+  },
+  {
+    tableNumber: "Table-4"
+  },
+  {
+    tableNumber: "Table-5"
+  },
+  {
+    tableNumber: "Table-6"
+  },
+  {
+    tableNumber: "Table-7"
+  },
+  {
+    tableNumber: "Table-8"
+  },
+  {
+    tableNumber: "Table-9"
+  },
+  {
+    tableNumber: "Table-10"
+  },
+  {
+    tableNumber: "Table-11"
+  },
+  {
+    tableNumber: "Table-12"
+  },
+  {
+    tableNumber: "Table-13"
+  },
+  {
+    tableNumber: "Table-14"
+  },
+  {
+    tableNumber: "Table-15"
+  },
+]
 
 export default function Page() {
   const [mounted, setMounted] = useState(false)
@@ -40,6 +87,7 @@ function TableBook() {
   const [day, setDay] = useLocalStorage("day", new Date().toISOString());
   const [tables, setTables] = useState<Table[]>([]);
   const [loading, setLoading] = useState(true);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   const reset = () => {
     setSelectedTime(null);
