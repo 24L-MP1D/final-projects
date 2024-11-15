@@ -104,10 +104,8 @@ export default function Page() {
     try {
       const response = await fetcher().get(`api/school-data`);
       setCurrentSchool(response.data);
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
+      return setLoading(false);
+    } catch (error) {}
   }
 
   useEffect(() => {
@@ -267,6 +265,14 @@ export default function Page() {
                 </motion.p>
 
                 <div className="mt-6">
+                  {/* VIDEO IS HERE
+              <iframe
+                src="https://player.vimeo.com/video/1029540703?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                width="720"
+                height="900"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                title="42.Ажил #2"
+              ></iframe> */}
                   <Button className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg btn cursor-pointer scale-75">ЗАХИАЛАХ</Button>
                 </div>
               </div>
