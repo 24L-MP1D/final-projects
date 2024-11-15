@@ -1,20 +1,25 @@
+'use client';
 import { DollarSign, Home, Laptop, LibraryBig, Settings } from 'lucide-react';
+import { useParams } from 'next/navigation';
 import React from 'react';
-const items = [
-  { title: 'Нүүр хуудас', url: '#', icon: Home },
-  { title: 'Сургалтууд', url: '/admin-app/courses', icon: LibraryBig },
-  { title: 'Вебсайт тохиргоо', url: '#', icon: Laptop },
-  { title: 'Орлого', url: '#', icon: DollarSign },
-  { title: 'Тохиргоо', url: '#', icon: Settings },
-];
 
 type Props = {
   children: React.ReactNode;
 };
 
 export const SideBar: React.FC<Props> = ({ children }) => {
+  const params = useParams();
+  const schoolId = params?.schoolId;
+  const items = [
+    { title: 'Нүүр хуудас', url: `/admin-app/${schoolId}`, icon: Home },
+    { title: 'Сургалтууд', url: `/admin-app/${schoolId}/courses`, icon: LibraryBig },
+    { title: 'Вебсайт тохиргоо', url: '#', icon: Laptop },
+    { title: 'Орлого', url: '#', icon: DollarSign },
+    { title: 'Тохиргоо', url: '#', icon: Settings },
+  ];
+
   return (
-    <div className="drawer 2xl:drawer-open font-pangolin z-10">
+    <div className="drawer lg:drawer-open font-pangolin z-10">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
 
       <div className="drawer-content flex flex-col items-center justify-center">
@@ -36,7 +41,7 @@ export const SideBar: React.FC<Props> = ({ children }) => {
                 <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" className="shadow-xl" />
               </div>
             </div>
-            <p> Surguuli </p>
+            {/* <p>Сургууль: {schoolId}</p> */}
           </div>
 
           {items.map((item) => (

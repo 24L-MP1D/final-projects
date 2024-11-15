@@ -1,7 +1,7 @@
 'use client';
 
 import { fetcher } from '@/lib/fetcher';
-import { PlusCircleIcon } from 'lucide-react';
+import { ArrowBigRight, PlusCircleIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -32,27 +32,32 @@ export default function Page() {
   };
 
   return (
-    <main className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-screen">
       <div className="prose flex items-center justify-center flex-col gap-4">
         <h1> Сайн уу ? {schools?.[0].ownerName}</h1>
         <h1>Та эдгээр сайтуудыг эзэмшиж байна.</h1>
-        <div className="grid grid-cols-2 gap-4">
-          {schools?.map((school, index) => (
-            <Link href={`https://${school.domain}`} key={school._id}>
-              <div className="mockup-browser border-base-300 border max-w-[400px]">
+
+        {schools?.map((school, index) => (
+          <div key={school._id} className="flex gap-4">
+            <Link href={`https://${school.domain}`}>
+              <div className="mockup-browser border-base-300 border max-w-[400px] link link-primary">
                 <div className="mockup-browser-toolbar">
                   <div className="input border-base-300 border">{school.ownerName}</div>
                 </div>
                 <div className="border-base-300 flex justify-center border-t px-4 py-16">{school.domain}</div>
               </div>
             </Link>
-          ))}
-        </div>
+            <Link className="flex items-center justify-center link link-accent" href={`/admin-app/${school._id}`}>
+              <ArrowBigRight className="w-20" />
+              Админ хэсэг рүү шилжих
+            </Link>
+          </div>
+        ))}
 
-        <button className="btn btn-primary" onClick={handleRedirect}>
+        <button className="btn btn-primary mt-10" onClick={handleRedirect}>
           Шинэ вебсайт нээх <PlusCircleIcon />
         </button>
       </div>
-    </main>
+    </div>
   );
 }

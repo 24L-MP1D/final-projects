@@ -10,19 +10,19 @@ import { ObjectId } from 'mongodb';
 //   }
 //   return school?._id
 // }
-type Params = Promise<{ id: string }>
+type Params = Promise<{ id: string }>;
 export async function GET(request: Request, { params }: { params: Params }) {
-  const {id}=await params
+  const { id } = await params;
   const oneSchool = await db.collection('schools').findOne({ _id: new ObjectId(id) });
   if (!oneSchool) {
     return new Response('Not Found', { status: 404 });
   }
+
   return Response.json(oneSchool);
 }
 
-
 export async function PUT(request: Request, { params }: { params: Params }) {
-  const {id}= await params
+  const { id } = await params;
   const body = await request.json();
 
   await db.collection('schools').updateOne(
@@ -37,7 +37,7 @@ export async function PUT(request: Request, { params }: { params: Params }) {
 }
 
 export async function DELETE(request: Request, { params }: { params: Params }) {
-  const {id}= await params
+  const { id } = await params;
   await db.collection('schools').deleteOne({ _id: new ObjectId(id) });
   return new Response(null, { status: 204 });
 }

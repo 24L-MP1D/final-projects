@@ -16,7 +16,7 @@ interface FormValues {
 }
 type Foodlocal = {
   id: string;
-  image: string;
+  photos: string;
   name: string;
   price: number;
   quantity: number;
@@ -25,20 +25,34 @@ const navs = [
   { name: 'БИДНИЙ ТУХАЙ', link: '/' },
   { name: 'MЕНЮ', link: '/menu' },
   { name: 'ГАЛЛЕРЕЙ', link: '/gallery' },
-  { name: 'ЗАХИАЛГА', link: '/order' },
-  { name: 'ХҮРГЭЛТ', link: '/delivery' },
+  { name: 'САГС', link: '/order' },
 ];
 const otp = Math.floor(Math.random() * 899999) + 100000;
 const id = nanoid();
 export default function BuyStepone() {
   const [orderedItem, setOrderedItem] = useState<Foodlocal[] | null>([]);
   const router = useRouter();
+  const [total, setTotal] = useState(0);
   console.log(orderedItem);
+
   useEffect(() => {
     const order = localStorage.getItem('order');
-    const orders = JSON.parse(order ? order : '');
-    setOrderedItem(orders);
+
+    if (order) {
+      try {
+        const orders: Foodlocal[] = JSON.parse(order);
+        const total = Array.from(orders).reduce((acc, cur) => acc + cur.quantity * cur.price, 0);
+        setTotal(total);
+        setOrderedItem(orders);
+      } catch (error) {
+        console.error('Error parsing order from localStorage:', error);
+        setOrderedItem([]);
+      }
+    } else {
+      setOrderedItem([]);
+    }
   }, []);
+
   const formik = useFormik({
     initialValues: {
       phoneNumber: '',
@@ -64,7 +78,7 @@ export default function BuyStepone() {
         address: formik.values.homeAddress,
         phonenumber: formik.values.phoneNumber,
         order: orderedItem,
-        totalprice: '',
+        totalprice: total,
         otp: otp,
         id: id,
       }),
@@ -81,6 +95,7 @@ export default function BuyStepone() {
       }
     });
   }
+
   function onSubmit() {
     successfullorder();
     // fetch('').then((res) => {
@@ -109,11 +124,10 @@ export default function BuyStepone() {
               <span className="text-xl font-bold text-[#8B0000]">ТАНЫ ЗАХИАЛГА</span>
               <span className="text-gray-400"></span>
             </div>
-
             <div className="flex flex-col gap-4 border-dashed border-b-2 py-6">
               {orderedItem?.map((order) => (
                 <div className="flex gap-6">
-                  <img className="w-[100px] h-[100px]" src={order.image}></img>
+                  <img className="w-[100px] h-[100px]" src={order.photos}></img>
                   <div className="flex flex-col gap-1 pb-1">
                     <span className="text-sm font-normal text-[#52071B]">{order.name}</span>
                     <div className="text-sm font-normal text-[#342216]">
@@ -125,8 +139,8 @@ export default function BuyStepone() {
               ))}
             </div>
             <div className="flex justify-between pb-8">
-              <span className="text-base font-normal text-[#52071B]">Нийт төлөх дүн:</span>
-              <span className="text-lg font-bold text-[#342216]">120’000₮</span>
+              <span className="text-2xl font-normal text-[#52071B] ">Нийт төлөх дүн:{}</span>
+              <span className="text-2xl font-bold text-[#52071B]">{total},000</span>
             </div>
           </div>
           <div className="w-[687px] rounded-2xl flex flex-col">

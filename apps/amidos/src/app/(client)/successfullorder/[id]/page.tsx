@@ -60,12 +60,22 @@ export default function Successfullorder({ params }: { params: { id: string } })
               </div>
             </div>
             <div className="max-w-[500px] text-balance pt-9">
-              <div>
+              {/* <div>
                 {oneOrder?.deliveryperson
-                  ? `Хүргэлтийн ажилтан хувиарлагдсан байна. Хүргэлтийн ажилтантай ${oneOrder?.deliveryperson} дугаараар холбогдоно уу.`
+                  ? `Хүргэлтийн ажилтан хувиарлагдсан байна. Хүргэлтийн ажилтантай  ${oneOrder?.deliveryperson} дугаараар холбогдоно уу.
+                  `
                   : 'Хүргэлтийн ажилтан тун удахгүй хувиарлагдах болно. Та түр хүлээнэ үү.'}
+              </div> */}
+              <div className="text-xl mb-6">
+                {oneOrder?.deliveryperson ? (
+                  <>
+                    Хүргэлтийн ажилтан хувиарлагдсан байна. Хүргэлтийн ажилтантай <span style={{ fontWeight: 'bold' }}>{oneOrder?.deliveryperson}</span> дугаараар холбогдоно уу.
+                  </>
+                ) : (
+                  'Хүргэлтийн ажилтан тун удахгүй хувиарлагдах болно. Та түр хүлээнэ үү.'
+                )}
               </div>
-              <Link href={`http://localhost:3000/deliverytracker/${oneOrder?.id}`} className="underline text-green-900 ">
+              <Link href={`http://localhost:3000/deliverytracker/${oneOrder?.id}`} className="underline text-green-900 font-bold mt-6 text-xl">
                 ХҮРГЭЛТИЙН АЖИЛТНЫ БАЙРШЛЫГ ХАРАХ
               </Link>
             </div>
