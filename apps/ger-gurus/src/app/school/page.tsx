@@ -72,7 +72,7 @@ export default function Page() {
 
   function edit() {
     setLoading(true);
-    fetch(`/api/schooldata/${currentSchool?._id}`, {
+    fetch(`/api/school-data/${currentSchool?._id}`, {
       method: 'PUT',
       body: JSON.stringify({ title: refTitle.current?.textContent, desc: refDesc.current?.textContent }),
       headers: {
@@ -102,7 +102,7 @@ export default function Page() {
 
   async function schoolData() {
     try {
-      const response = await fetcher().get(`api/schooldata`);
+      const response = await fetcher().get(`api/school-data`);
       setCurrentSchool(response.data);
       return setLoading(false);
     } catch (error) {}

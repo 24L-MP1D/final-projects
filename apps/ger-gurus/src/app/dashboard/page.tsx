@@ -81,7 +81,7 @@ export default function Page() {
     }
   }
   async function createSchoolData(domain: string) {
-    fetcher().post('/api/schooldata', { domain: `${domain}.verse.mn` });
+    fetcher().post('/api/school-data', { domain: `${domain}.verse.mn` });
   }
 
   return (
