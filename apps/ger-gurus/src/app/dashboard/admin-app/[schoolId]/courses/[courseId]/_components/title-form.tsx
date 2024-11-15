@@ -48,13 +48,13 @@ export const TitleForm: React.FC<TitleFormProps> = ({ initialData }) => {
   return (
     <div className="mt-6 border shadow-xl rounded-md p-4">
       <div className="prose flex items-center justify-between">
-        <h4>Курсын гарчиг</h4>
+        <h4>Сургалтын нэр</h4>
         <button className="btn btn-ghost hover:scale-105 transition" onClick={toggleEdit}>
           {isEditing && <>Цуцлах</>}
           {!isEditing && (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Гарчиг засах
+              Нэр засах
             </>
           )}
         </button>

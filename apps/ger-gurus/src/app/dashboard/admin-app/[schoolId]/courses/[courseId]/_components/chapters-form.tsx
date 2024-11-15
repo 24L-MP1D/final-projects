@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { PlusCircle } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -40,6 +40,8 @@ interface Chapter {
   // Add other properties here if needed
 }
 export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
+  const params = useParams();
+  const schoolId = params?.schoolId;
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [chapters, setChapters] = useState<Chapter[]>(initialData.chapters);
@@ -79,25 +81,25 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
   }
 
   const onEdit = (id: string) => {
-    router.push(`/admin-app/courses/${initialData._id}/chapters/${id}`);
+    router.push(`/admin-app/${schoolId}/courses/${initialData._id}/chapters/${id}`);
   };
   return (
     <div className="mt-6 border shadow-xl rounded-md p-4">
       <div className="prose flex items-center justify-between">
-        <h4>Курсын бүлгүүд</h4>
+        <h4>Хичээлүүд</h4>
         <button className="btn btn-ghost hover:scale-105 transition" onClick={toggleCreating}>
           {isCreating && <>Болих</>}
           {!isCreating && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Бүлэг нэмэх
+              Хичээл нэмэх
             </>
           )}
         </button>
       </div>
       {/* {!isCreating && ( */}
       <div className={cn(' mt-2', !initialData.chapters?.length && 'text-slate-500 italic')}>
-        <h4>{!initialData.chapters.length && 'Бүлэг байхгүй'}</h4>
+        <h4>{!initialData.chapters.length && 'Хичээл байхгүй'}</h4>
         <ChapterList onEdit={onEdit} onReorder={onReorder} chapters={chapters || []} />
       </div>
       {/* )} */}
@@ -124,7 +126,7 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
         </Form>
       )}
 
-      {!isCreating && <p className="text-sm text-muted-foreground mt-4">Бүлгүүдийг чирж, байрлалыг өөрчилнө үү</p>}
+      {!isCreating && <p className="text-sm text-muted-foreground mt-4">Хичээлүүдийг чирж, байрлалыг өөрчилж болно шүү. </p>}
     </div>
   );
 };

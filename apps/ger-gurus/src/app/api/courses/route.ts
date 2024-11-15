@@ -1,6 +1,5 @@
-import { db } from "@/lib/db";
-import { NextResponse } from "next/server";
-
+import { db } from '@/lib/db';
+import { NextResponse } from 'next/server';
 
 // export async function GET(request: Request) {
 //   const host = new URL(request.url).hostname ;
@@ -19,24 +18,30 @@ export async function GET(request: Request) {
 //{schoolId: schoolId} filter deer bichih
 
 export async function POST(request: Request) {
-  // const schoolId = getSchoolId(request);
-
-
-  // const body = await request.json();
-  // const { title, author, description, thumbnail } = body;
   try {
-    // const {userId}=auth() //clerk?
-    const {title}= await request.json()
-    // if (!userId){return new NextResponse("Unauthorized", {status: 401})}
+    const { currentSchool } = await request.json();
+    console.log(currentSchool);
+    const userId = request.headers.get('userId');
+    if (!userId) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+
+    if (currentSchool) {
+      const courses = await db.collection('courses').find({ schoolId: currentSchool._id, ownerId: userId });
+      return NextResponse.json(courses);
+    }
+
+    const { title, schoolId } = await request.json();
     const course = await db.collection('courses').insertOne({
-      // userId,
-      title
+      schoolId,
+      title,
+      ownerId: userId,
+      createdAt: Date(),
     });
-    const insertedCourse={_id: course.insertedId,title} //, schoolId
+    const insertedCourse = { _id: course.insertedId, title, schoolId };
     return NextResponse.json(insertedCourse);
-    
   } catch (error) {
-    console.log("[COURSES]", error)
-    return new NextResponse("Internal error", {status: 500}) 
+    console.log('[COURSES]', error);
+    return new NextResponse('Internal error', { status: 500 });
   }
 }

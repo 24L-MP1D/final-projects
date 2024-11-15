@@ -1,7 +1,7 @@
 'use client';
-import Editor from '@/components/blockNoteEditor';
 import { Preview } from '@/components/preview';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { useCreateBlockNote } from '@blocknote/react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -38,12 +38,13 @@ export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ 
   const editor = useCreateBlockNote();
 
   const { isSubmitting, isValid } = form.formState;
+  // const content = editor.document;
+  // console.log(content);
+  // content butsaah
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const content = editor.document;
-      console.log(content);
-      const response = await axios.patch(`/api/courses/${initialData.courseId}/chapters/${initialData._id}`, content);
+      const response = await axios.patch(`/api/courses/${initialData.courseId}/chapters/${initialData._id}`, values);
       toast.success('Chapter description updated');
       toggleEdit();
       router.refresh();
@@ -81,8 +82,9 @@ export const ChapterDescriptionForm: React.FC<ChapterDescriptionFormProps> = ({ 
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
+                    <Textarea placeholder="Жишээ нь: Энэ хичээл нь ... тухай" disabled={isSubmitting} {...field} className="textarea textarea-primary" />
                     {/* Integrate BlockNoteEditor with form */}
-                    <Editor editor={editor} />
+                    {/* <Editor editor={editor} /> */}
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -67,7 +67,7 @@ export const ChapterAccessForm: React.FC<ChapterAccessFormProps> = ({ initialDat
 
       {!isEditing && (
         <div className={cn('text-sm mt-2 text-red-500', !initialData.isFree && 'text-slate-500 italic')}>
-          {initialData.isFree ? <>Энэ бүлэг урьдчилан харахыг үнэгүй болгов</> : <>Энэ бүлэг үнэгүй биш</>}
+          {initialData.isFree ? <>Энэ хичээл нь урьдчилан харахад үнэгүй.</> : <>Энэ бүлэг үнэгүй биш</>}
         </div>
       )}
 
@@ -83,7 +83,7 @@ export const ChapterAccessForm: React.FC<ChapterAccessFormProps> = ({ initialDat
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} className="checkbox checkbox-primary" />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormDescription>Хэрэв та энэ бүлгийг урьдчилан харахыг үнэгүй болгохыг хүсвэл энэ хайрцгийг тэмдэглэнэ үү.</FormDescription>
+                    <FormDescription>Хэрэв та энэ хичээлийг урьдчилан харахыг үнэгүй болгохыг хүсвэл энэ хайрцгийг тэмдэглэнэ үү.</FormDescription>
                   </div>
                 </FormItem>
               )}

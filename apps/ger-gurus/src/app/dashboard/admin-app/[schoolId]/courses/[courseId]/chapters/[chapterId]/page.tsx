@@ -7,13 +7,13 @@ import { ChapterAccessForm } from './_components/chapter-access-form';
 import { ChapterActions } from './_components/chapter-actions';
 import { ChapterDescriptionForm } from './_components/chapter-description-form';
 import { ChapterTitleForm } from './_components/chapter-title-form';
-import { ChapterVideoForm } from './_components/chapter-video-form';
-type Params = Promise<{ courseId: string; chapterId: string }>;
+import { ChapterVideoEmbedForm } from './_components/chapter-video-embed-form';
+type Params = Promise<{ courseId: string; chapterId: string; schoolId: string }>;
 
 export default async function Page({ params }: { params: Params }) {
   // const {userId}=auth()
   // if (!userId){return redirect("/")}
-  const { courseId, chapterId } = await params;
+  const { courseId, chapterId, schoolId } = await params;
 
   const chapter = await db.collection('chapters').findOne({
     _id: new ObjectId(chapterId),
@@ -35,6 +35,7 @@ export default async function Page({ params }: { params: Params }) {
     isFree?: boolean;
     position: number;
     muxData?: any;
+    videoEmbedUrl?: string;
   }
 
   const chapterWithPlainId = {
@@ -66,7 +67,7 @@ export default async function Page({ params }: { params: Params }) {
 
       <div className="p-6 md:container md:mx-auto h-full">
         <div className="flex items-center justify-between max-w-2xl">
-          <Link href={`/admin-app/courses/${courseId}`} className="flex items-center text-sm  transition mb-6 link link-primary hover:scale-125">
+          <Link href={`/admin-app/${schoolId}/courses/${courseId}`} className="flex items-center text-sm  transition mb-6 link link-primary hover:scale-125">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Курсын тохиргоонд буцах
           </Link>
@@ -95,7 +96,14 @@ export default async function Page({ params }: { params: Params }) {
                 Видео нэмэх
               </h2>
             </div>
-            <ChapterVideoForm initialData={chapterWithPlainId} playbackId={muxData?.playbackId} />
+            <ChapterVideoEmbedForm initialData={chapterWithPlainId} />
+            {/* <div className="prose mt-20">
+              <h2 className="flex items-center gap-x-2">
+                <Video />
+                Видео нэмэх
+              </h2>
+            </div>
+            <ChapterVideoForm initialData={chapterWithPlainId} playbackId={muxData?.playbackId} /> */}
           </div>
           <div>
             <div className=" prose text-accent">

@@ -3,7 +3,7 @@
 import ConfirmModal from '@/components/modals/confirm-modal';
 import { fetcher } from '@/lib/fetcher';
 import { Trash } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -14,6 +14,8 @@ interface CourseActionProps {
 }
 
 export const CourseActions = ({ disabled, courseId, isPublished }: CourseActionProps) => {
+  const params = useParams();
+  const schoolId = params?.schoolId;
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -42,7 +44,7 @@ export const CourseActions = ({ disabled, courseId, isPublished }: CourseActionP
       await fetcher().delete(`/api/courses/${courseId}`);
       toast.success(' хичээл устсан');
       router.refresh();
-      router.push(`/admin-app/courses`);
+      router.push(`/admin-app/${schoolId}/courses`);
     } catch {
       toast.error('Something went wrong');
     } finally {

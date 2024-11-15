@@ -44,6 +44,13 @@ const globalStyles = `
 
 interface CurrentSchool {
   ownerName: string;
+  _id: string;
+}
+
+interface Course {
+  _id: string;
+  title: string;
+  imageUrl: string;
 }
 
 export default function Page() {
@@ -55,17 +62,34 @@ export default function Page() {
   const [domain, setDomain] = useState<string>();
   const inputRef = useRef<HTMLDivElement>(null);
   const [currentSchool, setCurrentSchool] = useState<CurrentSchool>();
-
-  console.log({ currentSchool });
+  const [courses, setCourses] = useState<Course[]>();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function getCurrentSchool() {
     try {
       const response = await fetcher().get(`api/currentSchool`);
       setCurrentSchool(response.data);
+      return response.data;
     } catch (error) {
       console.log(error);
     }
   }
+
+  async function getCourses() {
+    try {
+      setIsLoading(true);
+      const currentSchool = await getCurrentSchool();
+      const response = await fetcher().get(`api/coursesOfSchool/${currentSchool?._id}`);
+      setCourses(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getCourses();
+  }, []);
 
   useEffect(() => {
     getCurrentSchool();
@@ -174,15 +198,24 @@ export default function Page() {
         </div>
 
         {/* Main Content */}
-        <div className="flex flex-col items-center mx-auto mt-20">
-          <div className="text-9xl font-black text-green-600">
-            <motion.h1 className="myclass text-9xl font-black text-white hero_h1-white text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-              {currentSchool?.ownerName}-н вэбсайтад
-            </motion.h1>
+        <div className="flex flex-col items-center mx-auto mt-20 ">
+          <div className="text-9xl font-black text-green-600 h-[100vh]">
+            {!isLoading && (
+              <div>
+                <motion.h1 className="myclass text-9xl font-black text-white hero_h1-white text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+                  {currentSchool?.ownerName}-н вэбсайтад
+                </motion.h1>
 
-            <motion.h1 className="text-9xl font-black text-green-600 hero_h1-green text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}>
-              тавтай морилно уу !
-            </motion.h1>
+                <motion.h1
+                  className="text-9xl font-black text-green-600 hero_h1-green text-center"
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 0.3 }}
+                >
+                  тавтай морилно уу !
+                </motion.h1>
+              </div>
+            )}
           </div>
 
           <div className="w-[671px] h-16 mx-auto text-center mt-6">

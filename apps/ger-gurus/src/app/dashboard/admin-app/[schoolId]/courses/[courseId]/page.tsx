@@ -30,7 +30,7 @@ export default async function Page({ params }: { params: Params }) {
     description: string;
     imageUrl: string;
     price: number;
-    isPublished: boolean;
+    published: boolean;
     chapters: Chapter[];
     attachments?: Attachment[];
   }
@@ -80,6 +80,7 @@ export default async function Page({ params }: { params: Params }) {
           description: { $first: '$description' },
           imageUrl: { $first: '$imageUrl' },
           price: { $first: '$price' },
+          published: { $first: '$published' },
           chapters: { $push: '$chapters' },
         },
       },
@@ -140,7 +141,7 @@ export default async function Page({ params }: { params: Params }) {
   return (
     <>
       <main>
-        {!course.isPublished && (
+        {!course.published && (
           <div role="alert" className="alert alert-warning flex">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
               <path
@@ -150,23 +151,23 @@ export default async function Page({ params }: { params: Params }) {
                 d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
               />
             </svg>
-            <span className="text-sm">Энэхүү бүлэг хичээл нь нийтлэгдээгүй байна. Вебсайтын бүлэг хичээл хэсэгт харагдахгүй байх болно.</span>
+            <span className="text-sm">Энэхүү сургалт нь нийтлэгдээгүй байна. Вебсайтын сургалтын хэсэгт харагдахгүй байх болно.</span>
           </div>
         )}
         <div className=" md:container md:mx-auto px-[10%] py-[2%] max-h-full">
           <div className="flex items-center justify-between">
             <div className="prose">
-              <h1 className="">Курс тохиргоо</h1>
+              <h1 className="">Сургалт тохиргоо</h1>
               <p className="text-error">Бүх талбарыг бөглөнө үү {completionText}</p>
             </div>
-            <CourseActions disabled={!isComplete} courseId={courseId} isPublished={course.isPublished} />
+            <CourseActions disabled={!isComplete} courseId={courseId} isPublished={course.published} />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-6 mt-8">
             <div>
               <div className="prose">
                 <h2 className="flex items-center gap-x-2">
                   <LayoutDashboard />
-                  Курсээ тохируулах
+                  Сургалтаа тохируулах
                 </h2>
               </div>
               <TitleForm initialData={courseWithPlainId} />
@@ -178,7 +179,7 @@ export default async function Page({ params }: { params: Params }) {
                 <div className="prose">
                   <h2 className="flex items-center gap-x-2">
                     <ListCheck />
-                    Курсын бүлгүүд
+                    Сургалтын нэгж хичээлүүд
                   </h2>
                 </div>
                 <div>
@@ -190,7 +191,7 @@ export default async function Page({ params }: { params: Params }) {
               <div className="prose">
                 <h2 className="flex items-center gap-x-2">
                   <CircleDollarSign />
-                  Курсаа худалдах
+                  Сургалтаа худалдах
                 </h2>
               </div>
               <PriceForm initialData={courseWithPlainId} />

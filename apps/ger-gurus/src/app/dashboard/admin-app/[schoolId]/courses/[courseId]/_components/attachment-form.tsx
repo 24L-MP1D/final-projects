@@ -62,7 +62,7 @@ export const AttachmentForm: React.FC<AttachmentFormProps> = ({ initialData }) =
   return (
     <div className="mt-6 border shadow-xl rounded-md p-4">
       <div className="prose flex items-center justify-between">
-        <h4>Курсын хавсралтууд</h4>
+        <h4>Сургалтын хавсралт файлууд</h4>
         <button className="btn btn-ghost hover:scale-105 transition" onClick={toggleEdit}>
           {isEditing && <>Болих</>}
           {!isEditing && (
