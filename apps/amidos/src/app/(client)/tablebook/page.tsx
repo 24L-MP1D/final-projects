@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocalStorage } from "@uidotdev/usehooks";
@@ -38,7 +39,6 @@ function TableBook() {
   const [reservedSeat, setReservedSeat] = useLocalStorage<number | null>("reservedSeat", null);
   const [selectedTable, setSelectedTable] = useLocalStorage<string | null>("selectedTable", null);
   const [day, setDay] = useLocalStorage("day", new Date().toISOString());
-  const [isReserved, setIsReserved] = useLocalStorage<boolean>("isReserved");
   const [tables, setTables] = useState<Table[]>([]);
   const [loading, setLoading] = useState(true);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
@@ -99,15 +99,15 @@ function TableBook() {
   };
 
   return (
-    <div className="flex justify-between p-10 mx-auto max-w-screen-2xl">
+    <div className="flex py-10 mx-auto max-w-screen-2xl gap-20 ">
       {loading ? (
         <div>Loading tables...</div>
       ) : (
-        <div className="relative h-[800px] w-[1200px]">
+        <div className="relative backgroundImage bg-cover bg-center h-[800px] w-[1200px]">
           {tables.map((table) => (
             <div
               style={{ top: table.coordinate.y, left: table.coordinate.x }}
-              className={`absolute w-20 h-20 rounded-full 
+              className={`absolute w-20 h-20 rounded-full
                           ${table.isReserved ? "bg-gray-400 cursor-not-allowed" :
                   selectedTable === table._id ? "bg-[#52071B] text-white" : "bg-yellow-400 hover:bg-yellow-600"}`}
               key={table._id}
@@ -168,7 +168,7 @@ function TableBook() {
             />
           </div>
           <Button
-            className={`w-[200px] h-[40px] py-2 text-center bg-[#52071B] rounded-xl text-white text-base font-semibold hover:bg-[#52071b92] 
+            className={`w-[200px] h-[40px] py-2 text-center bg-[#52071B] rounded-xl text-white text-base font-semibold hover:bg-[#52071b92]
                         ${!selectedTime || !selectedTable || !reservedSeat ? "opacity-50 cursor-not-allowed" : ""}`}
             onClick={handleSubmit}
             disabled={!selectedTime || !selectedTable || !reservedSeat}

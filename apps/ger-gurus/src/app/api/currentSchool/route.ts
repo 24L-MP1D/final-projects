@@ -1,12 +1,10 @@
-import { db } from "@/lib/db";
-import { ObjectId } from "mongodb";
-
+import { db } from '@/lib/db';
+import { ObjectId } from 'mongodb';
 
 // export async function GET(request: Request) {
 //   const schools = await db.collection('schools').find({}).sort({ metacritic: -1 }).limit(20).toArray();
 //   return Response.json(schools);
 // }
-
 
 async function getCurrentSchool(request: Request) {
   const url = new URL(request.url);
@@ -14,7 +12,7 @@ async function getCurrentSchool(request: Request) {
 
   const baseDomain = hostname.split('/')[0];
 
-  console.log("Base Domain:", baseDomain);
+  console.log('Base Domain:', baseDomain);
   const school = await db.collection('schools').findOne({ domain: baseDomain });
 
   if (!school) {
@@ -25,19 +23,17 @@ async function getCurrentSchool(request: Request) {
   return school;
 }
 
-
-
 export async function GET(request: Request) {
   const currentSchool = await getCurrentSchool(request);
   if (!currentSchool) {
     return new Response('Not Found', { status: 404 });
   }
-  const id = currentSchool?._id
+  const id = currentSchool?._id;
   const oneSchool = await db.collection('schools').findOne({ _id: new ObjectId(id) });
   if (!oneSchool) {
     return new Response('Not Found', { status: 404 });
   }
-  return Response.json(currentSchool);
+  return Response.json(oneSchool);
 }
 
 export async function POST(request: Request) {
@@ -47,13 +43,13 @@ export async function POST(request: Request) {
     return new Response('Unauthorized', { status: 401 });
   }
 
-  const user = await db.collection("users").findOne({ _id: new ObjectId(userId) })
+  const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
 
   const { domain } = body;
   await db.collection('schools').insertOne({
     domain,
     ownerId: userId,
-    ownerName: user?.name
+    ownerName: user?.name,
   });
   return new Response(null, { status: 204 });
 }

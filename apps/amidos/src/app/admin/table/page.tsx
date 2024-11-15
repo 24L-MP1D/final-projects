@@ -26,7 +26,6 @@ export default function Table() {
       const response = await fetch(`/api/admin/tablesDetail/${deletedId}`, {
         method: 'DELETE',
       });
-
       if (response.ok) {
         // Optionally refresh the table list after deletion
         setTables(tables.filter((table) => table._id !== deletedId));
@@ -91,7 +90,8 @@ export default function Table() {
   return (
     <div className="max-w-[1440px] mx-auto flex gap-5 ">
       <div className="flex gap-10 mt-5">
-        <div className="w-[800px] h-[800px] bg-slate-400 relative">
+        <div className="bg-cover bg-center h-[800px] w-[1200px] relative backgroundImage">
+
           {tables &&
             tables.map((table: TableModel, index: number) => (
               <Draggable
