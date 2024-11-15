@@ -165,7 +165,7 @@ export const Bid = ({ bids, maximumBid, formikValues, isSticky, setIsSticky, ope
           <div className="overflow-y-scroll relative w-full max-h-80 flex flex-col gap-2">
             {bids.slice(0, 3).map((bid, index) => (
               <div key={bid._id} className="flex justify-between items-center border-b border-solid border-slate-200 shadow-sm">
-                <div>Дуудлага худалдаанд оролцогч {bidId(bid._id)}</div>
+                <div>оролцогч {bidId(bid._id)}</div>
                 <div className="p-2">{bid.bid} ₮</div>
                 <div>{dayjs(bid.createdAt).format('YYYY.MM.DD')}</div>
               </div>
