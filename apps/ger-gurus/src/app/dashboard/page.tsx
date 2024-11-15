@@ -74,10 +74,14 @@ export default function Page() {
     try {
       await fetcher().post(`/api/schools`, { domain: `${domain}.verse.mn` }); // Send domain in the request
       toast.success('Your space has been created!'); // Optionally handle success
+      createSchoolData();
       router.push(`/schools`);
     } catch (error) {
       toast.error('Something went wrong');
     }
+  }
+  async function createSchoolData() {
+    fetcher().post('/api/schooldata');
   }
 
   return (
