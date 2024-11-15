@@ -30,7 +30,7 @@ export default function FooterOfSchool() {
       <style>{globalStyles}</style>
 
       {/* Floating Bubbles */}
-      <div className="absolute top-[-50px] left-0 w-full h-[450px] mt-[-255px] overflow-hidden">
+      <div className="absolute top-[-50px] left-0 w-full h-[450px] mt-[-255px] overflow-hidden" style={{ pointerEvents: 'none' }}>
         <div style={{ ...bubbleStyle(3, 0), width: '120px', height: '120px', top: '9%', left: '4%' }} className="footer-bubble"></div>
         <div style={{ ...bubbleStyle(3, 0), width: '40px', height: '40px', top: '59%', left: '2%' }} className="footer-bubble"></div>
         <div style={{ ...bubbleStyle(4, 1), width: '100px', height: '100px', top: '25%', left: '75%' }} className="footer-bubble"></div>
@@ -54,16 +54,24 @@ export default function FooterOfSchool() {
         {/* Links */}
         <ul className="flex space-x-8 text-sm font-medium">
           <li>
-            <Link href="/about" className="hover:text-green-600">About Us</Link>
+            <Link href="/about" className="hover:text-green-600">
+              About Us
+            </Link>
           </li>
           <li>
-            <Link href="/courses" className="hover:text-green-600">Courses</Link>
+            <Link href="/courses" className="hover:text-green-600">
+              Courses
+            </Link>
           </li>
           <li>
-            <Link href="/contact" className="hover:text-green-600">Contact</Link>
+            <Link href="/contact" className="hover:text-green-600">
+              Contact
+            </Link>
           </li>
           <li>
-            <Link href="/privacy" className="hover:text-green-600">Privacy Policy</Link>
+            <Link href="/privacy" className="hover:text-green-600">
+              Privacy Policy
+            </Link>
           </li>
         </ul>
 

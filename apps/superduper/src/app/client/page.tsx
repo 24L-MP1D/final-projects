@@ -38,6 +38,7 @@ export default function Index() {
           searchValue: value?.searchValue,
           limit: count,
           page,
+          status: 'Accept',
         }),
         headers: {
           'Content-type': 'application/json',
@@ -106,6 +107,7 @@ export default function Index() {
         </div>
       </div>
     );
+
   return (
     <div className={`max-w-[1280px]  mx-auto w-full`}>
       <div className="grid grid-cols-2 mt-0.5">
@@ -231,9 +233,7 @@ export default function Index() {
             </div>
           )}
           {value.showCategory && <div className="fixed inset-0 bg-slate-500 opacity-50"></div>}
-
           <Categories />
-
         </div>
       )}
     </div>

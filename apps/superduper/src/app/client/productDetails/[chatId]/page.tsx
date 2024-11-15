@@ -90,7 +90,7 @@ function Realtime({ chatId }: { chatId: string }) {
         setDialogsBid(formik.values.bid);
         resetForm();
         setOpen(false);
-        const audio = new Audio('/images/bidaudio.mp3');
+        const audio = new Audio('/images/clappingsound.wav');
 
         audio.play();
         setTimeout(() => {

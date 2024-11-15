@@ -119,8 +119,8 @@ export default function Page() {
         </div>
         <div className="mt-8 text-center text-[#333] text-[48px] mb-16">Зураг болон баримт бичгийг байршуулах</div>
         <div className="flex  gap-4 text-[#333333]">
-          <div className="max-w-[600px] grid gap-6 grid-cols-2 w-full">
-            <div className="hover:cursor-pointer text-center h-[420px] row-span-3 col-span-2 border-dashed border-[1px] flex flex-col justify-center items-center relative p-4">
+          <div className="flex-1 grid gap-6 grid-cols-2">
+            <div className="hover:cursor-pointer text-center w-full row-span-3 col-span-2 border-dashed border-[1px] flex flex-col justify-center items-center relative p-4">
               <div>
                 <Camera />
               </div>
@@ -147,12 +147,12 @@ export default function Page() {
               {loading === 'frontImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
               {formik.touched.frontImage && formik.errors.frontImage && <p className="text-red-500">{formik.errors.frontImage}</p>}
             </div>
-            <div className="hover:cursor-pointer h-[200px] text-center border-dashed border-[1px] flex flex-col justify-center items-center relative p-4">
+            <div className="hover:cursor-pointer text-center border-dashed border-[1px] flex flex-col justify-center items-center relative p-4">
               <div>
                 <Camera />
               </div>
               <div>Зураг дээр дарж эсвэл чирж буулгаж байршуулна уу</div>
-              <div className="mt-10">Буцах</div>
+
               {formik.values.backImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
                   <Image src={formik.values.backImage} alt="backImage" width={1000} height={1000} className="w-full h-full object-cover" />
@@ -170,8 +170,11 @@ export default function Page() {
                   className="absolute cursor-pointer w-full h-full opacity-0 z-30"
                 />
               )}
-              {loading === 'backImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
-
+              {loading === 'backImage' && (
+                <div className="bg-white absolute inset-0 z-50">
+                  <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />
+                </div>
+              )}
               {formik.touched.backImage && formik.errors.backImage && <p className="text-red-500">{formik.errors.backImage}</p>}
             </div>
             <div className="hover:cursor-pointer text-center border-dashed border-[1px] flex flex-col justify-center items-center relative p-4">
@@ -179,7 +182,7 @@ export default function Page() {
                 <Camera />
               </div>
               <div>Зураг дээр дарж эсвэл чирж буулгаж байршуулна уу</div>
-              <div className="mt-10">Дэлгэрэнгүй</div>
+
               {formik.values.detailImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
                   <Image src={formik.values.detailImage} alt="detailImage" width={1000} height={1000} className="w-full h-full object-cover" />
@@ -197,7 +200,11 @@ export default function Page() {
                   className="absolute cursor-pointer w-full h-full opacity-0 z-30"
                 />
               )}
-              {loading === 'detailImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
+              {loading === 'detailImage' && (
+                <div className="bg-white absolute inset-0 z-50">
+                  <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />
+                </div>
+              )}
 
               {formik.touched.detailImage && formik.errors.detailImage && <p className="text-red-500">{formik.errors.detailImage}</p>}
             </div>
@@ -206,7 +213,7 @@ export default function Page() {
                 <Camera />
               </div>
               <div>Зураг дээр дарж эсвэл чирж буулгаж байршуулна уу</div>
-              <div className="mt-10">Гарын үсэг</div>
+
               {formik.values.signatureImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
                   <Image src={formik.values.signatureImage} alt="signatureImage" width={1000} height={1000} className="w-full h-full object-cover" />
@@ -224,7 +231,11 @@ export default function Page() {
                   className="absolute cursor-pointer w-full h-full opacity-0 z-30"
                 />
               )}
-              {loading === 'signatureImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
+              {loading === 'signatureImage' && (
+                <div className="bg-white absolute inset-0 z-50">
+                  <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />
+                </div>
+              )}
 
               {formik.touched.signatureImage && formik.errors.signatureImage && <p className="text-red-500">{formik.errors.signatureImage}</p>}
             </div>
@@ -233,7 +244,7 @@ export default function Page() {
                 <Camera />
               </div>
               <div>Зураг дээр дарж эсвэл чирж буулгаж байршуулна уу</div>
-              <div className="mt-10">Гэмтэл</div>
+
               {formik.values.damageImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
                   <Image src={formik.values.damageImage} alt="damageImage" width={1000} height={1000} className="w-full h-full object-cover" />
@@ -252,7 +263,11 @@ export default function Page() {
                 />
               )}
 
-              {loading === 'damageImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
+              {loading === 'damageImage' && (
+                <div className="bg-white absolute inset-0 z-50">
+                  <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />
+                </div>
+              )}
 
               {formik.touched.damageImage && formik.errors.damageImage && <p className="text-red-500">{formik.errors.damageImage}</p>}
             </div>
@@ -261,7 +276,6 @@ export default function Page() {
                 <Camera />
               </div>
               <div>Зураг дээр дарж эсвэл чирж буулгаж байршуулна уу</div>
-              <div className="mt-10">Нэмэлт</div>
 
               {formik.values.additionalImage ? (
                 <div className="absolute w-full flex h-full justify-between z-50 bg-white">
@@ -280,12 +294,16 @@ export default function Page() {
                   className="absolute w-full cursor-pointer h-full opacity-0 z-30"
                 />
               )}
-              {loading === 'additionalImage' && <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
+              {loading === 'additionalImage' && (
+                <div className="bg-white absolute inset-0 z-50">
+                  <Image className="absolute left-[50%] top-[50%] translate-x-[-50%]" src={'/images/spinner.svg'} alt="loading" width={40} height={40} />
+                </div>
+              )}
 
               {formik.touched.additionalImage && formik.errors.additionalImage && <p className="text-red-500">{formik.errors.additionalImage}</p>}
             </div>
           </div>
-          <div>
+          <div className="flex-1 max-w-[270px]">
             <div className=" pb-12 border-b-2 border-black">
               <div className="text-2xl">Зөвлөмж:</div>
               <ol className="flex flex-col gap-4 list-decimal px-5">
