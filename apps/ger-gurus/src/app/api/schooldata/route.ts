@@ -5,13 +5,19 @@ import { ObjectId } from 'mongodb';
 
 
 async function getCurrentSchool(request: Request) {
-  const host = new URL(request.url).hostname;
-  const hostname = host === 'localhost' ? process.env.CURRENT_HOST : host;
-  if (!hostname) {
-    throw new Error("Hostname is undefined. Please set the CURRENT_HOST environment variable.");
+  const url = new URL(request.url);
+  const hostname = url.hostname === 'localhost' ? process.env.CURRENT_HOST || 'defaultHost' : url.hostname;
+
+  const baseDomain = hostname.split('/')[0];
+
+  console.log("Base Domain:", baseDomain);
+  const school = await db.collection('schools').findOne({ domain: baseDomain });
+
+  if (!school) {
+    console.warn(`No school found for domain: ${baseDomain}`);
+    return null;
   }
-  const cleanedHostname = hostname.split(':')[0]; // remove any port if present
-  const school = await db.collection('schools').findOne({ domain: cleanedHostname });
+
   return school;
 }
 
@@ -22,8 +28,7 @@ export async function GET(request: Request) {
     if (!currentSchool) {
       return new Response('Not Found', { status: 404 });
     }
-    const data = await db.collection('schooldata').findOne({ ownerId: currentSchool?.ownerId });
-
+    const data = await db.collection('schooldata').findOne({ schoolDomain: currentSchool?.domain });
     return Response.json(data, { status: 200 });
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -33,6 +38,8 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const userId = request.headers.get('userId');
+  const body = await request.json();
+  const { domain } = body;
   if (!userId) {
     return new Response('Unauthorized', { status: 401 });
   }
@@ -46,6 +53,7 @@ export async function POST(request: Request) {
   const introduceDesc = 'Өөрийгөө танилцуулах товч намтараа оруулна уу.'
   await db.collection('schooldata').insertOne({
     ownerId: userId,
+    schoolDomain: domain,
     title,
     desc,
     flow,

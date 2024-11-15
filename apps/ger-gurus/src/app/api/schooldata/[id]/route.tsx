@@ -9,7 +9,7 @@ export async function GET(request: Request, { params }: { params: Params }) {
   if (!data) {
     return new Response('Not Found', { status: 404 });
   }
-  return Response.json(data);
+  console.log(data);
 }
 
 export async function PUT(request: Request, { params }: { params: Params }) {

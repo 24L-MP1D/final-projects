@@ -9,13 +9,19 @@ import { ObjectId } from "mongodb";
 
 
 async function getCurrentSchool(request: Request) {
-  const host = new URL(request.url).hostname;
-  const hostname = host === 'localhost' ? process.env.CURRENT_HOST : host;
-  if (!hostname) {
-    throw new Error("Hostname is undefined. Please set the CURRENT_HOST environment variable.");
+  const url = new URL(request.url);
+  const hostname = url.hostname === 'localhost' ? process.env.CURRENT_HOST || 'defaultHost' : url.hostname;
+
+  const baseDomain = hostname.split('/')[0];
+
+  console.log("Base Domain:", baseDomain);
+  const school = await db.collection('schools').findOne({ domain: baseDomain });
+
+  if (!school) {
+    console.warn(`No school found for domain: ${baseDomain}`);
+    return null;
   }
-  const cleanedHostname = hostname.split(':')[0]; // remove any port if present
-  const school = await db.collection('schools').findOne({ domain: cleanedHostname });
+
   return school;
 }
 
