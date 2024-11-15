@@ -38,6 +38,7 @@ export default function Index() {
           searchValue: value?.searchValue,
           limit: count,
           page,
+          status: 'Accept',
         }),
         headers: {
           'Content-type': 'application/json',
