@@ -52,7 +52,7 @@ function TableVerify() {
     }
   }, [phonenumber]);
 
-  async function CreateOrder() {
+  async function createOrder() {
     if (!phonenumber || !isValidPhoneNumber(phonenumber)) {
       setErrorMessage('Талбарыг зөв бөглөх шаардлагатай.');
       return;
@@ -97,11 +97,11 @@ function TableVerify() {
             className={errorMessage.includes('утасны дугаар') ? 'border-red-500' : ''}
           />
         </div>
-        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-        <Button onClick={CreateOrder} className="w-full hover:hover:bg-[#52071b7c]" disabled={loading}>
+        {errorMessage && phonenumber && <p className="text-red-500">{errorMessage}</p>}
+        <Button onClick={createOrder} className="w-full hover:hover:bg-[#52071b7c]" disabled={loading}>
           {loading ? 'Ажлын явц...' : 'Захиалга үүсгэх'}
         </Button>
       </div>
-    </div>
+    </div >
   );
 }

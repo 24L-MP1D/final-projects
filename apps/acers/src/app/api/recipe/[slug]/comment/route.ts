@@ -1,55 +1,10 @@
-import Ably from 'ably';
+import { Realtime } from 'ably';
+import { verify } from 'jsonwebtoken';
 import { ObjectId } from 'mongodb';
 import { DB } from '../../../../lib/db';
 
-const ably = new Ably.Realtime({ key: process.env.NEXT_PUBLIC_ABLY_KEY || '' });
-
-export async function POST(request: Request, { params }: { params: { title: string } }) {
-  const { title } = params;
-
-  try {
-    const body = await request.json();
-    const { comment, userId, firstName, _id: recipeId } = body;
-
-    if (!comment || !userId || !recipeId) {
-      return new Response('Missing required fields (comment, userId, recipeId)', { status: 400 });
-    }
-
-    const recipeObjectId = new ObjectId(recipeId);
-
-    const recipe = await DB.collection('recipes').findOne({ _id: recipeObjectId });
-    if (!recipe) {
-      return new Response('Recipe not found', { status: 404 });
-    }
-
-    const newComment = {
-      recipeId: recipeObjectId,
-      userId,
-      firstName: firstName || 'Anonymous',
-      comment,
-      createdAt: new Date(),
-    };
-
-    const result = await DB.collection('comments').insertOne(newComment);
-
-    const responseComment = {
-      ...newComment,
-      _id: result.insertedId.toString(),
-      recipeId: recipeObjectId.toString(),
-    };
-
-    const channel = ably.channels.get(`recipe-${title}-comments`);
-    channel.publish('new-comment', newComment);
-
-    return new Response(JSON.stringify({ success: true, comment: responseComment }), {
-      status: 201,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  } catch (error) {
-    console.error('Error posting comment:', error);
-    return new Response('Internal server error', { status: 500 });
-  }
-}
+// Initialize Ably Realtime instance with API key
+const ably = new Realtime({ key: process.env.NEXT_PUBLIC_ABLY_KEY || '' });
 
 export async function PUT(request: Request, { params }: { params: { title: string } }) {
   const { title } = params;
@@ -123,6 +78,49 @@ export async function DELETE(request: Request, { params }: { params: { title: st
     }
   } catch (error) {
     console.error('Error deleting comment:', error);
+    return new Response('Internal server error', { status: 500 });
+  }
+}
+
+export async function POST(request: Request, { params }: { params: { slug: string } }) {
+  const { slug } = params;
+  const title = slug;
+  try {
+    const body = await request.json();
+
+    const { comment, firstName, recipeTitle } = body; // Change _id to recipeId
+
+    const token = request.headers.get('authtoken');
+
+    if (!token) {
+      throw new Error('idk who ya are');
+    }
+
+    const { userId } = verify(token, process.env.JWT_SECRET || '') as { userId: string };
+
+    if (!comment || !userId || !recipeTitle) {
+      return new Response('Missing required fields (comment, userId, recipeId)', { status: 400 });
+    }
+
+    const res = await DB.collection('recipes').findOne({ title });
+    const recipeId = res?._id;
+
+    const newComment = {
+      recipeId,
+      userId,
+      firstName: firstName || 'Anonymous',
+      comment,
+      createdAt: new Date(),
+    };
+
+    const result = await DB.collection('comments').insertOne(newComment);
+
+    return new Response(JSON.stringify({ success: true, comment }), {
+      status: 201,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    console.error('Error posting comment:', error);
     return new Response('Internal server error', { status: 500 });
   }
 }

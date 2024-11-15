@@ -82,9 +82,9 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
     router.push(`/admin-app/courses/${initialData._id}/chapters/${id}`);
   };
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
-      <div className="font-medium flex items-center justify-between">
-        Курсын бүлгүүд
+    <div className="mt-6 border shadow-xl rounded-md p-4">
+      <div className="prose flex items-center justify-between">
+        <h4>Курсын бүлгүүд</h4>
         <button className="btn btn-ghost hover:scale-105 transition" onClick={toggleCreating}>
           {isCreating && <>Болих</>}
           {!isCreating && (
@@ -96,8 +96,8 @@ export const ChaptersForm: React.FC<ChaptersFormProps> = ({ initialData }) => {
         </button>
       </div>
       {/* {!isCreating && ( */}
-      <div className={cn('text-sm mt-2', !initialData.chapters?.length && 'text-slate-500 italic')}>
-        {!initialData.chapters.length && 'Бүлэг байхгүй'}
+      <div className={cn(' mt-2', !initialData.chapters?.length && 'text-slate-500 italic')}>
+        <h4>{!initialData.chapters.length && 'Бүлэг байхгүй'}</h4>
         <ChapterList onEdit={onEdit} onReorder={onReorder} chapters={chapters || []} />
       </div>
       {/* )} */}

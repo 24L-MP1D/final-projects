@@ -10,20 +10,20 @@ const collection = db.collection('admin');
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const query = searchParams.get('searchvalue');
-
+  console.log(query);
   try {
     if (query) {
       await client.connect();
 
-      const database = client.db('ecommerce');
+      const database = client.db('amidos');
 
-      const coll = database.collection('amidos');
+      const coll = database.collection('admin');
 
       const data = await collection
         .aggregate([
           {
             $search: {
-              index: 'amidos',
+              index: 'food',
               text: {
                 query: query,
                 path: {

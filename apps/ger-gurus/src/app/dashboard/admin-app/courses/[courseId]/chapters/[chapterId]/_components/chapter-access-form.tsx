@@ -52,8 +52,8 @@ export const ChapterAccessForm: React.FC<ChapterAccessFormProps> = ({ initialDat
   }
   return (
     <div className="mt-6 border shadow-xl rounded-md p-4">
-      <div className="font-medium flex items-center justify-between">
-        Бүлгийн хандалт
+      <div className="prose flex items-center justify-between">
+        <h4> Бүлгийн хандалт</h4>
         <button className="btn btn-ghost" onClick={toggleEdit}>
           {isEditing && <>Болих</>}
           {!isEditing && (

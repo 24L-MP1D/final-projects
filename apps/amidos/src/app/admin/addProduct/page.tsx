@@ -31,9 +31,33 @@ export default function Foods() {
       .then((res) => res.json())
       .then((data) => {
         setOrder(data);
+        const handleRemoveSpecial = async (foodId: string) => {
+          try {
+            await fetch(`/api/special/${foodId}`, {
+              method: 'DELETE',
+            });
+            toast.success('Food removed from special list!');
+          } catch (error) {
+            console.error('Error removing special food:', error);
+            toast.error('Error removing to special items');
+          }
+        };
       });
   }
-
+  const handleSpecialToggle = async (foodId: string, isSpecial: string) => {
+    try {
+      if (isSpecial) {
+        await handleRemoveSpecial(foodId);
+        toast.success('Food removed from special list!');
+      } else {
+        await handleSpecialFood(foodId);
+        toast.success('Food added to special items!');
+      }
+    } catch (error) {
+      console.error('Error toggling special food:', error);
+      toast.error('Error toggling special items');
+    }
+  };
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -150,31 +174,6 @@ export default function Foods() {
       toast.error('Error a  adding to special items');
     }
   };
-  const handleRemoveSpecial = async (foodId: string) => {
-    try {
-      await fetch(`/api/special/${foodId}`, {
-        method: 'DELETE',
-      });
-      toast.success('Food removed from special list!');
-    } catch (error) {
-      console.error('Error removing special food:', error);
-      toast.error('Error removing to special items');
-    }
-  };
-  const handleSpecialToggle = async (foodId: string, isSpecial: string) => {
-    try {
-      if (isSpecial) {
-        await handleRemoveSpecial(foodId);
-        toast.success('Food removed from special list!');
-      } else {
-        await handleSpecialFood(foodId);
-        toast.success('Food added to special items!');
-      }
-    } catch (error) {
-      console.error('Error toggling special food:', error);
-      toast.error('Error toggling special items');
-    }
-  };
 
   const toggleButtonColor = () => {
     setButtonColor((prevColor) => (prevColor === 'bg-slate-600' ? 'bg-red-600' : 'bg-slate-600'));
@@ -196,9 +195,10 @@ export default function Foods() {
   }, []);
 
   return (
-    <div className="text-md mb-10 flex">
+    <div className="text-md  flex bg-gradient-to-r from-pink-100 to-white">
       <LeftBar />
-      <div className="bg-slate-100 mt-8 ">
+      <div className=" ml-6">
+        <div className="text-5xl italic mt-16  mb-4">Бүтээгдэхүүнүүд</div>
         <div className="flex ">
           <div className="bg-white  p-10 mt-6  text-md rounded-lg mx-auto">
             <Dialog>
@@ -338,4 +338,7 @@ export default function Foods() {
       </div>
     </div>
   );
+}
+function handleRemoveSpecial(foodId: string) {
+  throw new Error('Function not implemented.');
 }
