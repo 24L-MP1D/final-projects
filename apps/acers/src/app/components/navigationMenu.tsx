@@ -2,12 +2,12 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 
 export default function HeaderNavigationMenu() {
   return (
-    <div>
+    <div className="mt-4">
       <NavigationMenu>
         {/* First NavigationMenu List */}
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Want to Cook</NavigationMenuTrigger>
+            <NavigationMenuTrigger className="text-[20px]">Want to Cook</NavigationMenuTrigger>
             <NavigationMenuContent className="z-10 bg-white p-6">
               <NavigationMenuLink>
                 <div className="flex gap-x-20 py-8 px-[60px]">
@@ -42,7 +42,7 @@ export default function HeaderNavigationMenu() {
         {/* Second NavigationMenu List */}
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Recipes</NavigationMenuTrigger>
+            <NavigationMenuTrigger className="text-[20px]">Recipes</NavigationMenuTrigger>
             <NavigationMenuContent className="z-10 bg-white p-6">
               <NavigationMenuLink>
                 <div className="flex gap-x-20 py-8 px-[60px]">
@@ -85,7 +85,7 @@ export default function HeaderNavigationMenu() {
         {/* Third NavigationMenu List */}
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Ingredients</NavigationMenuTrigger>
+            <NavigationMenuTrigger className="text-[20px]">Ingredients</NavigationMenuTrigger>
             <NavigationMenuContent className="z-10 bg-white p-6">
               <NavigationMenuLink>
                 <div className="flex gap-x-20 py-8 px-[60px]">
@@ -131,7 +131,7 @@ export default function HeaderNavigationMenu() {
         {/* Fourth NavigationMenu List */}
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Occasions</NavigationMenuTrigger>
+            <NavigationMenuTrigger className="text-[20px]">Occasions</NavigationMenuTrigger>
             <NavigationMenuContent className="z-10 bg-white p-6">
               <NavigationMenuLink>
                 <div className="flex gap-x-20 py-8 px-[60px]">
@@ -159,7 +159,7 @@ export default function HeaderNavigationMenu() {
         {/* Fifth NavigationMenu List */}
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>About</NavigationMenuTrigger>
+            <NavigationMenuTrigger className="text-[20px]">About</NavigationMenuTrigger>
             <NavigationMenuContent className="z-10 bg-white p-6">
               <NavigationMenuLink>
                 <div className="w-60 py-8 px-[60px]">

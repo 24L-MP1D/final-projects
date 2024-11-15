@@ -20,3 +20,15 @@ export const uploadFilesInCloudinary = async (file: File) => {
     return '';
   }
 };
+
+
+// export const handleYouTubeUrl = (url: string) => {
+//   const youtubeRegex = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/|e\/|videoseries\?v=|.*[?&]v=)([a-zA-Z0-9_-]{11})$/;
+//   const match = url.match(youtubeRegex);
+//   if (match) {
+//     return url;
+//   } else {
+//     console.error('Invalid YouTube URL');
+//     return '';
+//   }
+// };

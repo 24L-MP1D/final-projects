@@ -48,9 +48,9 @@ export default function ThemeBackground() {
 
   return (
     <div className={image}>
-      {image === 'gold-medal-bg' && <Image src={img1} alt="Gold Medal" width={76} height={76} />}
-      {image === 'silver-medal-bg' && <Image src={img2} alt="Silver Medal" width={76} height={76} />}
-      {image === 'bronze-medal-bg' && <Image src={img3} alt="Bronze Medal" width={76} height={76} />}
+      {image === 'gold-medal-bg' && <Image src={img1} alt="Gold Medal" width={80} height={80} />}
+      {image === 'silver-medal-bg' && <Image src={img2} alt="Silver Medal" width={80} height={80} />}
+      {image === 'bronze-medal-bg' && <Image src={img3} alt="Bronze Medal" width={80} height={80} />}
     </div>
   );
 }

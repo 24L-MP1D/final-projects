@@ -2,7 +2,7 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Bookmark, Calendar, Ellipsis, Heart, MessageSquare, TrendingUp, Upload } from 'lucide-react';
+import { Calendar, Ellipsis, Heart, MessageSquare } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Advertisement from '../../ads/ads';
@@ -146,22 +146,22 @@ export default function RecipeComponent() {
       ) : (
         <>
           <div className="flex justify-between">
-            <div className="flex gap-4 items-center">
+            {/* <div className="flex gap-4 items-center">
               <TrendingUp className="w-8 h-8" />
               <p className="text-slate-600">85% would make this again</p>
-            </div>
-            <div className="flex gap-6">
+            </div> */}
+            {/* <div className="flex gap-6">
               <Upload />
               <Bookmark />
-            </div>
+            </div> */}
           </div>
-          <p className="font-bold text-5xl">{formatTitle(slug)}</p>
+          <p className="font-bold text-6xl leading-10">{formatTitle(slug)}</p>
           <div className="flex">
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-3">
                 {recipe?.tags && recipe.tags.length > 0 ? (
                   recipe?.tags.map((tag, index) => (
-                    <div key={index} className="bg-gray-300 rounded-full px-2 py-1 ml-3">
+                    <div key={index} className="bg-gray-200 rounded-full px-4 py-1 ml-3 text-lg">
                       {tag}
                     </div>
                   ))
@@ -169,11 +169,11 @@ export default function RecipeComponent() {
                   <p>No tags available.</p>
                 )}
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 text-lg">
                 <Calendar />
                 {dayjs(recipe?.updatedAt).fromNow()}
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 text-lg">
                 <MessageSquare />
                 {comments.length}
               </div>
@@ -181,10 +181,10 @@ export default function RecipeComponent() {
             </div>
           </div>
           <div className="h-[1px] w-[1110px] bg-gray-200"></div>
-          <p className="font-semibold text-xl">{recipe?.description}</p>
+          <p className="font-semibold text-xl leading-8">{recipe?.description}</p>
           <div className="rounded">
             {recipe?.images ? (
-              recipe.images.map((image, index) => <img key={index} src={image} alt={`Recipe Image ${index + 1}`} className="w-[1110px]  object-cover rounded" />)
+              recipe.images.map((image, index) => <img key={index} src={image} alt={`Recipe Image ${index + 1}`} className="w-[1110px] h-[624px] object-cover rounded" />)
             ) : (
               <p>No images available</p>
             )}
@@ -216,10 +216,10 @@ export default function RecipeComponent() {
                   <h4 className="font-bold text-3xl py-5">Instructions</h4>
                   {recipe?.instructions && recipe.instructions.length > 0 ? (
                     recipe?.instructions.map((instruction, index) => (
-                      <ol key={index} className="list-decimal p-2 ml-3">
+                      <ol key={index} className="list-decimal p-2 ml-3 leading-8">
                         <li className="flex items-start space-x-3">
-                          <span className="w-6 h-6 bg-orange-400 text-white rounded-full flex items-center justify-center">{index + 1}</span>
-                          <span>{instruction.step}</span>
+                          <div className="w-6 h-6 bg-orange-400 text-white rounded-full flex items-center justify-center">{index + 1}</div>
+                          <span className="ml-1 flex-1">{instruction.step}</span>
                         </li>
                       </ol>
                     ))
@@ -234,15 +234,15 @@ export default function RecipeComponent() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableCaption className="w-[150px] font-semibold text-lg pb-3 pl-1">Nutrition Facts</TableCaption>
+                      <TableCaption className="w-[150px] font-semibold text-xl pb-3 pl-1">Nutrition Facts</TableCaption>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {recipe?.nutritionFacts && recipe.nutritionFacts.length > 0 ? (
                       recipe?.nutritionFacts.map((fact, index) => (
                         <TableRow key={index}>
-                          <TableCell className="w-[100px]">{fact.name}</TableCell>
-                          <TableCell className="w-[100px]">{fact.value}</TableCell>
+                          <TableCell className="w-[100px] text-lg">{fact.name}</TableCell>
+                          <TableCell className="w-[100px] text-lg">{fact.value}</TableCell>
                         </TableRow>
                       ))
                     ) : (
@@ -279,7 +279,7 @@ export default function RecipeComponent() {
               <Advertisement />
             </div>
           </div>
-          <p>Already made this?</p>
+
           <div className="h-3 bg-orange-400"></div>
           <div>
             <p>{comments.length} Comments</p>
@@ -321,20 +321,19 @@ export default function RecipeComponent() {
               </Table>
             </ScrollArea>
 
-            <div className="relative">
+            <div className="relative mb-5">
               <input
-                className="h-[40px] w-full max-w-[1110px] bg-gray-200 rounded p-4"
+                className="h-[240px] w-full max-w-[1110px] bg-gray-200 rounded p-4"
                 placeholder="Write your comment..."
                 aria-label="Comment input"
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
               />
-              <button className="bg-orange-500 hover:bg-orange-400 w-[200px] h-[50px] rounded mt-2 absolute right-[36px] bottom-8 z-10" aria-label="Post comment" onClick={handleCommentSubmit}>
+              <button className="bg-orange-500 hover:bg-orange-400 w-[200px] h-[50px] rounded mt-2 absolute right-[36px] bottom-8 z-10 " aria-label="Post comment" onClick={handleCommentSubmit}>
                 Post Comment
               </button>
             </div>
           </div>
-          <p>You might also like</p>
         </>
       )}
     </div>

@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
+    <div className="font-serif">
       <Header />
       {children}
       <Footer />
