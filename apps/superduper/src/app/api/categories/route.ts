@@ -13,7 +13,8 @@ export async function POST(request: Request) {
     return new Response(null, { status: 201 });
   } catch (err) {
     return new Response(null, { status: 404 });
-  }}
+  }
+}
 const collection = DB.collection('categories');
 
 // export async function POST(request: Request) {

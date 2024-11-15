@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Bookmark } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { formatTitle } from '../../recipe/[slug]/page';
@@ -37,3 +38,18 @@ export const Item = ({ item }: { item: any }) => {
     </div>
   );
 };
+
+export function addToFav(recipeId: any) {
+  const token = localStorage.getItem('authtoken');
+  return axios
+    .post('/api/favorite', { recipeId }, { headers: { authtoken: token } })
+    .then(({ status }) => {
+      if (status === 200) {
+        alert('Амжилттай хадгалла');
+        console.log(recipeId);
+      } else {
+        alert('Хадгалалт амжилтгүй');
+      }
+    })
+    .catch(() => { });
+}

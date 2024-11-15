@@ -8,6 +8,7 @@ import { HandyCarousel } from './components/homePageComponents/handyCarousel';
 import { Stars } from './components/itemComponents/stars';
 import { formatTitle } from './recipe/[slug]/page';
 import TextBackground from './wrapper';
+import { FavoriteRecipes } from './components/homePageComponents/favorites';
 
 const formatSlugForNavigation = (slug: string) => {
   return slug.toLowerCase();
@@ -33,6 +34,7 @@ export default function Index() {
         <RecipeOfTheDay />
         <div className="flex flex-col gap-16 max-w-[80%] xl:max-w-[1160px] w-full m-auto">
           <AvailableContent />
+          <FavoriteRecipes />
           <OccasionMeals />
           {collections.map((collection: any) => (
             <CollectionByAdmin key={collection._id} collection={collection} />
@@ -73,7 +75,6 @@ const AvailableContent = () => {
 
   return (
     <div className="border-t-2 border-[#222222] max-w-[1110px] w-full m-auto flex flex-col gap-4">
-      {/* <span className="text-[23px] ">{role} хэрэглэгчдэд </span> */}
       <TextBackground />
       <HandyCarousel data={data} name="available" />
     </div>
@@ -171,9 +172,13 @@ const RecipeOfTheDay = () => {
   const { img, title, description, rating, ratingNum, id, prepTime } = data;
   const formatedTitle = formatTitle(title);
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-10 max-w-[auto] md:max-w-[80%] xl:max-w-[1160px] w-full m-auto mt-5">
-      <div className="relative">
-        <img src={img} className={`max-w-auto aspect-video rounded-lg sm:w-[710px] object-cover`} onClick={() => (window.location.href = `/recipe/${formatedTitle}`)} />
+    <div className="flex flex-col lg:flex-row items-center gap-10 max-w-[auto] md:max-w-[80%] xl:max-w-[1160px] w-full m-auto">
+      <div className="relative bg-slate-500">
+        <img
+          src={img}
+          className={`max-w-auto aspect-video sm:w-[710px] object-cover`}
+          onClick={() => (window.location.href = `/recipe/${formatedTitle}`)}
+        />
         <SaveButton id={id} className="absolute right-6 bottom-6" />
       </div>
       <div className="flex flex-col text-[#222222] max-w-[80%]">

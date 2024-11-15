@@ -1,0 +1,146 @@
+.shadow__btn {
+  padding: 8px 10px;
+  border: none;
+  font-size: 10px;
+  color: #fff;
+  border-radius: 7px;
+  letter-spacing: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: 0.5s;
+  transition-property: box-shadow;
+  background: rgb(0, 140, 255);
+  box-shadow: 0 0 25px rgb(0, 140, 255);
+}
+
+.shadow__btn:hover {
+  box-shadow: 0 0 5px rgb(0, 140, 255), 0 0 25px rgb(0, 140, 255), 0 0 50px rgb(0, 140, 255), 0 0 100px rgb(0, 140, 255);
+}
+
+.shadow {
+  box-shadow: 0 0 5px rgb(0, 140, 255), 0 0 25px rgb(0, 140, 255), 0 0 50px rgb(0, 140, 255), 0 0 100px rgb(0, 140, 255);
+}
+
+.shadow-product {
+  box-shadow: 0 0 10px rgb(0, 140, 255), 0 0 10px rgb(0, 140, 255), 0 0 10px rgb(0, 140, 255), 0 0 10px rgb(0, 140, 255);
+}
+
+.btn-donate {
+  --clr-font-main: hsla(0 0% 20% / 100);
+  --btn-bg-1: hsla(194 100% 69% / 1);
+  --btn-bg-2: hsla(217 100% 56% / 1);
+  --btn-bg-color: hsla(360 100% 100% / 1);
+  --radii: 0.5em;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  min-height: 44px;
+  font-size: var(--size, 1rem);
+  font-weight: 500;
+  transition: 0.8s;
+  background-size: 280% auto;
+  background-image: linear-gradient(325deg, var(--btn-bg-2) 0%, var(--btn-bg-1) 55%, var(--btn-bg-2) 90%);
+  border: none;
+  border-radius: var(--radii);
+  color: var(--btn-bg-color);
+  box-shadow: 0px 0px 20px rgba(71, 184, 255, 0.5), 0px 5px 5px -1px rgba(58, 125, 233, 0.25), inset 4px 4px 8px rgba(175, 230, 255, 0.5), inset -4px -4px 8px rgba(19, 95, 216, 0.35);
+}
+
+.btn-donate:hover {
+  background-position: right top;
+}
+
+.btn-donate:is(:focus, :focus-visible, :active) {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--btn-bg-color), 0 0 0 6px var(--btn-bg-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-donate {
+    transition: linear;
+  }
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.loader-bar {
+  height: 25px;
+  width: 6px;
+  margin: 0 3px;
+  border-radius: 20px;
+  animation: loader 2s ease-in-out infinite;
+}
+
+.bar-1 {
+  background: linear-gradient(to right, #00e6e6, #00ccff, #0099ff, #0066ff);
+  animation-delay: 0s;
+  box-shadow: 0px 0px 15px 3px #00e6e6;
+}
+
+.bar-2 {
+  background: linear-gradient(to right, #00ccff, #0099ff, #0066ff, #00e6e6);
+  animation-delay: 0.1s;
+  box-shadow: 0px 0px 15px 3px #00ccff;
+}
+
+.bar-3 {
+  background: linear-gradient(to right, #0099ff, #0066ff, #00e6e6, #00ccff);
+  animation-delay: 0.2s;
+  box-shadow: 0px 0px 15px 3px #0099ff;
+}
+
+.bar-4 {
+  background: linear-gradient(to right, #0066ff, #00e6e6, #00ccff, #0099ff);
+  animation-delay: 0.3s;
+  box-shadow: 0px 0px 15px 3px #0066ff;
+}
+
+@keyframes loader {
+  0% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(2);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
+}
+.text {
+  font-family: freightBig, serif;
+  font-weight: 700;
+}
+
+/* From Uiverse.io by Codecite */
+.btn {
+  transition: all 0.3s ease-in-out;
+  font-family: 'Dosis', sans-serif;
+}
+
+.btn {
+  width: 100px;
+  height: 40px;
+  border-radius: 50px;
+  background-image: linear-gradient(135deg, #92c6fe 0%, #3d8bf1 100%);
+  box-shadow: 0 20px 30px -6px rgba(38, 115, 239, 0.5);
+  outline: none;
+  cursor: pointer;
+  border: none;
+  font-size: 18px;
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.btn:active {
+  opacity: 0.5;
+}

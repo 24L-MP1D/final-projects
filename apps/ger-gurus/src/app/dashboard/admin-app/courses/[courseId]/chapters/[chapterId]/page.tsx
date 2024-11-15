@@ -1,4 +1,3 @@
-import { IconBadge } from '@/components/icon-badge';
 import { db } from '@/lib/db';
 import { ArrowLeft, Eye, LayoutDashboard, Video } from 'lucide-react';
 import { ObjectId } from 'mongodb';
@@ -50,7 +49,7 @@ export default async function Page({ params }: { params: Params }) {
   const isComplete = requiredFields.every(Boolean);
 
   return (
-    <>
+    <div className="h-full mb-20">
       {!chapter.isPublished && (
         <div role="alert" className="alert alert-warning flex">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
@@ -65,7 +64,7 @@ export default async function Page({ params }: { params: Params }) {
         </div>
       )}
 
-      <main className="p-6">
+      <div className="p-6 md:container md:mx-auto h-full">
         <div className="flex items-center justify-between max-w-2xl">
           <Link href={`/admin-app/courses/${courseId}`} className="flex items-center text-sm  transition mb-6 link link-primary hover:scale-125">
             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -73,37 +72,42 @@ export default async function Page({ params }: { params: Params }) {
           </Link>
         </div>
         <div className="flex items-center justify-between">
-          <div className="flex flex-col gap-2">
-            <h1 className="text-2xl font-medium">Бүлэг үүсгэх</h1>
-            <span className="text-sm text-slate-700">Бүх талбарыг бөглөнө үү {completionText}</span>
+          <div className="prose">
+            <h1 className="">Бүлэг үүсгэх</h1>
+            <p className="text-error">Бүх талбарыг бөглөнө үү {completionText}</p>
           </div>
           <ChapterActions disabled={!isComplete} courseId={courseId} chapterId={chapterId} isPublished={chapter.isPublished} />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+        <div className="grid grid-cols-1 xl:grid-cols-3 md:grid-cols-2 gap-6 mt-8">
           <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={LayoutDashboard} />
-              <h2 className="text-xl">Бүлгээ тохируулах</h2>
+            <div className="prose">
+              <h2 className="flex items-center gap-x-2 ">
+                <LayoutDashboard className="bg-secondary" /> Бүлгээ тохируулах
+              </h2>
             </div>
             <ChapterTitleForm initialData={chapterWithPlainId} />
             <ChapterDescriptionForm initialData={chapterWithPlainId} />
           </div>
           <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={Video} />
-              <h2 className="text-xl">Видео нэмэх</h2>
+            <div className="prose">
+              <h2 className="flex items-center gap-x-2">
+                <Video />
+                Видео нэмэх
+              </h2>
             </div>
             <ChapterVideoForm initialData={chapterWithPlainId} playbackId={muxData?.playbackId} />
           </div>
           <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={Eye} />
-              <h2 className="text-xl">Хандалтын тохиргоо</h2>
+            <div className=" prose text-accent">
+              <h2 className="flex items-center gap-x-2">
+                <Eye />
+                Хандалтын тохиргоо
+              </h2>
             </div>
             <ChapterAccessForm initialData={chapterWithPlainId} />
           </div>
         </div>
-      </main>
-    </>
+      </div>
+    </div>
   );
 }

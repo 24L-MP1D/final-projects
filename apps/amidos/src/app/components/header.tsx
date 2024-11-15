@@ -13,10 +13,10 @@ const navs = [
 ];
 export default function Header() {
   return (
-    <div className="z-10">
-      <div className=" hidden md:flex md:gap-7 md:pt-10 ">
+    <div className="z-10  ">
+      <div className=" hidden md:flex md:gap-7 z-10 gap-4 justify-center p-6 max-w-[900px] m-auto ">
         {navs.map((nav) => (
-          <Link href={nav.link} className="text-white" key={nav.name}>
+          <Link className="text-white" key={nav.name} href={nav.link}>
             {nav.name}
           </Link>
         ))}

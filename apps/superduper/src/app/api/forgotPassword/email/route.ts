@@ -12,8 +12,10 @@ export async function PUT(request: Request) {
     if (!user) {
       return new Response(null, { status: 404 });
     }
+
     const { _id } = user;
-    if (!user) {
+    console.log(_id);
+    if (!_id) {
       console.log('user not found');
       return new Response(null, { status: 400 });
     }
@@ -21,13 +23,15 @@ export async function PUT(request: Request) {
     const expirationTime = new Date();
     expirationTime.setMinutes(expirationTime.getMinutes() + 5);
 
-    const userWithOtp = await collection.updateOne(
+    console.log(otp);
+
+    await collection.updateOne(
+      { _id },
       {
-        _id: _id,
-      },
-      {
-        $set: { otp },
-        expiresAt: expirationTime,
+        $set: {
+          otp,
+          expiresAt: expirationTime,
+        },
       }
     );
 
@@ -42,10 +46,12 @@ export async function PUT(request: Request) {
       await transporter.sendMail({
         from: 'galt.batzana1@gmail.com',
         to: email,
-        subject: 'OTP Verification',
-        text: `Your OTP for verification is :${otp}`,
+        subject: 'Нууц 6 орон тоо',
+        text: `Таны нэг удаагийн нууц 6 орон тоо :${otp}
+        хүчинтэй хугацаа: 5 минут`,
       });
 
+      console.log('user not ');
       return Response.json({ email });
     } catch (err) {
       return Response.json({ message: 'error' });

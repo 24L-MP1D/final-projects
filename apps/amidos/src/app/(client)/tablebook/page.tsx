@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocalStorage } from "@uidotdev/usehooks";
@@ -10,26 +9,27 @@ import "react-datepicker/dist/react-datepicker.css";
 
 type Table = {
   _id: string,
-  name: string
+  name: string,
+  tableNumber: number,
+  isReserved: boolean,
   coordinate: {
     x: number,
     y: number
   }
 };
 
-
 export default function Page() {
-  const [mounted, setMounted] = useState(false)
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
+    setMounted(true);
   }, []);
 
   if (!mounted) {
     return null;
   }
 
-  return <TableBook />
+  return <TableBook />;
 }
 
 function TableBook() {
@@ -38,14 +38,18 @@ function TableBook() {
   const [reservedSeat, setReservedSeat] = useLocalStorage<number | null>("reservedSeat", null);
   const [selectedTable, setSelectedTable] = useLocalStorage<string | null>("selectedTable", null);
   const [day, setDay] = useLocalStorage("day", new Date().toISOString());
+  const [isReserved, setIsReserved] = useLocalStorage<boolean>("isReserved");
   const [tables, setTables] = useState<Table[]>([]);
   const [loading, setLoading] = useState(true);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
+
 
   const reset = () => {
     setSelectedTime(null);
     setReservedSeat(null);
     setSelectedTable("");
     setDay(new Date().toISOString());
+    setAlertMessage(null);
   };
 
   const handleSubmit = () => {
@@ -84,10 +88,52 @@ function TableBook() {
     getTablesDetail();
   }, []);
 
+  const handleTableSelect = (table: Table) => {
+    console.log("table", table)
+    if (table.isReserved) {
+      setAlertMessage(`Ширээ ${table.tableNumber} аль хэдийн захиалагдсан байна!`);
+    } else {
+      setSelectedTable(table._id);
+      setAlertMessage(null);
+    }
+  };
+
   return (
-    <div className="flex flex-col justify-center gap-8 p-20 mx-auto">
+    <div className="flex justify-between p-10 mx-auto max-w-screen-2xl">
+      {loading ? (
+        <div>Loading tables...</div>
+      ) : (
+        <div className="relative h-[800px] w-[1200px]">
+          {tables.map((table) => (
+            <div
+              style={{ top: table.coordinate.y, left: table.coordinate.x }}
+              className={`absolute w-20 h-20 rounded-full 
+                          ${table.isReserved ? "bg-gray-400 cursor-not-allowed" :
+                  selectedTable === table._id ? "bg-[#52071B] text-white" : "bg-yellow-400 hover:bg-yellow-600"}`}
+              key={table._id}
+              onClick={() => handleTableSelect(table)}
+            >
+              {table.tableNumber}
+            </div>
+          ))}
+        </div>
+      )}
+      {alertMessage && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-5 rounded-lg shadow-lg w-80">
+            <h2 className="text-xl font-semibold mb-4 text-center">Анхааруулга</h2>
+            <p className="text-center mb-6">{alertMessage}</p>
+            <Button
+              className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
+              onClick={() => setAlertMessage(null)}
+            >
+              Хаах
+            </Button>
+          </div>
+        </div>
+      )}
       <div className="flex justify-between items-center">
-        <div className="flex gap-8 p-3">
+        <div className="flex flex-col gap-8 p-3">
           <div className="flex flex-col gap-4">
             <p className="text-xl font-semibold">Өдөр сонгох</p>
             <DatePicker
@@ -121,30 +167,16 @@ function TableBook() {
               className="p-5"
             />
           </div>
-        </div>
-        <Button
-          className={`w-[200px] h-[40px] py-2 text-center bg-[#52071B] rounded-xl text-white text-base font-semibold hover:bg-[#52071b92] 
+          <Button
+            className={`w-[200px] h-[40px] py-2 text-center bg-[#52071B] rounded-xl text-white text-base font-semibold hover:bg-[#52071b92] 
                         ${!selectedTime || !selectedTable || !reservedSeat ? "opacity-50 cursor-not-allowed" : ""}`}
-          onClick={handleSubmit}
-          disabled={!selectedTime || !selectedTable || !reservedSeat}
-        >
-          Continue
-        </Button>
-      </div>
-      {loading ? (
-        <div>Loading tables...</div>
-      ) : (
-        <div className="relative h-[800px] w-[800px]">
-          {tables.map((table) => (
-            <div style={{ top: table.coordinate.y, left: table.coordinate.x }}
-              className={`absolute w-20 h-20 rounded-full ${selectedTable === table._id ? "bg-[#52071B] text-white" : "bg-yellow-400 hover:bg-yellow-600"}`}
-              key={table._id}
-              onClick={() => setSelectedTable(table._id)}>
-              {table.name}
-            </div>
-          ))}
+            onClick={handleSubmit}
+            disabled={!selectedTime || !selectedTable || !reservedSeat}
+          >
+            Үргэлжлүүлэх
+          </Button>
         </div>
-      )}
-    </div >
+      </div>
+    </div>
   );
 }

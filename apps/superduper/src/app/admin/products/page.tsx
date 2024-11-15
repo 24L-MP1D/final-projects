@@ -1,4 +1,5 @@
 'use client';
+import '@/app/styles.css';
 import { AdminLayout } from '@/components/adminLayout';
 import { AdminMessageSendDialog } from '@/components/adminMessageSendDialog';
 import { DatePickerWithRange } from '@/components/dateRange';
@@ -18,7 +19,6 @@ const Home = () => {
   const value = useContext(Context);
 
   const [CheckBoxArray, setCheckBoxArray] = useState<string[]>([]);
-
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState<ProductType[]>([]);
 
@@ -35,8 +35,11 @@ const Home = () => {
   const [searchValue, setSearchValue] = useState('');
 
   const [userId, setUserId] = useState('');
+
   const [page, setPage] = useState(1);
+
   const [count, setCount] = useState(6);
+
   const loadProduct = async () => {
     try {
       setLoading(true);
@@ -113,8 +116,13 @@ const Home = () => {
       <AdminLayout>
         <div className="min-h-screen">
           <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] items-center flex">
-            <Image src={'/images/spinner.svg'} alt="loading" width={100} height={100} />
-            <div className="font-bold text-3xl">Ачааллаж байна...</div>
+            <div className="loader">
+              <div className="loader-bar bar-1"></div>
+              <div className="loader-bar bar-2"></div>
+              <div className="loader-bar bar-3"></div>
+              <div className="loader-bar bar-4"></div>
+            </div>
+            <div className="font-bold text-3xl">Ачаалж байна...</div>
           </div>
         </div>
       </AdminLayout>
@@ -237,7 +245,7 @@ const Home = () => {
           </TableBody>
         </Table>
         {open && <AdminMessageSendDialog setFeedBackInput={setFeedBackInput} productId={productId} open={open} loadProduct={loadProduct} setOpen={setOpen} />}
-        {feedBackInput && <div className="absolute inset-0 opacity-50 bg-slate-500"></div>}
+        {feedBackInput && <div className="fixed inset-0 opacity-50 bg-slate-500"></div>}
         {feedBackInput && <FeedBackInput productId={productId} userId={userId} loadProduct={loadProduct} setFeedBackInput={setFeedBackInput} />}
       </div>
       <Toaster />
@@ -251,7 +259,7 @@ const Home = () => {
             className="flex items-center gap-1"
           >
             {loading && <Image src={'/images/spinner.svg'} alt="loading" width={40} height={40} />}
-            <div> Load more</div>
+            <div> Цааш үзэх </div>
           </Button>
         </div>
       )}
