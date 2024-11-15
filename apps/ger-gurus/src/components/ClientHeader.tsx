@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { BsHandIndexThumbFill } from 'react-icons/bs';
 import { FaPlay } from 'react-icons/fa';
-import MagneticPlayButton from './ClientMagicCursor';
 
 export default function ClientHeader() {
   // const currentUser = useAuthStore((state) => state.currentUser);
@@ -57,47 +56,53 @@ export default function ClientHeader() {
         <div className="flex gap-[700px]">
           <div className="max-w-48 rounded-xl shadow-2xl transform transition-transform duration-1000 ease-out" style={{ transform: `translate(-${translateY}px, -${translateY}px)` }}>
             <video className="videoTag aspect-video object-cover overflow-hidden w-[100%] rounded-xl" autoPlay loop muted>
-              <source src={'/study.mp4'} type="video/mp4" />
+              <source src={'/vid1.mp4'} type="video/mp4" />
             </video>
           </div>
           <div className="max-w-48 rounded-xl shadow-2xl transform transition-transform duration-1000 ease-out" style={{ transform: `translate(${translateY}px, -${translateY}px)` }}>
             <video className="videoTag aspect-video object-cover overflow-hidden w-[100%] rounded-xl" autoPlay loop muted>
-              <source src={'/study.mp4'} type="video/mp4" />
+              <source src={'/vid2.mp4'} type="video/mp4" />
             </video>
           </div>
         </div>
         <div className="flex gap-[800px]">
           <div className="max-w-48 rounded-xl shadow-2xl transform transition-transform duration-1000 ease-out" style={{ transform: `translate(-${translateY}px, -${translateY}px)` }}>
             <video className="videoTag aspect-video object-cover overflow-hidden w-[100%] rounded-xl" autoPlay loop muted>
-              <source src={'/study.mp4'} type="video/mp4" />
+              <source src={'/vid3.mp4'} type="video/mp4" />
             </video>
           </div>
           <div className="max-w-48 rounded-xl shadow-2xl transform transition-transform duration-1000 ease-out" style={{ transform: `translate(${translateY}px, -${translateY}px)` }}>
             <video className="videoTag aspect-video object-cover overflow-hidden w-[100%] rounded-xl" autoPlay loop muted>
-              <source src={'/study.mp4'} type="video/mp4" />
+              <source src={'/vid4.mp4'} type="video/mp4" />
             </video>
           </div>
         </div>
         <div className="flex gap-[750px]">
           <div className="max-w-48 rounded-xl shadow-2xl transform transition-transform duration-1000 ease-out" style={{ transform: `translate(-${translateY}px, -${translateY}px)` }}>
             <video className="videoTag aspect-video object-cover overflow-hidden w-[100%] rounded-xl" autoPlay loop muted>
-              <source src={'/study.mp4'} type="video/mp4" />
+              <source src={'/vid5.mp4'} type="video/mp4" />
             </video>
           </div>
           <div className="max-w-48 rounded-xl shadow-2xl transform transition-transform duration-1000 ease-out" style={{ transform: `translate(${translateY}px, -${translateY}px)` }}>
             <video className="videoTag aspect-video object-cover overflow-hidden w-[100%] rounded-xl" autoPlay loop muted>
-              <source src={'/study.mp4'} type="video/mp4" />
+              <source src={'/vid6.mp4'} type="video/mp4" />
             </video>
           </div>
         </div>
-        <div className="max-w-3xl mx-auto shadow-2xl rounded-xl mt-[140px] absolute">
-          <video className="videoTag aspect-video object-cover overflow-hidden w-[100%] rounded-xl" autoPlay loop muted>
-            <source src={'/home-video.mp4'} type="video/mp4" />
-          </video>
+        <div className="w-[768px] mx-auto shadow-2xl rounded-xl mt-[140px] absolute">
+          <iframe
+            className="videoTag aspect-video  object-cover overflow-hidden w-[100%] h-[100%] rounded-xl"
+            src="https://www.youtube.com/embed/kKLVGoadRvk?autoplay=1&loop=1&mute=1&playlist=kKLVGoadRvk"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
         </div>
+        {/* 
         <div className="absolute z-10 mt-[140px]">
           <MagneticPlayButton />
-        </div>
+        </div> */}
       </div>
     </main>
   );

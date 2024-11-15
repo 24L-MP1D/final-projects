@@ -1,5 +1,7 @@
 'use client';
 
+import { GrInstagram } from 'react-icons/gr';
+
 export default function ClientQuote() {
   return (
     <div className="max-w-[1440px] mx-auto">
@@ -17,14 +19,19 @@ export default function ClientQuote() {
             background: 'linear-gradient(100deg, #e1e2e2, #e1e2e2 50%, #abaaa8)',
           }}
         >
-          <div className="pt-8 pb-4 flex flex-col gap-2">
+          <div className="pt-8 pb-4 flex flex-col gap-7">
             <div className="text-3xl font-bold text-purple-600">Анхны хэрэглэгч</div>
-            <div className="text-7xl text-[#201116] font-bold">Ууганбаяр гэж хэн бэ?</div>
+            <div className="text-7xl text-[#201116] font-bold">О.Ууганбилэг гэж хэн бэ?</div>
             <div className="text-xl">
               Уламжлалт анагаах ухааны бага эмч мэргэжилтэй, эрүүл амьдралын хэв маягийн коуч, шим тэжээл судлаач. Нутрилайт Институтын шим тэжээлийн мастер зөвлөх. Та эрүүл сайн сайхан байхын тулд
               цогц үйлчилгээг авах боломжтой бөгөөд цаг товлон ганцаарчилсан уулзалтаар өөрийн бие организм хэрхэн ажиллаж байгааг мэдэж, хоол, шим тэжээлийн нарийн зөвлөгөө авах боломжтой.
             </div>
-            <div>icons</div>
+            <div className="flex gap-5 font-bold">
+              <button className="flex items-center gap-1" onClick={() => (window.location.href = 'https://www.instagram.com/uuganbileg_otgonbayar/')}>
+                <GrInstagram className="text-xl" />
+                Instagram
+              </button>
+            </div>
           </div>
           <div className="absolute right-0 top-0 h-full">
             <img src="/uuganbileg.png" alt="chars" className="w-full h-full object-cover transform group-hover:scale-105 group-hover:rotate-3 group-hover:brightness-110" />
