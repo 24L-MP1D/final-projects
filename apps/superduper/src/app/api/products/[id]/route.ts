@@ -52,7 +52,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
             html: `<p>Сайн байна уу? <b>Эрхэм хүндэт ${users[i].firstName}</b>,</p>
             <p>Бид таныг өөрсдийн зохион байгуулж байгаа дуудлага худалдаанд орохыг урьж байна. </p>
             <p>Та доорх линк дээр даран манай веб руу орж болно.</p>
-              <a href="http://localhost:3000/client">Энд дарна уу</a>
+              <a href="https://superduper-sigma.vercel.app/client">Энд дарна уу</a>
               <ul> 
               <li>Бүтээгдэхүүний нэр: "${oneProduct?.productName}"</li>
               <li>Дуудлага худалдаа эхлэх огноо: ${oneProduct?.startDate}</li>

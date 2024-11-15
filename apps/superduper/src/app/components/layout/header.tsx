@@ -160,7 +160,7 @@ export default function Header() {
                     >
                       <div className="flex-1">{product.productName}</div>
                       <div className="">
-                        <Image src={product.frontImage || '/'} alt="image" width={100} height={100} className="rounded-full w-16 h-16" />
+                        <Image src={product?.frontImage || '/'} alt="image" width={100} height={100} className="rounded-full w-16 h-16" />
                       </div>
                     </div>
                   ))}
