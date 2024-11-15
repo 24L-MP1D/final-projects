@@ -58,16 +58,16 @@ export async function POST(request: Request) {
 export async function GET(req: Request, { params }: { params: { slug: string } }) {
   const { slug } = await params;
 
-  console.log('Received slug:', slug);
-
   const recipe = await DB.collection('recipes').findOne({ title: slug });
 
   if (!recipe) {
-    console.log('Recipe not found for title:', slug);
     return new Response(JSON.stringify({ message: 'Recipe not found' }), { status: 404 });
   }
 
+  console.log('id        :', recipe._id);
+
   const comments = await DB.collection('comments').find({ recipeId: recipe._id }).toArray();
+  console.log('comms:           ', comments);
 
   return new Response(JSON.stringify({ recipe, comments }), {
     status: 200,
