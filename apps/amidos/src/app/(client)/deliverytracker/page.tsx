@@ -1,90 +1,120 @@
-import { Button } from '@/app/components/ui/button';
-import Image from 'next/image';
-import Link from 'next/link';
+'use client';
+import { useGeolocation } from '@uidotdev/usehooks';
+import { APIProvider, Map, Marker, useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
+import * as Ably from 'ably';
+import { AblyProvider, ChannelProvider, useChannel, useConnectionStateListener } from 'ably/react';
+import { useEffect, useState } from 'react';
 
-export default function Deliveryorders() {
-  const orders = [
-    {
-      orderid: 12,
-      createdAt: '2024.12.20',
-      address: 'Twin tower 12th floor',
-      contact: 99907768,
-      orderedfoods: [
-        { foodname: 'Pasta', foodquantity: 2, id: 12389, image: '/pasta.jpg' },
-        { foodname: 'Carbonara', foodquantity: 1, id: 123890, image: '/carbonara.jpg' },
-      ],
-      totalprice: 55000,
-    },
-    {
-      orderid: 20,
-      createdAt: '2024.12.31',
-      address: 'Gurvan gol 3rd floor',
-      contact: 99907767,
-      orderedfoods: [
-        { foodname: 'Pasta', id: 123, foodquantity: 2, image: '/pasta.jpg' },
-        { foodname: 'Carbonara', foodquantity: 2, id: 1234, image: '/carbonara.jpg' },
-      ],
-      totalprice: 100000,
-    },
-  ];
+export default function Deliveryperson({ params }: { params: { deliverychannel: string } }) {
+  const state = useGeolocation();
+  const deliverychannel = params.deliverychannel;
+  const latitude = state.latitude;
+  const longitude = state.longitude;
+  const GOOGLE_API = String(process.env.GOOGLE_API);
+  const client = new Ably.Realtime({ key: 'Nh6tIw.Klcmeg:giWLIzmJQ9jQ_ovhkmin61JtSF5QScEZb_EQgxLTr5I' });
+
+  if (state.loading) {
+    return <p>Loading... (you may need to enable permissions)</p>;
+  }
+
+  if (state.error) {
+    return <p>Enable permissions to access your location data</p>;
+  }
+
+  const position = { lat: Number(state.latitude), lng: Number(state.longitude) };
+
   return (
-    <div className="flex flex-col gap-8">
-      {orders.map((order) => (
-        <div className="bg-white border border-gray-300 px-20 py-14 rounded-lg flex flex-col gap-8" key={order.orderid}>
-          <div className="flex flex-col gap-4">
-            <div className="flex justify-between">
-              <div className="flex gap-2">
-                <p className="text-2xl text-[#8B0000]">ЗАХИАЛГЫН ДУГААР:</p>
-                <p className="text-2xl text-[#342216]">{order.orderid}</p>
-              </div>
-              <div className="text-xl text-[#342216] font-normal">{order.createdAt}</div>
-            </div>
-            <div className="grid grid-cols-2 gap-6">
-              {order.orderedfoods?.map((orderedfood) => (
-                <div className="border border-gray-300 flex justify-between flex-1 rounded-xl py-4 px-6 items-center" key={orderedfood.id}>
-                  <div className="flex flex-col gap-1">
-                    <div className="flex gap-2">
-                      <p className="text-lg text-[#342216] font-bold">Захиалсан хоол:</p>
-                      <p className="text-lg text-[#342216] font-normal">{orderedfood.foodname}</p>
-                    </div>
-                    <div className="flex gap-2">
-                      <p className="text-lg text-[#342216] font-bold">Тоо ширхэг:</p>
-                      <p className="text-lg text-[#342216] font-normal">{orderedfood.foodquantity}</p>
-                    </div>
-                  </div>
-                  <div className="max-w-24 max-h-24 aspect-square overflow-hidden rounded-lg">
-                    <Image src={orderedfood.image} alt="Image of food" width={200} height={200} className="w-full h-full object-cover" />
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="flex justify-between items-center">
-              <div>
-                <div className="flex gap-2">
-                  <p className="text-base text-[#342216] font-bold">Хаяг:</p>
-                  <div className="text-base text-[#342216] font-normal">{order.address}</div>
-                </div>
-                <div className="flex gap-2">
-                  <p className="text-base text-[#342216] font-bold">Холбогдох утас:</p>
-                  <div className="text-base text-[#342216] font-normal">{order.contact}</div>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <p className="text-xl text-[#342216] font-bold">Нийт дүн:</p>
-                <div className="text-xl text-[#342216] font-normal">{order.totalprice}₮</div>
-              </div>
-            </div>
+    <div>
+      <AblyProvider client={client}>
+        <ChannelProvider channelName={deliverychannel}>
+          <div style={{ height: '500px', width: '100%' }} className="relative">
+            <APIProvider apiKey="AIzaSyCYuf3C9btTOUo7_OddJlPg0rjJuwLWf_I">
+              <Map defaultCenter={position} defaultZoom={10} mapId="myMap" fullscreenControl={false}>
+                <Marker position={position} />
+                <Directions latitude={latitude} longitude={longitude} deliverychannel={deliverychannel} />
+              </Map>
+            </APIProvider>
           </div>
-          <div className="flex gap-4 self-end">
-            <Link href="/homepage">
-              <Button className="bg-white hover:bg-slate-300 text-[#52071B] text-sm border border-[#52071B]">БУЦАХ</Button>
-            </Link>
-            <Link href="/buy">
-              <Button className="bg-[#C41D4A] hover:bg-[#8B0000]">ТӨЛБӨР ТӨЛӨХ</Button>
-            </Link>
-          </div>
-        </div>
-      ))}
+        </ChannelProvider>
+      </AblyProvider>
+    </div>
+  );
+}
+
+type Props = {
+  latitude: number | null;
+  longitude: number | null;
+  deliverychannel: string;
+};
+
+function Directions({ latitude, longitude, deliverychannel }: Props) {
+  const map = useMap();
+  const routesLibrary = useMapsLibrary('routes');
+  const [directionsService, setDirectionsService] = useState<google.maps.DirectionsService>();
+  const [directionsRenderer, setDirectionsRenderer] = useState<google.maps.DirectionsRenderer>();
+  const [routes, setRoutes] = useState<google.maps.DirectionsRoute[]>([]);
+  const [routeIndex, setRouteIndex] = useState(0);
+  const [messages, setMessages] = useState<Ably.Message>();
+
+  const deliverypersonposition = messages?.data;
+  const deliveryperson = deliverypersonposition?.join(', ');
+
+  useConnectionStateListener('connected', () => { });
+
+  const { channel } = useChannel(deliverychannel, 'message', (message) => {
+    setMessages(message);
+  });
+
+  useEffect(() => {
+    if (!directionsRenderer) return;
+    directionsRenderer.setRouteIndex(routeIndex);
+  }, [routeIndex, directionsRenderer]);
+
+  useEffect(() => {
+    if (!routesLibrary || !map) return;
+    setDirectionsService(new routesLibrary.DirectionsService());
+    setDirectionsRenderer(new routesLibrary.DirectionsRenderer({ map }));
+  }, [routesLibrary, map]);
+
+  useEffect(() => {
+    if (!directionsService || !directionsRenderer || !deliveryperson) return;
+    directionsService
+      .route({
+        origin: `${deliveryperson}`,
+        destination: `${latitude}, ${longitude}`,
+        travelMode: google.maps.TravelMode.DRIVING,
+        provideRouteAlternatives: true,
+      })
+      .then((response) => {
+        directionsRenderer.setDirections(response);
+        setRoutes(response.routes);
+      });
+  }, [directionsService, directionsRenderer, deliveryperson, latitude, longitude]);
+
+  const selected = routes[routeIndex];
+  const leg = selected?.legs[0];
+  if (!leg) return null;
+
+  return (
+    <div className="directions absolute top-0 right-0 bg-slate-500 text-white w-[400px] p-6 rounded-lg flex flex-col gap-3">
+      <div>
+        <h2 className="text-xl font-bold">{selected.summary}</h2>
+        <p className="text-xs">
+          {leg.start_address.split(',')[0]} - {leg.end_address.split(',')[0]}
+        </p>
+        <p className="text-xs">Distance: {leg.distance?.text}</p>
+        <p className="text-xs">Duration: {leg.duration?.text}</p>
+      </div>
+      <div>
+        <h2 className="text-lg font-bold text-white">Other Routes</h2>
+        <ul>
+          {routes.map((route, index) => (
+            <li key={route.summary} className="text-xs text-yellow-200 list-disc">
+              <button onClick={() => setRouteIndex(index)}>{route.summary}</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

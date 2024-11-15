@@ -5,11 +5,10 @@ import { Menu } from 'lucide-react';
 import Link from 'next/link';
 
 const navs = [
-  { name: 'БИДНИЙ ТУХАЙ', link: '' },
+  { name: 'БИДНИЙ ТУХАЙ', link: '#aboutupper2' },
   { name: 'MЕНЮ', link: '/menu' },
   { name: 'ГАЛЛЕРЕЙ', link: '/gallery' },
-  { name: 'ЗАХИАЛГА', link: '/order' },
-  { name: 'ХҮРГЭЛТ', link: '/delivery' },
+  { name: 'САГС', link: '/order' },
 ];
 export default function Header() {
   return (

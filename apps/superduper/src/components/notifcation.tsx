@@ -35,7 +35,9 @@ export const Notification = ({ message, loadNotif, notifications, type = 'info',
       className={`flex items-center justify-between p-4 mb-4 w-full shadow-lg rounded-lg  max-w-sm mx-auto`}
     >
       <div className="p-2 rounded-full border-2">
+
         <Image className="rounded-full object-cover w-10 h-10" src={notifications.productInfo[0]?.frontImage} alt="зураг" width={50} height={50} />
+
       </div>
       <span className="text-sm font-medium">{message}</span>
       <button onClick={deleteNotif} className="ml-4">

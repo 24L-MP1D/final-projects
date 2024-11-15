@@ -6,7 +6,6 @@ const { MongoClient } = require('mongodb');
 const url = process.env.MONGODB_URI;
 const client = new MongoClient(url);
 const collection = db.collection('admin');
-
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const query = searchParams.get('searchvalue');
@@ -15,15 +14,15 @@ export async function GET(request: NextRequest) {
     if (query) {
       await client.connect();
 
-      const database = client.db('amidos');
+      const database = client.db('ecommerce');
 
-      const coll = database.collection('admin');
+      const collection = database.collection('admin');
 
       const data = await collection
         .aggregate([
           {
             $search: {
-              index: 'food',
+              index: 'foods',
               text: {
                 query: query,
                 path: {

@@ -39,7 +39,7 @@ export function Swipersnew() {
             <Image src={special.photos} width={600} height={300} alt="Image" className="max-h-[300px] aspect-video object-cover rounded-md ml-3" />
             <div className="flex flex-col absolute left-[22px] bottom-[13px]">
               <div className="text-white md:text-2xl font-bold text-base self-start">{special.name}</div>
-              <p className=" text-white md:text-xl text-sm self-start">{special.price}</p>
+              <p className=" text-white md:text-xl text-sm self-start">{special.price}.0к</p>
             </div>
           </SwiperSlide>
         ))}

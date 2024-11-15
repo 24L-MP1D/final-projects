@@ -18,6 +18,7 @@ export default function Dialogs() {
   const [selectedCount, setSelectedCount] = useState<number>(1);
   const [selectedFood, setSelectedFood] = useState<Food | null>(null);
   const [open, setOpen] = useState(false);
+
   const specialdishes = [
     { url: '/carbonara.jpg', price: 21000, name: 'Carbonara' },
     { url: '/pasta.jpg', price: 15000, name: 'Pasta' },
@@ -33,8 +34,8 @@ export default function Dialogs() {
     const id = selectedFood?.id;
     const name = selectedFood?.name;
     const price = selectedFood?.price;
-    const image = selectedFood?.photos;
-    localStorage.setItem('order', JSON.stringify([{ id: id, name: name, price: price, image: image, quantity: selectedCount }]));
+    const photos = selectedFood?.photos;
+    localStorage.setItem('order', JSON.stringify([{ id: id, name: name, price: price, photos: photos, quantity: selectedCount }]));
     window.location.href = '/buystepone';
     setLoadingbutton(false);
   };
@@ -64,7 +65,6 @@ export default function Dialogs() {
     { name: 'ЗАХИАЛГА', link: '/order' },
     { name: 'ЗАХИАЛГА', link: '/food' },
     { name: 'MЕНЮ', link: '/lunch' },
-    { name: 'ХҮРГЭЛТ', link: '/delivery' },
   ];
   return (
     <>
@@ -99,9 +99,8 @@ export default function Dialogs() {
                           +
                         </button>
                       </div>
-                      <h1 className="font-bold text-lg italic text-[#342216] pr-4">{selectedFood?.price}.0</h1>
+                      <h1 className="font-bold text-lg italic text-[#342216] pr-4">{selectedFood?.price * selectedCount}.0k</h1>
                     </div>
-
                     <Button variant="amidos" className="self-end text-xl mt-4 " onClick={() => order(selectedFood)}>
                       {loadingbutton ? 'Уншиж байна' : ' Захиалах'}
                     </Button>

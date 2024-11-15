@@ -51,12 +51,14 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   try {
-    const product: any = {};
+    const product: any = { status: 'Accept' };
 
     const body = await request.json();
 
+
     const { searchValue, userId, status, page, limit, categoryId } = body;
     if (status) product.status = status;
+
     if (categoryId) product.categoryId = categoryId;
 
     if (userId) product.userId = new ObjectId(String(userId));

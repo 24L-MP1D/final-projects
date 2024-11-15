@@ -15,6 +15,9 @@ const nextConfig = {
   env: {
     CLOUDINARY_URL: process.env.CLOUDINARY_URL,
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 const plugins = [

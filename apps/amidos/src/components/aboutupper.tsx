@@ -7,7 +7,7 @@ export default function Aboutupper() {
     { title: 'ХАЯГ', description: 'МОНКОН БАРИЛГА 1-Р ДАВХАР' },
   ];
   return (
-    <>
+    <div id="aboutupper2">
       <Parallax blur={{ min: -5, max: 5 }} bgImage={'/pexels.jpeg'} bgImageAlt="food" strength={-500} className="hidden md:block">
         <div className="sticky top-0 left-1/2 bg-white h-[100vh] w-[50%]  flex flex-col gap-8 text-center justify-center items-center">
           <div className="flex flex-col gap-4">
@@ -51,6 +51,6 @@ export default function Aboutupper() {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }

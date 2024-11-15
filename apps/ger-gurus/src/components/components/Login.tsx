@@ -36,6 +36,8 @@ export function Login() {
           toast.success('Амжилттай нэвтэрлээ.', { className: 'custom-toast success' });
           document.cookie = `authtoken=${data.token}; path=/; domain=.verse.mn;  Secure; SameSite=Lax`;
           document.cookie = `userId=${data.userId}; path=/; domain=.verse.mn;  Secure; SameSite=Lax`;
+          document.cookie = `authtoken=${data.token}; path=/;`;
+          document.cookie = `userId=${data.userId}; path=/;`;
           if (url) {
             setTimeout(() => {
               window.location.href = `${url}`;

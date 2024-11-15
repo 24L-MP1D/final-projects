@@ -14,6 +14,7 @@ export type Oneorder = {
   name: string;
   price: number;
   image: string;
+  totalprice: number;
   quantity: number;
 };
 export type Orders = {
@@ -21,6 +22,8 @@ export type Orders = {
   phonenumber: string;
   order: Oneorder[];
   totalprice: number;
+  quantity: number;
+  price: number;
   otp: string;
   id: string;
   deliveryperson: string;
@@ -67,33 +70,6 @@ export default function DataTableDemo() {
         toast.error('Алдаа гарлаа');
       });
   };
-  //   function makeadmin(user: Users) {
-  //     if (user.role === 'admin') {
-  //       axios
-  //         .put('/api/admin/removeadmin', { id: user._id })
-  //         .then((res) => {
-  //           if (res.status === 200) {
-  //             toast.success('Амжилттай хэрэглэгч боллоо');
-  //           }
-  //         })
-  //         .catch(function (error) {
-  //           toast.error('Алдаа гарлаа. Дахин оролдоно уу');
-  //         })
-  //         .finally(() => renderusers());
-  //     } else {
-  //       axios
-  //         .put('/api/admin/users', { id: user._id })
-  //         .then((res) => {
-  //           if (res.status == 200) {
-  //             toast.success('Амжилттай админ боллоо');
-  //           }
-  //         })
-  //         .catch(function (error) {
-  //           toast.error('Алдаа гарлаа. Дахин оролдоно уу');
-  //         })
-  //         .finally(() => renderorders());
-  //     }
-  //   }
 
   return (
     <div className="flex  w-full  bg-gradient-to-r from-pink-100  to-white">
@@ -107,9 +83,12 @@ export default function DataTableDemo() {
                 <TableRow>
                   <TableHead className="text-wrap">Захиалга</TableHead>
                   <TableHead className="text-wrap">Захиалгын мэдээлэл</TableHead>
-                  <TableHead className="text-wrap">Нийт үнийн дүн</TableHead>
-                  <TableHead className="text-wrap">Хүргэлтийн ажилтан сонгох</TableHead>
-                  <TableHead className="text-wrap">Хүргэлтийн ажилтантай холбогдох</TableHead>
+                  <TableHead className="text-wrap">Тоо</TableHead>
+                  <TableHead className="text-wrap">Үнэ</TableHead>
+                  <TableHead className="text-wrap">Нийт үнэ</TableHead>
+                  <TableHead className="text-wrap">Хүргэлтийн ажилтанг сонгох</TableHead>
+                  <TableHead className="text-wrap">Холбогдох утасны дугаар</TableHead>
+
                   <TableHead className="text-wrap">Хүргэлтэнд хувиарлах</TableHead>
                 </TableRow>
               </TableHeader>
@@ -121,7 +100,9 @@ export default function DataTableDemo() {
                     {order.order.map((oneorder) => (
                       <>
                         <TableCell>{oneorder.name}</TableCell>
-                        <TableCell className="text-center">{oneorder.price}.0₮</TableCell>
+                        <TableCell className="text-center">{oneorder.quantity}</TableCell>
+                        <TableCell>{oneorder.price}</TableCell>
+                        <TableCell>{oneorder.price * oneorder.quantity}.000₮</TableCell>
                       </>
                     ))}
 
@@ -141,6 +122,7 @@ export default function DataTableDemo() {
                         </SelectContent>
                       </Select>
                     </TableCell>
+
                     <TableCell>{order.deliveryperson}</TableCell>
                     <Button onClick={() => adddeliveryperson(order)} className="mt-2">
                       Хувиарлах

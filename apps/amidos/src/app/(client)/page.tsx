@@ -26,7 +26,7 @@ export default function Home() {
 
     const adTimeout = setTimeout(() => {
       setShowAd(false);
-    }, 5000);
+    }, 1000);
 
     return () => clearTimeout(adTimeout);
   }, []);
@@ -44,14 +44,11 @@ export default function Home() {
   return (
     <div>
       {showAd && randomSpecialFood && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-100 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-md max-w-md w-full sm:max-w-lg md:max-w-xl lg:max-w-2xl relative">
-            {/* <button onClick={closeAd} className="absolute top-2 right-2 text-black">
-              X
-            </button> */}
-            <div className="mt-4">
+        <div className="fixed top-0 left-0 w-full h-full bg-black/80 bg-opacity-100 flex justify-center items-center z-50">
+          <div className=" p-6 rounded-md max-w-md w-full sm:max-w-lg md:max-w-xl lg:max-w-2xl relative">
+            <div className="mt-4 mx-auto">
+              <div className="text-3xl ml-28 text-white/80 ">Шилдэг борлуулалттай хоол</div>
               <div className="mt-4 w-full h-auto">
-                {/* <p className="text-3xl text-center italic">Манай онцгой хоол</p> */}
                 <Image
                   src={randomSpecialFood.photos || '/path/to/default-image.jpg'}
                   width={600}

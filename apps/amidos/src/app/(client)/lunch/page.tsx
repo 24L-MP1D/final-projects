@@ -58,12 +58,12 @@ export default function Menu() {
     { name: 'БИДНИЙ ТУХАЙ', link: '/' },
     { name: 'MЕНЮ', link: '/menu' },
     { name: 'ГАЛЛЕРЕЙ', link: '/gallery' },
-    { name: 'ЗАХИАЛГА', link: '/order' },
+    { name: 'САГС', link: '/order' },
     { name: 'ХҮРГЭЛТ', link: '/delivery' },
   ];
 
   const handleAddToCart = (foodItem: Food) => {
-    const existingCart: Array<any> = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existingCart: Array<any> = JSON.parse(localStorage.getItem('order') || '[]');
     const existingItemIndex = existingCart.findIndex((item) => item.id === foodItem._id);
 
     if (existingItemIndex !== -1) {
@@ -79,10 +79,12 @@ export default function Menu() {
       };
       existingCart.push(item);
     }
-    localStorage.setItem('cart', JSON.stringify(existingCart));
+
+    localStorage.setItem('order', JSON.stringify(existingCart));
     setTotalPrice((prev) => prev + foodItem.price * selectedCount);
     toast('Таны хоолыг сагсанд амжилттай нэмлээ');
   };
+
   return (
     <>
       {' '}
@@ -120,7 +122,7 @@ export default function Menu() {
                         <h1 className="font-bold  mt-10 text-2xl text-[#8B0000]">{foodItem.name}</h1>
                         <h2 className="text-lg italic text-wrap text-[#52071B]">{foodItem.ingredients}</h2>
                       </div>
-                      <h1 className="text-[#342216] text-lg italic font-bold">{foodItem.price}.0</h1>
+                      <h1 className="text-[#342216] text-lg italic font-bold">{foodItem.price}.0к</h1>
                     </div>
 
                     <div className="flex flex-row mt-2 gap-5 text-xl justify-end ">

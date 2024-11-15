@@ -26,7 +26,7 @@ function TableVerify() {
   const [phonenumber, setPhonenumber] = useState<string>('');
   const [selectedTime, setSelectedTime] = useLocalStorage<string | null>('selectedTime', null);
   const [reservedSeat, setReservedSeat] = useLocalStorage<string | null>('reservedSeat', null);
-  const [selectedTable, setSelectedTable] = useLocalStorage<string | null>('', null);
+  const [selectedTable, setSelectedTable] = useLocalStorage<string | null>('selectedTable', null);
   const [day, setDay] = useLocalStorage<Date | null>('day', new Date());
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -52,7 +52,7 @@ function TableVerify() {
     }
   }, [phonenumber]);
 
-  async function CreateOrder() {
+  async function createOrder() {
     if (!phonenumber || !isValidPhoneNumber(phonenumber)) {
       setErrorMessage('Талбарыг зөв бөглөх шаардлагатай.');
       return;
@@ -60,6 +60,7 @@ function TableVerify() {
     setLoading(true);
     const formattedDay = formatInTimeZone(day!, 'Asia/Shanghai', 'yyyy-MM-dd');
     try {
+      console.log(selectedTable)
       const response = await fetch('/api/tablebook', {
         method: 'POST',
         body: JSON.stringify({
@@ -68,6 +69,7 @@ function TableVerify() {
           reservedSeats: reservedSeat,
           table: selectedTable,
           day: format(day as Date, 'yyyy-MM-dd'),
+          isReserved: true,
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -97,11 +99,11 @@ function TableVerify() {
             className={errorMessage.includes('утасны дугаар') ? 'border-red-500' : ''}
           />
         </div>
-        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-        <Button onClick={CreateOrder} className="w-full hover:hover:bg-[#52071b7c]" disabled={loading}>
+        {errorMessage && phonenumber && <p className="text-red-500">{errorMessage}</p>}
+        <Button onClick={createOrder} className="w-full hover:hover:bg-[#52071b7c]" disabled={loading}>
           {loading ? 'Ажлын явц...' : 'Захиалга үүсгэх'}
         </Button>
       </div>
-    </div>
+    </div >
   );
 }

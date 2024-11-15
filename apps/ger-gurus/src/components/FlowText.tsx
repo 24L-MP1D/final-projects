@@ -2,14 +2,31 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-export default function FlowText() {
+export default function FlowText({ flow }: { flow: string | undefined }) {
   const [colors, setColors] = useState<string[]>([]);
-  const linesRef = useRef<(HTMLParagraphElement | null)[]>([]);
+  const textRef = useRef<HTMLParagraphElement | null>(null);
+
+  const text = flow || 'ГАРАГИЙН ТӨЛӨӨ хийгээрэй БИЗНЕСИЙНХЭЭ ТӨЛӨӨ хийгээрэй. ТАНЫ ESG ОНОО САЙХАН АВАХ тусам ХӨНГӨЛӨЛТ ТӨЛӨӨ БОЛНО.';
+
+  // Splitting text into lines of approximately 23 characters
+  const textLines = text.split(' ').reduce(
+    (acc: string[], word) => {
+      const currentLine = acc[acc.length - 1];
+      if (!currentLine || currentLine.length + word.length < 23) {
+        acc[acc.length - 1] = (currentLine ? currentLine + ' ' : '') + word;
+      } else {
+        acc.push(word);
+      }
+      return acc;
+    },
+    ['']
+  );
 
   useEffect(() => {
     const handleScroll = () => {
       const halfScreenHeight = window.innerHeight / 2;
-      const newColors = linesRef.current.map((line) => {
+      const newColors = textLines.map((_, index) => {
+        const line = textRef.current?.children[index] as HTMLElement | null;
         if (line) {
           const rect = line.getBoundingClientRect();
           return rect.top > halfScreenHeight && rect.bottom > halfScreenHeight ? 'text-[#566053]' : 'text-[#4CAF50]';
@@ -21,26 +38,17 @@ export default function FlowText() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const textLines = ['DO IT FOR THE PLANET', 'DO IT FOR YOUR BUSINESS', 'THE BETTER YOUR ESG', 'SCORE GETS, THE BIGGER', 'THE DISCOUNTS'];
+  }, [textLines]);
 
   return (
-    <div className="h-[60vh] pt-[20vh]">
-      <div className="text-center font-black font-[Deacon] mt-4">
+    <div className="h-[60vh] pt-[20vh] text-center font-black font-[Deacon] mt-4">
+      <p ref={textRef} className="text-stroke transition-colors duration-500 text-[74px] font-black leading-none">
         {textLines.map((line, index) => (
-          <p
-            key={index}
-            ref={(el) => {
-              linesRef.current[index] = el;
-            }}
-            contentEditable={true}
-            className={`text-stroke ${colors[index] || 'text-[#2E7D32]'} transition-colors duration-500 text-[74px] font-black leading-none`}
-          >
+          <span key={index} className={`${colors[index] || 'text-[#2E7D32]'}`} style={{ display: 'block' }}>
             {line}
-          </p>
+          </span>
         ))}
-      </div>
+      </p>
       <div className="mt-44 border-green-500 border-t" />
     </div>
   );

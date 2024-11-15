@@ -2,7 +2,7 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Bookmark, Calendar, Ellipsis, Heart, MessageSquare, TrendingUp, Upload } from 'lucide-react';
+import { Calendar, Ellipsis, Heart, MessageSquare } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Advertisement from '../../ads/ads';
@@ -67,73 +67,88 @@ export default function RecipeComponent() {
   const [user, setUser] = useState<Partial<User>>({ firstName: '' });
   const [ads, setAds] = useState<Ads>({});
   const [adsHover, setAdsHover] = useState<number>(0);
-  const [recipe, setRecipe] = useState<Recipe>({});
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
-  const [newComment, setNewComment] = useState<Ably.Message[]>([]);
+  const [newComment, setNewComment] = useState<string>('');
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const [freshRecipes, setFreshRecipes] = useState<Recipe[]>([]);
+
+  const fetchRecipe = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/api/recipe/${slug}`);
+      if (response.data.recipe) {
+        setRecipe(response.data.recipe);
+        setComments(response.data.comments);
+      } else {
+        setErrorMessage('Recipe not found');
+      }
+    } catch (error) {
+      console.error('Error fetching recipe:', error);
+      setErrorMessage('Failed to fetch recipe.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (slug) {
-      const fetchRecipe = async () => {
-        try {
-          setLoading(true);
-          const response = await axios.get(`/api/recipe/${slug}`);
-          if (response.data.recipe) {
-            setRecipe(response.data.recipe);
-            setComments(response.data.comments);
-          } else {
-            setErrorMessage('Recipe not found');
-          }
-        } catch (error) {
-          console.error('Error fetching recipe:', error);
-          setErrorMessage('Failed to fetch recipe.');
-        } finally {
-          setLoading(false);
-        }
-      };
       fetchRecipe();
     }
   }, [slug]);
 
   useEffect(() => {
-    if (slug && typeof slug === 'string') {
-      const fetchRecipe = async () => {
-        try {
-          const response = await axios.get(`/api/recipe/${slug}`);
-          setRecipe(response.data.recipe);
-          setComments(response.data.comments);
-        } catch (error) {
-          console.error('Error fetching recipe:', error);
+    const fetchFreshRecipes = async () => {
+      try {
+        const response = await axios.post('/api/recipe/getRecipe');
+        console.log('Fresh recipes response:', response.data);
+
+        if (response.data && response.data.hiddenData) {
+          const sortedRecipes = response.data.hiddenData.sort((a: Recipe, b: Recipe) => {
+            const dateA = new Date(a.createdAt).getTime();
+            const dateB = new Date(b.createdAt).getTime();
+            return dateB - dateA;
+          });
+          setFreshRecipes(sortedRecipes.slice(0, 2));
+        } else {
+          console.error('No fresh recipes found');
         }
-      };
-      fetchRecipe();
-    }
-  }, [slug]);
+      } catch (error) {
+        console.error('Error fetching fresh recipes:', error);
+      }
+    };
+    fetchFreshRecipes();
+  }, []);
 
   const handleCommentSubmit = async () => {
     if (!newComment.trim()) return;
 
-    useConnectionStateListener('connected', () => {
-      console.log('Connected to Ably');
-    });
-
     try {
-      const response = await axios.post(`/api/recipe/${slug}/comment`, {
-        comment: newComment,
-      });
+      const token = localStorage.getItem('authtoken');
+      const response = await axios.post(
+        `/api/recipe/${slug}/comment`,
+        {
+          comment: newComment,
+          recipeTitle: slug,
+        },
+        { headers: { authtoken: token } }
+      );
       if (response.data.success) {
         setComments((prev) => [...prev, response.data.comment]);
         setNewComment('');
       }
+      fetch;
     } catch (error) {
       console.error('Failed to submit comment:', error);
     }
+
+    fetchRecipe();
   };
 
   return (
-    <div className="w-[1110px] m-auto flex flex-col gap-6 font-serif">
+    <div className="xl:max-w-[1110px] w-full max-w-[80%] m-auto flex flex-col gap-6 font-serif ">
       {loading ? (
         <p>Loading recipe...</p>
       ) : errorMessage ? (
@@ -141,39 +156,42 @@ export default function RecipeComponent() {
       ) : (
         <>
           <div className="flex justify-between">
-            <div className="flex gap-4 items-center">
+            {/* <div className="flex gap-4 items-center">
               <TrendingUp className="w-8 h-8" />
               <p className="text-slate-600">85% would make this again</p>
-            </div>
-            <div className="flex gap-6">
+            </div> */}
+            {/* <div className="flex gap-6">
               <Upload />
               <Bookmark />
-            </div>
+            </div> */}
           </div>
-          <p className="font-bold text-5xl">{formatTitle(slug)}</p>
+          <p className="font-bold text-6xl leading-10">{formatTitle(slug)}</p>
           <div className="flex">
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-3">
-                <div className="bg-gray-300 w-[50px] h-[50px] rounded-full"></div>
-                <p>{user.firstName || 'Anonymous'}</p>
+                {recipe?.tags && recipe.tags.length > 0 ? (
+                  recipe?.tags.map((tag, index) => (
+                    <div key={index} className="bg-gray-200 rounded-full px-4 py-1 ml-3 text-lg">
+                      {tag}
+                    </div>
+                  ))
+                ) : (
+                  <p>No tags available.</p>
+                )}
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 text-lg">
                 <Calendar />
                 {dayjs(recipe?.updatedAt).fromNow()}
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 text-lg">
                 <MessageSquare />
                 {comments.length}
               </div>
-              <Stars
-                size={15}
-                //  rating={rating} voteNum={ratingNum}
-                //  id={id}
-              />
+              <Stars size={15} />
             </div>
           </div>
           <div className="h-[1px] w-[1110px] bg-gray-200"></div>
-          <p className="font-semibold text-xl">{recipe?.description}</p>
+          <p className="font-semibold text-xl leading-8">{recipe?.description}</p>
           <div className="rounded">
             {recipe?.images ? (
               recipe.images.map((image, index) => <img key={index} src={image} alt={`Recipe Image ${index + 1}`} className="w-[1110px] h-[624px] object-cover rounded" />)
@@ -191,11 +209,7 @@ export default function RecipeComponent() {
                   </div>
                   <div>
                     <p className="font-medium text-slate-600">SERVINGS</p>
-                    <div className="flex">
-                      {recipe?.servings} People
-                      {/* <SquarePen /> */}
-                    </div>
-                    {/* <Printer /> */}
+                    <div className="flex">{recipe?.servings} People</div>
                   </div>
                 </div>
                 <div>
@@ -212,10 +226,10 @@ export default function RecipeComponent() {
                   <h4 className="font-bold text-3xl py-5">Instructions</h4>
                   {recipe?.instructions && recipe.instructions.length > 0 ? (
                     recipe?.instructions.map((instruction, index) => (
-                      <ol key={index} className="list-decimal p-2 ml-3">
+                      <ol key={index} className="list-decimal p-2 ml-3 leading-8">
                         <li className="flex items-start space-x-3">
-                          <span className="w-6 h-6 bg-orange-400 text-white rounded-full flex items-center justify-center">{index + 1}</span>
-                          <span>{instruction.step}</span>
+                          <div className="w-6 h-6 bg-orange-400 text-white rounded-full flex items-center justify-center">{index + 1}</div>
+                          <span className="ml-1 flex-1">{instruction.step}</span>
                         </li>
                       </ol>
                     ))
@@ -230,15 +244,15 @@ export default function RecipeComponent() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableCaption className="w-[150px] font-semibold text-lg pb-3 pl-1">Nutrition Facts</TableCaption>
+                      <TableCaption className="w-[150px] font-semibold text-xl pb-3 pl-1">Nutrition Facts</TableCaption>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {recipe?.nutritionFacts && recipe.nutritionFacts.length > 0 ? (
                       recipe?.nutritionFacts.map((fact, index) => (
                         <TableRow key={index}>
-                          <TableCell className="w-[100px]">{fact.name}</TableCell>
-                          <TableCell className="w-[100px]">{fact.value}</TableCell>
+                          <TableCell className="w-[100px] text-lg">{fact.name}</TableCell>
+                          <TableCell className="w-[100px] text-lg">{fact.value}</TableCell>
                         </TableRow>
                       ))
                     ) : (
@@ -251,26 +265,30 @@ export default function RecipeComponent() {
               </div>
               <div>
                 <h4 className="text-lg font-semibold p-3">Fresh Recipes</h4>
-                {[...Array(2)].map((_, index) => (
-                  <div key={index} className="flex mb-5 gap-3">
-                    <div className="w-[150px] h-[100px] bg-gray-200"></div>
-                    <div>
-                      <Stars
-                        size={15}
-                        //  rating={rating} voteNum={ratingNum}
-                        //id={id}
-                      />
-                      <div>Rating</div>
-                      <p>Spinach and Cheese Pasta</p>
+                {freshRecipes.length > 0 ? (
+                  freshRecipes.map((recipe, index) => (
+                    <div key={index} className="flex mb-5 gap-3">
+                      <div className="flex gap-2">
+                        {recipe.img ? (
+                          <img src={recipe.img} alt={`Fresh Recipe Image ${index + 1}`} className="w-[150px] h-[100px] object-cover rounded" />
+                        ) : (
+                          <div className="w-[150px] h-[100px] bg-gray-300 rounded"></div>
+                        )}
+                      </div>
+
+                      <div>
+                        <Stars size={15} />
+                        <div>{recipe.title}</div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <p>No fresh recipes available.</p>
+                )}
               </div>
               <Advertisement />
             </div>
           </div>
-          <p>Already made this?</p>
-        
           <div className="h-3 bg-orange-400"></div>
           <div>
             <p>{comments.length} Comments</p>
@@ -312,34 +330,21 @@ export default function RecipeComponent() {
               </Table>
             </ScrollArea>
 
-            <div className="relative">
+            <div className="relative mb-5">
               <input
-                className="h-[40px] w-full max-w-[1110px] bg-gray-200 rounded p-4"
+                className="h-[240px] w-full max-w-[1110px] bg-gray-200 rounded p-4"
                 placeholder="Write your comment..."
                 aria-label="Comment input"
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
               />
-              <button className="bg-orange-500 hover:bg-orange-400 w-[200px] h-[50px] rounded mt-2 absolute right-[36px] bottom-8 z-10" aria-label="Post comment" onClick={handleCommentSubmit}>
+              <button className="bg-orange-500 hover:bg-orange-400 w-[200px] h-[50px] rounded mt-2 absolute right-[36px] bottom-8 z-10 " aria-label="Post comment" onClick={handleCommentSubmit}>
                 Post Comment
               </button>
             </div>
           </div>
-          <p>You might also like</p>
-          <div></div>
         </>
       )}
     </div>
   );
 }
-
-
-
-enum Role {
-  GOLD = 'gold',
-  SILVER = 'silver',
-  BRONZE = 'bronze',
-  FREE = 'free',
-  admin = 'admin',
-}
-

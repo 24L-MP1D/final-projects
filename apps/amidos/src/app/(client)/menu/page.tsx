@@ -5,7 +5,7 @@ export default function Menu() {
   return (
     <>
       <Headers />
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mt-20 ">
         <Image src="/amido1.png" alt="Amidos Image" width={900} height={500} />
         <Image src="/amido2.png" alt="Amidos Image" width={900} height={500} />
         <Image src="/amido3.png" alt="Amidos Image" width={900} height={500} />
@@ -18,7 +18,7 @@ export default function Menu() {
         <Image src="/amido10.png" alt="Amidos Image" width={900} height={500} />
         <Image src="/amido11.png" alt="Amidos Image" width={900} height={500} />
         <Image src="/amido12.png" alt="Amidos Image" width={900} height={500} />
-        <Image src="/amido13.png" alt="Amidos Image" width={900} height={500} />
+        <Image src="/amido13.png" alt="Amidos Image" width={900} height={500} className="mb-20" />
       </div>
     </>
   );
