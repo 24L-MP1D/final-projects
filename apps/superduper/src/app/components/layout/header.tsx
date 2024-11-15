@@ -10,6 +10,8 @@ import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
 import '../../styles.css';
 
 import { RealtimeNotif } from '@/app/client/layout';
+import { Notification } from '@/components/notifcation';
+import { ProductType } from '@/components/productType';
 import Image from 'next/image';
 import { useAuthStore } from '../auth/useAuthStore';
 
@@ -21,6 +23,7 @@ export type notifications = {
   userId: string;
   productId: string;
   isSeen: boolean;
+  productInfo: [ProductType];
 };
 
 export default function Header() {
@@ -32,6 +35,7 @@ export default function Header() {
   const [notifications, setNotifications] = useState<notifications[]>([]);
   const currentUser = useAuthStore((state) => state.currentUser);
   const value = useContext(RealtimeNotif);
+  const [showMessages, setShowMessages] = useState(false);
   const loadNotif = async () => {
     const response = await fetch('/api/notifications', {
       method: 'PUT',
@@ -119,6 +123,8 @@ export default function Header() {
       throw new Error('aldaa notif');
     }
     setShowNotif(false);
+    setShowMessages(false);
+    loadNotif();
   };
   const firstName = (name: string) => {
     let shortName = '';
@@ -128,7 +134,7 @@ export default function Header() {
     return shortName;
   };
   return (
-    <div onClick={() => showNotif && setShowNotif(false)} className=" pt-5 flex items-center max-w-[1280px] ">
+    <div className=" pt-5 flex items-center max-w-[1280px] ">
       <div className="bg-[#1F1F1FF2] py-4 px-6  max-w-[1280px] rounded-2xl flex-1">
         <div className="flex justify-between">
           <div className="flex items-center gap-16 w-[200px]">
@@ -183,21 +189,23 @@ export default function Header() {
             </div>
             {signin ? (
               <div className="flex gap-5 items-center p-1 relative">
-                <div onClick={() => setShowNotif(true)} className="hover:cursor-pointer ">
-                  <div className="relative ">
+                <div className="hover:cursor-pointer ">
+
+                  <div onClick={() => (showNotif ? setShowNotif(false) : setShowNotif(true))} className="relative z-50 hover:cursor-pointer">
+
                     <Bell color="white" />
                     {currentUser?._id && isSeenNotif.length > 0 && (
                       <div className="absolute rounded-full bg-red-500 w-5 h-5 text-center text-sm top-[-12px] left-3 text-white">{isSeenNotif.length}</div>
                     )}
                   </div>
+                  {showNotif && <div className="fixed inset-0 bg-black opacity-50"></div>}
                   {showNotif && (
-                    <div className="absolute top-12 left-[-300px] list-decimal right-0 z-50 max-w-[400px]">
-                      {notifications.map((notification, index) => (
-                        <div key={notification._id} onClick={() => notificationUpdate(notification._id)} className={`border-b rounded-lg items-center border-white p-2 bg-[#1F1F1FF2] text-white flex`}>
-                          <div>
-                            {index + 1}. {notification.message}
-                          </div>
-                          {isSeenNotif.length ? <div className="text-sm text-red-500 ml-7">new product notification</div> : <div className="text-sm text-red-500 ml-7">old product notification</div>}
+                    <div className="absolute top-12 left-[-250px] rounded-lg bg-white right-[100px] z-50">
+
+                      {notifications.map((notification) => (
+
+                        <div key={notification._id} className="flex gap-4">
+                          <Notification loadNotif={loadNotif} notifications={notification} onClose={() => setShowNotif(false)} message={notification.message} />
                         </div>
                       ))}
                     </div>
