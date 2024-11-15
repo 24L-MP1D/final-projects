@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { BsHandIndexThumbFill } from 'react-icons/bs';
 import { FaPlay } from 'react-icons/fa';
@@ -37,7 +38,9 @@ export default function FixButton() {
       </button>
 
       <button className="py-5 px-20 flex items-center gap-3 rounded-full text-white bg-purple-600 transition-transform duration-300 ease-in-out hover:translate-y-[-3px] hover:shadow-xl">
-        <span>Эхлэх</span>
+        <Link href={'/signup'}>
+          <span>Эхлэх</span>
+        </Link>
         <BsHandIndexThumbFill />
       </button>
     </section>
